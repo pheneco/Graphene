@@ -36,6 +36,7 @@ echo pushing changes to github
 git add .
 set /p changeDesc=describe changes: 
 git commit -m "%changeDesc%"
-git push
+git remote add origin https://github.com/Trewbot/Graphene.git
+git push origin master
 
 backup
