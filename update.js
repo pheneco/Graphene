@@ -41,12 +41,12 @@ User.find({},function(e,uu){
 			})
 		},function(e,i){
 			if(e) console.log(e);
-		});
-		u.save(function(){
-			if(++count == uu.length){
-				console.log('finished update commands');
-				process.exit();
-			}
+			u.save(function(){
+				if(++count == uu.length){
+					console.log('finished update commands');
+					process.exit();
+				}
+			});
 		});
 	});
 });
