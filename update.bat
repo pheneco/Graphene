@@ -20,7 +20,7 @@ echo updating server changelog
 %mongoDir%\mongorestore --drop --db %sub%phene %serverDir%\changelog\serverChanges.bson >nul 2>&1
 
 echo copying client code
-xcopy %serverDir%\client %clientDir% /e /h /c /r /q /y >nul
+xcopy %serverDir%\client %clientDir%\ /e /h /c /r /q /y >nul
 
 echo running npm install
 call npm install
