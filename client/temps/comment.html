@@ -1,0 +1,15 @@
+<div class="comment {{#if active}}comment-active{{/if}}" id="comment-{{id}}" comment-id="{{id}}">
+	<a href="{{user.url}}"><img class="comment-avatar" src="{{user.avatar}}"/></a>
+	<div class="comment-content">
+		<span class="comment-name"><a href="{{user.url}}"><b>{{user.name}}</b></a></span>
+		<br/>
+		{{{richText}}}
+		<div class="comment-time">
+			<span class="timestamp" unix-time="{{time}}">{{#if timestamp}}{{timestamp}}{{else}}{{time}}{{/if}}</span>
+			{{#if owner}}
+				&bull; <a onclick="Graphene.comments.delete('{{post}}','{{id}}')" title="Delete this Comment.">Delete</a>
+			{{/if}}
+		</div>
+	</div>
+	<div style="clear:both;"></div>
+</div>

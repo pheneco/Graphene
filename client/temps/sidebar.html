@@ -1,0 +1,17 @@
+{{#each sections}}
+	<a href="{{url}}" title="{{tooltip}}"><div class="side-title"><b>{{name}}</b></div></a>
+	{{#each links}}
+		{{#if tabled}}
+			<a href="{{url}}"><div class="side-link {{#if active}}side-select{{/if}}">
+				<table>
+					<tr>
+						<td style="width:100%;">{{name}}</td>
+						<td>{{value}}</td>
+					</tr>
+				</table>
+			</div></a>
+		{{else}}
+			<a href="{{url}}"><div class="side-link {{#if active}}side-select{{/if}}">{{name}}</div></a>
+		{{/if}}
+	{{/each}}
+{{/each}}

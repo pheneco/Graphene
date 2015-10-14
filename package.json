@@ -1,0 +1,27 @@
+{
+	"name"			: "Graphene",
+	"version"		: "0.3.0",
+	"description"	: "Server API application for the Graphene Social Network.",
+	"author"		: "Trevor \"Trewbot\" Hoglund <trewbot@phene.co>",
+	"contributors"	: [],
+	"main"			: "app.js",
+	"dependencies"	: {
+		"express"			: ">=4.10.7",
+		"express-session"	: ">=1.9.3",
+		"mongoose"			: ">=3.8.21",
+		"bcrypt-nodejs"		: ">=0.0.3",
+		"body-parser"		: ">=1.10.1",
+		"connect-mongo"		: ">=0.5.3",
+		"marked"			: ">=0.3.2",
+		"cors"				: ">=2.5.3",
+		"connect-sse"		: ">=1.0.6",
+		"cheerio"			: ">=0.18.0",
+		"request"			: ">=2.53.0",
+		"html-entities"		: ">=1.1.2",
+		"nodemailer"		: ">=1.4.0",
+		"handlebars"		: ">=4.0.3",
+		"sharp"				: ">=0.11.3",
+		"multer"			: ">=1.0.6",
+		"multer-autoreap"	: ">=0.0.9"
+	}
+}

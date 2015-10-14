@@ -1,0 +1,14 @@
+RewriteEngine on
+Options +FollowSymLinks
+
+#URL SHORTENING
+	RewriteCond %{DOCUMENT_ROOT}/$1\.php -f
+	RewriteRule ^(.+[^/])/?$ $1.php [L]
+
+#REDIRECT EVERYTHING
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-l
+	RewriteRule ^(.*)$ /index [L]
+
+Options -Indexes
