@@ -11,7 +11,8 @@ for /f "delims=" %%i in ('node cfg.js %sub%ClientDir') do set clientDir=%%i
 
 echo fetching from github
 git remote add origin https://github.com/Trewbot/Graphene.git >nul 2>&1
-git fetch origin
+git fetch --all
+git reset --hard origin/master
 
 echo updating client changelog
 %mongoDir%\mongorestore --drop --db %sub%phene %serverDir%\changelog\webClientChanges.bson >nul 2>&1
