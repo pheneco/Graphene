@@ -38,7 +38,7 @@ echo.
 set /p changeDesc=describe changes: 
 git commit -m "%changeDesc%" >nul
 echo.
-git remote add origin https://github.com/Trewbot/Graphene.git >nul
+git remote add origin https://github.com/Trewbot/Graphene.git >nul 2>&1
 git push origin master >nul
 
 backup
