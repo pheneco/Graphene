@@ -3,6 +3,7 @@ console.log('running update commands');
 var User		= require('./models/user'),
 	config		= require('./config.json'),
 	mongoose	= require('mongoose'),
+	fs			= require('fs'),
 	marked		= require('marked'),
 	nodemailer	= require('nodemailer'),
 	EmailSrc	= fs.readFileSync('email.html', "utf8"),
