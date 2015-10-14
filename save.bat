@@ -32,4 +32,10 @@ echo copying client code
 if not exist %serverDir%\client md %serverDir%\client
 xcopy %clientDir% %serverDir%\client\ /e /h /c /r /q /y >nul
 
+echo pushing changes to github
+git add .
+set /p changeDesc=describe changes: 
+git commit -m "%changeDesc%"
+git push
+
 backup
