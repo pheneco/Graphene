@@ -4,12 +4,15 @@
   --	Oct 5, 2015
   -->
 
+<?
+	$dev = true;
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<link rel="stylesheet"	href="/assets/style.css"		type="text/css"  id="basecss">
-	<link rel="stylesheet"	href="/assets/style.php"		type="text/css"  id="phpcss">
-	<link rel="stylesheet"	href="/assets/prism.css"		type="text/css"  id="prismcss">
+	<link rel="stylesheet"	href="/assets/style.css" type="text/css" id="basecss">
+	<link rel="stylesheet"	href="/assets/style.php?<?=$dev?'dev':'gra'?>" type="text/css"  id="phpcss">
+	<link rel="stylesheet"	href="/assets/prism.css" type="text/css" id="prismcss">
 	<link rel="icon"		href="/assets/img/fav.png">
 	
 	<?	$files = array_diff(scandir('temps'), array('..','.'));
@@ -18,6 +21,18 @@
 			<? readfile('temps/'.$file); ?>
 		</script>
 	<?	endforeach; ?>
+	
+	<script>
+		<? if($dev): ?>
+			var url		= "http://dev.phene.co",
+				api		= "http://dev.phene.co:3000",
+				name	= "Devphene";
+		<? else: ?>
+			var url		= "http://gra.phene.co",
+				api		= "http://gra.phene.co:3200",
+				name	= "Graphene";
+		<? endif;?>
+	</script>
 	
 	<script src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js"></script>
 	<script src="http://connect.soundcloud.com/sdk.js"></script>
@@ -48,8 +63,11 @@
 		<div id="loading-icon" style="opacity:1;">
 		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 500" enable-background="new 0 0 500 500" xml:space="preserve">
 			<g>
-				<!--<polygon fill="none" stroke="#FFFFFF" stroke-width="15" points="410.8,342 249.3,435.2 87.9,342 87.9,155.5 249.3,62.3 410.8,155.5"/>-->
-				<polygon fill="none" stroke="#FFFFFF" stroke-width="15" points="410.8,393 87.9,393 249.3,113.3"/>
+				<? if($dev): ?>
+					<polygon fill="none" stroke="#FFFFFF" stroke-width="15" points="410.8,393 87.9,393 249.3,113.3"/>
+				<? else: ?>
+					<polygon fill="none" stroke="#FFFFFF" stroke-width="15" points="410.8,342 249.3,435.2 87.9,342 87.9,155.5 249.3,62.3 410.8,155.5"/>
+				<? endif;?>
 			</g>
 		</svg>
 		</div>

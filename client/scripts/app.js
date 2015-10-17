@@ -87,7 +87,7 @@ var Graphene		= new(function(url,api,name){
 			el.innerHTML = tv == 'true' ? el.getAttribute("off") : el.getAttribute("on");
 			el.setAttribute("toggled", tv == 'true' ? 'false' : 'true');
 		}
-	})("http://dev.phene.co", "http://dev.phene.co:3000", "Devphene"),
+	})(url,api,name),
 	ajax			= function(url, type, header, ops){
 		var r = new XMLHttpRequest(),
 		o = ops || {};

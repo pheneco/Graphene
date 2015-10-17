@@ -61,4 +61,4 @@ html						{background:#f8f8f8 url("../assets/img/back.png");background-position:
 .comment-content a:hover	{color:<?=$accent?>;}
 
 /**  [7]  **/
-#side-logo					{background:rgba(0,0,0,0) url("../assets/img/logo.svg") no-repeat top;}
+#side-logo					{background:rgba(0,0,0,0) url("../assets/img/<?=(isset($_GET['dev']))?'dev':'gra';?>.svg") no-repeat top;}
