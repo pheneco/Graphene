@@ -1,12 +1,10 @@
 <!--
-  --	Graphene Index Page w0.4.1 (Dev)
+  --	Graphene Index Page w0.4.2
   --	Written by Trewbot
-  --	Oct 5, 2015
+  --	Oct 17, 2015
   -->
 
-<?
-	$dev = true;
-?>
+<? require('/scripts/dev.php'); ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
