@@ -10,7 +10,7 @@ var mongoose	= require('mongoose'),
 		emailNotes	: Boolean,
 		hoverColors	: Boolean,
 		eventStream	: Boolean
-	}).
+	}),
 	userSchema	= new mongoose.Schema({
 		userName	: String,
 		username	: String,
@@ -26,7 +26,7 @@ var mongoose	= require('mongoose'),
 		accent		: String,
 		nameHandle	: Boolean,
 		feeds		: [Feed],
-		advanced	: Advanced
+		advanced	: [Advanced]
 	}),
 	User		= mongoose.model('User', userSchema, 'users');
 module.exports	= User;
