@@ -1,11 +1,16 @@
 /*
  *	Graphene >> User Model
  *	Written by Trewbot
- *	Oct 13, 2015
+ *	Oct 17, 2015
  */
 
 var mongoose	= require('mongoose'),
 	Feed		= require('../models/feed'),
+	Advanced	= new mongoose.Schema({
+		emailNotes	: Boolean,
+		hoverColors	: Boolean,
+		eventStream	: Boolean
+	}).
 	userSchema	= new mongoose.Schema({
 		userName	: String,
 		username	: String,
@@ -20,7 +25,8 @@ var mongoose	= require('mongoose'),
 		rank		: Number,
 		accent		: String,
 		nameHandle	: Boolean,
-		feeds		: [Feed]
+		feeds		: [Feed],
+		advanced	: Advanced
 	}),
 	User		= mongoose.model('User', userSchema, 'users');
 module.exports	= User;
