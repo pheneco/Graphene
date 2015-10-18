@@ -114,6 +114,18 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			else res.send("");
 		});
 	});
+	app.post('/settings/advanced', function(req,res){
+		User.update({_id:req.session.user}, {
+			advanced	: [{
+				emailNotes	: req.body.emailNotes,
+				hoverColors	: req.body.hoverColors,
+				eventStream	: req.body.eventStream
+			}]
+		}, {upsert: true}, function(e){
+			if(e) res.send(e);
+			else res.send("");
+		});
+	});
 	app.post('/password', function(req,res){
 		User.findOne({_id:req.session.user},function(e,u){
 			if(!bcrypt.compareSync(req.body.oldPass, u.password)) return res.send("Incorrect password!");
