@@ -1,3 +1,9 @@
+/*
+ *	Graphene Update Commands
+ *	Written by Trewbot
+ *	Oct 17, 2015
+ */
+
 console.log('running update commands');
 
 var User		= require('./models/user'),
@@ -23,13 +29,27 @@ var User		= require('./models/user'),
 console.log('connecting to database');
 mongoose.connect('mongodb://localhost/' + config.sub + 'phene');
 
-console.log('adding all lowercase usernames');
+console.log('adding advanced options');
 User.find({},function(e,uu){
 	if(e) return console.log(e);
 	uu.forEach(function(u){
 		if(!u) return ++count;
-		u.username = u.userName.toLowerCase();
-		if(!u.avatarHash) u.avatarHash = "0";
+		
+		if(!u.advanced) u.advanced = [{
+			emailNotes	: true,
+			hoverColors	: false,
+			eventStream	: true
+		}];
+		//	dev version
+		u.save(function(){
+			if(++count == uu.length){
+				console.log('finished update commands');
+				process.exit();
+			}
+		});
+		
+		/*
+		//	gra version
 		mailer.sendMail({
 			from	: 'support@phene.co',
 			to		: u.email,
@@ -48,5 +68,6 @@ User.find({},function(e,uu){
 				}
 			});
 		});
+		*/
 	});
 });

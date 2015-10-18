@@ -47,6 +47,11 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 										color	: '#444444',
 										default	: true,
 										users	: []
+									}],
+									advanced	: [{
+										emailNotes	: true,
+										hoverColors	: false,
+										eventStream	: true
 									}]
 								});
 								nu.save(function(e,u){
