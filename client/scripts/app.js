@@ -471,6 +471,7 @@ var Graphene		= new(function(url,api,name){
 			//	GENERAL ELEMENTS
 			var p = [
 				'settings',
+				'advset',
 				'password',
 				'streams',
 				'changes',
@@ -915,8 +916,7 @@ var Graphene		= new(function(url,api,name){
 						save		: '_g.s.save()'
 					});
 					_i('body').appendChild(sets);
-					sets._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.save()">Save</div></div>');
-					sets._c('post')[0].insertAdjacentHTML('afterend','<div id="login-link"><a href="'+_g.url+'/settings/advanced">Advanced Settings</a></div>');
+					sets._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.save()">Save</div></div><div id="advset-link"><a href="'+_g.url+'/settings/advanced">Advanced Settings</a></div>');
 					
 					var clr	= new _g.cl.picker(_i('settings-clr'), {
 						input	: _i('settings-accent'),
@@ -991,8 +991,7 @@ var Graphene		= new(function(url,api,name){
 						toggle		: !0,
 						value		: !0,
 						offValue	: "Off",
-						onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>",
-						info		: "After a certain amount of time, if your notifications go unread they will be emailed to you."
+						onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
 					},
 					{
 						name		: "Color Previews",
@@ -1000,8 +999,7 @@ var Graphene		= new(function(url,api,name){
 						toggle		: !0,
 						value		: !1,
 						offValue	: "Off <div style='color:#ccc;display:inline-block;'>(Default)</div>",
-						onValue		: "On",
-						info		: "The accent color of your page will change when you hover over a color code."
+						onValue		: "On"
 					},
 					{
 						name		: "Event Streams",
@@ -1009,8 +1007,7 @@ var Graphene		= new(function(url,api,name){
 						toggle		: !0,
 						value		: !0,
 						offValue	: "Off",
-						onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>",
-						info		: "Content on pages will be actively loaded as it is created."
+						onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
 					}
 				],
 				save		: 'alert("WIP")'

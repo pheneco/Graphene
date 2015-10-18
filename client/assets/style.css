@@ -195,6 +195,7 @@
 	.stream-users			{-moz-column-count:3;column-count:3;}
 	.stream-user			{padding:2px;}
 	.stream-user-r:hover	{cursor:pointer;color:#fff;background:#CD3E3E;}
+	#advset-link			{position:absolute;margin-top:5px;width:100%;text-align:center;}
 	
 #changelog td				{padding:3px;}
 	#changelog tr *:first-child{padding-right:10px;vertical-align:top;}
