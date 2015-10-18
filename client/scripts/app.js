@@ -1,7 +1,7 @@
 /*
- *	Graphene Web Client w0.4.1
+ *	Graphene Web Client w0.4.2
  *	Written by Trewbot
- *	Oct 13, 2015
+ *	Oct 17, 2015
  */
 
 //	General Functions
@@ -916,38 +916,13 @@ var Graphene		= new(function(url,api,name){
 					});
 					_i('body').appendChild(sets);
 					sets._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.save()">Save</div></div>');
+					sets._c('post')[0].insertAdjacentHTML('afterend','<div id="login-link"><a href="'+_g.url+'/settings/advanced">Advanced Settings</a></div>');
 					
 					var clr	= new _g.cl.picker(_i('settings-clr'), {
 						input	: _i('settings-accent'),
 						color	: sess.accent,
 						func	: _g.t.update
 					});
-					
-					var feat		= document.createElement('div');
-					feat.id			= "features";
-					feat.innerHTML	= _g.temps.post({
-						user	: _g.session,
-						time	: "Features",
-						url		: "",
-						all		: !0,
-						blankPost : !0
-					});
-					
-					feat._c('post-content')[0].innerHTML = _g.temps.sets({
-						settings	: [
-							{
-								name		: "Color Previews",
-								id			: "t1",
-								toggle		: !0,
-								value		: !1,
-								offValue	: "Off <div style='color:#ccc;display:inline-block;'>(Default)</div>",
-								onValue		: "On",
-								info		: "The accent color of your page will change when you hover over a color code."
-							}
-						],
-						save		: 'alert("WIP")'
-					});
-					//	_i('body').appendChild(feat);
 					
 					var pass		= document.createElement('div');
 					pass.id			= "password";
@@ -995,6 +970,52 @@ var Graphene		= new(function(url,api,name){
 					pass._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.savePass()">Save</div></div>');
 				}
 			});
+			next();
+		},
+		advanced: function(ctx,next){
+			var advset		= document.createElement('div');
+			advset.id			= "advset";
+			advset.innerHTML	= _g.temps.post({
+				user	: _g.session,
+				time	: "Advanced Settings",
+				url		: "",
+				all		: !0,
+				blankPost : !0
+			});
+			
+			advset._c('post-content')[0].innerHTML = _g.temps.sets({
+				settings	: [
+					{
+						name		: "Email Notifications",
+						id			: "t1",
+						toggle		: !0,
+						value		: !0,
+						offValue	: "Off",
+						onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>",
+						info		: "After a certain amount of time, if your notifications go unread they will be emailed to you."
+					},
+					{
+						name		: "Color Previews",
+						id			: "t1",
+						toggle		: !0,
+						value		: !1,
+						offValue	: "Off <div style='color:#ccc;display:inline-block;'>(Default)</div>",
+						onValue		: "On",
+						info		: "The accent color of your page will change when you hover over a color code."
+					},
+					{
+						name		: "Event Streams",
+						id			: "t1",
+						toggle		: !0,
+						value		: !0,
+						offValue	: "Off",
+						onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>",
+						info		: "Content on pages will be actively loaded as it is created."
+					}
+				],
+				save		: 'alert("WIP")'
+			});
+			_i('body').appendChild(advset);
 			next();
 		},
 		save	: function(){
@@ -1411,6 +1432,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 
 	//	Setting Pages
 	page('/settings', _g.s.load, pageview);
+	page('/settings/advanced', _g.s.advanced, pageview);
 	page('/feeds', function(ctx,next){next();}, pageview);
 
 	//	404
