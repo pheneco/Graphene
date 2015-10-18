@@ -35,7 +35,7 @@ User.find({},function(e,uu){
 	uu.forEach(function(u){
 		if(!u) return ++count;
 		
-		if(!u.advanced) u.advanced = [{
+		if(!u.advanced[0]) u.advanced = [{
 			emailNotes	: true,
 			hoverColors	: false,
 			eventStream	: true
