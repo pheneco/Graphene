@@ -974,47 +974,61 @@ var Graphene		= new(function(url,api,name){
 			next();
 		},
 		advanced: function(ctx,next){
-			var advset		= document.createElement('div');
-			advset.id			= "advset";
-			advset.innerHTML	= _g.temps.post({
-				user	: _g.session,
-				time	: "Advanced Settings",
-				url		: "",
-				all		: !0,
-				blankPost : !0
+			_g.b.toLoad = 3;
+			_g.b.loaded = 0;
+			_g.b.update();
+			document.title = _g.page = "Advanced Settings | " + _g.name;
+			new ajax(_g.api + "/session", "GET", "", {
+				change	: function(){
+					_g.b.loaded++;
+					_g.b.update();
+				},
+				load	: function(r){
+					var sess = _g.session = JSON.parse(r.responseText);
+					if(!sess.user) return !1;
+					var advset		= document.createElement('div');
+					advset.id			= "advset";
+					advset.innerHTML	= _g.temps.post({
+						user	: _g.session,
+						time	: "Advanced Settings",
+						url		: "",
+						all		: !0,
+						blankPost : !0
+					});
+					
+					advset._c('post-content')[0].innerHTML = _g.temps.sets({
+						settings	: [
+							{
+								name		: "Email Notifications",
+								id			: "t1",
+								toggle		: !0,
+								value		: !0,
+								offValue	: "Off",
+								onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
+							},
+							{
+								name		: "Color Previews",
+								id			: "t1",
+								toggle		: !0,
+								value		: !1,
+								offValue	: "Off <div style='color:#ccc;display:inline-block;'>(Default)</div>",
+								onValue		: "On"
+							},
+							{
+								name		: "Event Streams",
+								id			: "t1",
+								toggle		: !0,
+								value		: !0,
+								offValue	: "Off",
+								onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
+							}
+						],
+						save		: 'alert("WIP")'
+					});
+					_i('body').appendChild(advset);
+					advset._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.saveAdv()">Save</div></div>');
+				}
 			});
-			
-			advset._c('post-content')[0].innerHTML = _g.temps.sets({
-				settings	: [
-					{
-						name		: "Email Notifications",
-						id			: "t1",
-						toggle		: !0,
-						value		: !0,
-						offValue	: "Off",
-						onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
-					},
-					{
-						name		: "Color Previews",
-						id			: "t1",
-						toggle		: !0,
-						value		: !1,
-						offValue	: "Off <div style='color:#ccc;display:inline-block;'>(Default)</div>",
-						onValue		: "On"
-					},
-					{
-						name		: "Event Streams",
-						id			: "t1",
-						toggle		: !0,
-						value		: !0,
-						offValue	: "Off",
-						onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
-					}
-				],
-				save		: 'alert("WIP")'
-			});
-			_i('body').appendChild(advset);
-			advset._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.saveAdv()">Save</div></div>');
 			next();
 		},
 		save	: function(){
