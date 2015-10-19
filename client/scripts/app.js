@@ -429,6 +429,7 @@ var Graphene		= new(function(url,api,name){
 			
 		},
 		listen		: function(){ 
+			if(!_g.session.advanced[0].eventStream) return !1;
 			(_g.p.stream = new EventSource(_g.api + '/posts/listen/' + JSON.stringify(_g.p.posts) + "/" + _g.p.set + "/" + _g.p.setData, {withCredentials:true})).onmessage = function(e){
 				var type = JSON.parse(e.data).type;
 				if(type == 'comment') _g.c.handle(e);
