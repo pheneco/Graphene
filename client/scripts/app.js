@@ -929,6 +929,7 @@ var Graphene		= new(function(url,api,name){
 			info.rankname = _g.u.ranks[info.rank];
 			var cont = _g.temps.user({
 				url		: info.url,
+				card	: !0,
 				avat	: info.avatarFull,
 				toCrop	: info.toCrop,
 				name	: info.name,

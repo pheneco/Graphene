@@ -1,5 +1,7 @@
+{{#unless card}}
 <div id="user" style="position:relative">
 	<div id="user-content">
+{{/unless}}
 		<div class="user-info">
 			<a href="{{url}}"><img class="user-avatar" src="{{avat}}"/></a>
 			<div class="user-name">
@@ -34,5 +36,7 @@
 			{{#if shwcrp}}<div class="user-link" onclick="_g.u.crop('{{toCrop}}')" style="cursor:pointer;">Edit Avatar</div>{{/if}}
 			{{/if}}
 		</div>
+{{#unless card}}
 	</div>
 </div>
+{{/unless}}
