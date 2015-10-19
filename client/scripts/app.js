@@ -480,6 +480,12 @@ var Graphene		= new(function(url,api,name){
 				_g.u.loaded = !1;
 			}
 			
+			//	HOVERCARDS
+			if(_g.u.hovering){
+				_g.u.cards[_g.u.card].style.display = 'none';
+				_g.u.hovering = !1;
+			}
+			
 			//	STREAMS
 			if(typeof _g.p.stream === 'object') _g.p.stream.close();
 			
