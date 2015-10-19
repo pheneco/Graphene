@@ -392,6 +392,18 @@ var Graphene		= new(function(url,api,name){
 				Prism.highlightAll();
 				twttr.widgets.load();
 				greenText();
+				if(_g.session.advanced[0].hoverColors){
+					var a = document.getElementsByTagName('a');
+					for(var i in a)
+						if(a && /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(a[i].innerHTML)){
+							a[i].addEventListener('mouseover',function(){
+								_g.t.update(this.innerHTML);
+							});
+							a[i].addEventListener('mouseout',function(){
+								_g.t.update(_g.session.accent);
+							});
+						}
+				}
 			}}).onreadystatechange = function(){
 				_g.b.loaded++;
 				_g.b.update();
