@@ -926,6 +926,7 @@ var Graphene		= new(function(url,api,name){
 				_g.u.cards[_g.u.card] = card;
 				cards.insertBefore(card, cards.children[0]);
 			}
+			info.id = info._id;
 			info.rankname = _g.u.ranks[info.rank];
 			var cont = _g.temps.user({
 				url		: info.url,
