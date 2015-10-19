@@ -804,6 +804,7 @@ var Graphene		= new(function(url,api,name){
 					});
 					if(!_g.u.loaded) _i('body').insertAdjacentHTML('afterbegin',utmp);
 					else _i('user').outerHTML = utmp;
+					_g.t.update(info.accent);
 					_g.u.loaded = !0;
 				}
 			})
