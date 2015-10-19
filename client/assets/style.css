@@ -78,7 +78,7 @@
 	.notes-time a			{font-size:8pt;color:#aaa;}
 	.notes-read				{background:#f8f8f8;border-right:0;margin-right:0;}
 	
-.hovercard					{position:absolute;z-index:101;width:210px;background:#fff;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;display:none;transition:opacity 0.5s;-webkit-transition:opacity 0.5s;}
+.hovercard					{position:fixed;z-index:101;width:210px;background:#fff;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;display:none;transition:opacity 0.5s;-webkit-transition:opacity 0.5s;}
 	.hovercard-info			{position:relative;background:#fff;padding:10px;}
 	.hovercard-ribbon		{width:148px;}
 	.hovercard-avatar		{position:relative;width:130px;height:130px;display:block;}

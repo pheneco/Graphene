@@ -930,7 +930,7 @@ var Graphene		= new(function(url,api,name){
 			var a = _g.u.cardSrc.getBoundingClientRect(),
 				b = _i('body').getBoundingClientRect(),
 				c = card.getBoundingClientRect();
-			card.style.top = a.bottom + ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) + 'px';
+			card.style.top = a.bottom + 'px';
 			card.style.left = (a.left + (a.width/2)) - (c.width/2) - b.left + 'px';
 			card.style.opacity = 1;
 		}
