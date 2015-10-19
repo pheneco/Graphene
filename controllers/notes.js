@@ -61,15 +61,15 @@ module.exports = function(app, Graphene, Notification){
 								if(~notes[y].senders.indexOf(""+u[l]._id)) notes[y].users.push(Graphene.collect(u[l]._doc,{
 									user		: u[l].userName,
 									name		: u[l].nameHandle ? u[l].userName : u[l].firstName + " " + u[l].lastName,
-									avatar		: Graphene.img + "/" + u[l].avatar + "/36.jpg",
-									avatarFull	: Graphene.img + "/" + u[l].avatar + "/200.jpg",
+									avatar		: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-36.jpg",
+									avatarFull	: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-200.jpg",
 									url			: Graphene.url + "/user/" + u[l].userName
 								}));
 								if(""+u[l]._id == notes[y].post.user) notes[y].owner = Graphene.collect(u[l]._doc,{
 									user		: u[l].userName,
 									name		: u[l].nameHandle ? u[l].userName : u[l].firstName + " " + u[l].lastName,
-									avatar		: Graphene.img + "/" + u[l].avatar + "/36.jpg",
-									avatarFull	: Graphene.img + "/" + u[l].avatar + "/200.jpg",
+									avatar		: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-36.jpg",
+									avatarFull	: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-200.jpg",
 									url			: Graphene.url + "/user/" + u[l].userName
 								});
 							}
