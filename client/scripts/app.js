@@ -912,7 +912,7 @@ var Graphene		= new(function(url,api,name){
 		},
 		loadCard: function(e){
 			var cards, card, user = _g.u.info.name[_g.u.card];
-			if(user.id == null) return;
+			if(user._id == null) return _g.u.hovering = !1;
 			_g.u.cardSrc = e.target;
 			if(!(cards = _i('hovercards')))
 				_i('body').insertAdjacentHTML('beforebegin', '<div id="hovercards"></div>'),
