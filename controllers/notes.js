@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Notifications Routes
  *	Written by Trewbot
- *	Sep 18, 2015
+ *	Oct 18, 2015
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -87,7 +87,6 @@ module.exports = function(app, Graphene, Notification){
 	});
 	app.post('/notes/:ids/read', function(req,res){
 		//	Just get a JSON array of ids, mark them as read:true
-		console.log("Reading notes: "+req.params.ids);
 		Note.update({_id:{$in:req.params.ids.split(',')}},{$set:{read:true}},{multi:true},function(e){
 			if(e) return res.send(e);
 			res.send(true);

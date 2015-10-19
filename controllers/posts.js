@@ -42,7 +42,7 @@ module.exports = function(app, Graphene, Notification){
 					regex		= /#(\w+)/g,
 					tags		= [],
 					result;
-				while(result	= regex.exec(richText)) tags[tags.length] = result[1];
+				while(result	= regex.exec(richText)) tags[tags.length] = result[1].toLowerCase();
 				richText		= richText.replace(/(\s+)#(\w+)/g, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>');
 				var post		= new Post({
 						user		: req.session.user,
@@ -172,7 +172,7 @@ module.exports = function(app, Graphene, Notification){
 		} else if(req.query.set == 'tag'){
 			Post.find(
 				req.query.start && req.query.start != 'default'
-					? {_id:{$lt:req.query.start},tags:req.query.data}
+					? {_id:{$lt:req.query.start},tags:req.query.data.toLowerCase()}
 					: {tags:req.query.data}
 			).sort('-_id').limit(req.query.amount).exec(cont);
 		} else if(req.query.set == 'user'){
@@ -348,7 +348,7 @@ module.exports = function(app, Graphene, Notification){
 				for(var i = 0; i < users.length; i++) Posts.on(""+users[i],posCall);
 			});
 		} else if(req.params.set == 'tag'){
-			Tags.on(""+req.params.setData,posCall);
+			Tags.on(""+req.params.setData.toLowerCase(),posCall);
 		} else if(req.params.set == 'user'){
 			Posts.on(""+req.params.setData,posCall);
 		}
