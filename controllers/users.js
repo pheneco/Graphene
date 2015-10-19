@@ -237,6 +237,11 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 				res.send(JSON.stringify({
 					rank		: 0,
 					user		: 0,
+					advanced	: [{
+						emailNotes	: true,
+						hoverColors	: false,
+						eventStream	: true
+					}].
 					version		: c.version,
 					sVersion	: sc.version,
 					accent		: "#444444"
