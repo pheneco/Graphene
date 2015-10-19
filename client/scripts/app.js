@@ -885,7 +885,7 @@ var Graphene		= new(function(url,api,name){
 				||  e.clientY > a.bottom
 				||  e.clientX < a.left
 				||  e.clientX > a.right){
-					_g.u.card.style.display = 'none';
+					_g.u.cards[_g.u.card].style.display = 'none';
 					_g.u.hovering = !1;
 				}
 			} else {
