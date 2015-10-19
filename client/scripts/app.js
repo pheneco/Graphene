@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.4.2
  *	Written by Trewbot
- *	Oct 18, 2015
+ *	Oct 19, 2015
  */
 
 //	General Functions
@@ -885,7 +885,8 @@ var Graphene		= new(function(url,api,name){
 				||  e.clientY > a.bottom
 				||  e.clientX < a.left
 				||  e.clientX > a.right){
-					_g.u.cards[_g.u.card].style.display = 'none';
+					window.setTimeout(function(){_g.u.cards[_g.u.card].style.display = 'none';},500);
+					_g.u.cards[_g.u.card].style.opacity = 0;
 					_g.u.hovering = !1;
 				}
 			} else {
@@ -931,7 +932,7 @@ var Graphene		= new(function(url,api,name){
 				b = _i('body').getBoundingClientRect(),
 				c = card.getBoundingClientRect();
 			card.style.top = a.bottom + 'px';
-			card.style.left = (a.left + (a.width/2)) - (c.width/2) - b.left + 'px';
+			card.style.left = (a.left + (a.width/2)) - (c.width/2) + 'px';
 			card.style.opacity = 1;
 		}
 	});
