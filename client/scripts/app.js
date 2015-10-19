@@ -912,8 +912,8 @@ var Graphene		= new(function(url,api,name){
 			}
 		},
 		loadCard: function(e){
-			var cards, card, user = _g.u.info.name[_g.u.card];
-			if(user._id == null) return _g.u.hovering = !1;
+			var cards, card, info = _g.u.info.name[_g.u.card];
+			if(info._id == null) return _g.u.hovering = !1;
 			_g.u.cardSrc = e.target;
 			if(!(cards = _i('hovercards')))
 				_i('body').insertAdjacentHTML('beforebegin', '<div id="hovercards"></div>'),
@@ -926,6 +926,36 @@ var Graphene		= new(function(url,api,name){
 				_g.u.cards[_g.u.card] = card;
 				cards.insertBefore(card, cards.children[0]);
 			}
+			info.rankname = _g.u.ranks[info.rank];
+			var cont = _g.temps.user({
+				url		: info.url,
+				avat	: info.avatarFull,
+				toCrop	: info.toCrop,
+				name	: info.name,
+				id		: info.id,
+				rankname: info.rankname,
+				shwfbtn	: _g.session.user && info.id !== _g.session.user,
+				shwedit	: !1,
+				shwcrp	: !1,
+				fllwng	: info.following,
+				links	: [
+					{
+						tabled	: !0,
+						name	: "Posts:",
+						value	: info.postCount,
+						url		: info.url + "/posts",
+						active	: ctx.path == info.url.split(_g.url)[1] + "/posts"
+					},
+					{
+						tabled	: !0,
+						name	: "Upvotes:",
+						value	: info.upvoteCount,
+						url		: info.url + "/upvotes",
+						active	: ctx.path == info.url.split(_g.url)[1] + "/upvotes"
+					}
+				]
+			});
+			card.innerHTML = cont;
 			card.style.opacity = 0;
 			card.style.display = 'block';
 			var a = _g.u.cardSrc.getBoundingClientRect(),
