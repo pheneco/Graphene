@@ -878,7 +878,7 @@ var Graphene		= new(function(url,api,name){
 		hovercard: function(e){
 			if(_g.u.cardTime) window.clearTimeout(_g.u.cardTime);
 			if(_g.u.hovering){
-				var a = _g.u.card.getBoundingClientRect(),
+				var a = _g.u.cards[_g.u.card].getBoundingClientRect(),
 					b = _g.u.cardSrc.getBoundingClientRect();
 				if( e.clientY < b.top
 				|| (e.clientY < a.top && (e.clientX < b.left || e.clientX > b.right))
