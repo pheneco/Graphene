@@ -389,6 +389,8 @@ var Graphene		= new(function(url,api,name){
 				});
 				if((info.all || info.body) && _g.p.set == 'post')
 					document.title = _g.page = info.preview + " | " + _g.name;
+				if(info.all && _g.p.set == 'post')
+					_g.c.toggle(id);
 				Prism.highlightAll();
 				twttr.widgets.load();
 				greenText();
@@ -1366,6 +1368,7 @@ var Graphene		= new(function(url,api,name){
 	Handlebars.registerPartial('comment', _i('comment-template').innerHTML);
 
 //	Routes
+
 function pageview(ctx){
 	ga('set', {
 		page	: ctx.path,
