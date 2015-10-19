@@ -780,11 +780,16 @@ var Graphene		= new(function(url,api,name){
 			'Developer',
 			'God'
 		],
+		hovering: !1,
+		card	: '',
+		cardSrc	: {},
+		cards	: {},
+		cardTime: 0,
 		load	: function(user,ctx){
 			_g.u.name = user;
 			new ajax(_g.api + '/user/' + user, 'GET', '', {
 				load	: function(r){
-					var info = _g.u.info.name[user] = JSON.parse(r.response);
+					var info = _g.u.info.name[user.toLowerCase()] = JSON.parse(r.response);
 					_g.u.info.id[info._id] = _g.u.info.name[user];
 					document.title = _g.page = info.name + " | " + _g.name;
 					_g.u.current = info.id = info._id;
@@ -869,7 +874,65 @@ var Graphene		= new(function(url,api,name){
 					page(window.location.pathname);
 				}
 			});
-			
+		},
+		hovercard: function(e){
+			if(_g.u.cardTime) window.clearTimeout(_g.u.cardTime);
+			if(_g.u.hovering){
+				var a = _g.u.card.getBoundingClientRect(),
+					b = _g.u.cardSrc.getBoundingClientRect();
+				if( e.clientY < b.top
+				|| (e.clientY < a.top && (e.clientX < b.left || e.clientX > b.right))
+				||  e.clientY > a.bottom
+				||  e.clientX < a.left
+				||  e.clientX > a.right){
+					_g.u.card.style.display = 'none';
+					_g.u.hovering = !1;
+				}
+			} else {
+				var a,b;
+				if(a = e.target.parentAnchor()){
+					if(a.host !== _g.url.split('://')[1]) return;
+					var c = a.href.split(_g.url)[1].split("/");
+					if(c[1].toLowerCase() == 'user' && typeof c[2] == 'string')
+						_g.u.cardTime = window.setTimeout(function(){
+							_g.u.card = c[2].toLowerCase();
+							_g.u.hovering = !0;
+							if(_g.u.info.name[_g.u.card]) _g.u.loadCard(e);
+							else
+								new ajax(_g.api + '/user/' + c[2], 'GET', '', {
+									load	: function(r){
+										var info = _g.u.info.name[c[2].toLowerCase()] = JSON.parse(r.response);
+										_g.u.info.id[info._id] = _g.u.info.name[c[2].toLowerCase()];
+										_g.u.loadCard(e);
+									}
+								});
+						},750);
+				}
+			}
+		},
+		loadCard: function(e){
+			var cards, card, user = _g.u.info.name[_g.u.card];
+			if(user.id == null) return;
+			_g.u.cardSrc = e.target;
+			if(!(cards = _i('hovercards')))
+				_i('body').insertAdjacentHTML('beforebegin', '<div id="hovercards"></div>'),
+				cards = _i('hovercards');
+			if(!(card = _g.u.cards[_g.u.card])){
+				card = document.createElement('div');
+				card.id = 'hovercard-' + _g.u.card;
+				card.className = 'hovercard';
+				card.innerHTML = '';
+				_g.u.cards[_g.u.card] = card;
+				cards.insertBefore(card, cards.children[0]);
+			}
+			card.style.opacity = 0;
+			card.style.display = 'block';
+			var a = _g.u.cardSrc.getBoundingClientRect(),
+				b = _i('body').getBoundingClientRect(),
+				c = card.getBoundingClientRect();
+			card.style.top = a.bottom + ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) + 'px';
+			card.style.left = (a.left + (a.width/2)) - (c.width/2) - b.left + 'px';
+			card.style.opacity = 1;
 		}
 	});
 	_g.s	= (_g.settings	= {
