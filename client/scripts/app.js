@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.4.2
  *	Written by Trewbot
- *	Oct 17, 2015
+ *	Oct 18, 2015
  */
 
 //	General Functions
@@ -1014,6 +1014,7 @@ var Graphene		= new(function(url,api,name){
 				save		: 'alert("WIP")'
 			});
 			_i('body').appendChild(advset);
+			advset._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.saveAdv()">Save</div></div>');
 			next();
 		},
 		save	: function(){
@@ -1022,6 +1023,23 @@ var Graphene		= new(function(url,api,name){
 				lastName	: _i('settings-lname').value,
 				nameHandle	: _i('settings-nh').getAttribute('toggled'),
 				accent		: _i('settings-accent').value
+			}), {
+				type	: 'application/json',
+				load	: function(r){
+					if(r.responseText !== '') _g.pu.open({
+						title			: "Error!",
+						text			: r.responseText,
+						titleColor		: "#ff2727",
+						titleTextColor	: "#fff"
+					});
+				}
+			});
+		},
+		saveAdv	: function(){
+			new ajax(_g.api + '/settings/advanced', 'POST', JSON.stringify({
+				emailNotes	: _i('settings-t1').getAttribute('toggled'),
+				hoverColors	: _i('settings-t2').getAttribute('toggled'),
+				eventStream	: _i('settings-t3').getAttribute('toggled'),
 			}), {
 				type	: 'application/json',
 				load	: function(r){
@@ -1295,7 +1313,7 @@ var Graphene		= new(function(url,api,name){
 	});
 
 //	Templates
-	
+
 	_g.tp	= (_g.temps		= {
 		post	: _h('post'),
 		side	: _h('sidebar'),
