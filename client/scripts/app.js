@@ -1059,6 +1059,12 @@ var Graphene		= new(function(url,api,name){
 						titleColor		: "#ff2727",
 						titleTextColor	: "#fff"
 					});
+					else _g.pu.open({
+						title			: "Saved",
+						text			: "Your settings have been saved.",
+						titleColor		: _g.session.accent,
+						titleTextColor	: "#fff"
+					});
 				}
 			});
 		},
@@ -1074,6 +1080,12 @@ var Graphene		= new(function(url,api,name){
 						title			: "Error!",
 						text			: r.responseText,
 						titleColor		: "#ff2727",
+						titleTextColor	: "#fff"
+					});
+					else _g.pu.open({
+						title			: "Saved",
+						text			: "Your settings have been saved.",
+						titleColor		: _g.session.accent,
 						titleTextColor	: "#fff"
 					});
 				}
