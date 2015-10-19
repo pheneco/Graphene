@@ -944,14 +944,14 @@ var Graphene		= new(function(url,api,name){
 						name	: "Posts:",
 						value	: info.postCount,
 						url		: info.url + "/posts",
-						active	: ctx.path == info.url.split(_g.url)[1] + "/posts"
+						active	: !1
 					},
 					{
 						tabled	: !0,
 						name	: "Upvotes:",
 						value	: info.upvoteCount,
 						url		: info.url + "/upvotes",
-						active	: ctx.path == info.url.split(_g.url)[1] + "/upvotes"
+						active	: !1
 					}
 				]
 			});
