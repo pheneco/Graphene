@@ -1586,3 +1586,4 @@ window.addEventListener('scroll', function(){
 	if((_g.p.loaded && _g.p.needLoad && !_g.p.loading && _g.p.loadMore) && (((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) > (document.body.scrollHeight - 600 - window.innerHeight)))
 		_g.p.list(20);
 });
+window.addEventListener('mousemove',_g.u.hovercard)
