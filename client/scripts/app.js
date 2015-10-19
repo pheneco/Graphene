@@ -832,6 +832,12 @@ var Graphene		= new(function(url,api,name){
 		follow	: function(user){
 			new ajax(_g.api + '/user/' + user + '/follow', 'POST', '', {
 				load	: function(r){
+					new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+						load	: function(r){
+							var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
+							_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
+						}
+					});
 					if(_g.u.loaded && _g.u.current == user) page(window.location.pathname);
 				}
 			});
@@ -839,6 +845,12 @@ var Graphene		= new(function(url,api,name){
 		unfollow: function(user){
 			new ajax(_g.api + '/user/' + user + '/unfollow', 'POST', '', {
 				load	: function(r){
+					new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+						load	: function(r){
+							var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
+							_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
+						}
+					});
 					if(_g.u.loaded && _g.u.current == user) page(window.location.pathname);
 				}
 			});
