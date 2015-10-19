@@ -1008,7 +1008,7 @@ var Graphene		= new(function(url,api,name){
 							},
 							{
 								name		: "Color Previews",
-								id			: "t1",
+								id			: "t2",
 								toggle		: !0,
 								value		: !1,
 								offValue	: "Off <div style='color:#ccc;display:inline-block;'>(Default)</div>",
@@ -1016,7 +1016,7 @@ var Graphene		= new(function(url,api,name){
 							},
 							{
 								name		: "Event Streams",
-								id			: "t1",
+								id			: "t3",
 								toggle		: !0,
 								value		: !0,
 								offValue	: "Off",
