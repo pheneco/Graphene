@@ -1062,7 +1062,7 @@ var Graphene		= new(function(url,api,name){
 					else _g.pu.open({
 						title			: "Saved",
 						text			: "Your settings have been saved.",
-						titleColor		: _g.session.accent,
+						titleColor		: "#62ff62",
 						titleTextColor	: "#fff"
 					});
 				}
@@ -1085,7 +1085,7 @@ var Graphene		= new(function(url,api,name){
 					else _g.pu.open({
 						title			: "Saved",
 						text			: "Your settings have been saved.",
-						titleColor		: _g.session.accent,
+						titleColor		: "#62ff62",
 						titleTextColor	: "#fff"
 					});
 				}
