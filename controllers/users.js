@@ -241,7 +241,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 						emailNotes	: true,
 						hoverColors	: false,
 						eventStream	: true
-					}].
+					}],
 					version		: c.version,
 					sVersion	: sc.version,
 					accent		: "#444444"
