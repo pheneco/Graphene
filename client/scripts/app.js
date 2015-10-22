@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.4.2
  *	Written by Trewbot
- *	Oct 19, 2015
+ *	Oct 22, 2015
  */
 
 //	General Functions
@@ -1186,21 +1186,54 @@ var Graphene		= new(function(url,api,name){
 					_g.b.update();
 				},
 				load	: function(r){
+					var sess = _g.session = JSON.parse(r.responseText);
+					if(!sess.user) return !1;
 					var feeds	= _i('feeds'),
 						edit	= _i('post-feeds');
 					edit.innerHTML = _g.temps.post({
-						user	: _g.session,
+						user	: sess,
 						time	: "Feeds",
 						url		: "",
 						all		: !0,
 						blankPost : !0
 					});
+					edit._c('post-content')[0].style.height = 0;
+					edit._c('post-content')[0].style.paddingBottom = 0;
+					for(var i = 0; i < sess.feeds.length; i++)
+						_g.s.loadFeed(sess.feeds[i])
+					if(load) edit.oncontextmenu = function(e){
+						e.preventDefault();
+						_g.m.open(e,{
+							"Create New Feed":"_g.s.newFeed(prompt('New name:'))"
+						})
+					};
 				}
 			});
 			next();
 		},
-		loadFeed: function(){
-			
+		loadFeed: function(info){
+			var load = !1;
+			if(!_i('feed-'+info._id)){
+					load	= !0;
+				var feed	= document.createElement('div');
+				feed.id		= 'feed-'+info._id;
+				feed.innerHTML = _g.temps.post({
+					user	: {
+						name	: info.name,
+						url		: "",
+						avatar	: "",
+					},
+					time	: "Feed",
+					url		: info.url,
+					all		: !0,
+					blankPost : !0
+				});
+				feed.innerHTML += "<textarea class='feed-drop' style='position:absolute;top:0px;left:0px;border:0px none;width:100%;height:100%;z-index:5;opacity:0;display:none;'></textarea>";
+				_i('feeds').appendChild(feed);
+			} else {
+				var feed = _i('feed-'+info._id);
+				feed._c('feed-drop')[0].style.display = 'none';
+			}
 		},
 		save	: function(){
 			new ajax(_g.api + '/settings', 'POST', JSON.stringify({
