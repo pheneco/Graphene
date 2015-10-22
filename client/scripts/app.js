@@ -1199,6 +1199,7 @@ var Graphene		= new(function(url,api,name){
 					});
 					edit._c('post-content')[0].style.height = 0;
 					edit._c('post-content')[0].style.paddingBottom = 0;
+					edit._c('post-content')[0].innerHTML = '';
 					for(var i = 0; i < sess.feeds.length; i++)
 						_g.s.loadFeed(sess.feeds[i])
 					if(load) edit.oncontextmenu = function(e){
@@ -1217,6 +1218,7 @@ var Graphene		= new(function(url,api,name){
 					load	= !0;
 				var feed	= document.createElement('div');
 				feed.id		= 'feed-'+info._id;
+				feed.style.position = 'relative';
 				feed.innerHTML = _g.temps.post({
 					user	: {
 						name	: info.name,
