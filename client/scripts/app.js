@@ -1160,6 +1160,48 @@ var Graphene		= new(function(url,api,name){
 			});
 			next();
 		},
+		feeds	: function(ctx,next){
+			var load = !1;
+			_g.b.toLoad = 3;
+			_g.b.loaded = 0;
+			_g.b.update();
+			document.title = _g.page = "Feeds | " + _g.name;
+			if(!_i('feeds')){
+				load = !0;
+				_i('body').insertAdjacentHTML('beforeend', "<div id='feeds'><div id='post-feeds'>" + _g.temps.post({
+					user	: {
+						name	: "Loading...",
+						url		: "",
+						avatar	: "",
+					},
+					time	: "Loading...",
+					url		: "",
+					all		: !0,
+					blankPost : !0
+				}) + "</div></div>");
+			}
+			new ajax(_g.api + "/session", "GET", "", {
+				change	: function(){
+					_g.b.loaded++;
+					_g.b.update();
+				},
+				load	: function(r){
+					var feeds	= _i('feeds'),
+						edit	= _i('post-feeds');
+					edit.innerHTML = _g.temps.post({
+						user	: _g.session,
+						time	: "Feeds",
+						url		: "",
+						all		: !0,
+						blankPost : !0
+					});
+				}
+			});
+			next();
+		},
+		loadFeed: function(){
+			
+		},
 		save	: function(){
 			new ajax(_g.api + '/settings', 'POST', JSON.stringify({
 				firstName	: _i('settings-fname').value,
@@ -1232,7 +1274,7 @@ var Graphene		= new(function(url,api,name){
 					}
 				}
 			});
-		}
+		},
 	});
 	_g.rg	= (_g.register	= {
 		load	: function(ctx,next){
@@ -1605,7 +1647,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 	//	Setting Pages
 	page('/settings', _g.s.load, pageview);
 	page('/settings/advanced', _g.s.advanced, pageview);
-	page('/feeds', function(ctx,next){next();}, pageview);
+	page('/feeds', _g.s.feeds, pageview);
 
 	//	404
 	page('*', function(ctx, next){
