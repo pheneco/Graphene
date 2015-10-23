@@ -1,6 +1,13 @@
-*[Graphene has updated to w0.4.1-s0.3.0](http://gra.phene.co)*
+*[Graphene has updated to w0.4.2-s0.3.1](http://gra.phene.co)*
 
-Avatars are back! Head over to your user page and check out the "Upload Avatar" button to upload one. Click "Edit Avatar" to crop it to your heart's content.
-Several major fixes are also included. Timestamps no longer flash long strings of numbers, posts load when posted and loading posts no longer blocks commenting and posting.
-For anyone interested in the more technical details, the Node.js module Sharp was installed to handle image manipulation and several server-side scripts were written to smooth out the update process.
+
+The update process is slowly becoming smoother, this time there _should_ be no manual edits needed.
+New features include an advanced settings page (the link to which is on the settings page), hovercards (when hovering over user page links), and a feed editor (click *"Feeds"* in the sidebar).
+As for fixes: the login page shows a red box when the login fails and there is a popup to verify that settings have saved.
+The next update should be out in the next week, including fixes for notifications, search, user tagging, and email notifications.
+
+
+Report bugs and review the source code on [GitHub](https://github.com/Trewbot/Graphene).
+
+
 See the [changelog](http://gra.phene.co/changes) for more details.

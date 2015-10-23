@@ -1,7 +1,7 @@
 /*
  *	Graphene Update Commands
  *	Written by Trewbot
- *	Oct 17, 2015
+ *	Oct 22, 2015
  */
 
 console.log('running update commands');
@@ -41,14 +41,13 @@ User.find({},function(e,uu){
 			eventStream	: true
 		}];
 		//	dev version
-		u.save(function(){
-			if(++count == uu.length){
-				console.log('finished update commands');
-				process.exit();
-			}
-		});
+		// u.save(function(){
+			// if(++count == uu.length){
+				// console.log('finished update commands');
+				// process.exit();
+			// }
+		// });
 		
-		/*
 		//	gra version
 		mailer.sendMail({
 			from	: 'support@phene.co',
@@ -68,6 +67,5 @@ User.find({},function(e,uu){
 				}
 			});
 		});
-		*/
 	});
 });
