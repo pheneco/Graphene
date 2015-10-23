@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Changelog Routes
  *	Written by Trewbot
- *	Oct 13, 2015
+ *	Oct 22, 2015
  */
 
 module.exports	= function(app,Graphene){
@@ -56,6 +56,7 @@ module.exports	= function(app,Graphene){
 			c.save(function(e){
 				if(e) return res.send("Error saving change.");
 				if(req.params.app == 'webClient') Changelog.emit('change', req.body.date, req.body.version);
+				if(req.params.app == 'server') console.log("Restart server to update.");
 				res.send("");
 			});
 		});

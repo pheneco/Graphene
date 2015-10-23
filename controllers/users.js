@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trewbot
- *	Oct 13, 2015
+ *	Oct 22, 2015
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -233,7 +233,6 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			},req,res);
 		else
 			Change.findOne({},{},{sort:{_id:-1}},function(e,c){if(e) return res.send(e);
-			ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return res.send(e);
 				res.send(JSON.stringify({
 					rank		: 0,
 					user		: 0,
@@ -243,10 +242,9 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 						eventStream	: true
 					}],
 					version		: c.version,
-					sVersion	: sc.version,
+					sVersion	: Graphene.v,
 					accent		: "#444444"
 				}));
-			});
 			});
 	});
 	app.get('/user/:user', function(req,res){

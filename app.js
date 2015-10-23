@@ -55,7 +55,6 @@ var root		= __dirname,
 		};
 		this.getUserInfo	= function(user,name,callback,req,res){
 			Change.findOne({},{},{sort:{_id:-1}},function(e,c){if(e) return res.send(e);
-			ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return res.send(e);
 			User.findOne(name?{username:user.toLowerCase()}:{_id:user}, function(e,u){if(e) return res.send(e);if(u==null) return res.send(e);
 			Post.find({user:u._id}, function(e,p) { if(e) return res.send(e);
 			Post.find({"ratings":{$elemMatch:{field:"user",value:u._id}}}, function(e, uv){ if(e) return res.send(e);
@@ -91,7 +90,7 @@ var root		= __dirname,
 					toCrop		: Graphene.img + "/" + u.avatar + "/500.jpg",
 					url			: Graphene.url + "/user/" + u.userName,
 					version		: c.version,
-					sVersion	: sc.version,
+					sVersion	: Graphene.v,
 					postCount	: p.length,
 					upvoteCount	: uv.length,
 					follows		: uf,
@@ -100,7 +99,6 @@ var root		= __dirname,
 					? {following : !!~yf.indexOf(""+u._id)}
 					: {following : !1}
 				))));
-			});
 			});
 			});
 			});
@@ -146,6 +144,7 @@ var root		= __dirname,
 Notification.setMaxListeners(0)
 mongoose.connect('mongodb://localhost/' + Graphene.sub + 'phene');
 
+
 //	Enable CORS
 app.use(function(req,res,next) {
 	res.header("Access-Control-Allow-Origin", "http://" + Graphene.sub + ".phene.co");
@@ -155,9 +154,11 @@ app.use(function(req,res,next) {
 	next();
 });
 
+
 //	Body Parser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
 
 //	Sessions
 app.use(session({
@@ -170,6 +171,7 @@ app.use(session({
 	}
 }));
 
+
 //	Routes
 app.get('/', function(req,res){res.send("Graphene Server API is running.");});
 require('./controllers/changelog')(app, Graphene);
@@ -177,19 +179,26 @@ require('./controllers/users')(app, Graphene, EmailTemp, mailer);
 require('./controllers/posts')(app, Graphene, Notification);
 require('./controllers/notes')(app, Graphene, Notification);
 
-//	Listen
-app.listen(config.port, function(){
-	mailer.sendMail({
-		from	: 'support@phene.co',
-		to		: 'trewbot@phene.co',
-		subject	: 'Graphene Server API Running',
-		text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-		html	: EmailTemp({
-			content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-			prefix	: Graphene.sub
-		})
-	},function(e,i){
-		if(e) console.log(e);
+
+//	Get Server Version
+
+ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.log(e);
+	Graphene.v = sc.version;
+	
+	//	Listen
+	app.listen(config.port, function(){
+		mailer.sendMail({
+			from	: 'support@phene.co',
+			to		: 'trewbot@phene.co',
+			subject	: 'Graphene Server API Running',
+			text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+			html	: EmailTemp({
+				content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+				prefix	: Graphene.sub
+			})
+		},function(e,i){
+			if(e) console.log(e);
+		});
+		console.log("Server running.");
 	});
-	console.log("Server running.");
 });
