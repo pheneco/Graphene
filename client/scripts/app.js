@@ -870,19 +870,25 @@ var Graphene		= new(function(url,api,name){
 				}
 			});
 		},
-		unfollow: function(user){
-			new ajax(_g.api + '/user/' + user + '/unfollow', 'POST', '', {
-				load	: function(r){
-					if(_g.s.feedsPg) _g.s.feeds();
-					if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
-						load	: function(r){
-							var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
-							_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
-						}
-					});
-					if(_g.u.loaded && _g.u.current == user) page(window.location.pathname);
-				}
-			});
+		unfollow: function(user,feed){
+			var load	= function(r){
+				if(_g.s.feedsPg) _g.s.feeds();
+				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+					load	: function(r){
+						var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
+						_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
+					}
+				});
+				if(_g.u.loaded && _g.u.current == user) page(window.location.pathname);
+			}
+			if(typeof feed == 'undefined')
+				new ajax(_g.api + '/user/' + user + '/unfollow', 'POST', '', {
+					load	: load
+				});
+			else
+				new ajax(_g.api + '/feed/' + feed + '/remove/' + user, 'POST', '', {
+					load	: load
+				});
 		},
 		avatar	: function(){
 			if(!_g.u.loaded || !_g.session.user || _g.u.current != _g.session.user) return false;
