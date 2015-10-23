@@ -848,7 +848,6 @@ var Graphene		= new(function(url,api,name){
 			else
 				new ajax(_g.api + '/feed/' + feed + '/add/' + user, 'POST', '', {
 					load	: load
-					}
 				});
 		},
 		unfollow: function(user){
