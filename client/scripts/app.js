@@ -853,7 +853,7 @@ var Graphene		= new(function(url,api,name){
 					load	: load
 				});
 		},
-		followLink:function(link,feed){
+		followLink: function(link,feed){
 			var p = link.split(_g.url)[1].split('#')[0].split("/");
 			if(!(typeof p[1] === 'string' && p[1].toLowerCase() == 'user' && typeof p[2] === 'string')) return !1;
 			new ajax(_g.api + '/user/' + p[2], 'GET', '', {
@@ -1349,6 +1349,30 @@ var Graphene		= new(function(url,api,name){
 				}
 			});
 		},
+		newFeed	: function(name){
+			new ajax(_g.api + '/feed/new/' + name, 'POST', '', {
+				load	: function(r){
+					if(_g.s.feedsPg) _g.s.feeds();
+				}
+			});
+		},
+		renameFeed: function(feed,name){
+			new ajax(_g.api + '/feed/' + feed + '/rename/' + name, 'POST', '', {
+				load	: function(r){
+					if(_g.s.feedsPg) _g.s.feeds();
+				}
+			});
+		},
+		deleteFeed:	function(feed){
+			new ajax(_g.api + '/feed/' + feed, 'DELETE', '', {
+				load	: function(r){
+					if(_g.s.feedsPg){
+						_i('feed-'+feed).remove();
+						_g.s.feeds();
+					}
+				}
+			});
+		}
 	});
 	_g.rg	= (_g.register	= {
 		load	: function(ctx,next){
