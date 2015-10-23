@@ -501,6 +501,8 @@ var Graphene		= new(function(url,api,name){
 			]
 			for(var i in p) if(se = _i(p[i])) se.remove();
 			
+			_g.s.feedsPg = !1;
+			
 			//	MOVING ON
 			next();
 		}
@@ -833,8 +835,9 @@ var Graphene		= new(function(url,api,name){
 		},
 		follow	: function(user,feed){
 			var load = function(r){
-				new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
 					load	: function(r){
+						if(_g.s.feedsPg) _g.s.feeds();
 						var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
 						_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
 					}
@@ -864,7 +867,8 @@ var Graphene		= new(function(url,api,name){
 		unfollow: function(user){
 			new ajax(_g.api + '/user/' + user + '/unfollow', 'POST', '', {
 				load	: function(r){
-					new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+					if(_g.s.feedsPg) _g.s.feeds();
+					if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
 						load	: function(r){
 							var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
 							_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
@@ -1000,6 +1004,7 @@ var Graphene		= new(function(url,api,name){
 		}
 	});
 	_g.s	= (_g.settings	= {
+		feedsPg	: !1,
 		load	: function(ctx,next){
 			_g.b.toLoad = 3;
 			_g.b.loaded = 0;
@@ -1178,6 +1183,7 @@ var Graphene		= new(function(url,api,name){
 			_g.b.toLoad = 3;
 			_g.b.loaded = 0;
 			_g.b.update();
+			_g.s.feedsPg = !0;
 			document.title = _g.page = "Feeds | " + _g.name;
 			if(!_i('feeds')){
 				load = !0;
@@ -1268,7 +1274,7 @@ var Graphene		= new(function(url,api,name){
 			feed._c('post-content')[0].innerHTML = "";
 			for(var i = 0; i < info.users.length; i++)
 				feed._c('post-content')[0].innerHTML += '<div class="feed-user feed-user-r" title="Unfollow ' + info.users[i].name + '" onclick="_g.u.unfollow(\'' + info.users[i]._id + '\',\'' + info._id + '\')">' + info.users[i].name + '</div>';
-			if(info.users.length == 0) se._c('post-content')[0].innerHTML = '<i>This stream is empty.</i>';
+			if(info.users.length == 0) feed._c('post-content')[0].innerHTML = '<i>This stream is empty.</i>';
 		},
 		save	: function(){
 			new ajax(_g.api + '/settings', 'POST', JSON.stringify({
