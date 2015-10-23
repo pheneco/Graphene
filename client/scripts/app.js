@@ -1250,7 +1250,7 @@ var Graphene		= new(function(url,api,name){
 			}
 			feed._c('post-content')[0].innerHTML = "";
 			for(var i = 0; i < info.users.length; i++)
-				feed._c('post-content')[0].innerHTML += '<div class="feed-user feed-user-r" onclick="_g.u.unfollow(\'' + info.users[i]._id + '\',\'' + info._id + '\')">' + info.users[i].name + '</div>';
+				feed._c('post-content')[0].innerHTML += '<div class="feed-user feed-user-r" title="Unfollow ' + info.users[i].name + '" onclick="_g.u.unfollow(\'' + info.users[i]._id + '\',\'' + info._id + '\')">' + info.users[i].name + '</div>';
 			if(info.users.length == 0) se._c('post-content')[0].innerHTML = '<i>This stream is empty.</i>';
 		},
 		save	: function(){
