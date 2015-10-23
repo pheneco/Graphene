@@ -1219,6 +1219,9 @@ var Graphene		= new(function(url,api,name){
 					edit._c('post-content')[0].style.height = 0;
 					edit._c('post-content')[0].style.paddingBottom = 0;
 					edit._c('post-content')[0].innerHTML = '';
+					for(var i = 0; i < sess.follows.length; i++)
+						edit._c('edit-content')[0].innerHTML += '<a href="' + sess.follows[i].url + '"><div class="feed-user">' + sess.follows[i].name + '</div></a>';
+					if(sess.follows.length == 0) edit._c('post-content')[0].innerHTML = '<i>You are so lonely.</i>';
 					for(var i = 0; i < sess.feeds.length; i++)
 						_g.s.loadFeed(sess.feeds[i])
 					if(load) edit.oncontextmenu = function(e){
