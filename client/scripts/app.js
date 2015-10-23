@@ -835,6 +835,12 @@ var Graphene		= new(function(url,api,name){
 		},
 		follow	: function(user,feed){
 			var load = function(r){
+				if(r.responseText !== '') _g.pu.open({
+						title : "Error!",
+						text : r.responseText,
+						titleColor : "#ff2727",
+						titleTextColor : "#fff"
+					});
 				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
 					load	: function(r){
 						if(_g.s.feedsPg) _g.s.feeds();
