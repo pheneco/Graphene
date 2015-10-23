@@ -2,6 +2,7 @@
  *	Graphene Web Client w0.4.2
  *	Written by Trewbot
  *	Oct 22, 2015
+ *  Notice me senpai!
  */
 
 //	General Functions
