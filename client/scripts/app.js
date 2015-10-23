@@ -859,7 +859,7 @@ var Graphene		= new(function(url,api,name){
 					_g.u.info.id[info._id] = _g.u.info.name[user];
 					_g.u.follow(info._id,feed);
 				}
-			};
+			});
 		},
 		unfollow: function(user){
 			new ajax(_g.api + '/user/' + user + '/unfollow', 'POST', '', {
