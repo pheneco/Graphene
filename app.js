@@ -81,6 +81,19 @@ var root		= __dirname,
 								break;
 							}
 					}
+				var follows = [];
+				for(var k = 0; k < fu.length; k++)
+					follows[k] = {
+						_id			: id,
+						userName	: fu[k].userName,
+						firstName	: fu[k].firstName,
+						lastName	: fu[k].lastName,
+						name		: fu[k].nameHandle ? fu[k].userName : fu[k].firstName + " " + fu[k].lastName,
+						avatar		: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-36.jpg",
+						avatarFull	: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-200.jpg",
+						toCrop		: Graphene.img + "/" + fu[k].avatar + "/500.jpg",
+						url			: Graphene.url + "/user/" + fu[k].userName,
+					}
 				u.password = "";
 				callback(JSON.stringify(Graphene.collect(u._doc,{
 					user		: user,
@@ -93,7 +106,7 @@ var root		= __dirname,
 					sVersion	: Graphene.v,
 					postCount	: p.length,
 					upvoteCount	: uv.length,
-					follows		: uf,
+					follows		: follows,
 					joined		: u._id.getTimestamp().getTime()
 				},(req.session.user
 					? {following : !!~yf.indexOf(""+u._id)}
