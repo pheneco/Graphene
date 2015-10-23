@@ -1352,6 +1352,12 @@ var Graphene		= new(function(url,api,name){
 		newFeed	: function(name){
 			new ajax(_g.api + '/feed/new/' + name, 'POST', '', {
 				load	: function(r){
+					if(r.responseText !== '') _g.pu.open({
+						title            : "Error!",
+						text            : r.responseText,
+						titleColor        : "#ff2727",
+						titleTextColor    : "#fff"
+					});
 					if(_g.s.feedsPg) _g.s.feeds();
 				}
 			});
@@ -1359,6 +1365,12 @@ var Graphene		= new(function(url,api,name){
 		renameFeed: function(feed,name){
 			new ajax(_g.api + '/feed/' + feed + '/rename/' + name, 'POST', '', {
 				load	: function(r){
+					if(r.responseText !== '') _g.pu.open({
+						title            : "Error!",
+						text            : r.responseText,
+						titleColor        : "#ff2727",
+						titleTextColor    : "#fff"
+					});
 					if(_g.s.feedsPg) _g.s.feeds();
 				}
 			});
@@ -1366,6 +1378,12 @@ var Graphene		= new(function(url,api,name){
 		deleteFeed:	function(feed){
 			new ajax(_g.api + '/feed/' + feed, 'DELETE', '', {
 				load	: function(r){
+					if(r.responseText !== '') _g.pu.open({
+						title            : "Error!",
+						text            : r.responseText,
+						titleColor        : "#ff2727",
+						titleTextColor    : "#fff"
+					});
 					if(_g.s.feedsPg){
 						_i('feed-'+feed).remove();
 						_g.s.feeds();
