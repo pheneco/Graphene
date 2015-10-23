@@ -855,7 +855,7 @@ var Graphene		= new(function(url,api,name){
 			if(!(typeof p[1] === 'string' && p[1].toLowerCase() == 'user' && typeof p[2] === 'string')) return !1;
 			new ajax(_g.api + '/user/' + p[2], 'GET', '', {
 				load : function(r){
-					var info = _g.u.info.name[user.toLowerCase()] = JSON.parse(r.response);
+					var info = _g.u.info.name[p[2].toLowerCase()] = JSON.parse(r.response);
 					_g.u.info.id[info._id] = _g.u.info.name[user];
 					_g.u.follow(info._id,feed);
 				}
