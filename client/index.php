@@ -54,7 +54,7 @@
 		ga('send', 'pageview');
 	</script>
 	
-	<title>Devphene</title>
+	<title><?=$dev?'Devphene':'Graphene'?></title>
 </head>
 <body style="overflow:hidden;">
 	<div id="loading">
