@@ -441,7 +441,7 @@ module.exports = function(app, Graphene, Notification){
 			
 			var feed = u.feeds.id(req.params.id);
 			if(feed == void 0) return res.send("Feed does not exist.");
-			if(!~feed.indexOf(req.params.user)) feed.users.push(req.params.user);
+			if(!~feed.users.indexOf(req.params.user)) feed.users.push(req.params.user);
 			u.save(function(e,u){
 				if(e) return res.send(e);
 				else res.send("");
