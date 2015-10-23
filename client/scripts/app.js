@@ -1208,7 +1208,7 @@ var Graphene		= new(function(url,api,name){
 					var sess = _g.session = JSON.parse(r.responseText);
 					if(!sess.user) return !1;
 					var feeds	= _i('feeds'),
-						edit	= _i('post-feeds');
+						edit	= _i('post-feed');
 					edit.innerHTML = _g.temps.post({
 						user	: sess,
 						time	: "Feeds",
@@ -1216,11 +1216,9 @@ var Graphene		= new(function(url,api,name){
 						all		: !0,
 						blankPost : !0
 					});
-					edit._c('post-content')[0].style.height = 0;
-					edit._c('post-content')[0].style.paddingBottom = 0;
 					edit._c('post-content')[0].innerHTML = '';
 					for(var i = 0; i < sess.follows.length; i++)
-						edit._c('edit-content')[0].innerHTML += '<a href="' + sess.follows[i].url + '"><div class="feed-user">' + sess.follows[i].name + '</div></a>';
+						edit._c('post-content')[0].innerHTML += '<a href="' + sess.follows[i].url + '"><div class="feed-user">' + sess.follows[i].name + '</div></a>';
 					if(sess.follows.length == 0) edit._c('post-content')[0].innerHTML = '<i>You are so lonely.</i>';
 					for(var i = 0; i < sess.feeds.length; i++)
 						_g.s.loadFeed(sess.feeds[i])
@@ -1238,7 +1236,8 @@ var Graphene		= new(function(url,api,name){
 			if(!_i('feed-'+info._id)){
 				var feed	= document.createElement('div');
 				feed.id		= 'feed-'+info._id;
-				feed.feed	= info._id
+				feed.className = 'post-feed';
+				feed.feed	= info._id;
 				feed.style.position = 'relative';
 				feed.innerHTML = _g.temps.post({
 					user	: {

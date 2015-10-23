@@ -188,7 +188,7 @@
 	.settings-toggle		{outline:0 !important;border:none;padding:3px 6px;margin-right:8px;background:#444444;width:152px;margin-bottom:10px;color:#FFF;cursor:pointer;}
 	#register-table tr td:first-child{width:164px;vertical-align:top;}
 	#register-table td *:last-child{margin-right:0px;}
-	.feed-users				{-moz-column-count:3;column-count:3;}
+	.post-feed .post .post-content {-moz-column-count:3;column-count:3;}
 	.feed-user				{padding:2px;}
 	.feed-user-r:hover		{cursor:pointer;color:#fff;background:#CD3E3E;}
 	#advset-link			{position:absolute;margin-top:5px;width:100%;text-align:center;}
