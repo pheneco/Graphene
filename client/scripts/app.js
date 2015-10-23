@@ -1263,7 +1263,7 @@ var Graphene		= new(function(url,api,name){
 				feed.ondragout  = function() {
 					this._c('feed-drop')[0].style.display = 'none';}
 				feed._c('feed-drop')[0].oninput = function() {
-					_g.u.followLink(this.value,parseInt(this.parentElement.parentElement.feed));
+					_g.u.followLink(this.value,this.parentElement.feed);
 					this.value = '';
 				}
 				feed.oncontextmenu = function(e){
