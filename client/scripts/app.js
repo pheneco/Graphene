@@ -856,7 +856,7 @@ var Graphene		= new(function(url,api,name){
 			new ajax(_g.api + '/user/' + p[2], 'GET', '', {
 				load : function(r){
 					var info = _g.u.info.name[p[2].toLowerCase()] = JSON.parse(r.response);
-					_g.u.info.id[info._id] = _g.u.info.name[user];
+					_g.u.info.id[info._id] = _g.u.info.name[p[2].toLowerCase()];
 					_g.u.follow(info._id,feed);
 				}
 			});
