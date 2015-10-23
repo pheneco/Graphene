@@ -850,6 +850,17 @@ var Graphene		= new(function(url,api,name){
 					load	: load
 				});
 		},
+		followLink:function(link,feed){
+			var p = link.split(_g.url)[1].split('#')[0].split("/");
+			if(!(typeof p[1] === 'string' && p[1].toLowerCase() == 'user' && typeof p[2] === 'string')) return !1;
+			new ajax(_g.api + '/user/' + p[2], 'GET', '', {
+				load : function(r){
+					var info = _g.u.info.name[user.toLowerCase()] = JSON.parse(r.response);
+					_g.u.info.id[info._id] = _g.u.info.name[user];
+					_g.u.follow(info._id,feed);
+				}
+			};
+		},
 		unfollow: function(user){
 			new ajax(_g.api + '/user/' + user + '/unfollow', 'POST', '', {
 				load	: function(r){
