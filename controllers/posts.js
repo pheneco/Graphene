@@ -124,7 +124,7 @@ module.exports = function(app, Graphene, Notification){
 		});
 	});
 	app.delete('/post/:post/comment/:comment',function(req,res){
-		if(!req.session.user) return res.send("");
+		if(!req.session.user) return res.send("Must be logged in!");
 		Post.findOne({_id:req.params.post},function(e,p){
 			if(e) return res.send(e);
 			var c = p.comments.id(req.params.comment);
@@ -134,7 +134,7 @@ module.exports = function(app, Graphene, Notification){
 				if(e) return res.send(e);
 				else {
 					Comments.emit(""+p._id,""+p._id);
-					res.send("Comment deleted.");
+					res.send(".");
 				}
 			});
 		});
@@ -411,7 +411,7 @@ module.exports = function(app, Graphene, Notification){
 			if(!~u.feeds[0].users.indexOf(req.params.user)) u.feeds[0].users.push(req.params.user);
 			u.save(function(e,u){
 				if(e) return res.send(e);
-				else res.send("User followed.");
+				else res.send("");
 			});
 		});
 	});
@@ -426,7 +426,7 @@ module.exports = function(app, Graphene, Notification){
 			}
 			u.save(function(e,u){
 				if(e) res.send(e);
-				else res.send("User unfollowed.");
+				else res.send("");
 			});
 			
 		});
@@ -444,7 +444,7 @@ module.exports = function(app, Graphene, Notification){
 			if(!~feed.indexOf(req.params.user)) feed.users.push(req.params.user);
 			u.save(function(e,u){
 				if(e) return res.send(e);
-				else res.send("User followed.");
+				else res.send("");
 			});
 		});
 	});
@@ -458,7 +458,7 @@ module.exports = function(app, Graphene, Notification){
 			if(indx > -1) feed.users.splice(indx,1);
 			u.save(function(e,u){
 				if(e) res.send(e);
-				else res.send("User unfollowed.");
+				else res.send("");
 			});
 			
 		});
@@ -476,7 +476,7 @@ module.exports = function(app, Graphene, Notification){
 			});
 			u.save(function(e,u){
 				if(e) return res.send(e);
-				res.send("Feed created.");
+				res.send("");
 			});
 		});
 	});
@@ -489,7 +489,7 @@ module.exports = function(app, Graphene, Notification){
 			feed.name == req.params.name;
 			u.save(function(e,u){
 				if(e) return res.send(e);
-				else res.send("Feed renamed.");
+				else res.send("");
 			});
 		});
 	});
@@ -500,7 +500,7 @@ module.exports = function(app, Graphene, Notification){
 			var feed = u.feeds.id(req.params.id).remove();
 			u.save(function(e,u){
 				if(e) return res.send(e);
-				else res.send("Feed removed.");
+				else res.send("");
 			});
 		});
 	});
