@@ -494,16 +494,12 @@ var Graphene		= new(function(url,api,name){
 				'settings',
 				'advset',
 				'password',
-				'streams',
+				'feeds',
 				'changes',
 				'change',
 				'post-new'
 			]
 			for(var i in p) if(se = _i(p[i])) se.remove();
-			if(se = _c('stream')){
-				var s = _c('stream');
-				while (s.length > 0) s[s.length].remove();
-			}
 			
 			//	MOVING ON
 			next();
@@ -1236,6 +1232,7 @@ var Graphene		= new(function(url,api,name){
 				var feed = _i('feed-'+info._id);
 				feed._c('feed-drop')[0].style.display = 'none';
 			}
+			feed._c('post-content')[0].innerHTML = "";
 		},
 		save	: function(){
 			new ajax(_g.api + '/settings', 'POST', JSON.stringify({

@@ -61,6 +61,25 @@ var root		= __dirname,
 			Post.find({"ratings":{$elemMatch:{field:"user",value:u._id}}}, function(e, uv){ if(e) return res.send(e);
 			Graphene.getFollowing(u._id, null, function(uf){
 			Graphene.getFollowing(req.session.user?req.session.user:'bypass',null,function(yf){
+			User.find({_id:{$in:uf}}, function(e,f){if(e) return res.send(e);
+				var feeds = u.feeds;
+				for(var i = 0; i < feeds.length; i++)
+					for(var j = 0; j < feeds[i].users.length; j++){
+						var id = feeds[i].users[j];
+						for(var k = 0; k < fu.length; k++)
+							if(""+fu[k]._id == id)
+								feeds[i].users[j] = {
+									_id			: id,
+									userName	: fu[k].userName,
+									firstName	: fu[k].firstName,
+									lastName	: fu[k].lastName,
+									name		: fu[k].nameHandle ? fu[k].userName : fu[k].firstName + " " + fu[k].lastName,
+									avatar		: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-36.jpg",
+									avatarFull	: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-200.jpg",
+									toCrop		: Graphene.img + "/" + fu[k].avatar + "/500.jpg",
+									url			: Graphene.url + "/user/" + fu[k].userName,
+								}
+					}
 				u.password = "";
 				callback(JSON.stringify(Graphene.collect(u._doc,{
 					user		: user,
@@ -79,6 +98,7 @@ var root		= __dirname,
 					? {following : !!~yf.indexOf(""+u._id)}
 					: {following : !1}
 				))));
+			});
 			});
 			});
 			});
