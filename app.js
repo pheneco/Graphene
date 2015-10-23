@@ -67,7 +67,7 @@ var root		= __dirname,
 					for(var j = 0; j < feeds[i].users.length; j++){
 						var id = feeds[i].users[j];
 						for(var k = 0; k < fu.length; k++)
-							if(""+fu[k]._id == id)
+							if(""+fu[k]._id == id){
 								feeds[i].users[j] = {
 									_id			: id,
 									userName	: fu[k].userName,
@@ -79,6 +79,8 @@ var root		= __dirname,
 									toCrop		: Graphene.img + "/" + fu[k].avatar + "/500.jpg",
 									url			: Graphene.url + "/user/" + fu[k].userName,
 								}
+								break;
+							}
 					}
 				u.password = "";
 				callback(JSON.stringify(Graphene.collect(u._doc,{
