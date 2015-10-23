@@ -61,7 +61,7 @@ var root		= __dirname,
 			Post.find({"ratings":{$elemMatch:{field:"user",value:u._id}}}, function(e, uv){ if(e) return res.send(e);
 			Graphene.getFollowing(u._id, null, function(uf){
 			Graphene.getFollowing(req.session.user?req.session.user:'bypass',null,function(yf){
-			User.find({_id:{$in:uf}}, function(e,f){if(e) return res.send(e);
+			User.find({_id:{$in:uf}}, function(e,fu){if(e) return res.send(e);
 				var feeds = u.feeds;
 				for(var i = 0; i < feeds.length; i++)
 					for(var j = 0; j < feeds[i].users.length; j++){
