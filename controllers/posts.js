@@ -497,6 +497,7 @@ module.exports = function(app, Graphene, Notification){
 		if(!req.session.user) return res.send("Must be logged in.");
 		User.findOne({_id:req.session.user},function(e,u){
 			if(e) return res.send(e);
+			if(!u.feeds.id(req.params.id)) return res.send("Invalid feed!");
 			if(u.feeds.id(req.params.id).default) return res.send("Cannot delete default feed!");
 			var feed = u.feeds.id(req.params.id).remove();
 			u.save(function(e,u){
