@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trewbot
- *	Oct 13, 2015
+ *	Oct 22, 2015
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -497,6 +497,7 @@ module.exports = function(app, Graphene, Notification){
 		if(!req.session.user) return res.send("Must be logged in.");
 		User.findOne({_id:req.session.user},function(e,u){
 			if(e) return res.send(e);
+			if(u.feeds.id(req.params.id).default) return res.send("Cannot delete default feed!");
 			var feed = u.feeds.id(req.params.id).remove();
 			u.save(function(e,u){
 				if(e) return res.send(e);
