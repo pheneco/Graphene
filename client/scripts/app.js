@@ -1209,11 +1209,10 @@ var Graphene		= new(function(url,api,name){
 			next();
 		},
 		loadFeed: function(info){
-			var load = !1;
 			if(!_i('feed-'+info._id)){
-					load	= !0;
 				var feed	= document.createElement('div');
 				feed.id		= 'feed-'+info._id;
+				feed.feed	= info._id
 				feed.style.position = 'relative';
 				feed.innerHTML = _g.temps.post({
 					user	: {
@@ -1228,11 +1227,31 @@ var Graphene		= new(function(url,api,name){
 				});
 				feed.innerHTML += "<textarea class='feed-drop' style='position:absolute;top:0px;left:0px;border:0px none;width:100%;height:100%;z-index:5;opacity:0;display:none;'></textarea>";
 				_i('feeds').appendChild(feed);
+				feed.ondragover = function() {
+					this._c('feed-drop')[0].style.display = 'block';}
+				feed.ondragout  = function() {
+					this._c('feed-drop')[0].style.display = 'none';}
+				feed._c('feed-drop')[0].oninput = function() {
+					_g.u.followLink(this.value,parseInt(this.parentElement.parentElement.feed));
+					this.value = '';
+				}
+				feed.oncontextmenu = function(e){
+					e.preventDefault();
+					var id  = this.streamId;
+					_g.m.open(e,{
+						Rename	: "_g.s.renameFeed('" + id + "',prompt('New name:'))",
+						Delete	: "_g.s.deleteFeed('" + id + "')",
+						"Create New Feed"	: "_g.s.newFeed(prompt('New name:'))"
+					})
+				};
 			} else {
 				var feed = _i('feed-'+info._id);
 				feed._c('feed-drop')[0].style.display = 'none';
 			}
 			feed._c('post-content')[0].innerHTML = "";
+			for(var i = 0; i < info.users.length; i++)
+				feed._c('post-content')[0].innerHTML += '<div class="feed-user feed-user-r" onclick="_g.u.unfollow(\'' + info.users[i]._id + '\',\'' + info._id + '\')">' + info.users[i].name + '</div>';
+			if(info.users.length == 0) se._c('post-content')[0].innerHTML = '<i>This stream is empty.</i>';
 		},
 		save	: function(){
 			new ajax(_g.api + '/settings', 'POST', JSON.stringify({
