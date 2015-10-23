@@ -1260,7 +1260,7 @@ var Graphene		= new(function(url,api,name){
 				}
 				feed.oncontextmenu = function(e){
 					e.preventDefault();
-					var id  = this.streamId;
+					var id  = this.feed;
 					_g.m.open(e,{
 						Rename	: "_g.s.renameFeed('" + id + "',prompt('New name:'))",
 						Delete	: "_g.s.deleteFeed('" + id + "')",
