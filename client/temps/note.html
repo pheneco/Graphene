@@ -16,11 +16,14 @@
 			{{#strCompare type 'rating'}}
 				rated your post.
 			{{/strCompare}}
+			{{#strCompare type 'attag'}}
+				tagged you in a post.
+			{{/strCompare}}
 			{{#strCompare type 'follow'}}
 				started following you.
 			{{/strCompare}}
 			{{#if post.preview}}
-				{{post.preview}}...
+				{{post.preview}}
 			{{/if}}
 		</a>
 		<div class="notes-time">

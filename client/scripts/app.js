@@ -252,7 +252,7 @@ var Graphene		= new(function(url,api,name){
 										? info[i].users[2].name
 										: (info[i].users.length - 2) + "others") + "",
 					info[i].timestamp	= _g.time(info[i].time);
-					info[i].link		= _g.url + (info[i].type == 'comment' || info[i].type == 'rating' ? "/post/" + info[i].post._id : info[i].user.url);
+					info[i].link		= _g.url + (info[i].type == 'comment' || info[i].type == 'rating' || info[i].type == 'attag' ? "/post/" + info[i].post._id : info[i].user.url);
 					if(!info[i].read) _g.n.amount++;
 				}
 				_g.n.update();
