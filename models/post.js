@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Model
  *	Written by Trewbot
- *	Jan 07, 2015
+ *	Oct 25, 2015
  */
  
 var mongoose	= require('mongoose'),
@@ -27,6 +27,7 @@ var mongoose	= require('mongoose'),
 		content		: String,
 		location	: String,
 		tags		: [String],
+		users		: [String],
 		ratings		: [Rating],
 		comments	: [Comment],
 		votes		: [Vote],		//For polls

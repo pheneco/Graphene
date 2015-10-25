@@ -40,16 +40,21 @@ module.exports = function(app, Graphene, Notification){
 									? plainText.replace('@html','') // CHAOS XD
 									: marked(plainText),
 					regex		= /#(\w+)/g,
+					regexu		= /@(\w+)/g,
 					tags		= [],
+					users		= [],
 					result;
 				while(result	= regex.exec(richText)) tags[tags.length] = result[1].toLowerCase();
+				while(result	= regexu.exec(richText)) users[users.length] = result[1].toLowerCase();
 				richText		= richText.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>');
+				richText		= richText.replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>');
 				var post		= new Post({
 						user		: req.session.user,
 						at			: req.body.set,
 						richText	: richText,
 						plainText	: plainText,
 						tags		: tags,
+						users		: users,
 						followers	: [req.session.user]
 					});
 				if(req.body.type == "text"){
