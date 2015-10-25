@@ -186,8 +186,8 @@ module.exports = function(app, Graphene, Notification){
 			Graphene.getFollowing(req.session.user,null,function(e){
 				Post.find(
 					req.query.start && req.query.start != 'default'
-						? {_id:{$lt:req.query.start},user:{$in:e}}
-						: {user:{$in:e}}
+						? {_id:{$lt:req.query.start},$or:[{user:{$in:e}},{users:u.username}]}
+						: {$or:[{user:{$in:e}},{users:u.username}]}
 				).sort('-_id').limit(req.query.amount).exec(cont);
 			});
 		} else if(req.query.set == 'feed' && req.session.user){
