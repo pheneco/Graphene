@@ -1615,24 +1615,6 @@ var Graphene		= new(function(url,api,name){
 		toLoad : 0,
 		loaded : 0,
 		error  : !1,
-		fun    : [
-			"https://www.youtube.com/watch?v=0y2ZxgJNlWs'>Herding sheep",
-			"https://en.wikipedia.org/wiki/Sudetenland'>Annexing the Sudetenland",
-			"https://en.wikipedia.org/wiki/Alien_and_Sedition_Acts'>Proposing partisan legislation",
-			"https://en.wikipedia.org/wiki/Representativeness_heuristic'>Electing new representatives",
-			"http://www.gamefaqs.com/pc/561176-simcity-4/faqs/22135'>Fetching more loading titles",
-			"http://www.horoscope.com/'>Predicting astronomic phenomena",
-			"https://www.youtube.com/watch?v=5_tXcRYOYZ0'>Firing interns",
-			"https://www.reddit.com/r/foodporn'>Activating the lateral hypothalamus",
-			"https://www.youtube.com/watch?v=MJ_-sDR-_Hs'>Rendering Golgi apparati",
-			"http://www.warhol.org/'>Do you have a moment to talk about our lord and savior Andy Warhol? ",
-			"http://imgur.com/gallery/pJRNA'>This could be an advertisement... but we're too cool for that",
-			"https://www.youtube.com/watch?v=PNtdeeo1yxw'>Fixing bugs you didn't even notice",
-			"http://www.stanleyparable.com'>Looking for a real job",
-			"'>Loading... I can't think of anything funny to say",
-			"https://www.youtube.com/watch?v=vt0Y39eMvpI'>Expecting the Spanish Inquisition",
-			"https://www.youtube.com/watch?v=FRgcw5HjBV0'>Uhh"
-		],
 		update : function(){
 			if(this.error) return;
 			var sl	= _i('side-loading'),
@@ -1660,7 +1642,7 @@ var Graphene		= new(function(url,api,name){
 			if(!_g.b.error) return;
 			_g.b.error = !1;
 			_i('loading-error-bar').id = 'loading-bar';
-			// _i('loading-error').innerHTML = "<a target='_blank' href='" + _g.b.fun[~~(_g.b.fun.length*Math.random())] + "</a>...";
+			_i('loading-error').innerHTML = "";
 		}
 	});
 
@@ -1688,7 +1670,6 @@ function pageview(ctx){
 	ga('send', 'pageview');
 }
 window.addEventListener('load', function(){
-// if(!_g.b.error) _i('loading-error').innerHTML = "<a target='_blank' href='" + _g.b.fun[~~(_g.b.fun.length*Math.random())] + "</a>...";
 new ajax(_g.api + "/session", "GET", "", {change:function(r){
 
 	if(r.target.status !== 200) {
