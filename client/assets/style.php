@@ -26,6 +26,7 @@ html						{background:#f8f8f8 url("../assets/img/back.png");background-position:
 .notes-title,
 
 .user-avatar,
+.user-follow,
 
 .post-ribbon,
 .post-loading,

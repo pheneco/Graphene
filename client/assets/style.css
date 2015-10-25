@@ -82,11 +82,14 @@
 
 #user						{position:absolute;left:-250px;}
 	#user-content			{position:fixed;top:40px;width:190px;border:0 !important;background:#fff;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;padding:10px;}
+	.user-name				{margin-bottom:10px;}
 	.user-name a:hover		{color:#444444;}
 	.user-avatar			{position:relative;display:block;margin-bottom:10px;height:190px;width:190px;}
 	.user-link				{padding:3px;margin:-3px -3px 5px -3px;color:#111 !important;}
 	.user-link:last-child	{margin-bottom:0;}
+	.user-follow			{padding:10px;text-align:center;background:#444444;color:white !important;margin-bottom:10px;}
 	.user-select			{background:#444444;color:#fff !important;}
+	.user-bio				{margin-bottom:10px;}
 	
 .post						{position:relative;display:inline-block;text-align:left;margin-bottom:40px;background:#fff;width:520px;border:0 !important;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;transition:margin-bottom 0.3s;}
 .post-popped				{position:fixed;top:40px;margin-left:-560px;}
