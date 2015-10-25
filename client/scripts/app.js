@@ -823,6 +823,8 @@ var Graphene		= new(function(url,api,name){
 			'Developer',
 			'God'
 		],
+		set		: '',
+		setData	: '',
 		hovering: !1,
 		card	: '',
 		cardSrc	: {},
@@ -872,6 +874,9 @@ var Graphene		= new(function(url,api,name){
 					_g.u.loaded = !0;
 				}
 			})
+		},
+		list	: function(amount){
+			
 		},
 		follow	: function(user,feed){
 			var load = function(r){
@@ -1669,9 +1674,7 @@ function pageview(ctx){
 	});
 	ga('send', 'pageview');
 }
-window.addEventListener('load', function(){
-new ajax(_g.api + "/session", "GET", "", {change:function(r){
-
+window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 	if(r.target.status !== 200) {
 		if(_g.b.error) return;
 		_g.b.error						= !0;
@@ -1736,6 +1739,10 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 	}, pageview);
 	page('/search/:query', function(ctx,next){
 		document.title = _g.page = "Results for \"" + ctx.params.query + "\" | " + _g.name;
+		_g.u.set = 'search';
+		_g.u.setData = ctx.params.query;
+		_g.u.list();
+		
 		_g.p.set = 'search';
 		_g.p.setData = ctx.params.query;
 		_g.p.list(20);
@@ -1816,8 +1823,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 	
 	_g.cn.recheck(_g.session.v);
 	_g.n.check();
-}});
-});
+}});});
 
 setInterval(function(){
 	var ts = _c('timestamp');

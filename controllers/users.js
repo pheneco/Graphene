@@ -248,6 +248,26 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 				}));
 			});
 	});
+	app.get('/users', function(req,res){
+		var cont = function(e,u){
+			if(e) return res.send(e);
+			var users = [];
+			if(u.length == 0)
+				return res.send(['only']);
+			for(var i = 0; i < u.length; i++)
+				users[users.length] = ""+u[i]._id;
+			if(u.length < req.query.amount)
+				users[users.length] = 'last';
+			res.send(users);
+		}
+		if(req.query.set == 'search'){
+			User.find(
+				req.query.start && req.query.start != 'default'
+					? {_id:{$lt:req.query.start},$text:{$search:req.query.data}}
+					: {$text:{$search:req.query.data}}
+			).sort('-_id').limit(req.query.amount).exec(cont);
+		} else res.send(['only']);
+	});
 	app.get('/user/:user', function(req,res){
 		Graphene.getUserInfo(req.params.user,true,function(u){
 			res.send(u);
@@ -269,15 +289,6 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		User.count({email:{$regex: new RegExp("^" + req.body.email + "$", "i")}}, function(e,c){
 			if(!e) res.send(c==0?"open":"taken");
 			else res.send(e);
-		});
-	});
-	app.get('/search/users/:query', function(req,res){
-		User.find({$text:{$search:req.params.query}},function(e,u){if(e) return res.send(e);
-			var users = [];
-			for(var i = 0; i < u.length; i++){
-				users[users.length] = ""+u[i]._id;
-			}
-			res.send(users);
 		});
 	});
 }
