@@ -28,17 +28,20 @@ var mongoose	= require('mongoose'),
 		feeds		: [Feed],
 		advanced	: [Advanced],
 		bio			: String
-	}),
-	User		= mongoose.model('User', userSchema, 'users');
+	});
 	userSchema.index({
 		username	: 'text',
 		firstName	: 'text',
 		lastName	: 'text',
 		bio			: 'text'
-	},{weights		: {
-		username	: 10,
-		firstName	: 4,
-		lastName	: 8,
-		bio			: 4
-	}});
+	},{
+		name		: 'userIndex',
+		weights		: {
+			username	: 10,
+			firstName	: 4,
+			lastName	: 8,
+			bio			: 4
+		}
+	});
+var User		= mongoose.model('User', userSchema, 'users');
 module.exports	= User;

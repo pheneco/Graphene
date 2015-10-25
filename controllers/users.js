@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trewbot
- *	Oct 22, 2015
+ *	Oct 25, 2015
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -268,6 +268,11 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		User.count({email:{$regex: new RegExp("^" + req.body.email + "$", "i")}}, function(e,c){
 			if(!e) res.send(c==0?"open":"taken");
 			else res.send(e);
+		});
+	});
+	app.get('/search/users/:key', function(req,res){
+		User.find({$text:{$search:req.params.key}},function(e,u){if(e) return res.send(e);
+			res.send(u);
 		});
 	});
 }
