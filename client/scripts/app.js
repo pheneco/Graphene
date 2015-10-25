@@ -202,7 +202,7 @@ var Graphene		= new(function(url,api,name){
 				pcn.insertBefore(nw, pcn.children[0]);
 				nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
 			}
-			_i('info-column').innerHTML += '<div id="search"></div>';
+			_i('info-column').innerHTML += '<div id="search"><input id="search-box"><div class="post-ribbon" tabindex="-1" onclick="_g.t.search()" style="height:15px;text-align:right; width:288px;">Search</div></div>';
 		}
 	});
 	_g.n	= (_g.notes		= {
@@ -1706,8 +1706,8 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 	page('*', _g.p.clear);
 	page('*', _g.t.side);
 	
-	if(_g.session.user) _g.n.open();
 	_g.t.loadSearch();
+	if(_g.session.user) _g.n.open();
 	
 	//	Home/Stream Pages
 	page('/', function(ctx,next){
