@@ -93,6 +93,7 @@ module.exports = function(app, Graphene, Notification){
 								});
 								note.save();
 								Notification.emit(""+u[i]._id);
+								Posts.emit("@"+u[i]._id);
 							}
 						});
 					}else{
