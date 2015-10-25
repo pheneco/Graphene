@@ -1750,11 +1750,13 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 		if(!_i('posts')) _i('body').insertAdjacentHTML('beforeend', '<div id="posts"></div>');
 		_g.p.set = 'post';
 		_g.p.setData = ctx.params.id;
+		_g.p.posts = [ctx.params.id];
 		_g.b.toLoad = 4;
 		_g.b.loaded = 1;
 		_g.b.update();
 		_g.p.load(ctx.params.id, 'all');
 		_g.p.loaded = true;
+		_g.p.listen();
 		next();
 	}, pageview);
 
