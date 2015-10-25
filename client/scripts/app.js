@@ -450,14 +450,16 @@ var Graphene		= new(function(url,api,name){
 				load : function(r){
 					var i = JSON.parse(r.responseText),
 						l = _g.p.posts,
-						x,n=[];
+						x,n=[],e;
 						i.reverse();
 						l.reverse();
 						//	remove client elements not recognized by server
 						for(var k = 0; k < l.length; k++)
 							if(!~i.indexOf(l[k])){
-								if(_i('post-' + l[k]))
-									_i('post-' + l[k]).remove();
+								if(e = _i('post-' + l[k])){
+									scrollBy(0,-e.scrollHeight);
+									e.remove();
+								}
 								n.push(l[k]);
 							};
 						
