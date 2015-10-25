@@ -1750,6 +1750,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 			_g.u.load(ctx.params.user,ctx)
 			_g.p.set = 'user';
 			_g.p.setData = user;
+			if(_g.session.user == user) _g.cr.load();
 			_g.p.list(20);
 		next();
 		}});
@@ -1760,6 +1761,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 			_g.u.load(ctx.params.user,ctx)
 			_g.p.set = 'user';
 			_g.p.setData = user;
+			if(_g.session.user == user) _g.cr.load();
 			_g.p.list(20);
 			next();
 		}});
