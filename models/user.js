@@ -1,7 +1,7 @@
 /*
  *	Graphene >> User Model
  *	Written by Trewbot
- *	Oct 17, 2015
+ *	Oct 25, 2015
  */
 
 var mongoose	= require('mongoose'),
@@ -26,7 +26,19 @@ var mongoose	= require('mongoose'),
 		accent		: String,
 		nameHandle	: Boolean,
 		feeds		: [Feed],
-		advanced	: [Advanced]
+		advanced	: [Advanced],
+		bio			: String
 	}),
 	User		= mongoose.model('User', userSchema, 'users');
+	userSchema.index({
+		username	: 'text',
+		firstName	: 'text',
+		lastName	: 'text',
+		bio			: 'text'
+	},{weights		: {
+		username	: 10,
+		firstName	: 4,
+		lastName	: 8,
+		bio			: 4
+	}});
 module.exports	= User;

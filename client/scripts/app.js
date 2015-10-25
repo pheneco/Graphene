@@ -1,8 +1,9 @@
 /*
- *	Graphene Web Client w0.4.2
+ *	Graphene Web Client w0.4.3
  *	Written by Trewbot
- *	Oct 22, 2015
- *  Notice me senpai!
+ *	Oct 25, 2015
+ *	Notice me senpai!
+ *		- Noticed
  */
 
 //	General Functions
@@ -325,7 +326,7 @@ var Graphene		= new(function(url,api,name){
 					_g.b.loaded += 3;
 					_g.b.update();
 				}
-				_i('posts').insertAdjacentHTML('beforeend', '<div class="post" id="post-0">No more posts o.0</div>');
+				_i('posts').insertAdjacentHTML('beforeend', '<div class="post" id="post-0">No more posts to load.</div>');
 				return;
 			}
 			if(id == 'only'){
@@ -333,7 +334,7 @@ var Graphene		= new(function(url,api,name){
 					_g.b.loaded += 3;
 					_g.b.update();
 				}
-				if(_i('post-0') == null) _i('posts').insertAdjacentHTML('beforeend', '<div class="post" id="post-0">\'Tis rather lonely ;~;</div>');
+				if(_i('post-0') == null) _i('posts').insertAdjacentHTML('beforeend', '<div class="post" id="post-0">No posts to load.</div>');
 				return;
 			}
 			var post = _i('post-' + id);
