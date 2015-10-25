@@ -1735,7 +1735,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 		next();
 	}, pageview);
 	page('/search/:query', function(ctx,next){
-		document.title = _g.page = "\"" + ctx.params.tag + "\" | " + _g.name;
+		document.title = _g.page = "Results for \"" + ctx.params.query + "\" | " + _g.name;
 		_g.p.set = 'search';
 		_g.p.setData = ctx.params.query;
 		_g.p.list(20);
