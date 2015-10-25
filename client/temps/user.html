@@ -11,11 +11,13 @@
 			<br>
 			{{#if shwfbtn}}
 				{{#if fllwng}}
-					<a onclick="_g.u.unfollow('{{id}}')" style="margin-bottom:10px;"><div class="user-link">Unfollow</div></a>
+					<a onclick="_g.u.unfollow('{{id}}')" style="margin-bottom:10px;"><div class="user-link">Unfollow</div></a><b>
 				{{else}}
-					<a onclick="_g.u.follow('{{id}}')" style="margin-bottom:10px;"><div class="user-link">Follow</div></a>
+					<a onclick="_g.u.follow('{{id}}')" style="margin-bottom:10px;"><div class="user-link">Follow</div></a><br>
 				{{/if}}
 			{{/if}}
+			<div class="user-bio">{{{bio}}}</div>
+			<br>
 			{{#each links}}
 				{{#if tabled}}
 					<a href="{{url}}" nocard><div class="user-link {{#if active}}user-select{{/if}}">
