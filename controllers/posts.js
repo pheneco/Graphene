@@ -386,6 +386,7 @@ module.exports = function(app, Graphene, Notification){
 			Graphene.getFollowing(req.session.user,null,function(e){
 				users = e;
 				for(var i = 0; i < users.length; i++) Posts.on(""+users[i],posCall);
+				Posts.on("@"+req.session.user,posCall);
 			});
 		} else if(req.params.set == 'feed' && req.session.user){
 			Graphene.getFollowing(req.session.user,req.params.setData,function(e){
@@ -395,6 +396,9 @@ module.exports = function(app, Graphene, Notification){
 		} else if(req.params.set == 'tag'){
 			Tags.on(""+req.params.setData.toLowerCase(),posCall);
 		} else if(req.params.set == 'user'){
+			Posts.on(""+req.params.setData,posCall);
+			Posts.on("@"+req.params.setData,posCall);
+		} else if(req.params.set == 'userPosts'){
 			Posts.on(""+req.params.setData,posCall);
 		}
 		
