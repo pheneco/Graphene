@@ -270,9 +270,13 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			else res.send(e);
 		});
 	});
-	app.get('/search/users/:key', function(req,res){
-		User.find({$text:{$search:req.params.key}},function(e,u){if(e) return res.send(e);
-			res.send(u);
+	app.get('/search/users/:query', function(req,res){
+		User.find({$text:{$search:req.params.query}},function(e,u){if(e) return res.send(e);
+			var users = [];
+			for(var i = 0; i < u.length; i++){
+				users[users.length] = ""+u[i]._id;
+			}
+			res.sedn(users);
 		});
 	});
 }
