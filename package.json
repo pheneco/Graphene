@@ -1,6 +1,6 @@
 {
 	"name"			: "Graphene",
-	"version"		: "0.3.0",
+	"version"		: "0.4.0",
 	"description"	: "Server API application for the Graphene Social Network.",
 	"author"		: "Trevor \"Trewbot\" Hoglund <trewbot@phene.co>",
 	"contributors"	: [],

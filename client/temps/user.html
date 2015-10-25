@@ -18,7 +18,7 @@
 			{{/if}}
 			{{#each links}}
 				{{#if tabled}}
-					<a href="{{url}}"><div class="user-link {{#if active}}user-select{{/if}}">
+					<a href="{{url}}" nocard><div class="user-link {{#if active}}user-select{{/if}}">
 						<table>
 							<tr>
 								<td style="width:100%;">{{name}}</td>
@@ -27,7 +27,7 @@
 						</table>
 					</div></a>
 				{{else}}
-					<a href="{{url}}"><div class="user-link {{#if active}}user-select{{/if}}">{{name}}</div></a>
+					<a href="{{url}}" nocard><div class="user-link {{#if active}}user-select{{/if}}">{{name}}</div></a>
 				{{/if}}
 			{{/each}}
 			{{#if shwedit}}
