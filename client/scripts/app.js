@@ -193,6 +193,16 @@ var Graphene		= new(function(url,api,name){
 				_i('side-version').innerHTML = "<a href='http://phene.co'>phene.co, 2015<br></a><a href='" + _g.url + "/changes/webClient'>" + _g.v + "</a>-<a href='" + _g.url + "/changes/server'>" + _g.session.sVersion + "</a>";
 				next();
 			}});
+		},
+		loadSearch	: function(){
+			if(!_i('info-column')){
+				var nw = document.createElement('div');
+				nw.className = 'column thin right';
+				pcn = _i('body');
+				pcn.insertBefore(nw, pcn.children[0]);
+				nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
+			}
+			_i('info-column').innerHTML += '<div id="search"></div>';
 		}
 	});
 	_g.n	= (_g.notes		= {
@@ -230,11 +240,14 @@ var Graphene		= new(function(url,api,name){
 		},
 		open	: function(){
 			if(!_g.n.opened){
-				var nw = document.createElement('div');
-				nw.id = 'notes';
-				pcn = _i('body');
-				pcn.insertBefore(nw, pcn.children[0]);
-				nw.innerHTML = '<div id="notes-content"><div class="notes-title">Notifications (<span id="notes-num">' + _g.n.amount + '</span> unread)</div><div id="notes-notes"></div></div>';
+				if(!_i('info-column')){
+					var nw = document.createElement('div');
+					nw.className = 'column thin right';
+					pcn = _i('body');
+					pcn.insertBefore(nw, pcn.children[0]);
+					nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
+				}
+				_i('info-column').innerHTML += '<div id="notes"><div class="notes-title">Notifications (<span id="notes-num">' + _g.n.amount + '</span> unread)</div><div id="notes-notes"></div></div>';
 				// _i('side-notes').style.display = 'none';
 				_g.n.opened = !0;
 				_g.n.load();
@@ -1694,6 +1707,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 	page('*', _g.t.side);
 	
 	if(_g.session.user) _g.n.open();
+	_g.t.loadSearch();
 	
 	//	Home/Stream Pages
 	page('/', function(ctx,next){
@@ -1823,6 +1837,9 @@ setInterval(function(){
 }, 1e3);
 //	I totally forgot this vvv was even a thing
 window.addEventListener('scroll', function(){
+	var cf = _c('column-fix');
+	for(var i = 0; i < cf.length; i++)
+		cf[i].style.top = ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) + "px";
 	if((_g.p.loaded && _g.p.needLoad && !_g.p.loading && _g.p.loadMore) && (((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) > (document.body.scrollHeight - 600 - window.innerHeight)))
 		_g.p.list(20);
 });
