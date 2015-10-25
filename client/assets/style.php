@@ -21,6 +21,8 @@ html						{background:#f8f8f8 url("../assets/img/back.png");background-position:
 .side-select,
 .side-select:hover,
 
+.user-select,
+
 .notes-title,
 
 .user-avatar,
