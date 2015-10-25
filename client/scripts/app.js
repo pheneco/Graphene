@@ -1766,7 +1766,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
 			_g.u.load(ctx.params.user,ctx)
-			_g.p.set = 'user';
+			_g.p.set = 'userPosts';
 			_g.p.setData = user;
 			if(_g.session.user == user) _g.cr.load();
 			_g.p.list(20);
@@ -1777,7 +1777,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
 			_g.u.load(ctx.params.user,ctx)
-			_g.p.set = 'user';
+			_g.p.set = 'userPosts';
 			_g.p.setData = user;
 			_g.p.list(20);
 			next();

@@ -188,6 +188,12 @@ module.exports = function(app, Graphene, Notification){
 						: {$or:[{user:req.query.data},{users:u.username}]}
 				).sort('-_id').limit(req.query.amount).exec(cont);
 			});
+		} else if(req.query.set == 'userPosts'){
+			Post.find(
+				req.query.start && req.query.start != 'default'
+					? {_id:{$lt:req.query.start},user:req.query.data}
+					: {user:req.query.data}
+			).sort('-_id').limit(req.query.amount).exec(cont);
 		} else res.send(['only']);
 	});
 	app.get('/post/:id', function(req,res){
