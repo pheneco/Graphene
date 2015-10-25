@@ -1006,23 +1006,7 @@ var Graphene		= new(function(url,api,name){
 				shwfbtn	: _g.session.user && info.id !== _g.session.user,
 				shwedit	: !1,
 				shwcrp	: !1,
-				fllwng	: info.following,
-				links	: [
-					{
-						tabled	: !0,
-						name	: "Posts:",
-						value	: info.postCount,
-						url		: info.url + "/posts",
-						active	: !1
-					},
-					{
-						tabled	: !0,
-						name	: "Upvotes:",
-						value	: info.upvoteCount,
-						url		: info.url + "/upvotes",
-						active	: !1
-					}
-				]
+				fllwng	: info.following
 			});
 			card.innerHTML = cont;
 			card.style.opacity = 0;
