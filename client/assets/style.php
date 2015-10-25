@@ -61,4 +61,10 @@ html						{background:#f8f8f8 url("../assets/img/back.png");background-position:
 .comment-content a:hover	{color:<?=$accent?>;}
 
 /**  [7]  **/
-#side-logo					{background:rgba(0,0,0,0) url("../assets/img/<?=(isset($_GET['dev']))?'dev':'gra';?>.svg") no-repeat top;}
+#side-logo					{background:rgba(0,0,0,0) url("../assets/img/<?=(isset($_GET['dev']))?'dev':'gra';?>.svg") no-repeat top;z-index:1;}
+
+/**  [8]  **/
+::selection					{background:<?=$accent?>;color:#fff;}
+
+/**  [9]  **/
+::-moz-selection			{background:<?=$accent?>;color:#fff;}

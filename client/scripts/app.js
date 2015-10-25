@@ -111,7 +111,7 @@ var Graphene		= new(function(url,api,name){
 			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-200px" : "0px";
 		},
 		update		: function(c){
-			var s = document.styleSheets[1].cssRules, r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color'];
+			var s = document.styleSheets[1].cssRules, r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','background','background'];
 			for(i in r) s[++i].style[r[--i]] = c;
 			this.accent = c;
 		},
