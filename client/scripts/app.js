@@ -940,7 +940,7 @@ var Graphene		= new(function(url,api,name){
 			} else {
 				var a,b;
 				if(a = e.target.parentAnchor()){
-					if(a.host !== _g.url.split('://')[1]) return;
+					if(a.host !== _g.url.split('://')[1] || a.hasAttribute('nocard')) return;
 					var c = a.href.split(_g.url)[1].split("/");
 					if(c[1].toLowerCase() == 'user' && typeof c[2] == 'string')
 						_g.u.cardTime = window.setTimeout(function(){
