@@ -450,12 +450,16 @@ var Graphene		= new(function(url,api,name){
 				load : function(r){
 					var i = JSON.parse(r.responseText),
 						l = _g.p.posts,
-						x;
+						x,n=[];
 						i.reverse();
 						l.reverse();
 						//	remove client elements not recognized by server
-						for(var k = 0; k < l.length; k++) if(!~i.indexOf(l[k])) _i('post-' + l[k]).remove();
-						//	load any new comments
+						for(var k = 0; k < l.length; k++) if(!~i.indexOf(l[k])){ _i('post-' + l[k]).remove(); n.push(l[k])};
+						
+						//	need to remove deleted posts' ids from _g.p.posts
+						for(var m = 0; m < n.length; n++) _g.p.posts.splice(_g.p.posts.indexOf(l[k]),1);
+						
+						//	load any new posts
 						if((x = i.length - 1 - i.indexOf(l[l.length-1])) > 0){
 							_g.p.posts.push(i[i.length-1]);
 							_g.p.load(i[i.length-1],'all','b');
