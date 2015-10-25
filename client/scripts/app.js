@@ -205,7 +205,7 @@ var Graphene		= new(function(url,api,name){
 			_i('info-column').innerHTML += '<div id="search"><div class="notes-title">Search</div><input id="search-box"></div>';
 			window.setTimeout(function(){
 				_i('search-box').onkeypress = function(e){
-					if(e.keyCode == 13) page(_g.url + '/search/' + encodeURIComponent(this.value));
+					if(e.keyCode == 13 && this.value != '') page('/search/' + encodeURIComponent(this.value));
 				}
 			},0);
 		}
