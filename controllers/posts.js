@@ -183,12 +183,14 @@ module.exports = function(app, Graphene, Notification){
 			res.send(posts);
 		}
 		if(req.query.set == 'dash' && req.query.data == 'home') {
-			Graphene.getFollowing(req.session.user,null,function(e){
-				Post.find(
-					req.query.start && req.query.start != 'default'
-						? {_id:{$lt:req.query.start},$or:[{user:{$in:e}},{users:u.username}]}
-						: {$or:[{user:{$in:e}},{users:u.username}]}
-				).sort('-_id').limit(req.query.amount).exec(cont);
+			User.findOne({_id:req.session.user},function(e,u){if(e) return res.send(e);
+				Graphene.getFollowing(req.session.user,null,function(e){
+					Post.find(
+						req.query.start && req.query.start != 'default'
+							? {_id:{$lt:req.query.start},$or:[{user:{$in:e}},{users:u.username}]}
+							: {$or:[{user:{$in:e}},{users:u.username}]}
+					).sort('-_id').limit(req.query.amount).exec(cont);
+				});
 			});
 		} else if(req.query.set == 'feed' && req.session.user){
 			Graphene.getFollowing(req.session.user,req.query.data,function(e){
