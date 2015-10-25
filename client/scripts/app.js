@@ -830,7 +830,7 @@ var Graphene		= new(function(url,api,name){
 		cardSrc	: {},
 		cards	: {},
 		cardTime: 0,
-		load	: function(user,ctx){
+		page	: function(user,ctx){
 			_g.u.name = user;
 			new ajax(_g.api + '/user/' + user, 'GET', '', {
 				load	: function(r){
@@ -876,7 +876,25 @@ var Graphene		= new(function(url,api,name){
 			})
 		},
 		list	: function(amount){
-			
+			if(!_i('users')) _i('body').insertAdjacentHTML('afterbegin', '<div id="users"></div>');
+			var last	= _i('users').children[_i('users').children.length - 1],
+				lastId	= last == void 0 ? 'default' : last.id.split('-')[1];
+			if(lastId !== '0'){
+				new ajax(_g.api + '/users?set=' + this.set + '&amount=' + amount + '&data=' + this.setData + '&start=' + lastId, 'GET', '', {
+					load : function(r){
+						if(last == void 0)
+							_i("users").innerHTML = "<div id='_u'></div>";
+						var u		= JSON.parse(r.responseText);
+						_g.b.toLoad = u.length * 3;
+						_g.b.loaded = 0;
+						for(var i = 0; i < u.length; i++)
+							this.load(u[i]);
+						if(last == void 0) _i("_u").remove();
+					}.bind(this)
+				});
+			} else this.needLoad = !1;
+		},
+		load	: function(id){
 		},
 		follow	: function(user,feed){
 			var load = function(r){
@@ -1771,7 +1789,7 @@ window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET",
 	page('/user/:user', function(ctx,next){
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
-			_g.u.load(ctx.params.user,ctx)
+			_g.u.page(ctx.params.user,ctx)
 			_g.p.set = 'user';
 			_g.p.setData = user;
 			if(_g.session.user == user) _g.cr.load();
@@ -1782,7 +1800,7 @@ window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET",
 	page('/user/:user/posts', function(ctx,next){
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
-			_g.u.load(ctx.params.user,ctx)
+			_g.u.page(ctx.params.user,ctx)
 			_g.p.set = 'userPosts';
 			_g.p.setData = user;
 			if(_g.session.user == user) _g.cr.load();
@@ -1793,7 +1811,7 @@ window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET",
 	page('/user/:user/upvotes', function(ctx,next){
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
-			_g.u.load(ctx.params.user,ctx)
+			_g.u.page(ctx.params.user,ctx)
 			_g.p.set = 'userPosts';
 			_g.p.setData = user;
 			_g.p.list(20);
