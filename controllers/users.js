@@ -276,7 +276,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			for(var i = 0; i < u.length; i++){
 				users[users.length] = ""+u[i]._id;
 			}
-			res.sedn(users);
+			res.send(users);
 		});
 	});
 }
