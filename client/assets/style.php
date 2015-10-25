@@ -68,3 +68,6 @@ html						{background:#f8f8f8 url("../assets/img/back.png");background-position:
 
 /**  [9]  **/
 ::-moz-selection			{background:<?=$accent?>;color:#fff;}
+
+/**  [10]  **/
+::-webkit-selection			{background:<?=$accent?>;color:#fff;}
