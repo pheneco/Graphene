@@ -1734,6 +1734,13 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 		_g.p.list(20);
 		next();
 	}, pageview);
+	page('/search/:query', function(ctx,next){
+		document.title = _g.page = "\"" + ctx.params.tag + "\" | " + _g.name;
+		_g.p.set = 'search';
+		_g.p.setData = ctx.params.query;
+		_g.p.list(20);
+		next();
+	}, pageview);
 	
 	//	Changelog
 	page('/changes/:app?', _g.cn.load, pageview);
