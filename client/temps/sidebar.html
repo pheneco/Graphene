@@ -1,5 +1,5 @@
 {{#each sections}}
-	<a href="{{url}}" title="{{tooltip}}"><div class="side-title"><b>{{name}}</b></div></a>
+	{{#if url}}<a href="{{url}}" title="{{tooltip}}">{{/if}}<div class="side-title"><b>{{name}}</b></div>{{#if url}}</a>{{/if}}
 	{{#each links}}
 		{{#if tabled}}
 			<a href="{{url}}"><div class="side-link {{#if active}}side-select{{/if}}">

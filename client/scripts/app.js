@@ -124,20 +124,22 @@ var Graphene		= new(function(url,api,name){
 						sections : [
 							{
 								name	: "Feeds",
-								url		: _g.url + "/feeds",
-								tooltip	: "Edit Feeds",
 								links	: [
 									{
 										name	: "Home",
 										url		: _g.url,
 										active	: ctx.path == "/"
 									}
-								].concat(_g.session.feeds)
+								].concat(_g.session.feeds).concat([
+									{
+										name	: "Edit Feeds",
+										url		: _g.url + "/feeds",
+										active	: ctx.path == "/feeds"
+									}
+								])
 							},
 							{
 								name	: "Account",
-								url		: _g.url + "/settings",
-								tooltip	: "Edit Settings",
 								links	: [
 									{
 										name	: _g.session.userName,
@@ -159,15 +161,15 @@ var Graphene		= new(function(url,api,name){
 										active	: ctx.path == _g.session.url.split(_g.url)[1] + "/upvotes"
 									},
 									{
+										name	: "Settings",
+										url		: _g.url + "/settings",
+										active	: ctx.path == "/settings"
+									},
+									{
 										name	: "Sign Out",
 										url		: _g.url + "/logout"
 									}
 								]
-							},
-							{
-								name	: "Notifications",
-								url		: "javascript:_g.n.open();void(0);",
-								tooltip	: "Open Notification Window"
 							}
 						]
 					};
