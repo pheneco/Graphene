@@ -130,13 +130,13 @@ var Graphene		= new(function(url,api,name){
 										url		: _g.url,
 										active	: ctx.path == "/"
 									}
-								].concat(_g.session.feeds).concat([
+								].concat(_g.session.feeds).concat(
 									{
 										name	: "Edit Feeds",
 										url		: _g.url + "/feeds",
 										active	: ctx.path == "/feeds"
 									}
-								])
+								)
 							},
 							{
 								name	: "Account",
@@ -173,7 +173,7 @@ var Graphene		= new(function(url,api,name){
 							}
 						]
 					};
-					for(var i = 1; i < o.sections[0].links.length; i++){
+					for(var i = 1; i < o.sections[0].links.length - 1; i++){
 						o.sections[0].links[i].url = _g.url + "/feed/" + o.sections[0].links[i].name;
 						o.sections[0].links[i].active = ctx.path == "/feed/" + o.sections[0].links[i].name;
 					}
