@@ -181,11 +181,13 @@ module.exports = function(app, Graphene, Notification){
 					: {tags:req.query.data}
 			).sort('-_id').limit(req.query.amount).exec(cont);
 		} else if(req.query.set == 'user'){
-			Post.find(
-				req.query.start && req.query.start != 'default'
-					? {_id:{$lt:req.query.start},user:req.query.data}
-					: {user:req.query.data}
-			).sort('-_id').limit(req.query.amount).exec(cont);
+			User.findOne({_id:req.query.data},function(e,u){if(e) return res.send(e);
+				Post.find(
+					req.query.start && req.query.start != 'default'
+						? {_id:{$lt:req.query.start},$or:[{user:req.query.data},{users:u.username}]}
+						: {$or:[{user:req.query.data},{users:u.username}]}
+				).sort('-_id').limit(req.query.amount).exec(cont);
+			});
 		} else res.send(['only']);
 	});
 	app.get('/post/:id', function(req,res){
