@@ -214,6 +214,12 @@ module.exports = function(app, Graphene, Notification){
 					? {_id:{$lt:req.query.start},user:req.query.data}
 					: {user:req.query.data}
 			).sort('-_id').limit(req.query.amount).exec(cont);
+		} else if(req.query.set == 'search'){
+			Post.find(
+				req.query.start && req.query.start != 'default'
+					? {_id:{$lt:req.query.start},$text:{$search:req.query.data}}
+					: {$text:{$search:req.query.data}}
+			).sort('-_id').limit(req.query.amount).exec(cont);
 		} else res.send(['only']);
 	});
 	app.get('/post/:id', function(req,res){
