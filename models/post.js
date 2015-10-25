@@ -33,6 +33,18 @@ var mongoose	= require('mongoose'),
 		votes		: [Vote],		//For polls
 		followers	: [String],
 		blockers	: [String]
-	}),
-	Post		= mongoose.model('Post', postSchema, 'posts');
+	});
+	postSchema.index({
+		plainText	: 'text',
+		tags		: 'text',
+		users		: 'text'
+	},{
+		name		: 'postIndex',
+		weights		: {
+			plainText	: 7,
+			tags		: 10,
+			users		: 5
+		}
+	});
+var Post		= mongoose.model('Post', postSchema, 'posts');
 module.exports	= Post;
