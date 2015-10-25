@@ -77,6 +77,7 @@ module.exports = function(app, Graphene, Notification){
 						//Fire event listeners
 						Posts.emit(""+u._id);
 						for(var i = 0; i < tags.length; i++) Tags.emit(""+tags[i]);
+						for(var i = 0; i < users.length; i++) Posts.emit("@"+users[i]);
 						res.send("");
 						User.find({username:{$in:users}},function(e,u){
 							if(e) return console.log(e);
@@ -143,6 +144,8 @@ module.exports = function(app, Graphene, Notification){
 			if(p.user !== req.session.user) return false;
 			Post.remove({_id:req.params.id}, function(e){if(e) return res.send(e);
 			Note.remove({data:req.params.id}, function(e){if(e) return res.send(e);
+				Posts.emit(""+req.session.user);
+				for(var i = 0; i < p.users.length; i++) Posts.emit("@"+p.users[i]);
 				return res.send("Post deleted succesfully!");
 			});
 			});
