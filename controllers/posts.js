@@ -46,12 +46,10 @@ module.exports = function(app, Graphene, Notification){
 					result;
 				while(result	= regex.exec(richText)) tags[tags.length] = result[1].toLowerCase();
 				while(result	= regexu.exec(richText)) users[users.length] = result[1].toLowerCase();
-				richText		= richText.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>');
-				richText		= richText.replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>');
 				var post		= new Post({
 						user		: req.session.user,
 						at			: req.body.set,
-						richText	: richText,
+						richText	: richText.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>').replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>'),
 						plainText	: plainText,
 						tags		: tags,
 						users		: users,
@@ -90,7 +88,7 @@ module.exports = function(app, Graphene, Notification){
 			post.comments.push({
 				user		: req.session.user,
 				plainText	: req.body.text,
-				richText	: marked(req.body.text).replace(/(\s+)#(\w+)/g, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>')
+				richText	: marked(req.body.text).replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>').replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>')
 			});
 			if(req.session.user != post.user && !~post.followers.indexOf(req.session.user) && !~post.blockers.indexOf(req.session.user))
 				post.followers.push(req.session.user);
