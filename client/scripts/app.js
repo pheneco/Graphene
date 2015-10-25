@@ -2,8 +2,6 @@
  *	Graphene Web Client w0.4.3
  *	Written by Trewbot
  *	Oct 25, 2015
- *	Notice me senpai!
- *		- Noticed
  */
 
 //	General Functions
@@ -194,7 +192,7 @@ var Graphene		= new(function(url,api,name){
 				next();
 			}});
 		},
-		loadSearch	: function(){
+		search		: function(){
 			if(!_i('info-column')){
 				var nw = document.createElement('div');
 				nw.className = 'column thin right';
@@ -1716,7 +1714,7 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 	page('*', _g.p.clear);
 	page('*', _g.t.side);
 	
-	_g.t.loadSearch();
+	_g.t.search();
 	if(_g.session.user) _g.n.open();
 	
 	//	Home/Stream Pages
