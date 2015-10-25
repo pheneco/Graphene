@@ -14,6 +14,7 @@
 	img						{-webkit-transform:translateZ(0);-webkit-transform:rotate(0);}
 
 #body						{position:relative;width:520px;margin:auto;min-height:calc(100% - 25px);padding-top:40px;}
+	.space					{height:10px;}
 
 #login-container			{width:272px;margin:0 auto;display:block;height:100%;}
 	#login-box				{position:absolute;width:270px;top:256px;}
@@ -87,7 +88,7 @@
 	.user-avatar			{position:relative;display:block;margin-bottom:10px;height:190px;width:190px;}
 	.user-link				{padding:3px;margin:-3px -3px 5px -3px;color:#111 !important;}
 	.user-link:last-child	{margin-bottom:0;}
-	.user-follow			{padding:10px;text-align:center;background:#444444;color:white !important;margin-bottom:10px;}
+	.user-follow			{padding:10px;text-align:center;background:#444444;color:white !important;}
 	.user-select			{background:#444444;color:#fff !important;}
 	.user-bio				{margin-bottom:10px;}
 	
