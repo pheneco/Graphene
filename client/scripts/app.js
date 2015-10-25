@@ -202,7 +202,12 @@ var Graphene		= new(function(url,api,name){
 				pcn.insertBefore(nw, pcn.children[0]);
 				nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
 			}
-			_i('info-column').innerHTML += '<div id="search"><input id="search-box"><div class="post-ribbon" tabindex="-1" onclick="_g.t.search()" style="height:15px;text-align:right; width:288px;">Search</div></div>';
+			_i('info-column').innerHTML += '<div id="search"><div class="notes-title">Search</div><input id="search-box"></div>';
+			window.setTimeout(function(){
+				_i('search-box').onkeypress = function(e){
+					if(e.keyCode == 13) page(_g.url + '/search/' + encodeURIComponent(this.value));
+				}
+			},0);
 		}
 	});
 	_g.n	= (_g.notes		= {
@@ -533,6 +538,11 @@ var Graphene		= new(function(url,api,name){
 			for(var i in p) if(se = _i(p[i])) se.remove();
 			
 			_g.s.feedsPg = !1;
+			
+			//	FIX SIDES
+			var cf = _c('column-fix');
+			for(var i = 0; i < cf.length; i++)
+				cf[i].style.top = 0;
 			
 			//	MOVING ON
 			next();
