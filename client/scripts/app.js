@@ -1692,6 +1692,8 @@ new ajax(_g.api + "/session", "GET", "", {change:function(r){
 	page('*', _g.p.clear);
 	page('*', _g.t.side);
 	
+	if(_g.session.user) _g.n.open();
+	
 	//	Home/Stream Pages
 	page('/', function(ctx,next){
 		if(!_g.user) page.redirect('/login');
