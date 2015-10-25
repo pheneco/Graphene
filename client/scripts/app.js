@@ -223,8 +223,8 @@ var Graphene		= new(function(url,api,name){
 		},
 		update	: function(){
 			if(_g.n.amount < 0) _g.n.amount = 0;
-			_i('side-notes').innerHTML = _g.n.amount;
-			_i('side-notes').style.display = _g.n.amount == 0 ? 'none' : 'block';
+			//	_i('side-notes').innerHTML = _g.n.amount;
+			//	_i('side-notes').style.display = _g.n.amount == 0 ? 'none' : 'block';
 			_g.n.opened ? _i('notes-num').innerHTML = _g.n.amount : null;
 		},
 		open	: function(){
@@ -257,7 +257,7 @@ var Graphene		= new(function(url,api,name){
 				}
 				_g.n.update();
 				if(_g.n.opened){
-					if(_g.n.amount == 0) _i('notes-notes').innerHTML = '<i>You have no notifications</i>';
+					if(info.length == 0) _i('notes-notes').innerHTML = '<i>You have no notifications</i>';
 					else _i('notes-notes').innerHTML = _g.tp.notes({
 						notes	: info
 					});
