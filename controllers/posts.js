@@ -36,7 +36,12 @@ module.exports = function(app, Graphene, Notification){
 		if(req.session.user){
 			User.findOne({_id:req.session.user}, function(e,u){
 				var plainText	= req.body.text,
-					richText	= (~plainText.indexOf('@html') && u.rank >= 10)
+					test,link;
+				if(test			= plainText.match(/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])\n/)){
+					link		= test[1];
+					plainText	= plainText.replace(/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])\n/,'');
+				}
+				var richText	= (~plainText.indexOf('@html') && u.rank >= 10)
 									? plainText.replace('@html','') // CHAOS XD
 									: marked(plainText),
 					regex		= /#(\w+)/g,
@@ -59,6 +64,7 @@ module.exports = function(app, Graphene, Notification){
 					if(plainText.length > 0){
 						post.type = "text";
 					} else return res.send("Post cannot be empty!");
+					if(link) post.type = "link", post.content = link;
 				} else if(req.body.type == "image"){
 					post.type = "image";
 				} else if(req.body.type == "link") {
@@ -308,6 +314,9 @@ module.exports = function(app, Graphene, Notification){
 									if(meta['twitter:player']){
 										post.embedLink = true;
 										post.link = meta['twitter:player'];
+									} else {
+										post.regularLink = true;
+										post.link = p.content;
 									}
 									res.send(post);
 								});
