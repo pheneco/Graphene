@@ -256,9 +256,12 @@ var Graphene		= new(function(url,api,name){
 					if(!info[i].read) _g.n.amount++;
 				}
 				_g.n.update();
-				if(_g.n.opened) _i('notes-notes').innerHTML = _g.tp.notes({
-					notes	: info
-				})
+				if(_g.n.opened){
+					if(_g.n.amount == 0) _i('notes-notes').innerHTML = '<i>You have no notifications</i>';
+					else _i('notes-notes').innerHTML = _g.tp.notes({
+						notes	: info
+					});
+				}
 			}});
 		},
 		read	: function(ids){
