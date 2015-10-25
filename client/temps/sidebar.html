@@ -1,8 +1,8 @@
 {{#each sections}}
-	{{#if url}}<a href="{{url}}" title="{{tooltip}}">{{/if}}<div class="side-title"><b>{{name}}</b></div>{{#if url}}</a>{{/if}}
+	{{#if url}}<a href="{{url}}" title="{{tooltip}}" nocard>{{/if}}<div class="side-title"><b>{{name}}</b></div>{{#if url}}</a>{{/if}}
 	{{#each links}}
 		{{#if tabled}}
-			<a href="{{url}}"><div class="side-link {{#if active}}side-select{{/if}}">
+			<a href="{{url}}" nocard><div class="side-link {{#if active}}side-select{{/if}}">
 				<table>
 					<tr>
 						<td style="width:100%;">{{name}}</td>
@@ -11,7 +11,7 @@
 				</table>
 			</div></a>
 		{{else}}
-			<a href="{{url}}"><div class="side-link {{#if active}}side-select{{/if}}">{{name}}</div></a>
+			<a href="{{url}}" nocard><div class="side-link {{#if active}}side-select{{/if}}">{{name}}</div></a>
 		{{/if}}
 	{{/each}}
 {{/each}}
