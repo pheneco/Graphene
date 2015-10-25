@@ -454,7 +454,12 @@ var Graphene		= new(function(url,api,name){
 						i.reverse();
 						l.reverse();
 						//	remove client elements not recognized by server
-						for(var k = 0; k < l.length; k++) if(!~i.indexOf(l[k])){ _i('post-' + l[k]).remove(); n.push(l[k])};
+						for(var k = 0; k < l.length; k++)
+							if(!~i.indexOf(l[k])){
+								if(_i('post-' + l[k]))
+									_i('post-' + l[k]).remove();
+								n.push(l[k]);
+							};
 						
 						//	need to remove deleted posts' ids from _g.p.posts
 						for(var m = 0; m < n.length; n++) _g.p.posts.splice(_g.p.posts.indexOf(l[k]),1);
