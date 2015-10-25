@@ -35,37 +35,33 @@ User.find({},function(e,uu){
 	uu.forEach(function(u){
 		if(!u) return ++count;
 		
-		if(!u.advanced[0]) u.advanced = [{
-			emailNotes	: true,
-			hoverColors	: false,
-			eventStream	: true
-		}];
+		if(!u.bio) u.bio = "<i>No information available.</i>";
 		//	dev version
-		// u.save(function(){
-			// if(++count == uu.length){
-				// console.log('finished update commands');
-				// process.exit();
-			// }
-		// });
+		u.save(function(){
+			if(++count == uu.length){
+				console.log('finished update commands');
+				process.exit();
+			}
+		});
 		
 		//	gra version
-		mailer.sendMail({
-			from	: 'support@phene.co',
-			to		: u.email,
-			subject	: 'Graphene Update',
-			text	: plainText,
-			html	: EmailTemp({
-				content : richText,
-				prefix	: 'gra'
-			})
-		},function(e,i){
-			if(e) console.log(e);
-			u.save(function(){
-				if(++count == uu.length){
-					console.log('finished update commands');
-					process.exit();
-				}
-			});
-		});
+		// mailer.sendMail({
+			// from	: 'support@phene.co',
+			// to		: u.email,
+			// subject	: 'Graphene Update',
+			// text	: plainText,
+			// html	: EmailTemp({
+				// content : richText,
+				// prefix	: 'gra'
+			// })
+		// },function(e,i){
+			// if(e) console.log(e);
+			// u.save(function(){
+				// if(++count == uu.length){
+					// console.log('finished update commands');
+					// process.exit();
+				// }
+			// });
+		// });
 	});
 });

@@ -52,7 +52,8 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 										emailNotes	: true,
 										hoverColors	: false,
 										eventStream	: true
-									}]
+									}],
+									bio			: '<i>No information available.</i>'
 								});
 								nu.save(function(e,u){
 									if(!e){
