@@ -72,6 +72,22 @@ module.exports = function(app, Graphene, Notification){
 						Posts.emit(""+u._id);
 						for(var i = 0; i < tags.length; i++) Tags.emit(""+tags[i]);
 						res.send("");
+						User.find({username:{$in:users}},function(e,u){
+							if(e) return console.log(e);
+							for(var i = 0; i < u.length; i++){
+								var note = new Note({
+									recipient	: ""+u[i]._id,
+									sender		: req.session.user,
+									type		: "attag",
+									data		: [
+										p._id
+									],
+									read		: !1
+								});
+								note.save();
+								Notification.emit(""+u[i]._id);
+							}
+						});
 					}else{
 						res.send("Error creating post.");	
 						console.log("Error creating post.");	
