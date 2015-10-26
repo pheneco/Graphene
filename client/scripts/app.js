@@ -922,11 +922,11 @@ var Graphene		= new(function(url,api,name){
 						toCrop	: info.toCrop,
 						name	: info.name,
 						bio		: info.bio,
-						id		: info.id,
+						id		: info._id,
 						rankname: info.rankname,
-						shwfbtn	: _g.session.user && info.id !== _g.session.user,
-						shwedit	: _g.session.user && info.id == _g.session.user,
-						shwcrp	: _g.session.avatar !== 'http://img.phene.co/default/0-36.jpg',
+						shwfbtn	: _g.session.user && info._id !== _g.session.user,
+						shwedit	: !1,
+						shwcrp	: !1,
 						fllwng	: info.following
 					});
 					_i('users').innerHTML += '<div class="user listed">'+utmp+'</div>';

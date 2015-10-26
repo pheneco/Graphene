@@ -11,7 +11,7 @@
 			</div>
 			<div class="user-bio">{{{bio}}}</div>
 			{{#if shwfbtn}}
-				<div style="margin-bottom:10px;{{#if listed}}bottom:0;position:absolute;width:300px;" >
+				<div style="margin-bottom:10px;{{#if listed}}bottom:0;position:absolute;width:300px;{{/if}}" >
 					{{#if fllwng}}
 						<a onclick="_g.u.unfollow('{{id}}')"><div class="user-follow">Unfollow</div></a>
 					{{else}}
