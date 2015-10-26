@@ -9,7 +9,7 @@
 				<a href="{{url}}" nocard><b>{{name}}</b></a>
 				<span class="post-rank">{{rankname}}</span>
 			</div>
-			<div class="user-bio"><span style="outline:0;" {{#if shwedit}}contenteditable{{/if}}>{{{bio}}}</span></div>
+			<div class="user-bio"><div id="user-bio-input" style="outline:0;width:190px;min-height:10px;" {{#if shwedit}}contenteditable{{/if}}>{{{bio}}}</div></div>
 			{{#if shwfbtn}}
 				<div style="margin-bottom:10px;{{#if listed}}bottom:0;position:absolute;width:300px;{{/if}}" >
 					{{#if fllwng}}

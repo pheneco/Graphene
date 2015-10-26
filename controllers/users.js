@@ -226,6 +226,14 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		});
 		});
 	});
+	app.post('/user/bio/set', function(req,res){
+		User.update({_id:req.session.user}, {
+			bio			: striptags(req.body.bio)
+		}, {upsert: true}, function(e){
+			if(e) res.send(e);
+			else res.send("");
+		});
+	});
 	
 	//	Info
 	app.get('/session', function(req,res){

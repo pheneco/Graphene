@@ -879,6 +879,13 @@ var Graphene		= new(function(url,api,name){
 					}
 					if(!_g.u.loaded) _i('page-column').insertAdjacentHTML('afterbegin',utmp);
 					else _i('user').outerHTML = utmp;
+					if(_g.session.user && info.id == _g.session.user){
+						window.setTimeout(function(){
+							_i('user-bio-input').onkeypress = function(){
+								this.innerHTML = this.innerText;
+							}
+						},0);
+					}
 					_g.t.update(info.accent);
 					_g.u.loaded = !0;
 				}
