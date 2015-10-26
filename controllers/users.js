@@ -16,7 +16,8 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		multer	= require('multer'),
 		upload	= multer({dest:'/tmp/'}),
 		autoReap= require('multer-autoreap'),
-		bcrypt	= require('bcrypt-nodejs');
+		bcrypt	= require('bcrypt-nodejs'),
+		striptags = require('striptags');
 	
 	//	Accounts
 	app.post('/user/new', function(req,res){

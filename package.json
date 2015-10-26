@@ -22,6 +22,7 @@
 		"handlebars"		: ">=4.0.3",
 		"sharp"				: ">=0.11.3",
 		"multer"			: ">=1.0.6",
-		"multer-autoreap"	: ">=0.0.9"
+		"multer-autoreap"	: ">=0.0.9",
+		"striptags"			: ">=2.0.4"
 	}
 }
