@@ -883,11 +883,14 @@ var Graphene		= new(function(url,api,name){
 						window.setTimeout(function(){
 							_i('user-bio-input').onkeypress = function(e){
 								this.innerHTML = this.innerText;
-								if(e.keyCode == 13 && this.value != '') new ajax(_g.api + '/user/bio', 'POST', 'bio=' + encodeURIComponent(this.innerText),{
-									load	: function(){
-										page(window.location.pathname);
-									}
-								});
+								if(e.keyCode == 13 && this.value != ''){
+									e.preventDefault();
+									new ajax(_g.api + '/user/bio/set', 'POST', 'bio=' + encodeURIComponent(this.innerText),{
+										load	: function(){
+											page(window.location.pathname);
+										}
+									});
+								}
 							}
 						},0);
 					}
