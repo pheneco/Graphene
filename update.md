@@ -23,6 +23,11 @@ To edit your bio, just click on it on your user page, type your desired text, an
 This field is plain text only, no MarkDown for the time being.
 
 
+Link posts are also reimplemented!
+There is no specified button to add a link to a post, it is now just a parsing of text posts.
+If the first line is a proper link (and it is not the only line) it will be used as the post's link and then treated as a link post.
+
+
 Report bugs and review the source code on [GitHub](https://github.com/Trewbot/Graphene).
 
 
