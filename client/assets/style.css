@@ -90,8 +90,8 @@
 	
 .hovercard					{position:fixed;z-index:101;padding:10px;width:190px;background:#fff;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;display:none;transition:opacity 0.5s;-webkit-transition:opacity 0.5s;}
 
-#user						{position:absolute;left:-250px;}
-	#user-content			{position:fixed;top:40px;width:190px;border:0 !important;background:#fff;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;padding:10px;}
+.user						{top:40px;width:190px;border:0 !important;background:#fff;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;padding:10px;}
+	.user.listed			{width:500px;margin-bottom:40px;}
 	.user-info div:last-child{margin-bottom:0 !important;}
 	.user-name				{margin-bottom:10px;}
 	.user-name a:hover		{color:#444444;}

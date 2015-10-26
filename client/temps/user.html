@@ -1,16 +1,17 @@
 {{#unless card}}
-<div id="user" style="position:relative">
-	<div id="user-content">
+<div id="user" class="user">
 {{/unless}}
-		<div class="user-info">
-			<a href="{{url}}" nocard><img class="user-avatar" src="{{avat}}"/></a>
+		<div class="user-info" style="position:relative;">
+			{{#if listed}}<table><tr><td>{{/if}}
+			<a href="{{url}}" nocard><img class="user-avatar" src="{{avat}}" {{#if listed}}style="margin-bottom:0;"{{/if}}/></a>
+			{{#if listed}}</td><td style="padding:0 10px;vertical-align:top;width:300px;">{{/if}}
 			<div class="user-name">
 				<a href="{{url}}" nocard><b>{{name}}</b></a>
 				<span class="post-rank">{{rankname}}</span>
 			</div>
 			<div class="user-bio">{{{bio}}}</div>
 			{{#if shwfbtn}}
-				<div style="margin-bottom:10px;">
+				<div style="margin-bottom:10px;{{#if listed}}bottom:0;position:absolute;width:300px;" >
 					{{#if fllwng}}
 						<a onclick="_g.u.unfollow('{{id}}')"><div class="user-follow">Unfollow</div></a>
 					{{else}}
@@ -37,8 +38,8 @@
 			<div class="user-link" style="position:relative;"><input type="file" id="avatinput" onchange="_g.u.avatar()" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;z-index:1;cursor:pointer;font-size:0;"/>Upload Avatar</div>
 			{{#if shwcrp}}<div class="user-link" onclick="_g.u.crop('{{toCrop}}')" style="cursor:pointer;">Edit Avatar</div>{{/if}}
 			{{/if}}
+			{{#if listed}}</td></tr></table>{{/if}}
 		</div>
 {{#unless card}}
-	</div>
 </div>
 {{/unless}}

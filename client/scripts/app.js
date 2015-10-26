@@ -870,7 +870,14 @@ var Graphene		= new(function(url,api,name){
 							}
 						]
 					});
-					if(!_g.u.loaded) _i('body').insertAdjacentHTML('afterbegin',utmp);
+					if(!_i('page-column')){
+						var nw = document.createElement('div');
+						nw.className = 'column slim left';
+						pcn = _i('body');
+						pcn.insertBefore(nw, pcn.children[0]);
+						nw.innerHTML = '<div id="page-column" class="column-fix"></div>';
+					}
+					if(!_g.u.loaded) _i('page-column').insertAdjacentHTML('afterbegin',utmp);
 					else _i('user').outerHTML = utmp;
 					_g.t.update(info.accent);
 					_g.u.loaded = !0;
@@ -908,6 +915,8 @@ var Graphene		= new(function(url,api,name){
 					_g.u.info.id[info._id] = info;
 					info.rankname = _g.u.ranks[info.rank];
 					var utmp = _g.temps.user({
+						card	: !0,
+						listed	: !0,
 						url		: info.url,
 						avat	: info.avatarFull,
 						toCrop	: info.toCrop,
@@ -920,7 +929,7 @@ var Graphene		= new(function(url,api,name){
 						shwcrp	: _g.session.avatar !== 'http://img.phene.co/default/0-36.jpg',
 						fllwng	: info.following
 					});
-					_i('users').innerHTML += utmp;
+					_i('users').innerHTML += '<div class="user listed">'+utmp+'</div>';
 				}
 			})
 		},
