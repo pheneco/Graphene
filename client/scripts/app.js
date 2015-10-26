@@ -894,8 +894,8 @@ var Graphene		= new(function(url,api,name){
 						if(last == void 0)
 							_i("users").innerHTML = "<div id='_u'></div>";
 						var u		= JSON.parse(r.responseText);
-						_g.b.toLoad += u.length * 3;
-						_g.b.loaded = 0;
+						// _g.b.toLoad += u.length * 3;
+						// _g.b.loaded = 0;
 						for(var i = 0; i < u.length; i++)
 							this.load(u[i]);
 						if(last == void 0) _i("_u").remove();
@@ -904,11 +904,12 @@ var Graphene		= new(function(url,api,name){
 			} else this.needLoad = !1;
 		},
 		load	: function(id){
+			if(id == 'last' || id == 'only') return;
 			new ajax(_g.api + '/user/' + id + '/byId', 'GET', '', {
-				change	: function(){
-					_g.b.loaded++;
-					_g.b.update();
-				},
+				// change	: function(){
+					// _g.b.loaded++;
+					// _g.b.update();
+				// },
 				load	: function(r){
 					var info = JSON.parse(r.response);
 					_g.u.info.id[info.username] = info;
