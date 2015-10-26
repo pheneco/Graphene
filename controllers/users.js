@@ -272,7 +272,12 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		Graphene.getUserInfo(req.params.user,true,function(u){
 			res.send(u);
 		},req,res);
-	})
+	});
+	app.get('/user/:user/byId', function(req,res){
+		Graphene.getUserInfo(req.params.user,false,function(u){
+			res.send(u);
+		},req,res);
+	});
 	app.get('/user/:user/getId', function(req,res){
 		User.findOne({username:req.params.user.toLowerCase()}, function(e,u){
 			if(e || u == null) return res.send(e);

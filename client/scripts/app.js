@@ -189,6 +189,7 @@ var Graphene		= new(function(url,api,name){
 				}
 				_i('side-content').innerHTML = _g.temps.side(o);
 				_i('side-version').innerHTML = "<a href='http://phene.co'>phene.co, 2015<br></a><a href='" + _g.url + "/changes/webClient'>" + _g.v + "</a>-<a href='" + _g.url + "/changes/server'>" + _g.session.sVersion + "</a>";
+				_g.b.toLoad = 0;
 				next();
 			}});
 		},
@@ -326,7 +327,7 @@ var Graphene		= new(function(url,api,name){
 						var pls		= JSON.parse(r.responseText);
 						this.posts	= this.posts.concat(pls);
 						// window.__prl();
-						_g.b.toLoad = pls.length * 3;
+						_g.b.toLoad += pls.length * 3;
 						_g.b.loaded = 0;
 						for(var i = 0; i < pls.length; i++) this.load(pls[i], 'all', 'a');
 						this.loading = !1;
@@ -885,7 +886,7 @@ var Graphene		= new(function(url,api,name){
 						if(last == void 0)
 							_i("users").innerHTML = "<div id='_u'></div>";
 						var u		= JSON.parse(r.responseText);
-						_g.b.toLoad = u.length * 3;
+						_g.b.toLoad += u.length * 3;
 						_g.b.loaded = 0;
 						for(var i = 0; i < u.length; i++)
 							this.load(u[i]);
@@ -895,6 +896,32 @@ var Graphene		= new(function(url,api,name){
 			} else this.needLoad = !1;
 		},
 		load	: function(id){
+			new ajax(_g.api + '/user/' + id + '/byId', 'GET', '', {
+				change	: function(){
+					_g.b.loaded++;
+					_g.b.update();
+				},
+				load	: function(r){
+					var info = JSON.parse(r.response);
+					_g.u.info.id[info.username] = info;
+					_g.u.info.id[info._id] = info;
+					info.rankname = _g.u.ranks[info.rank];
+					var utmp = _g.temps.user({
+						url		: info.url,
+						avat	: info.avatarFull,
+						toCrop	: info.toCrop,
+						name	: info.name,
+						bio		: info.bio,
+						id		: info.id,
+						rankname: info.rankname,
+						shwfbtn	: _g.session.user && info.id !== _g.session.user,
+						shwedit	: _g.session.user && info.id == _g.session.user,
+						shwcrp	: _g.session.avatar !== 'http://img.phene.co/default/0-36.jpg',
+						fllwng	: info.following
+					});
+					_i('users').innerHTML += utmp;
+				}
+			})
 		},
 		follow	: function(user,feed){
 			var load = function(r){
