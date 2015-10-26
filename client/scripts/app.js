@@ -881,8 +881,13 @@ var Graphene		= new(function(url,api,name){
 					else _i('user').outerHTML = utmp;
 					if(_g.session.user && info.id == _g.session.user){
 						window.setTimeout(function(){
-							_i('user-bio-input').onkeypress = function(){
+							_i('user-bio-input').onkeypress = function(e){
 								this.innerHTML = this.innerText;
+								if(e.keyCode == 13 && this.value != '') new ajax(_g.api + '/user/bio', 'POST', 'bio=' + encodeURIComponent(this.innerText),{
+									load	: function(){
+										page(window.location.pathname);
+									}
+								});
 							}
 						},0);
 					}
