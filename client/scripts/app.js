@@ -532,7 +532,8 @@ var Graphene		= new(function(url,api,name){
 				'feeds',
 				'changes',
 				'change',
-				'post-new'
+				'post-new',
+				'users'
 			]
 			for(var i in p) if(se = _i(p[i])) se.remove();
 			
