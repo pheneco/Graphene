@@ -1,73 +1,126 @@
 /*
- *	Graphene Web Client w0.4.3
- *	Written by Trewbot
- *	Oct 25, 2015
+ *	Graphene Web Client w0.5.0
+ *	Written by Trevor J Hoglund
+ *	Dec 18, 2015
  */
 
-//	General Functions
-
-	var __cs = {};
-	function _i(i){return document.getElementById(i);}
-	function _c(c){return document.getElementsByClassName(c);}
-	function _h(i){return Handlebars.compile(_i(i+'-template').innerHTML)};
-	Element.prototype._c = function(c){return this.getElementsByClassName(c);}
-	String.prototype.isEmail = function(){return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(this);}
-	function scrollToPos(){
-		// Arguments: positions to, time, incremements 
-		var idst = (dist = arguments[0] - (cpos = document.documentElement.scrollTop || scrollY)) / (inum = (time = arguments[1] || 500) / (inc = arguments[2] || 10)),i=-1;
-		window.scrollBy(0, dist % inum);
-		while((++i)<inum) setTimeout(function(){window.scrollBy(0, idst)}, i * inc);
-	}
-	function resize(){
-		window.setTimeout((function(){
-			var t = this,
-				c = t.cloneNode();
-			t.parentNode.insertBefore(c, t);
-			c.style.height = 'auto';
-			c.value = t.value;
-			t.style.height = (c.scrollTop + c.scrollHeight + 20) + 'px';
-			t.parentNode.removeChild(c);
-		}).bind(this), 0);
-	}
-	function greenText(){
-		var p = document.getElementsByTagName('p');
-		for(i in p)
-			if(p[i].textContent&&p[i].textContent[0]==">")
-				p[i].style.color = "green";
-	}
-	Element.prototype.fitContent = function(){
-		var l = ['change','cut','paste','drop','keydown'];
-		for(var i in l) this.addEventListener(l[i], resize.bind(this), !1);
-	}
-	Handlebars.registerHelper('ifCond', function(u,s,v,o){
-		return eval(u + s + v) ? o.fn(this) : o.inverse(this);
-	});
-	Handlebars.registerHelper('strCompare', function(u,v,o){
-		return u == v ? o.fn(this) : o.inverse(this);
-	})
-	window.twttr = (function(d, s, id){
-		var t,
-			js,
-			fjs = d.getElementsByTagName(s)[0];
-		if(d.getElementById(id)) return;
-		js 		= d.createElement(s);
-		js.id 	= id;
-		js.src 	= "https://platform.twitter.com/widgets.js";
-		fjs.parentNode.insertBefore(js, fjs);
-		return window.twttr || (t = {
-			_e : [],
-			ready : function(f){
-				t._e.push(f)
+   (function bippity(){
+		window._c = function(c){return document.getElementsByClassName(c);}
+		window._h = function(i){return Handlebars.compile(_i(i+'-template').innerHTML)};
+		window._i = function(i){return document.getElementById(i);}
+    })();
+    function boppity(){
+		Element.prototype._c = function(c){return this.getElementsByClassName(c);}
+		Element.prototype.fitContent = function(){
+			var l = ['change','cut','paste','drop','keydown'];
+			for(var i in l) this.addEventListener(l[i], resize.bind(this), !1);
+		}
+		Handlebars.registerHelper('ifCond', function(u,s,v,o){
+			return eval(u + s + v) ? o.fn(this) : o.inverse(this);
+		});
+		Handlebars.registerHelper('strCompare', function(u,v,o){
+			return u == v ? o.fn(this) : o.inverse(this);
+		});
+		SC.initialize({
+			client_id	: '19ae8fa1aae0ba94bf94e017aa5651de'
+		});
+		String.prototype.isEmail = function(){return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(this);}
+		window.ajax = function(url, type, header, ops){
+			var r = new XMLHttpRequest(),
+			o = ops || {};
+			r.open(type, url, !0);
+			r.withCredentials = typeof o.cred == 'boolean' ? o.cred : !0;
+			r.setRequestHeader("Content-type", o.type || "application/x-www-form-urlencoded");
+			r.send(header);
+			typeof o.load == 'function' && r.addEventListener('load', function(){o.load(r);});
+			typeof o.change == 'function' && (r.onreadystatechange = o.change);
+			return r;
+		}
+		window.greenText = function(){
+			var p = document.getElementsByTagName('p');
+			for(i in p)
+				if(p[i].textContent&&p[i].textContent[0]==">")
+					p[i].style.color = "green";
+		}
+		window.pageview = function(ctx){
+			ga('set', {
+				page	: ctx.path,
+				title	: _g.page
+			});
+			ga('send', 'pageview');
+		}
+		window.resize = function(){
+			window.setTimeout((function(){
+				var t = this,
+					c = t.cloneNode();
+				t.parentNode.insertBefore(c, t);
+				c.style.height = 'auto';
+				c.value = t.value;
+				t.style.height = (c.scrollTop + c.scrollHeight + 20) + 'px';
+				t.parentNode.removeChild(c);
+			}).bind(this), 0);
+		}
+		window.scrollToPos = function(){
+			// Arguments: positions to, time, incremements 
+			var idst = (dist = arguments[0] - (cpos = document.documentElement.scrollTop || scrollY)) / (inum = (time = arguments[1] || 500) / (inc = arguments[2] || 10)),i=-1;
+			window.scrollBy(0, dist % inum);
+			while((++i)<inum) setTimeout(function(){window.scrollBy(0, idst)}, i * inc);
+		}
+		window.twttr = (function(d, s, id){
+			var t,
+				js,
+				fjs = d.getElementsByTagName(s)[0];
+			if(d.getElementById(id)) return;
+			js 		= d.createElement(s);
+			js.id 	= id;
+			js.src 	= "https://platform.twitter.com/widgets.js";
+			fjs.parentNode.insertBefore(js, fjs);
+			return window.twttr || (t = {
+				_e : [],
+				ready : function(f){
+					t._e.push(f)
+				}
+			});
+		}(document, "script", "twitter-wjs"));
+		//	This is the thing that does everything important
+		new ajax(_g.api + "/session", "GET", "", {
+			change	: function(r){
+				if(r.target.status !== 200) {
+					if(_g.b.error) return;
+					_g.b.error						= !0;
+					var le							= _i('loading');
+					_i('loading-bar').id			= 'loading-error-bar';
+					_i('loading-error-bar').style.width	= "100%";
+					_i('loading-error').innerHTML	= "Error " + r.target.status + " " + r.target.statusText;
+					le.style.opacity				= '1';
+					le.style.display				= '';
+					document.body.style.overflow	= 'hidden';
+				};
+			},
+			load	: function(r){
+				_g.session = JSON.parse(r.responseText);
+				_g.v		= _g.session.version;
+				_g.user		= _g.session.user;
+				_g.lvl		= _g.session.rank;
+				_g.t.update(_g.session.accent);
+				_g.t.search();
+				if(_g.session.user) _g.n.open();
+				page();
+				_g.cn.recheck(_g.session.v);
+				_g.n.check();
+				window.addEventListener('scroll', function(){
+					var cf = _c('column-fix');
+					for(var i = 0; i < cf.length; i++)
+						cf[i].style.top = ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) + "px";
+					if((_g.p.loaded && _g.p.needLoad && !_g.p.loading && _g.p.loadMore) && (((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) > (document.body.scrollHeight - 600 - window.innerHeight)))
+						_g.p.list(20);
+				});
+				window.addEventListener('mousemove',_g.u.hovercard);
 			}
 		});
-	}(document, "script", "twitter-wjs"));
-	SC.initialize({
-		client_id	: '19ae8fa1aae0ba94bf94e017aa5651de'
-	});
-	
-//	Classes
+    }
 
-var Graphene		= new(function(url,api,name){
+	_g		= (Graphene 	= new(function(url,api,name){
 		this.url	= url;
 		this.api	= api;
 		this.name	= name;
@@ -87,127 +140,411 @@ var Graphene		= new(function(url,api,name){
 			el.innerHTML = tv == 'true' ? el.getAttribute("off") : el.getAttribute("on");
 			el.setAttribute("toggled", tv == 'true' ? 'false' : 'true');
 		}
-	})(url,api,name),
-	ajax			= function(url, type, header, ops){
-		var r = new XMLHttpRequest(),
-		o = ops || {};
-		r.open(type, url, !0);
-		r.withCredentials = typeof o.cred == 'boolean' ? o.cred : !0;
-		r.setRequestHeader("Content-type", o.type || "application/x-www-form-urlencoded");
-		r.send(header);
-		typeof o.load == 'function' && r.addEventListener('load', function(){o.load(r);});
-		typeof o.change == 'function' && (r.onreadystatechange = o.change);
-		return r;
-	};
-	window._g		= Graphene;
-
-//	Functions
-
-	_g.t	= (_g.theme		= {
-		menuOpen	: !1,
-		accent		: '#333333',
-		menu		: function(){
-			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-200px" : "0px";
-		},
-		update		: function(c){
-			var s = document.styleSheets[1].cssRules, r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'];
-			for(i in r) s[++i].style[r[--i]] = c;
-			this.accent = c;
-		},
-		side		: function(ctx, next){
-			new ajax(_g.api + "/session", "GET", "", {load : function(r){
-				if(_g.session.user) {
-					_g.session = JSON.parse(r.responseText);
-					_g.t.update(_g.session.accent);
-					var o = {
-						sections : [
-							{
-								name	: "Feeds",
-								links	: [
-									{
-										name	: "Home",
-										url		: _g.url,
-										active	: ctx.path == "/"
-									}
-								].concat(_g.session.feeds).concat(
-									{
-										name	: "Edit Feeds",
-										url		: _g.url + "/feeds",
-										active	: ctx.path == "/feeds"
-									}
-								)
-							},
-							{
-								name	: "Account",
-								links	: [
-									{
-										name	: _g.session.userName,
-										url		: _g.session.url,
-										active	: ctx.path == _g.session.url.split(_g.url)[1]
-									},
-									{
-										tabled	: !0,
-										name	: "Posts:",
-										value	: _g.session.postCount,
-										url		: _g.session.url + "/posts",
-										active	: ctx.path == _g.session.url.split(_g.url)[1] + "/posts"
-									},
-									{
-										tabled	: !0,
-										name	: "Upvotes:",
-										value	: _g.session.upvoteCount,
-										url		: _g.session.url + "/upvotes",
-										active	: ctx.path == _g.session.url.split(_g.url)[1] + "/upvotes"
-									},
-									{
-										name	: "Settings",
-										url		: _g.url + "/settings",
-										active	: ctx.path == "/settings"
-									},
-									{
-										name	: "Sign Out",
-										url		: _g.url + "/logout"
-									}
-								]
-							}
-						]
-					};
-					for(var i = 1; i < o.sections[0].links.length - 1; i++){
-						o.sections[0].links[i].url = _g.url + "/feed/" + o.sections[0].links[i].name;
-						o.sections[0].links[i].active = ctx.path == "/feed/" + o.sections[0].links[i].name;
-					}
-				} else {
-					var o = {
-						sections : [
-							{
-								name	: "Sign In",
-								url		: _g.url + "/login",
-								tooltip	: "Sign In"
-							}
-						]
-					}
-				}
-				_i('side-content').innerHTML = _g.temps.side(o);
-				_i('side-version').innerHTML = "<a href='http://phene.co'>phene.co, 2015<br></a><a href='" + _g.url + "/changes/webClient'>" + _g.v + "</a>-<a href='" + _g.url + "/changes/server'>" + _g.session.sVersion + "</a>";
-				_g.b.toLoad = 0;
-				next();
-			}});
-		},
-		search		: function(){
-			if(!_i('info-column')){
-				var nw = document.createElement('div');
-				nw.className = 'column thin right';
-				pcn = _i('body');
-				pcn.insertBefore(nw, pcn.children[0]);
-				nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
+		setInterval(function(){
+			var ts = _c('timestamp');
+			for(var i = 0; i < ts.length; i++)
+				if(!isNaN(parseInt(ts[i].getAttribute('unix-time')))) ts[i].innerHTML = Graphene.time(ts[i].getAttribute('unix-time'));
+		}, 1e3);
+	})(url,api,name));boppity();
+	_g.b	= (_g.bar		= {
+		toLoad : 0,
+		loaded : 0,
+		error  : !1,
+		update : function(){
+			if(this.error) return;
+			var sl	= _i('side-loading'),
+				lb	= _i('loading-bar'),
+				le	= _i('loading'),
+				lr	= this.loaded / this.toLoad;
+			sl.style.height		= Math.min(lr,1) * 100 + "%";
+			lb.style.width		= Math.min(lr,1) * 100 + "%";
+			sl.style.display	= (lr >= 1) ? 'none' : 'block';
+			if(lr >= 1){
+				window.setTimeout(function(){
+					_i('loading').style.opacity = '0';
+					window.setTimeout(function(){
+						document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
+						_i('loading').style.display = 'none'
+					}, 310);
+					document.body.style.overflow = '';
+				}, 2500);
+			} else if(le.style.display !== 'none'){
+				document.getElementsByTagName('html')[0].style.overflowY = 'auto'
+				document.body.style.overflow = 'hidden';
 			}
-			_i('info-column').innerHTML += '<div id="search"><div class="notes-title">Search</div><input id="search-box"></div>';
-			window.setTimeout(function(){
-				_i('search-box').onkeypress = function(e){
-					if(e.keyCode == 13 && this.value != '') page('/search/' + encodeURIComponent(this.value));
-				}
-			},0);
+		},
+		fix		: function(){
+			if(!_g.b.error) return;
+			_g.b.error = !1;
+			_i('loading-error-bar').id = 'loading-bar';
+			_i('loading-error').innerHTML = "";
 		}
+	});
+	_g.c	= (_g.comments	= {
+		posting : !1,
+		loading : !1,
+		visible : [],
+		streams : {},
+		load	: function(id, after, amount){
+			if(this.loading) return;
+			this.loading = !0;
+			var post = _i('post-' + id),
+				cmts = post._c('comment'),
+				last = (cmts.length > 1 && !after) ? cmts[0].getAttribute('comment-id') : 'default';
+			new ajax(_g.api + '/post/' + id + '/comments', 'POST', JSON.stringify({
+				start	: last,
+				amount	: amount,
+				before	: !after
+			}), {
+				type	: 'application/json',
+				load	: function(r){
+					var ret = JSON.parse(r.response);
+					for(var i in ret)
+						ret[i].owner = ret[i].user.id == _g.session.user,
+						ret[i].post = id,
+						ret[i].timestamp = _g.time(ret[i].time);
+					if(after)
+						for(var i = ret.length - 1; i >= 0; i--)
+							cmts[cmts.length - 1].insertAdjacentHTML('beforebegin', Handlebars.partials.comment(ret[i]));
+					else
+						for(var i in ret)
+							cmts[0].insertAdjacentHTML('beforebegin', Handlebars.partials.comment(ret[i]));
+					_g.c.loading = !1;
+					post._c('comment-more')[0].style.display = (post._c('comment').length-1 == (+post._c('comment-num')[0].innerHTML)) ? 'none' : 'block';
+				}
+			});
+		},
+		key		: function(e,id){
+			if(e.keyCode == 13) _g.c.post(id);
+		},
+		post	: function(id){
+			if(this.posting) return;
+			this.posting = !0;
+			new ajax(_g.api + '/post/' + id + '/comment', 'POST', JSON.stringify({
+				text	: _i("comment-content-" + id).value
+			}), {
+				type	: 'application/json',
+				load	: function(r){
+					// _g.c.load(id, !0, 1);
+					window.setTimeout(function(){_g.c.posting = !1;},5e3);
+					_i("comment-content-" + id).value = '';
+				}
+			});
+		}, 
+		delete	: function(post,comment){
+			new ajax(_g.api + '/post/' + post + '/comment/' + comment, 'DELETE', '', {});
+		},
+		handle	: function(e){
+			var i = JSON.parse(e.data),
+				e = _i('post-'+i.id),
+				c = e._c('comment'),
+				l = [],
+				x;
+			e._c('comment-num')[0].innerHTML = i.count;
+			for(var j = 0; j < c.length - 1; j++) l[l.length] = c[j].getAttribute('comment-id');
+			//	remove client elements not recognized by server
+			for(var k = 0; k < l.length; k++) if(!~i.list.indexOf(l[k])) _i('comment-' + l[k]).remove();
+			//	load any new comments
+			if((x = i.list.length - 1 - i.list.indexOf(l[l.length-1])) > 0) _g.c.load(i.id,!0,x);
+		},
+		toggle	: function(id, focus){
+			var cpp = _i('post-' + id),
+				ccr = cpp._c('post-comments')[0];
+			if(ccr.style.display == 'none'){
+				ccr.style.display = 'block';
+				cpp._c('post')[0].className = 'post post-active';
+				if(typeof focus !== 'boolean' || focus) window.setTimeout(function(){ccr._c('comment-textbox')[0].focus();}, 0);
+			} else {
+				ccr.style.display = 'none';
+				cpp._c('post post-active')[0].className = 'post';
+			}
+		}
+	});
+	_g.cn	= (_g.changes	= {
+		stream	: {},
+		load	: function(ctx,next){
+			document.title = _g.page = "Changes | " + _g.name;
+			var app = typeof ctx.params.app == 'string' ? ctx.params.app : 'webClient',
+				post = _i('changes');
+			if(post == null){
+				post = document.createElement('div');
+				post.id = "changes";
+				cont = _i('body');
+				cont.appendChild(post);
+			}
+			post.innerHTML = _g.temps.post({
+				user	: {
+					name	: "Changes",
+					url		: "",
+					avatar	: "",
+				},
+				time	: "Loading...",
+				url		: "",
+				all		: !0,
+				blankPost : !0
+			});
+			_g.b.toLoad = 3;
+			_g.b.loaded = 0;
+			_g.b.update();
+			new ajax(_g.api + "/changes/" + app, "GET", "", {
+				change : function(){
+					_g.b.loaded++;
+					_g.b.update();
+				},
+				load : function(r){
+					var cl = JSON.parse(r.responseText);
+					_i('changes')._c('post-time')[0].innerHTML = cl[cl.length - 1].version;
+					_i('changes')._c('post-content')[0].outerHTML = '<div class="post-inputs"><table id="changelog"></table></div>';
+					var tb = _i("changelog"),tr,td;
+					for(var i in cl){
+						tr = tb.insertRow();
+						tr.insertCell().innerHTML = cl[i].version;
+						tr.insertCell().innerHTML = cl[i].description;
+					}
+					if(_g.lvl < 10) return;
+					post = _i('change');
+					if(post == null){
+						post = document.createElement('div');
+						post.id = "change";
+						cont = _i('body');
+						cont.appendChild(post);
+					}
+					post.innerHTML = _g.temps.post({
+						user	: _g.session,
+						time	: "New Change",
+						url		: "",
+						all		: !0,
+						blankPost : !0
+					});
+					var v1 = cl[cl.length - 1].version.split('.'),
+						v2 = v1[0] + "." + v1[1] + "." + v1[2] + ".";
+					for(var i = 0; i < 4 - (parseInt(v1[3]) + 1).toString().length; i++) v2 += "0";
+						v2 += (parseInt(v1[3]) + 1);
+					var d1 = new Date(),
+						d2 = (d1.getMonth() + 1) + "/" + d1.getDate() + "/" + d1.getFullYear();
+					post._c('post-content')[0].outerHTML = _g.temps.change({
+						app		: app,
+						version : v2,
+						date	: d2
+					});
+					post._c('post-inputs')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.cn.save(\'' + app + '\')">Save</div></div>');
+					scrollToPos(document.documentElement.scrollHeight);
+				}
+			});
+			next();
+		},
+		save	: function(app){
+			new ajax(_g.api + '/change/' + app, 'POST', JSON.stringify({
+				version		: _i('change-v').value,
+				date		: _i('change-d').value,
+				description	: _i('change-ds').value
+			}), {
+				type : 'application/json',
+				load : function(r){
+					if(r.responseText !== '')
+						_g.pu.open({
+							title			: "Error!",
+							text			: r.responseText,
+							titleColor		: "#ff2727",
+							titleTextColor	: "#fff"
+						});
+					page('/changes/' + app);
+				}
+			});
+		},
+		recheck	: function(v){
+			if(typeof(EventSource) !== "undefined"){
+				_g.cn.stream = new EventSource(_g.api + "/changes/stream/" + _g.v,{withCredentials:true});
+				_g.cn.stream.onmessage = function(e){
+					var dat = JSON.parse(e.data);
+					if(_g.v == dat.v)
+						return !1;
+					_g.cn.stream.close();
+					if(!_i('version')) body.insertAdjacentHTML('afterend', '<div id="version"></div>');
+					_i('version').innerHTML = 'Your Graphene version (<i>' + _g.v + '</i>) is out of date. Please <a href="javascript:location.reload();void(0);">reload</a> to update to <a href="' + _g.url + '/changes"><i>' + dat.v + '<i></a>.';
+					_g.cn.recheck(dat.v);
+				};
+			}
+		}
+	});
+	_g.cr	= (_g.creator	= {
+		images			: [],
+		imageLayout 	: [],
+		audioElement	: '',
+		audio			: '',
+		posting			: !1,
+		load			: function(){
+			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
+			var post = _i('post-new');
+			if(post == null){
+				post = document.createElement('div');
+				post.className = "post-increment";
+				post.id = "post-new";
+				cont = _i('body');
+				cont.insertBefore(post, cont.children[0]);
+			}
+			post.innerHTML = _g.temps.post({
+				user	: _g.session,
+				time	: "Right Now!",
+				all		: !0,
+				blankPost : !0
+			});
+			post.setAttribute('post-type', 'text');
+			post._c('post-content')[0].innerHTML = _g.temps.creator({url:_g.url});
+			post._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.cr.post()">Post</div></div>');
+			post.insertAdjacentHTML('afterbegin', '<div class="post-shade"></div>');
+			post.style.display = 'block';
+			post.style.opacity = '1';
+			_i('post-textbox-1').fitContent();
+			/*
+			_i('post-new-image').onchange = this.drop;
+			_i('post-new-audio').onchange = this.drop;
+			post.addEventListener('dragover', this.dragover);
+			post.addEventListener('drop', this.drop);
+			*/
+			return !0;
+		},
+		renderImages	: function(){
+			var img, pr
+				cre	= _i('post-new'),
+				pm	= cre._c('post-mediabox')[0];
+			pm.innerHTML = '<div></div>';
+			for(var i in this.imageLayout){
+				pr = document.createElement('div');
+				pr.className = 'post-images-' + this.imageLayout[i].length;
+				pm.appendChild(pr);
+				for(var j = 0; j < this.imageLayout[i].length; j++){
+					img = document.createElement('img');
+					img.src = this.images[this.imageLayout[i][j]];
+					img.imgId = this.imageLayout[i][j];
+					img.oncontextmenu = function(e){
+						e.preventDefault();
+						_g.m.open(e, {
+							Remove : "_g.cr.remove(" + this.imgId + ")",
+							"Move Up" : "",
+							"Move Down" : ""
+						})
+					};
+					pr.appendChild(img);
+				}
+			}
+		},
+		renderLink		: function(){
+			var cre = _i('post-new'),
+				pm = cre._c('post-mediabox')[0];
+			if(cre.getAttribute('post-type') == 'text'){
+				cre.setAttribute('post-type', 'link');
+				cre._c('post-medias')[0].style.display = 'none';
+				pr = document.createElement('input');
+				pr.className = 'post-link';
+				pr.placeholder = 'http://www.example.com/';
+				pm.appendChild(pr);
+				window.setTimeout(pr.focus(), 0);
+			}
+		},
+		dragover		: function(e){
+			e.stopPropagation();
+			e.preventDefault();
+			e.dataTransfer.dropEffect = 'move';
+		},
+		drop			: function(e){
+			var files	= (typeof e.dataTransfer !== 'undefined') ? e.dataTransfer.files : this.files,
+				cre		= _i('post-new'), f;
+			if((cre.getAttribute('post-type') == 'text' || cre.getAttribute('post-type') == 'image') && files[0].type.match('image.*')){
+				if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
+				for(var i in f = files[i]){
+					if(!f.type.match('image.*')) continue;
+					cre.setAttribute('post-type', 'image');
+					var reader = new FileReader();
+					reader.onload = function(e){
+						var pclen = _g.cr.images.length;
+						if(pclen < 11){
+							_g.cr.images[pclen] = e.target.result;
+							_g.cr.imageLayout[_g.cr.imageLayout.length] = [pclen];
+							cre._c('post-medias')[0].style.display = 'none';
+							_g.cr.renderImages();
+						}
+					};
+					reader.readAsDataURL(f);
+				}
+			} else if(cre.getAttribute('post-type') == 'text' && files[0].type.match('audio.*') && _g.cr.audio == ''){
+				pm = cre._c('post-mediabox')[0];
+				if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
+				cre.setAttribute('post-type', 'audio');
+				var reader = new FileReader();
+				reader.onload = function(f){
+					return function(e){
+						_g.cr.audio = e.target.result;
+						_g.cr.audioElement = window.URL.createObjectURL(f);
+						cre._c('post-medias')[0].style.display = 'none';
+						pm.innerHTML = '<div id="post-creator-blob"></div>';
+						new gra_aud(_i('post-creator-blob'), _g.cr.audioElement, {
+							color : _g.t.accent
+						});
+					};
+				}(files[0]);
+				reader.readAsDataURL(files[0]);
+			}
+		},
+		remove			: function(id){
+			this.images.splice(id, 1);
+			for(var i in this.imageLayout){
+				for(var j in this.imageLayout[i]){
+					if(this.imageLayout[i][j] == id) this.imageLayout[i].splice(j, 1), j--;
+					if(this.imageLayout[i][j] > id) this.imageLayout[i][j]--;
+				}
+				if(this.imageLayout[i].length == 0) this.imageLayout.splice(i, 1), i--;
+			}
+			if(this.imageLayout.length == 0){
+				var cre	= _('post-new'),
+					pm	= cre._c('post-mediabox')[0];
+				cre.setAttribute('post-type', 'text');
+				pm.innerHTML = '';
+			} else this.renderImages();
+		},
+		post 			: function(){
+			if(this.posting) return;
+			this.posting = !0;
+			if(typeof this.audioElement === 'object') this.audioElement.close();
+			this.audioElement = '';
+			var cre		= _i('post-new'),
+				type	= cre.getAttribute('post-type'),
+				shade	= cre._c('post-shade')[0],
+				text	= cre._c('post-textbox')[0].value.replace(/\r\n|\r|\n/g, "\n");
+			shade.style.display = 'block';
+			cre.style.opacity = '0.5';
+			new ajax(_g.api + '/post', 'POST', JSON.stringify({
+				set		: 'dash',
+				type	: type,
+				text	: text,
+				content	: type == 'image' ? {
+					layout	: this.imageLayout,
+					images	: this.images
+				} : type == 'audio' ? this.audio : type == 'link' ? cre._c('post-link')[0].value : ''
+			}), {
+				type	: 'application/json',
+				load	: function(r){
+					if(r.responseText !== '')
+						_g.pu.open({
+							title			: 'Error!',
+							text			: r.responseText,
+							titleColor		: '#ff2727',
+							titleTextColor	: '#fff'
+						});
+					_g.cr.posting = !1;
+					_g.cr.load();
+				}
+			})
+		}
+	});
+	_g.ct	= (_g.chat		= {
+		
+	});
+	_g.e	= (_g.editor	= {
+		
+	});
+	_g.g	= (_g.groups	= {
+		
 	});
 	_g.n	= (_g.notes		= {
 		amount	: 0,
@@ -548,573 +885,78 @@ var Graphene		= new(function(url,api,name){
 			next();
 		}
 	});
-	_g.e	= (_g.editor	= {
-		
-	});
-	_g.cr	= (_g.creator	= {
-		images			: [],
-		imageLayout 	: [],
-		audioElement	: '',
-		audio			: '',
-		posting			: !1,
-		load			: function(){
+	_g.rg	= (_g.register	= {
+		load	: function(ctx,next){
+			_g.b.toLoad = 1;
+			_g.b.loaded = 1;
+			_g.b.update();
+			document.title = _g.page = "Register | " + _g.name;
 			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
-			var post = _i('post-new');
-			if(post == null){
-				post = document.createElement('div');
-				post.className = "post-increment";
-				post.id = "post-new";
-				cont = _i('body');
-				cont.insertBefore(post, cont.children[0]);
-			}
-			post.innerHTML = _g.temps.post({
-				user	: _g.session,
-				time	: "Right Now!",
+			var reg			= document.createElement('div');
+			reg.id			= "register";
+			reg.innerHTML	= _g.temps.post({
+				user	: {
+					name	: "New User"
+				},
+				time	: "Register",
+				url		: "",
 				all		: !0,
 				blankPost : !0
 			});
-			post.setAttribute('post-type', 'text');
-			post._c('post-content')[0].innerHTML = _g.temps.creator({url:_g.url});
-			post._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.cr.post()">Post</div></div>');
-			post.insertAdjacentHTML('afterbegin', '<div class="post-shade"></div>');
-			post.style.display = 'block';
-			post.style.opacity = '1';
-			_i('post-textbox-1').fitContent();
-			/*
-			_i('post-new-image').onchange = this.drop;
-			_i('post-new-audio').onchange = this.drop;
-			post.addEventListener('dragover', this.dragover);
-			post.addEventListener('drop', this.drop);
-			*/
-			return !0;
+			
+			reg._c('post-content')[0].innerHTML = _g.temps.reg();
+			_i('body').appendChild(reg);
+			reg._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.rg.save()">Register</div></div>');	
+			next();
 		},
-		renderImages	: function(){
-			var img, pr
-				cre	= _i('post-new'),
-				pm	= cre._c('post-mediabox')[0];
-			pm.innerHTML = '<div></div>';
-			for(var i in this.imageLayout){
-				pr = document.createElement('div');
-				pr.className = 'post-images-' + this.imageLayout[i].length;
-				pm.appendChild(pr);
-				for(var j = 0; j < this.imageLayout[i].length; j++){
-					img = document.createElement('img');
-					img.src = this.images[this.imageLayout[i][j]];
-					img.imgId = this.imageLayout[i][j];
-					img.oncontextmenu = function(e){
-						e.preventDefault();
-						_g.m.open(e, {
-							Remove : "_g.cr.remove(" + this.imgId + ")",
-							"Move Up" : "",
-							"Move Down" : ""
-						})
-					};
-					pr.appendChild(img);
-				}
-			}
-		},
-		renderLink		: function(){
-			var cre = _i('post-new'),
-				pm = cre._c('post-mediabox')[0];
-			if(cre.getAttribute('post-type') == 'text'){
-				cre.setAttribute('post-type', 'link');
-				cre._c('post-medias')[0].style.display = 'none';
-				pr = document.createElement('input');
-				pr.className = 'post-link';
-				pr.placeholder = 'http://www.example.com/';
-				pm.appendChild(pr);
-				window.setTimeout(pr.focus(), 0);
-			}
-		},
-		dragover		: function(e){
-			e.stopPropagation();
-			e.preventDefault();
-			e.dataTransfer.dropEffect = 'move';
-		},
-		drop			: function(e){
-			var files	= (typeof e.dataTransfer !== 'undefined') ? e.dataTransfer.files : this.files,
-				cre		= _i('post-new'), f;
-			if((cre.getAttribute('post-type') == 'text' || cre.getAttribute('post-type') == 'image') && files[0].type.match('image.*')){
-				if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
-				for(var i in f = files[i]){
-					if(!f.type.match('image.*')) continue;
-					cre.setAttribute('post-type', 'image');
-					var reader = new FileReader();
-					reader.onload = function(e){
-						var pclen = _g.cr.images.length;
-						if(pclen < 11){
-							_g.cr.images[pclen] = e.target.result;
-							_g.cr.imageLayout[_g.cr.imageLayout.length] = [pclen];
-							cre._c('post-medias')[0].style.display = 'none';
-							_g.cr.renderImages();
-						}
-					};
-					reader.readAsDataURL(f);
-				}
-			} else if(cre.getAttribute('post-type') == 'text' && files[0].type.match('audio.*') && _g.cr.audio == ''){
-				pm = cre._c('post-mediabox')[0];
-				if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
-				cre.setAttribute('post-type', 'audio');
-				var reader = new FileReader();
-				reader.onload = function(f){
-					return function(e){
-						_g.cr.audio = e.target.result;
-						_g.cr.audioElement = window.URL.createObjectURL(f);
-						cre._c('post-medias')[0].style.display = 'none';
-						pm.innerHTML = '<div id="post-creator-blob"></div>';
-						new gra_aud(_i('post-creator-blob'), _g.cr.audioElement, {
-							color : _g.t.accent
-						});
-					};
-				}(files[0]);
-				reader.readAsDataURL(files[0]);
-			}
-		},
-		remove			: function(id){
-			this.images.splice(id, 1);
-			for(var i in this.imageLayout){
-				for(var j in this.imageLayout[i]){
-					if(this.imageLayout[i][j] == id) this.imageLayout[i].splice(j, 1), j--;
-					if(this.imageLayout[i][j] > id) this.imageLayout[i][j]--;
-				}
-				if(this.imageLayout[i].length == 0) this.imageLayout.splice(i, 1), i--;
-			}
-			if(this.imageLayout.length == 0){
-				var cre	= _('post-new'),
-					pm	= cre._c('post-mediabox')[0];
-				cre.setAttribute('post-type', 'text');
-				pm.innerHTML = '';
-			} else this.renderImages();
-		},
-		post 			: function(){
-			if(this.posting) return;
-			this.posting = !0;
-			if(typeof this.audioElement === 'object') this.audioElement.close();
-			this.audioElement = '';
-			var cre		= _i('post-new'),
-				type	= cre.getAttribute('post-type'),
-				shade	= cre._c('post-shade')[0],
-				text	= cre._c('post-textbox')[0].value.replace(/\r\n|\r|\n/g, "\n");
-			shade.style.display = 'block';
-			cre.style.opacity = '0.5';
-			new ajax(_g.api + '/post', 'POST', JSON.stringify({
-				set		: 'dash',
-				type	: type,
-				text	: text,
-				content	: type == 'image' ? {
-					layout	: this.imageLayout,
-					images	: this.images
-				} : type == 'audio' ? this.audio : type == 'link' ? cre._c('post-link')[0].value : ''
+		save	: function(){
+			new ajax(_g.api + '/user/new', 'POST', JSON.stringify({
+				username	: _i('settings-uname').value,
+				firstname	: _i('settings-fname').value,
+				lastname	: _i('settings-lname').value,
+				password	: _i('settings-pass').value,
+				email		: _i('settings-email').value
 			}), {
 				type	: 'application/json',
 				load	: function(r){
-					if(r.responseText !== '')
-						_g.pu.open({
-							title			: 'Error!',
-							text			: r.responseText,
-							titleColor		: '#ff2727',
-							titleTextColor	: '#fff'
-						});
-					_g.cr.posting = !1;
-					_g.cr.load();
-				}
-			})
-		}
-	});
-	_g.c	= (_g.comments	= {
-		posting : !1,
-		loading : !1,
-		visible : [],
-		streams : {},
-		load	: function(id, after, amount){
-			if(this.loading) return;
-			this.loading = !0;
-			var post = _i('post-' + id),
-				cmts = post._c('comment'),
-				last = (cmts.length > 1 && !after) ? cmts[0].getAttribute('comment-id') : 'default';
-			new ajax(_g.api + '/post/' + id + '/comments', 'POST', JSON.stringify({
-				start	: last,
-				amount	: amount,
-				before	: !after
-			}), {
-				type	: 'application/json',
-				load	: function(r){
-					var ret = JSON.parse(r.response);
-					for(var i in ret)
-						ret[i].owner = ret[i].user.id == _g.session.user,
-						ret[i].post = id,
-						ret[i].timestamp = _g.time(ret[i].time);
-					if(after)
-						for(var i = ret.length - 1; i >= 0; i--)
-							cmts[cmts.length - 1].insertAdjacentHTML('beforebegin', Handlebars.partials.comment(ret[i]));
-					else
-						for(var i in ret)
-							cmts[0].insertAdjacentHTML('beforebegin', Handlebars.partials.comment(ret[i]));
-					_g.c.loading = !1;
-					post._c('comment-more')[0].style.display = (post._c('comment').length-1 == (+post._c('comment-num')[0].innerHTML)) ? 'none' : 'block';
+					if(r.responseText !== '1') _g.pu.open({
+						title			: "Error!",
+						text			: r.responseText,
+						titleColor		: "#ff2727",
+						titleTextColor	: "#fff"
+					});
+					else page('/');
 				}
 			});
 		},
-		key		: function(e,id){
-			if(e.keyCode == 13) _g.c.post(id);
-		},
-		post	: function(id){
-			if(this.posting) return;
-			this.posting = !0;
-			new ajax(_g.api + '/post/' + id + '/comment', 'POST', JSON.stringify({
-				text	: _i("comment-content-" + id).value
-			}), {
-				type	: 'application/json',
-				load	: function(r){
-					// _g.c.load(id, !0, 1);
-					window.setTimeout(function(){_g.c.posting = !1;},5e3);
-					_i("comment-content-" + id).value = '';
-				}
-			});
-		}, 
-		delete	: function(post,comment){
-			new ajax(_g.api + '/post/' + post + '/comment/' + comment, 'DELETE', '', {});
-		},
-		handle	: function(e){
-			var i = JSON.parse(e.data),
-				e = _i('post-'+i.id),
-				c = e._c('comment'),
-				l = [],
-				x;
-			e._c('comment-num')[0].innerHTML = i.count;
-			for(var j = 0; j < c.length - 1; j++) l[l.length] = c[j].getAttribute('comment-id');
-			//	remove client elements not recognized by server
-			for(var k = 0; k < l.length; k++) if(!~i.list.indexOf(l[k])) _i('comment-' + l[k]).remove();
-			//	load any new comments
-			if((x = i.list.length - 1 - i.list.indexOf(l[l.length-1])) > 0) _g.c.load(i.id,!0,x);
-		},
-		toggle	: function(id, focus){
-			var cpp = _i('post-' + id),
-				ccr = cpp._c('post-comments')[0];
-			if(ccr.style.display == 'none'){
-				ccr.style.display = 'block';
-				cpp._c('post')[0].className = 'post post-active';
-				if(typeof focus !== 'boolean' || focus) window.setTimeout(function(){ccr._c('comment-textbox')[0].focus();}, 0);
-			} else {
-				ccr.style.display = 'none';
-				cpp._c('post post-active')[0].className = 'post';
-			}
-		}
-	});
-	_g.u	= (_g.users		= {
-		loaded	: !1,
-		info	: {
-			name	: {},
-			id		: {}
-		},
-		current	: '',
-		name	: '',
-		height	: 0,
-		x		: {},
-		ranks	: [
-			'Guest',
-			'Registered User',
-			'Activated User',
-			'Contributor',
-			'Creator',
-			'Advanced Creator',
-			'Beta Tester',
-			'Graphene Contributor',
-			'Moderator',
-			'Administrator',
-			'Developer',
-			'God'
-		],
-		set		: '',
-		setData	: '',
-		hovering: !1,
-		card	: '',
-		cardSrc	: {},
-		cards	: {},
-		cardTime: 0,
-		page	: function(user,ctx){
-			_g.u.name = user;
-			new ajax(_g.api + '/user/' + user, 'GET', '', {
-				load	: function(r){
-					var info = _g.u.info.name[user.toLowerCase()] = JSON.parse(r.response);
-					_g.u.info.id[info._id] = _g.u.info.name[user];
-					document.title = _g.page = info.name + " | " + _g.name;
-					_g.u.current = info.id = info._id;
-					info.rankname = _g.u.ranks[info.rank];
-					var utmp = _g.temps.user({
-						url		: info.url,
-						avat	: info.avatarFull,
-						toCrop	: info.toCrop,
-						name	: info.name,
-						bio		: info.bio,
-						id		: info.id,
-						rankname: info.rankname,
-						shwfbtn	: _g.session.user && info.id !== _g.session.user,
-						shwedit	: _g.session.user && info.id == _g.session.user,
-						shwcrp	: _g.session.avatar !== 'http://img.phene.co/default/0-36.jpg',
-						fllwng	: info.following,
-						links	: [
-							{
-								tabled	: !0,
-								name	: "Posts:",
-								value	: info.postCount,
-								url		: info.url + "/posts",
-								active	: ctx.path == info.url.split(_g.url)[1] + "/posts"
-							},
-							{
-								tabled	: !0,
-								name	: "Upvotes:",
-								value	: info.upvoteCount,
-								url		: info.url + "/upvotes",
-								active	: ctx.path == info.url.split(_g.url)[1] + "/upvotes"
-							}
-						]
-					});
-					if(!_i('page-column')){
-						var nw = document.createElement('div');
-						nw.className = 'column slim left';
-						pcn = _i('body');
-						pcn.insertBefore(nw, pcn.children[0]);
-						nw.innerHTML = '<div id="page-column" class="column-fix"></div>';
-					}
-					if(!_g.u.loaded) _i('page-column').insertAdjacentHTML('afterbegin',utmp);
-					else _i('user').outerHTML = utmp;
-					if(_g.session.user && info.id == _g.session.user){
-						window.setTimeout(function(){
-							_i('user-bio-input').onkeypress = function(e){
-								this.innerHTML = this.innerText;
-								if(e.keyCode == 13 && this.value != ''){
-									e.preventDefault();
-									new ajax(_g.api + '/user/bio/set', 'POST', 'bio=' + encodeURIComponent(this.innerText),{
-										load	: function(){
-											page(window.location.pathname);
-										}
-									});
-								}
-							}
-						},0);
-					}
-					_g.t.update(info.accent);
-					_g.u.loaded = !0;
-				}
-			})
-		},
-		list	: function(amount){
-			if(!_i('users')) _i('body').insertAdjacentHTML('afterbegin', '<div id="users"></div>');
-			var last	= _i('users').children[_i('users').children.length - 1],
-				lastId	= last == void 0 ? 'default' : last.id.split('-')[1];
-			if(lastId !== '0'){
-				new ajax(_g.api + '/users?set=' + this.set + '&amount=' + amount + '&data=' + this.setData + '&start=' + lastId, 'GET', '', {
-					load : function(r){
-						if(last == void 0)
-							_i("users").innerHTML = "<div id='_u'></div>";
-						var u		= JSON.parse(r.responseText);
-						// _g.b.toLoad += u.length * 3;
-						// _g.b.loaded = 0;
-						for(var i = 0; i < u.length; i++)
-							this.load(u[i]);
-						if(last == void 0) _i("_u").remove();
-					}.bind(this)
-				});
-			} else this.needLoad = !1;
-		},
-		load	: function(id){
-			if(id == 'last' || id == 'only') return;
-			new ajax(_g.api + '/user/' + id + '/byId', 'GET', '', {
-				// change	: function(){
-					// _g.b.loaded++;
-					// _g.b.update();
-				// },
-				load	: function(r){
-					var info = JSON.parse(r.response);
-					_g.u.info.id[info.username] = info;
-					_g.u.info.id[info._id] = info;
-					info.rankname = _g.u.ranks[info.rank];
-					var utmp = _g.temps.user({
-						card	: !0,
-						listed	: !0,
-						url		: info.url,
-						avat	: info.avatarFull,
-						toCrop	: info.toCrop,
-						name	: info.name,
-						bio		: info.bio,
-						id		: info._id,
-						rankname: info.rankname,
-						shwfbtn	: _g.session.user && info._id !== _g.session.user,
-						shwedit	: !1,
-						shwcrp	: !1,
-						fllwng	: info.following
-					});
-					_i('users').innerHTML += '<div class="user listed">'+utmp+'</div>';
-				}
-			})
-		},
-		follow	: function(user,feed){
-			var load = function(r){
-				if(r.responseText !== '') _g.pu.open({
-						title : "Error!",
-						text : r.responseText,
-						titleColor : "#ff2727",
-						titleTextColor : "#fff"
-					});
-				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+		check	: {
+			userName	: function(){
+				new ajax(_g.api + '/test/userName', 'GET', JSON.stringify({
+					username	: _i('settings-uname').value
+				}), {
+					type	: 'application/json',
 					load	: function(r){
-						if(_g.s.feedsPg) _g.s.feeds();
-						var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
-						_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
+						_i('un-taken').style.display = r.responseText == "taken" ? 'inline-block' : 'open';
 					}
 				});
-				if(_g.u.loaded && _g.u.current == user) page(window.location.pathname);
-			}
-			if(typeof feed == 'undefined')
-				new ajax(_g.api + '/user/' + user + '/follow', 'POST', '', {
-					load	: load
-				});
-			else
-				new ajax(_g.api + '/feed/' + feed + '/add/' + user, 'POST', '', {
-					load	: load
-				});
-		},
-		followLink: function(link,feed){
-			var p = link.split(_g.url)[1].split('#')[0].split("/");
-			if(!(typeof p[1] === 'string' && p[1].toLowerCase() == 'user' && typeof p[2] === 'string')) return !1;
-			new ajax(_g.api + '/user/' + p[2], 'GET', '', {
-				load : function(r){
-					var info = _g.u.info.name[p[2].toLowerCase()] = JSON.parse(r.response);
-					_g.u.info.id[info._id] = _g.u.info.name[p[2].toLowerCase()];
-					_g.u.follow(info._id,feed);
-				}
-			});
-		},
-		unfollow: function(user,feed){
-			var load	= function(r){
-				if(_g.s.feedsPg) _g.s.feeds();
-				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+			},
+			email		: function(){
+				_i('em-taken').style.display = 'none';
+				if(!_i('settings-email').value.isEmail()) return _i('em-false').style.display = 'inline-block';
+				_i('em-false').style.display = 'none';
+				new ajax(_g.api + '/test/email', 'GET', JSON.stringify({
+					username	: _i('settings-email').value
+				}), {
+					type	: 'application/json',
 					load	: function(r){
-						var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
-						_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
+						_i('em-taken').style.display = r.responseText == "taken" ? 'inline-block' : 'none';
 					}
 				});
-				if(_g.u.loaded && _g.u.current == user) page(window.location.pathname);
-			}
-			if(typeof feed == 'undefined')
-				new ajax(_g.api + '/user/' + user + '/unfollow', 'POST', '', {
-					load	: load
-				});
-			else
-				new ajax(_g.api + '/feed/' + feed + '/remove/' + user, 'POST', '', {
-					load	: load
-				});
-		},
-		avatar	: function(){
-			if(!_g.u.loaded || !_g.session.user || _g.u.current != _g.session.user) return false;
-			var xhr		= new XMLHttpRequest(),
-				file	= _i('avatinput').files[0],
-				data	= new FormData();
-			data.append("avatar", file);
-			xhr.onreadystatechange = function(e){
-				if(this.readyState==4) page(window.location.pathname);
-            };
-			xhr.open('POST',_g.api+'/user/avatar/new',true);
-			xhr.withCredentials = true;
-			xhr.send(data);
-		},
-		crop	: function(img){
-			_g.popup.open({
-				title	: "Crop Avatar",
-				text	: '<div id="crop-avatar" style="width:500px"></div><div class="popup-button" onclick="_g.u.cropSave()">Save</div>',
-				width	: "500px"
-			});
-			_g.u.x = new _g.x(_i('crop-avatar'), img, 'cut', {
-				square:true
-			});
-		},
-		cropSave: function(){
-			_i('popup-shade').remove();
-			new ajax(_g.api + '/user/avatar/crop/', 'POST', JSON.stringify(_g.u.x.getValues()), {
-				type	: 'application/json',
-				load	: function(r){
-					page(window.location.pathname);
-				}
-			});
-		},
-		hovercard: function(e){
-			if(_g.u.cardTime) window.clearTimeout(_g.u.cardTime);
-			if(_g.u.hovering){
-				var a = _g.u.cards[_g.u.card].getBoundingClientRect(),
-					b = _g.u.cardSrc.getBoundingClientRect();
-				if( e.clientY < b.top
-				|| (e.clientY < a.top && (e.clientX < b.left || e.clientX > b.right))
-				||  e.clientY > a.bottom
-				||  e.clientX < a.left
-				||  e.clientX > a.right){
-					window.setTimeout(function(){_g.u.cards[_g.u.card].style.display = 'none';},500);
-					_g.u.cards[_g.u.card].style.opacity = 0;
-					_g.u.hovering = !1;
-				}
-			} else {
-				var a,b;
-				if(a = e.target.parentAnchor()){
-					if(a.host !== _g.url.split('://')[1] || a.hasAttribute('nocard')) return;
-					var c = a.href.split(_g.url)[1].split("/");
-					if(c[1].toLowerCase() == 'user' && typeof c[2] == 'string')
-						_g.u.cardTime = window.setTimeout(function(){
-							_g.u.card = c[2].toLowerCase();
-							_g.u.hovering = !0;
-							if(_g.u.info.name[_g.u.card]) _g.u.loadCard(e);
-							else
-								new ajax(_g.api + '/user/' + c[2], 'GET', '', {
-									load	: function(r){
-										var info = _g.u.info.name[c[2].toLowerCase()] = JSON.parse(r.response);
-										_g.u.info.id[info._id] = _g.u.info.name[c[2].toLowerCase()];
-										_g.u.loadCard(e);
-									}
-								});
-						},750);
-				}
+			},
+			passwords	: function(){
+				_i('ps-nomatch').style.display = _i('settings-pass').value !== _i('settings-pass2').value ? 'inline-block' : 'none';
 			}
 		},
-		loadCard: function(e){
-			var cards, card, info = _g.u.info.name[_g.u.card];
-			if(info._id == null) return _g.u.hovering = !1;
-			_g.u.cardSrc = e.target;
-			if(!(cards = _i('hovercards')))
-				_i('body').insertAdjacentHTML('beforebegin', '<div id="hovercards"></div>'),
-				cards = _i('hovercards');
-			if(!(card = _g.u.cards[_g.u.card])){
-				card = document.createElement('div');
-				card.id = 'hovercard-' + _g.u.card;
-				card.className = 'hovercard';
-				card.innerHTML = '';
-				_g.u.cards[_g.u.card] = card;
-				cards.insertBefore(card, cards.children[0]);
-			}
-			info.id = info._id;
-			info.rankname = _g.u.ranks[info.rank];
-			var cont = _g.temps.user({
-				url		: info.url,
-				card	: !0,
-				avat	: info.avatarFull,
-				toCrop	: info.toCrop,
-				name	: info.name,
-				bio		: info.bio,
-				id		: info.id,
-				rankname: info.rankname,
-				shwfbtn	: _g.session.user && info.id !== _g.session.user,
-				shwedit	: !1,
-				shwcrp	: !1,
-				fllwng	: info.following
-			});
-			card.innerHTML = cont;
-			card.style.opacity = 0;
-			card.style.display = 'block';
-			var a = _g.u.cardSrc.getBoundingClientRect(),
-				b = _i('body').getBoundingClientRect(),
-				c = card.getBoundingClientRect();
-			card.style.top = a.bottom + 'px';
-			card.style.left = (a.left + (a.width/2)) - (c.width/2) + 'px';
-			card.style.opacity = 1;
-		}
 	});
 	_g.s	= (_g.settings	= {
 		feedsPg	: !1,
@@ -1507,223 +1349,112 @@ var Graphene		= new(function(url,api,name){
 			});
 		}
 	});
-	_g.rg	= (_g.register	= {
-		load	: function(ctx,next){
-			_g.b.toLoad = 1;
-			_g.b.loaded = 1;
-			_g.b.update();
-			document.title = _g.page = "Register | " + _g.name;
-			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
-			var reg			= document.createElement('div');
-			reg.id			= "register";
-			reg.innerHTML	= _g.temps.post({
-				user	: {
-					name	: "New User"
-				},
-				time	: "Register",
-				url		: "",
-				all		: !0,
-				blankPost : !0
-			});
-			
-			reg._c('post-content')[0].innerHTML = _g.temps.reg();
-			_i('body').appendChild(reg);
-			reg._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.rg.save()">Register</div></div>');	
-			next();
+	_g.t	= (_g.theme		= {
+		menuOpen	: !1,
+		accent		: '#333333',
+		menu		: function(){
+			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-200px" : "0px";
 		},
-		save	: function(){
-			new ajax(_g.api + '/user/new', 'POST', JSON.stringify({
-				username	: _i('settings-uname').value,
-				firstname	: _i('settings-fname').value,
-				lastname	: _i('settings-lname').value,
-				password	: _i('settings-pass').value,
-				email		: _i('settings-email').value
-			}), {
-				type	: 'application/json',
-				load	: function(r){
-					if(r.responseText !== '1') _g.pu.open({
-						title			: "Error!",
-						text			: r.responseText,
-						titleColor		: "#ff2727",
-						titleTextColor	: "#fff"
-					});
-					else page('/');
+		update		: function(c){
+			var s = document.styleSheets[1].cssRules, r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'];
+			for(i in r) s[++i].style[r[--i]] = c;
+			this.accent = c;
+		},
+		side		: function(ctx, next){
+			new ajax(_g.api + "/session", "GET", "", {load : function(r){
+				if(_g.session.user) {
+					_g.session = JSON.parse(r.responseText);
+					_g.t.update(_g.session.accent);
+					var o = {
+						sections : [
+							{
+								name	: "Feeds",
+								links	: [
+									{
+										name	: "Home",
+										url		: _g.url,
+										active	: ctx.path == "/"
+									}
+								].concat(_g.session.feeds).concat(
+									{
+										name	: "Edit Feeds",
+										url		: _g.url + "/feeds",
+										active	: ctx.path == "/feeds"
+									}
+								)
+							},
+							{
+								name	: "Account",
+								links	: [
+									{
+										name	: _g.session.userName,
+										url		: _g.session.url,
+										active	: ctx.path == _g.session.url.split(_g.url)[1]
+									},
+									{
+										tabled	: !0,
+										name	: "Posts:",
+										value	: _g.session.postCount,
+										url		: _g.session.url + "/posts",
+										active	: ctx.path == _g.session.url.split(_g.url)[1] + "/posts"
+									},
+									{
+										tabled	: !0,
+										name	: "Upvotes:",
+										value	: _g.session.upvoteCount,
+										url		: _g.session.url + "/upvotes",
+										active	: ctx.path == _g.session.url.split(_g.url)[1] + "/upvotes"
+									},
+									{
+										name	: "Settings",
+										url		: _g.url + "/settings",
+										active	: ctx.path == "/settings"
+									},
+									{
+										name	: "Sign Out",
+										url		: _g.url + "/logout"
+									}
+								]
+							}
+						]
+					};
+					for(var i = 1; i < o.sections[0].links.length - 1; i++){
+						o.sections[0].links[i].url = _g.url + "/feed/" + o.sections[0].links[i].name;
+						o.sections[0].links[i].active = ctx.path == "/feed/" + o.sections[0].links[i].name;
+					}
+				} else {
+					var o = {
+						sections : [
+							{
+								name	: "Sign In",
+								url		: _g.url + "/login",
+								tooltip	: "Sign In"
+							}
+						]
+					}
 				}
-			});
+				_i('side-content').innerHTML = _g.temps.side(o);
+				_i('side-version').innerHTML = "<a href='http://phene.co'>phene.co, 2015<br></a><a href='" + _g.url + "/changes/webClient'>" + _g.v + "</a>-<a href='" + _g.url + "/changes/server'>" + _g.session.sVersion + "</a>";
+				_g.b.toLoad = 0;
+				next();
+			}});
 		},
-		check	: {
-			userName	: function(){
-				new ajax(_g.api + '/test/userName', 'GET', JSON.stringify({
-					username	: _i('settings-uname').value
-				}), {
-					type	: 'application/json',
-					load	: function(r){
-						_i('un-taken').style.display = r.responseText == "taken" ? 'inline-block' : 'open';
-					}
-				});
-			},
-			email		: function(){
-				_i('em-taken').style.display = 'none';
-				if(!_i('settings-email').value.isEmail()) return _i('em-false').style.display = 'inline-block';
-				_i('em-false').style.display = 'none';
-				new ajax(_g.api + '/test/email', 'GET', JSON.stringify({
-					username	: _i('settings-email').value
-				}), {
-					type	: 'application/json',
-					load	: function(r){
-						_i('em-taken').style.display = r.responseText == "taken" ? 'inline-block' : 'none';
-					}
-				});
-			},
-			passwords	: function(){
-				_i('ps-nomatch').style.display = _i('settings-pass').value !== _i('settings-pass2').value ? 'inline-block' : 'none';
+		search		: function(){
+			if(!_i('info-column')){
+				var nw = document.createElement('div');
+				nw.className = 'column thin right';
+				pcn = _i('body');
+				pcn.insertBefore(nw, pcn.children[0]);
+				nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
 			}
-		},
-	});
-	_g.cn	= (_g.changes	= {
-		stream	: {},
-		load	: function(ctx,next){
-			document.title = _g.page = "Changes | " + _g.name;
-			var app = typeof ctx.params.app == 'string' ? ctx.params.app : 'webClient',
-				post = _i('changes');
-			if(post == null){
-				post = document.createElement('div');
-				post.id = "changes";
-				cont = _i('body');
-				cont.appendChild(post);
-			}
-			post.innerHTML = _g.temps.post({
-				user	: {
-					name	: "Changes",
-					url		: "",
-					avatar	: "",
-				},
-				time	: "Loading...",
-				url		: "",
-				all		: !0,
-				blankPost : !0
-			});
-			_g.b.toLoad = 3;
-			_g.b.loaded = 0;
-			_g.b.update();
-			new ajax(_g.api + "/changes/" + app, "GET", "", {
-				change : function(){
-					_g.b.loaded++;
-					_g.b.update();
-				},
-				load : function(r){
-					var cl = JSON.parse(r.responseText);
-					_i('changes')._c('post-time')[0].innerHTML = cl[cl.length - 1].version;
-					_i('changes')._c('post-content')[0].outerHTML = '<div class="post-inputs"><table id="changelog"></table></div>';
-					var tb = _i("changelog"),tr,td;
-					for(var i in cl){
-						tr = tb.insertRow();
-						tr.insertCell().innerHTML = cl[i].version;
-						tr.insertCell().innerHTML = cl[i].description;
-					}
-					if(_g.lvl < 10) return;
-					post = _i('change');
-					if(post == null){
-						post = document.createElement('div');
-						post.id = "change";
-						cont = _i('body');
-						cont.appendChild(post);
-					}
-					post.innerHTML = _g.temps.post({
-						user	: _g.session,
-						time	: "New Change",
-						url		: "",
-						all		: !0,
-						blankPost : !0
-					});
-					var v1 = cl[cl.length - 1].version.split('.'),
-						v2 = v1[0] + "." + v1[1] + "." + v1[2] + ".";
-					for(var i = 0; i < 4 - (parseInt(v1[3]) + 1).toString().length; i++) v2 += "0";
-						v2 += (parseInt(v1[3]) + 1);
-					var d1 = new Date(),
-						d2 = (d1.getMonth() + 1) + "/" + d1.getDate() + "/" + d1.getFullYear();
-					post._c('post-content')[0].outerHTML = _g.temps.change({
-						app		: app,
-						version : v2,
-						date	: d2
-					});
-					post._c('post-inputs')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.cn.save(\'' + app + '\')">Save</div></div>');
-					scrollToPos(document.documentElement.scrollHeight);
+			_i('info-column').innerHTML += '<div id="search"><div class="notes-title">Search</div><input id="search-box"></div>';
+			window.setTimeout(function(){
+				_i('search-box').onkeypress = function(e){
+					if(e.keyCode == 13 && this.value != '') page('/search/' + encodeURIComponent(this.value));
 				}
-			});
-			next();
-		},
-		save	: function(app){
-			new ajax(_g.api + '/change/' + app, 'POST', JSON.stringify({
-				version		: _i('change-v').value,
-				date		: _i('change-d').value,
-				description	: _i('change-ds').value
-			}), {
-				type : 'application/json',
-				load : function(r){
-					if(r.responseText !== '')
-						_g.pu.open({
-							title			: "Error!",
-							text			: r.responseText,
-							titleColor		: "#ff2727",
-							titleTextColor	: "#fff"
-						});
-					page('/changes/' + app);
-				}
-			});
-		},
-		recheck	: function(v){
-			if(typeof(EventSource) !== "undefined"){
-				_g.cn.stream = new EventSource(_g.api + "/changes/stream/" + _g.v,{withCredentials:true});
-				_g.cn.stream.onmessage = function(e){
-					var dat = JSON.parse(e.data);
-					if(_g.v == dat.v)
-						return !1;
-					_g.cn.stream.close();
-					if(!_i('version')) body.insertAdjacentHTML('afterend', '<div id="version"></div>');
-					_i('version').innerHTML = 'Your Graphene version (<i>' + _g.v + '</i>) is out of date. Please <a href="javascript:location.reload();void(0);">reload</a> to update to <a href="' + _g.url + '/changes"><i>' + dat.v + '<i></a>.';
-					_g.cn.recheck(dat.v);
-				};
-			}
+			},0);
 		}
 	});
-	_g.b	= (_g.bar		= {
-		toLoad : 0,
-		loaded : 0,
-		error  : !1,
-		update : function(){
-			if(this.error) return;
-			var sl	= _i('side-loading'),
-				lb	= _i('loading-bar'),
-				le	= _i('loading'),
-				lr	= this.loaded / this.toLoad;
-			sl.style.height		= Math.min(lr,1) * 100 + "%";
-			lb.style.width		= Math.min(lr,1) * 100 + "%";
-			sl.style.display	= (lr >= 1) ? 'none' : 'block';
-			if(lr >= 1){
-				window.setTimeout(function(){
-					_i('loading').style.opacity = '0';
-					window.setTimeout(function(){
-						document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
-						_i('loading').style.display = 'none'
-					}, 310);
-					document.body.style.overflow = '';
-				}, 2500);
-			} else if(le.style.display !== 'none'){
-				document.getElementsByTagName('html')[0].style.overflowY = 'auto'
-				document.body.style.overflow = 'hidden';
-			}
-		},
-		fix		: function(){
-			if(!_g.b.error) return;
-			_g.b.error = !1;
-			_i('loading-error-bar').id = 'loading-bar';
-			_i('loading-error').innerHTML = "";
-		}
-	});
-
-//	Templates
-
 	_g.tp	= (_g.temps		= {
 		post	: _h('post'),
 		side	: _h('sidebar'),
@@ -1733,46 +1464,325 @@ var Graphene		= new(function(url,api,name){
 		change	: _h('change'),
 		user	: _h('user'),
 		notes	: _h('note')
+	});Handlebars.registerPartial('comment', _i('comment-template').innerHTML);
+	_g.u	= (_g.users		= {
+		loaded	: !1,
+		info	: {
+			name	: {},
+			id		: {}
+		},
+		current	: '',
+		name	: '',
+		height	: 0,
+		x		: {},
+		ranks	: [
+			'Guest',
+			'Registered User',
+			'Activated User',
+			'Contributor',
+			'Creator',
+			'Advanced Creator',
+			'Beta Tester',
+			'Graphene Contributor',
+			'Moderator',
+			'Administrator',
+			'Developer',
+			'God'
+		],
+		set		: '',
+		setData	: '',
+		hovering: !1,
+		card	: '',
+		cardSrc	: {},
+		cards	: {},
+		cardTime: 0,
+		page	: function(user,ctx){
+			_g.u.name = user;
+			new ajax(_g.api + '/user/' + user, 'GET', '', {
+				load	: function(r){
+					var info = _g.u.info.name[user.toLowerCase()] = JSON.parse(r.response);
+					_g.u.info.id[info._id] = _g.u.info.name[user];
+					document.title = _g.page = info.name + " | " + _g.name;
+					_g.u.current = info.id = info._id;
+					info.rankname = _g.u.ranks[info.rank];
+					var utmp = _g.temps.user({
+						url		: info.url,
+						avat	: info.avatarFull,
+						toCrop	: info.toCrop,
+						name	: info.name,
+						bio		: info.bio,
+						id		: info.id,
+						rankname: info.rankname,
+						shwfbtn	: _g.session.user && info.id !== _g.session.user,
+						shwedit	: _g.session.user && info.id == _g.session.user,
+						shwcrp	: _g.session.avatar !== 'http://img.phene.co/default/0-36.jpg',
+						fllwng	: info.following,
+						links	: [
+							{
+								tabled	: !0,
+								name	: "Posts:",
+								value	: info.postCount,
+								url		: info.url + "/posts",
+								active	: ctx.path == info.url.split(_g.url)[1] + "/posts"
+							},
+							{
+								tabled	: !0,
+								name	: "Upvotes:",
+								value	: info.upvoteCount,
+								url		: info.url + "/upvotes",
+								active	: ctx.path == info.url.split(_g.url)[1] + "/upvotes"
+							}
+						]
+					});
+					if(!_i('page-column')){
+						var nw = document.createElement('div');
+						nw.className = 'column slim left';
+						pcn = _i('body');
+						pcn.insertBefore(nw, pcn.children[0]);
+						nw.innerHTML = '<div id="page-column" class="column-fix"></div>';
+					}
+					if(!_g.u.loaded) _i('page-column').insertAdjacentHTML('afterbegin',utmp);
+					else _i('user').outerHTML = utmp;
+					if(_g.session.user && info.id == _g.session.user){
+						window.setTimeout(function(){
+							_i('user-bio-input').onkeypress = function(e){
+								this.innerHTML = this.innerText;
+								if(e.keyCode == 13 && this.value != ''){
+									e.preventDefault();
+									new ajax(_g.api + '/user/bio/set', 'POST', 'bio=' + encodeURIComponent(this.innerText),{
+										load	: function(){
+											page(window.location.pathname);
+										}
+									});
+								}
+							}
+						},0);
+					}
+					_g.t.update(info.accent);
+					_g.u.loaded = !0;
+				}
+			})
+		},
+		list	: function(amount){
+			if(!_i('users')) _i('body').insertAdjacentHTML('afterbegin', '<div id="users"></div>');
+			var last	= _i('users').children[_i('users').children.length - 1],
+				lastId	= last == void 0 ? 'default' : last.id.split('-')[1];
+			if(lastId !== '0'){
+				new ajax(_g.api + '/users?set=' + this.set + '&amount=' + amount + '&data=' + this.setData + '&start=' + lastId, 'GET', '', {
+					load : function(r){
+						if(last == void 0)
+							_i("users").innerHTML = "<div id='_u'></div>";
+						var u		= JSON.parse(r.responseText);
+						// _g.b.toLoad += u.length * 3;
+						// _g.b.loaded = 0;
+						for(var i = 0; i < u.length; i++)
+							this.load(u[i]);
+						if(last == void 0) _i("_u").remove();
+					}.bind(this)
+				});
+			} else this.needLoad = !1;
+		},
+		load	: function(id){
+			if(id == 'last' || id == 'only') return;
+			new ajax(_g.api + '/user/' + id + '/byId', 'GET', '', {
+				// change	: function(){
+					// _g.b.loaded++;
+					// _g.b.update();
+				// },
+				load	: function(r){
+					var info = JSON.parse(r.response);
+					_g.u.info.id[info.username] = info;
+					_g.u.info.id[info._id] = info;
+					info.rankname = _g.u.ranks[info.rank];
+					var utmp = _g.temps.user({
+						card	: !0,
+						listed	: !0,
+						url		: info.url,
+						avat	: info.avatarFull,
+						toCrop	: info.toCrop,
+						name	: info.name,
+						bio		: info.bio,
+						id		: info._id,
+						rankname: info.rankname,
+						shwfbtn	: _g.session.user && info._id !== _g.session.user,
+						shwedit	: !1,
+						shwcrp	: !1,
+						fllwng	: info.following
+					});
+					_i('users').innerHTML += '<div class="user listed">'+utmp+'</div>';
+				}
+			})
+		},
+		follow	: function(user,feed){
+			var load = function(r){
+				if(r.responseText !== '') _g.pu.open({
+						title : "Error!",
+						text : r.responseText,
+						titleColor : "#ff2727",
+						titleTextColor : "#fff"
+					});
+				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+					load	: function(r){
+						if(_g.s.feedsPg) _g.s.feeds();
+						var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
+						_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
+					}
+				});
+				if(_g.u.loaded && _g.u.current == user) page(window.location.pathname);
+			}
+			if(typeof feed == 'undefined')
+				new ajax(_g.api + '/user/' + user + '/follow', 'POST', '', {
+					load	: load
+				});
+			else
+				new ajax(_g.api + '/feed/' + feed + '/add/' + user, 'POST', '', {
+					load	: load
+				});
+		},
+		followLink: function(link,feed){
+			var p = link.split(_g.url)[1].split('#')[0].split("/");
+			if(!(typeof p[1] === 'string' && p[1].toLowerCase() == 'user' && typeof p[2] === 'string')) return !1;
+			new ajax(_g.api + '/user/' + p[2], 'GET', '', {
+				load : function(r){
+					var info = _g.u.info.name[p[2].toLowerCase()] = JSON.parse(r.response);
+					_g.u.info.id[info._id] = _g.u.info.name[p[2].toLowerCase()];
+					_g.u.follow(info._id,feed);
+				}
+			});
+		},
+		unfollow: function(user,feed){
+			var load	= function(r){
+				if(_g.s.feedsPg) _g.s.feeds();
+				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
+					load	: function(r){
+						var info = _g.u.info.name[_g.u.info.id[user].username] = JSON.parse(r.response);
+						_g.u.info.id[user] = _g.u.info.name[_g.u.info.id[user].username];
+					}
+				});
+				if(_g.u.loaded && _g.u.current == user) page(window.location.pathname);
+			}
+			if(typeof feed == 'undefined')
+				new ajax(_g.api + '/user/' + user + '/unfollow', 'POST', '', {
+					load	: load
+				});
+			else
+				new ajax(_g.api + '/feed/' + feed + '/remove/' + user, 'POST', '', {
+					load	: load
+				});
+		},
+		avatar	: function(){
+			if(!_g.u.loaded || !_g.session.user || _g.u.current != _g.session.user) return false;
+			var xhr		= new XMLHttpRequest(),
+				file	= _i('avatinput').files[0],
+				data	= new FormData();
+			data.append("avatar", file);
+			xhr.onreadystatechange = function(e){
+				if(this.readyState==4) page(window.location.pathname);
+            };
+			xhr.open('POST',_g.api+'/user/avatar/new',true);
+			xhr.withCredentials = true;
+			xhr.send(data);
+		},
+		crop	: function(img){
+			_g.popup.open({
+				title	: "Crop Avatar",
+				text	: '<div id="crop-avatar" style="width:500px"></div><div class="popup-button" onclick="_g.u.cropSave()">Save</div>',
+				width	: "500px"
+			});
+			_g.u.x = new _g.x(_i('crop-avatar'), img, 'cut', {
+				square:true
+			});
+		},
+		cropSave: function(){
+			_i('popup-shade').remove();
+			new ajax(_g.api + '/user/avatar/crop/', 'POST', JSON.stringify(_g.u.x.getValues()), {
+				type	: 'application/json',
+				load	: function(r){
+					page(window.location.pathname);
+				}
+			});
+		},
+		hovercard: function(e){
+			if(_g.u.cardTime) window.clearTimeout(_g.u.cardTime);
+			if(_g.u.hovering){
+				var a = _g.u.cards[_g.u.card].getBoundingClientRect(),
+					b = _g.u.cardSrc.getBoundingClientRect();
+				if( e.clientY < b.top
+				|| (e.clientY < a.top && (e.clientX < b.left || e.clientX > b.right))
+				||  e.clientY > a.bottom
+				||  e.clientX < a.left
+				||  e.clientX > a.right){
+					window.setTimeout(function(){_g.u.cards[_g.u.card].style.display = 'none';},500);
+					_g.u.cards[_g.u.card].style.opacity = 0;
+					_g.u.hovering = !1;
+				}
+			} else {
+				var a,b;
+				if(a = e.target.parentAnchor()){
+					if(a.host !== _g.url.split('://')[1] || a.hasAttribute('nocard')) return;
+					var c = a.href.split(_g.url)[1].split("/");
+					if(c[1].toLowerCase() == 'user' && typeof c[2] == 'string')
+						_g.u.cardTime = window.setTimeout(function(){
+							_g.u.card = c[2].toLowerCase();
+							_g.u.hovering = !0;
+							if(_g.u.info.name[_g.u.card]) _g.u.loadCard(e);
+							else
+								new ajax(_g.api + '/user/' + c[2], 'GET', '', {
+									load	: function(r){
+										var info = _g.u.info.name[c[2].toLowerCase()] = JSON.parse(r.response);
+										_g.u.info.id[info._id] = _g.u.info.name[c[2].toLowerCase()];
+										_g.u.loadCard(e);
+									}
+								});
+						},750);
+				}
+			}
+		},
+		loadCard: function(e){
+			var cards, card, info = _g.u.info.name[_g.u.card];
+			if(info._id == null) return _g.u.hovering = !1;
+			_g.u.cardSrc = e.target;
+			if(!(cards = _i('hovercards')))
+				_i('body').insertAdjacentHTML('beforebegin', '<div id="hovercards"></div>'),
+				cards = _i('hovercards');
+			if(!(card = _g.u.cards[_g.u.card])){
+				card = document.createElement('div');
+				card.id = 'hovercard-' + _g.u.card;
+				card.className = 'hovercard';
+				card.innerHTML = '';
+				_g.u.cards[_g.u.card] = card;
+				cards.insertBefore(card, cards.children[0]);
+			}
+			info.id = info._id;
+			info.rankname = _g.u.ranks[info.rank];
+			var cont = _g.temps.user({
+				url		: info.url,
+				card	: !0,
+				avat	: info.avatarFull,
+				toCrop	: info.toCrop,
+				name	: info.name,
+				bio		: info.bio,
+				id		: info.id,
+				rankname: info.rankname,
+				shwfbtn	: _g.session.user && info.id !== _g.session.user,
+				shwedit	: !1,
+				shwcrp	: !1,
+				fllwng	: info.following
+			});
+			card.innerHTML = cont;
+			card.style.opacity = 0;
+			card.style.display = 'block';
+			var a = _g.u.cardSrc.getBoundingClientRect(),
+				b = _i('body').getBoundingClientRect(),
+				c = card.getBoundingClientRect();
+			card.style.top = a.bottom + 'px';
+			card.style.left = (a.left + (a.width/2)) - (c.width/2) + 'px';
+			card.style.opacity = 1;
+		}
 	});
-	Handlebars.registerPartial('comment', _i('comment-template').innerHTML);
-
-//	Routes
-
-function pageview(ctx){
-	ga('set', {
-		page	: ctx.path,
-		title	: _g.page
-	});
-	ga('send', 'pageview');
-}
-window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET", "", {change:function(r){
-	if(r.target.status !== 200) {
-		if(_g.b.error) return;
-		_g.b.error						= !0;
-		var le							= _i('loading');
-		_i('loading-bar').id			= 'loading-error-bar';
-		_i('loading-error-bar').style.width	= "100%";
-		_i('loading-error').innerHTML	= "Error " + r.target.status + " " + r.target.statusText;
-		le.style.opacity				= '1';
-		le.style.display				= '';
-		document.body.style.overflow	= 'hidden';
-	};
-
-	if(r.target.readyState !== 4) return;
 	
-	var _session_	= _g.session = JSON.parse(r.target.responseText);
-		_g.v		= _session_.version;
-		_g.user		= _session_.user;
-		_g.lvl		= _session_.rank;
-		_g.t.update(_session_.accent);
-	
-	page('*', _g.p.clear);
-	page('*', _g.t.side);
-	
-	_g.t.search();
-	if(_g.session.user) _g.n.open();
-	
-	//	Home/Stream Pages
+	page('*', _g.p.clear),
+	page('*', _g.t.side),
 	page('/', function(ctx,next){
 		if(!_g.user) page.redirect('/login');
 		else {
@@ -1790,7 +1800,7 @@ window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET",
 	page('/logout', function(){
 		window.location.replace(_g.api + "/logout");
 	});
-	page('/register', _g.rg.load, pageview);
+	page('/register', _g.rg.load, pageview),
 	page('/feed/:name', function(ctx,next){
 		if(!_g.user) page.redirect('/login');
 		else {
@@ -1819,11 +1829,7 @@ window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET",
 		_g.p.list(20);
 		next();
 	}, pageview);
-	
-	//	Changelog
-	page('/changes/:app?', _g.cn.load, pageview);
-	
-	//	Post Pages
+	page('/changes/:app?', _g.cn.load, pageview),
 	page('/post/:id', function(ctx,next){
 		if(!_i('posts')) _i('body').insertAdjacentHTML('beforeend', '<div id="posts"></div>');
 		_g.p.set = 'post';
@@ -1837,8 +1843,6 @@ window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET",
 		_g.p.listen();
 		next();
 	}, pageview);
-
-	//	User Pages
 	page('/user/:user', function(ctx,next){
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
@@ -1871,13 +1875,9 @@ window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET",
 			next();
 		}});
 	}, pageview);
-
-	//	Setting Pages
 	page('/settings', _g.s.load, pageview);
 	page('/settings/advanced', _g.s.advanced, pageview);
 	page('/feeds', _g.s.feeds, pageview);
-
-	//	404
 	page('*', function(ctx, next){
 		_g.b.error						= !0;
 		var le							= _i('loading');
@@ -1889,24 +1889,3 @@ window.addEventListener('load', function(){ new ajax(_g.api + "/session", "GET",
 		document.body.style.overflow	= 'hidden';
 		next();
 	}, pageview);
-	
-	page();
-	
-	_g.cn.recheck(_g.session.v);
-	_g.n.check();
-}});});
-
-setInterval(function(){
-	var ts = _c('timestamp');
-	for(var i = 0; i < ts.length; i++)
-		if(!isNaN(parseInt(ts[i].getAttribute('unix-time')))) ts[i].innerHTML = _g.time(ts[i].getAttribute('unix-time'));
-}, 1e3);
-//	I totally forgot this vvv was even a thing
-window.addEventListener('scroll', function(){
-	var cf = _c('column-fix');
-	for(var i = 0; i < cf.length; i++)
-		cf[i].style.top = ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) + "px";
-	if((_g.p.loaded && _g.p.needLoad && !_g.p.loading && _g.p.loadMore) && (((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) > (document.body.scrollHeight - 600 - window.innerHeight)))
-		_g.p.list(20);
-});
-window.addEventListener('mousemove',_g.u.hovercard)
