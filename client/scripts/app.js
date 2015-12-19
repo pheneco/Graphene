@@ -83,6 +83,7 @@
 			});
 		}(document, "script", "twitter-wjs"));
 		//	This is the thing that does everything important
+		window.addEventListener('load', function(){
 		new ajax(_g.api + "/session", "GET", "", {
 			change	: function(r){
 				if(r.target.status !== 200) {
@@ -117,6 +118,7 @@
 				});
 				window.addEventListener('mousemove',_g.u.hovercard);
 			}
+		});
 		});
     }
 
@@ -259,6 +261,12 @@
 				cpp._c('post post-active')[0].className = 'post';
 			}
 		}
+	});
+	_g.ca	= (_g.calendar	= {
+		
+	});
+	_g.cl	= (_g.color		= {	//	Reservation
+		
 	});
 	_g.cn	= (_g.changes	= {
 		stream	: {},
@@ -544,6 +552,9 @@
 		
 	});
 	_g.g	= (_g.groups	= {
+		
+	});
+	_g.m	= (_g.menu		= {	//	Reservation
 		
 	});
 	_g.n	= (_g.notes		= {
@@ -884,6 +895,9 @@
 			//	MOVING ON
 			next();
 		}
+	});
+	_g.pu	= (_g.popup		= {	//	Reservation
+		
 	});
 	_g.rg	= (_g.register	= {
 		load	: function(ctx,next){
@@ -1779,6 +1793,9 @@
 			card.style.left = (a.left + (a.width/2)) - (c.width/2) + 'px';
 			card.style.opacity = 1;
 		}
+	});
+	_g.x	= (_g.crop		= {	//	Reservation
+		
 	});
 	
 	page('*', _g.p.clear),
