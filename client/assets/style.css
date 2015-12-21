@@ -1,7 +1,7 @@
 /*
- *	Graphene Standard CSS w0.4.3
- *	Written by Trewbot
- *	Oct 25, 2015
+ *	Graphene Standard CSS w0.5.0
+ *	Written by Trevor J Hoglund
+ *	Dec 20, 2015
  */
  
 	*						{margin:0px;zoom:1;font-size:10pt;}
@@ -131,13 +131,13 @@
 	.post-image				{width:500px;margin-bottom:10px;}
 	.post-embed,
 	.post-video				{margin-bottom:10px;}
-	.post-video video		{width:500px;height:282px;border:0;outline:0;}
-	.post-video iframe		{width:500px;height:311px;border:0;outline:0;}
+	.post-video video		{width:500px;height:281.25px;border:0;outline:0;}
+	.post-video iframe		{width:500px;height:281.25px;border:0;outline:0;}
 	.post-link-cont			{margin-bottom:10px;color:#aaa;}
 	.post-link a			{font-size:14pt;}
 	.post-link-error		{margin-bottom:10px;border:2px solid #ff2727;line-height:150px;color:#ff2727;font-size:large !important;text-align:center;text-transform:uppercase;font-weight:bold;}
 	.post-thumb				{float:left;width:200px;margin-right:10px;}
-	.post iframe			{width:500px;height:311px;}
+	.post iframe			{width:500px;height:281.25px;}
 .post-options				{position:absolute;max-height:0px;transition:max-height 0.3s;-webkit-transition:max-height 0.3s;overflow:hidden;}
 	.post-active .post-options{position:relative !important;}
 	.post-active .post-options,

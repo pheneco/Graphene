@@ -1,6 +1,6 @@
 /*
  *	Graphene >> Post Routes
- *	Written by Trewbot
+ *	Written by Trevor J Hoglund
  *	Dec 20, 2015
  */
 

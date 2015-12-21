@@ -1,7 +1,7 @@
 /*
  *	Graphene
- *	Written by Trewbot
- *	Oct 22, 2015
+ *	Written by Trevor J Hoglund
+ *	Dec 20, 2015
  */
 
 //	Set Up
