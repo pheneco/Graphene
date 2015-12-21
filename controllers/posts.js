@@ -57,9 +57,9 @@ module.exports = function(app, Graphene, Notification){
 						at			: req.body.set,
 						richText	: richText
 							.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>').replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>')
-							.replace(/\/map (\s+)\n/gim, function($1){
+							.replace(/(\s+|^|\>)\/map\((.*)\)/g, function($1,$2){
 								return '<iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q='
-								       + encodeURIComponent($1)
+								       + encodeURIComponent($2)
 									   + '&key='
 									   + config.googleMapsEmbedAPIKey
 									   + '" allowfullscreen></iframe>';
