@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trewbot
- *	Oct 25, 2015
+ *	Dec 20, 2015
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -10,6 +10,7 @@ module.exports = function(app, Graphene, Notification){
 		User			= require('../models/user'),
 		Note			= require('../models/notification'),
 		Feed			= require('../models/feed'),
+		config			= require('../config.json'),
 		marked			= require('marked'),
 		fs				= require('fs'),
 		sse				= require('connect-sse')(),
@@ -54,7 +55,15 @@ module.exports = function(app, Graphene, Notification){
 				var post		= new Post({
 						user		: req.session.user,
 						at			: req.body.set,
-						richText	: richText.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>').replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>'),
+						richText	: richText
+							.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>').replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>')
+							.replace(/\/map (\s+)\n/gim, function($1){
+								return '<iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q='
+								       + encodeURIComponent($1)
+									   + '&key='
+									   + config.googleMapsEmbedAPIKey
+									   + '" allowfullscreen></iframe>';
+							}),
 						plainText	: plainText,
 						tags		: tags,
 						users		: users,

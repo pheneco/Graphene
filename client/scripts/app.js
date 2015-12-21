@@ -1798,8 +1798,8 @@
 		
 	});
 	
-	page('*', _g.p.clear),
-	page('*', _g.t.side),
+	page('*', _g.p.clear);
+	page('*', _g.t.side);
 	page('/', function(ctx,next){
 		if(!_g.user) page.redirect('/login');
 		else {
