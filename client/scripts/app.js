@@ -1805,6 +1805,7 @@
 	page('*', function(ctx,next){
 		var lnk = document.getElementsByTagName('link');
 		lnk[lnk.length-1].href = '/assets/img/fav.php?c=' + _g.session.accent.replace('#','');
+		next();
 	});
 	page('/', function(ctx,next){
 		if(!_g.user) page.redirect('/login');
