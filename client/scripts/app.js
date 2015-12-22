@@ -1796,6 +1796,34 @@
 			card.style.opacity = 1;
 		}
 	});
+	_g.ui	= (_g.interface	= {
+		columns	: [
+			{
+				width		: 'slim',	//	210px
+				defaultOfSize : !0,
+				contains	: [
+					'user'
+				]
+			},
+			{
+				width		: 'post',	//	500px
+				defaultOfSize : !0,
+				center		: !0,
+				contains	: [
+					'posts'
+				]
+			},
+			{
+				width		: 'thin',	//	300px
+				defaultOfSize : !0,
+				contains	: [
+					'search',
+					'notes'
+				]
+			}
+		],
+		blocks	: []
+	});
 	_g.x	= (_g.crop		= {	//	Reservation
 		
 	});
