@@ -56,6 +56,7 @@ module.exports = function(app, Graphene, Notification){
 						user		: req.session.user,
 						at			: req.body.set,
 						richText	: richText
+							.replace(/<a/,'<a target="_blank"')
 							.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>')
 							.replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>')
 							.replace(/<p>\/bandcamp album (.*)<\/p>/g, '<iframe style="border:0;" src="https://bandcamp.com/EmbeddedPlayer/album=$1/size=large/bgcol=ffffff/linkcol=444444/artwork=small/transparent=true/" seamless>Bandcamp Embed</iframe>')
