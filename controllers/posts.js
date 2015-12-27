@@ -58,10 +58,10 @@ module.exports = function(app, Graphene, Notification){
 						richText	: richText
 							.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>')
 							.replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>')
-							.replace(/\/bandcamp album (.*)/g, '<iframe style="border:0;" src="https://bandcamp.com/EmbeddedPlayer/album=$1/size=large/bgcol=ffffff/linkcol=444444/artwork=small/transparent=true/" seamless>Bandcamp Embed</iframe>')
-							.replace(/\/map (.*)/g, function($1){
+							.replace(/<p>\/bandcamp album (.*)<\/p>/g, '<iframe style="border:0;" src="https://bandcamp.com/EmbeddedPlayer/album=$1/size=large/bgcol=ffffff/linkcol=444444/artwork=small/transparent=true/" seamless>Bandcamp Embed</iframe>')
+							.replace(/<p>\/map (.*)<\/p>/g, function(){
 								return '<iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q='
-								       + encodeURIComponent($1)
+								       + encodeURIComponent(arguments[1])
 									   + '&key='
 									   + config.googleMapsEmbedAPIKey
 									   + '" allowfullscreen></iframe>';
