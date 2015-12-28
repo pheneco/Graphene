@@ -18,7 +18,7 @@ module.exports = function(app, Graphene, Notification){
 		https			= require('https'),
 		cheerio			= require('cheerio'),
 		request			= require('request'),
-		SC				= require('soundcloud'),
+		SC				= require('node-soundcloud'),
 		renderer		= new marked.Renderer(),
 		events			= require('events'),
 		Comments		= new events.EventEmitter(),
@@ -27,7 +27,7 @@ module.exports = function(app, Graphene, Notification){
 	Comments.setMaxListeners(0);
 	Tags.setMaxListeners(0);
 	Posts.setMaxListeners(0);
-	SC.initialize({
+	SC.init({
 		client_id	: config.soundcloudAPIKey
 	});
 	renderer.heading	= function(text,level){for(var i = 1; i < level; i++) text = '#' + text; return text;}	//	Kill header rendering
