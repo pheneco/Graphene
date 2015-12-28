@@ -1,6 +1,6 @@
 {
 	"name"			: "Graphene",
-	"version"		: "0.4.0",
+	"version"		: "0.5.0",
 	"description"	: "Server API application for the Graphene Social Network.",
 	"author"		: "Trevor \"Trewbot\" Hoglund <trewbot@phene.co>",
 	"contributors"	: [],
@@ -23,6 +23,7 @@
 		"sharp"				: ">=0.11.3",
 		"multer"			: ">=1.0.6",
 		"multer-autoreap"	: ">=0.0.9",
-		"striptags"			: ">=2.0.4"
+		"striptags"			: ">=2.0.4",
+		"soundcloud"		: ">=3.0.1"
 	}
 }
