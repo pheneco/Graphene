@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	Dec 18, 2015
+ *	Jan 02, 2016
  */
 
    (function bippity(){
@@ -1450,7 +1450,7 @@
 					}
 				}
 				_i('side-content').innerHTML = _g.temps.side(o);
-				_i('side-version').innerHTML = "<a href='http://phene.co'>phene.co, 2015<br></a><a href='" + _g.url + "/changes/webClient'>" + _g.v + "</a>-<a href='" + _g.url + "/changes/server'>" + _g.session.sVersion + "</a>";
+				_i('side-version').innerHTML = "<a href='http://phene.co'>phene.co, 2016<br></a><a href='" + _g.url + "/changes/webClient'>" + _g.v + "</a>-<a href='" + _g.url + "/changes/server'>" + _g.session.sVersion + "</a>";
 				_g.b.toLoad = 0;
 				next();
 			}});
