@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	Jan 02, 2016
+ *	Jan 10, 2016
  */
 
    (function bippity(){
@@ -1120,7 +1120,7 @@
 								name		: "Email Notifications",
 								id			: "t1",
 								toggle		: !0,
-								value		: !0,
+								value		: _g.session[0].emailNotes,
 								offValue	: "Off",
 								onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
 							},
@@ -1128,7 +1128,7 @@
 								name		: "Color Previews",
 								id			: "t2",
 								toggle		: !0,
-								value		: !1,
+								value		: _g.session[0].hoverColors,
 								offValue	: "Off <div style='color:#ccc;display:inline-block;'>(Default)</div>",
 								onValue		: "On"
 							},
@@ -1136,7 +1136,7 @@
 								name		: "Event Streams",
 								id			: "t3",
 								toggle		: !0,
-								value		: !0,
+								value		: _g.session[0].eventStreams,
 								offValue	: "Off",
 								onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
 							}
