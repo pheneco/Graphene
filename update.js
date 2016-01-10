@@ -29,13 +29,13 @@ var User		= require('./models/user'),
 console.log('connecting to database');
 mongoose.connect('mongodb://localhost/' + config.sub + 'phene');
 
-console.log('adding advanced options');
+console.log('adding color avatar option');
 User.find({},function(e,uu){
 	if(e) return console.log(e);
 	uu.forEach(function(u){
 		if(!u) return ++count;
 		
-		if(typeof u.colorAvatar != 'undefined') u.colorAvatar = false;
+		if(typeof u.colorAvatar == 'undefined') u.colorAvatar = false;
 		//	dev version
 		u.save(function(){
 			if(++count == uu.length){
