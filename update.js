@@ -1,7 +1,7 @@
 /*
  *	Graphene Update Commands
- *	Written by Trewbot
- *	Oct 25, 2015
+ *	Written by Trevor J Hoglund
+ *	Jan 10, 2016
  */
 
 console.log('running update commands');

@@ -20,9 +20,11 @@ echo updating client changelog
 echo updating server changelog
 %mongoDir%\mongorestore --drop --db %sub%phene %serverDir%\changelog\serverChanges.bson >nul 2>&1
 
-echo changing $dev to false
-del %serverDir%\client\scripts\dev.php
-rename %serverDir%\client\scripts\gra.php dev.php
+if not %1==dev (
+	echo changing $dev to false
+	del %serverDir%\client\scripts\dev.php
+	rename %serverDir%\client\scripts\gra.php dev.php
+)
 
 echo copying client code
 xcopy %serverDir%\client %clientDir%\ /e /h /c /r /q /y >nul
