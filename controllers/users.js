@@ -54,7 +54,8 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 										hoverColors	: false,
 										eventStream	: true
 									}],
-									bio			: '<i>No information available.</i>'
+									bio			: '<i>No information available.</i>',
+									colorAvatar	: false
 								});
 								nu.save(function(e,u){
 									if(!e){
@@ -225,6 +226,9 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		});
 		});
 		});
+	});
+	app.post('/user/avatar/generate',function(req,res){
+		
 	});
 	app.post('/user/bio/set', function(req,res){
 		User.update({_id:req.session.user}, {

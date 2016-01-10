@@ -1,7 +1,7 @@
 <!--
-  --	Graphene Index Page w0.4.2
-  --	Written by Trewbot
-  --	Oct 17, 2015
+  --	Graphene Index Page w0.5.0
+  --	Written by Trevor J Hoglund
+  --	Jan 10, 2016
   -->
 
 <? require('/scripts/dev.php'); ?>
@@ -41,7 +41,7 @@
 	<script src="/scripts/app.js"			type="text/javascript"></script>
 	
 	<script src="//scripts.phene.co/color/0.1.0.0006"></script>
-	<script src="//scripts.phene.co/crop/0.0.2.0017"></script>
+	<script src="//scripts.phene.co/crop/0.1.0.0025.min"></script>
 	<script src="//scripts.phene.co/popup/0.1.0.0012"></script>
 	<script src="//scripts.phene.co/menu/0.4.3.0031.min"></script>
 	
