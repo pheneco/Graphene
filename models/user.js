@@ -28,7 +28,8 @@ var mongoose	= require('mongoose'),
 		feeds		: [Feed],
 		advanced	: [Advanced],
 		bio			: String,
-		colorAvatar	: Boolean
+		colorAvatar	: Boolean,
+		avatarColor	: String
 	});
 	userSchema.index({
 		username	: 'text',

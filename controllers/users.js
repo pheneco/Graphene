@@ -55,7 +55,8 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 										eventStream	: true
 									}],
 									bio			: '<i>No information available.</i>',
-									colorAvatar	: false
+									colorAvatar	: false,
+									avatarColor	: '#444444'
 								});
 								nu.save(function(e,u){
 									if(!e){
@@ -257,7 +258,9 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 					}],
 					version		: c.version,
 					sVersion	: Graphene.v,
-					accent		: "#444444"
+					accent		: "#444444",
+					colorAvatar	: true,
+					avatarColor	: "#444444"
 				}));
 			});
 	});
