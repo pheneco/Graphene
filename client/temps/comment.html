@@ -1,5 +1,8 @@
 <div class="comment {{#if active}}comment-active{{/if}}" id="comment-{{id}}" comment-id="{{id}}">
-	<a href="{{user.url}}"><img class="comment-avatar" src="{{user.avatar}}"/></a>
+	<a href="{{user.url}}">
+		<div class="comment-avatar color-{{user._id}}" style="display:{{#if user.colorAvatar}}block{{else}}none{{/if}};background:{{user.avatarColor}}"></div>
+		<img class="comment-avatar avatar-{{user._id}}" style="display:{{#if user.colorAvatar}}none{{else}}block{{/if}}" src="{{user.avatar}}">
+	</a>
 	<div class="comment-content">
 		<span class="comment-name"><a href="{{user.url}}"><b>{{user.name}}</b></a></span>
 		<br/>

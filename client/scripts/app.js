@@ -393,6 +393,7 @@
 				cont = _i('body');
 				cont.insertBefore(post, cont.children[0]);
 			}
+			_g.session.id = _g.session._id;
 			post.innerHTML = _g.temps.post({
 				user	: _g.session,
 				time	: "Right Now!",
@@ -1526,6 +1527,7 @@
 						avat	: info.avatarFull,
 						toCrop	: info.toCrop,
 						clravat	: info.colorAvatar,
+						avatclr	: info.avatarColor,
 						name	: info.name,
 						bio		: info.bio,
 						id		: info.id,
@@ -1576,11 +1578,21 @@
 						},0);
 						new _g.cl.picker(_i('settings-avatclr'), {
 							input	: _i('settings-avatclr-input'),
-							color	: _g.session.accent,
-							func	: _g.t.update
+							color	: _g.session.avatarColor,
+							func	: function(clr){
+								var c = _c('color-' + _g.session._id);
+								for(var i = 0; i < c.length; i++)
+									c[i].style.background = clr;
+							}
 						});
 						_i('settings-clravat').addEventListener('click',function(e){
-							var tv = e.target.getAttribute("toggled");
+							var tv = e.target.getAttribute("toggled"),
+								a = _c('avatar-' + _g.session._id),
+								c = _c('color-' + _g.session._id);
+							for(var i = 0; i < a.length; i++)
+								a[i].style.display = tv != 'true' ? 'none' : 'block';
+							for(var i = 0; i < c.length; i++)
+								c[i].style.display = tv == 'true' ? 'none' : 'block';
 							_i('imgavatthing').style.display = tv != 'true' ? 'none' : 'block';
 							_i('clravatthing').style.display = tv == 'true' ? 'none' : 'block';
 							e.target.innerHTML = tv == 'true' ? e.target.getAttribute("off") : e.target.getAttribute("on");
@@ -1629,6 +1641,8 @@
 						url		: info.url,
 						avat	: info.avatarFull,
 						toCrop	: info.toCrop,
+						clravat	: info.colorAvatar,
+						avatclr	: info.avatarColor,
 						name	: info.name,
 						bio		: info.bio,
 						id		: info._id,

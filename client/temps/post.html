@@ -3,7 +3,10 @@
 {{/if}}
 	{{#ifCond all '||' header}}
 	<div class="post-header">
-		<a href="{{user.url}}"><img class="post-avatar" src="{{user.avatar}}"></a>
+		<a href="{{user.url}}">
+			<div class="post-avatar color-{{user.id}}" style="display:{{#if user.colorAvatar}}block{{else}}none{{/if}};background:{{user.avatarColor}};"></div>
+			<img class="post-avatar avatar-{{user.id}}" style="display:{{#if user.colorAvatar}}none{{else}}block{{/if}}" src="{{user.avatar}}">
+		</a>
 		<div class="post-name"><a href="{{user.url}}"><b>{{user.name}}</b></a></div>
 		<div class="post-time">{{#if url}}<a permalink href="{{url}}" class="timestamp" unix-time="{{time}}">{{/if}}{{#if timestamp}}{{timestamp}}{{else}}{{time}}{{/if}}{{#if url}}</a>{{/if}}</div>
 	</div>
@@ -132,7 +135,8 @@
 			{{#if commentable}}
 				<div class="comment" id="comment-creator-{{id}}">
 					<a href="{{you.url}}">
-						<img class="comment-avatar" src="{{you.avatar}}"/>
+						<div class="comment-avatar color-{{you._id}}" style="display:{{#if you.colorAvatar}}block{{else}}none{{/if}};background:{{you.avatarColor}}"></div>
+						<img class="comment-avatar avatar-{{you._id}}" style="display:{{#if you.colorAvatar}}none{{else}}block{{/if}}" src="{{you.avatar}}">
 					</a>
 					<div class="comment-content">
 						<div class="comment-name">

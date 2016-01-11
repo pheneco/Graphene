@@ -3,7 +3,10 @@
 {{/unless}}
 		<div class="user-info" style="position:relative;">
 			{{#if listed}}<table><tr><td>{{/if}}
-			<a href="{{url}}" nocard><img class="user-avatar" src="{{avat}}" {{#if listed}}style="margin-bottom:0;"{{/if}}/></a>
+			<a href="{{url}}" nocard>
+				<div class="user-avatar color-{{id}}" style="display:{{#if clravat}}block{{else}}none{{/if}};background:{{avatclr}};{{#if listed}}margin-bottom:0;{{/if}}"></div>
+				<img class="user-avatar avatar-{{id}}" style="display:{{#if clravat}}none{{else}}block{{/if}};{{#if listed}}margin-bottom:0;{{/if}}" src="{{avat}}">
+			</a>
 			{{#if listed}}</td><td style="padding:0 10px;vertical-align:top;width:300px;">{{/if}}
 			<div class="user-name">
 				<a href="{{url}}" nocard><b>{{name}}</b></a>
@@ -41,7 +44,7 @@
 					{{#if shwcrp}}<div class="user-link" onclick="_g.u.crop('{{toCrop}}')" style="cursor:pointer;">Edit Avatar</div>{{/if}}
 				</div>
 				<div id="clravatthing" style="display:{{#if clravat}}block{{else}}none{{/if}}">
-					<input type="text" id="settings-avatclr-input" class="settings-text" placeholder="#93D2FF" value="">
+					<input type="text" id="settings-avatclr-input" class="settings-text" placeholder="#444444" value="{{avatclr}}">
 					<div id="settings-avatclr"></div>
 					<div style="width:178px;text-align:center;margin-top:10px;" class="settings-toggle">Save</div>
 				</div>

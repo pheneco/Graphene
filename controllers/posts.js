@@ -255,7 +255,9 @@ module.exports = function(app, Graphene, Notification){
 					userName: u.userName,
 					id		: u._id,
 					url		: Graphene.url + "/user/" + u.userName,
-					avatar	: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-36.jpg"
+					avatar	: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-36.jpg",
+					avatarColor : u.avatarColor,
+					colorAvatar : u.colorAvatar
 				},
 				url			: Graphene.url + "/post/" + p._id,
 				id			: p._id,
