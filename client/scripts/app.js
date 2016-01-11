@@ -1597,10 +1597,10 @@
 							_i('clravatthing').style.display = tv ? 'none' : 'block';
 							e.target.innerHTML = tv == 'true' ? e.target.getAttribute("off") : e.target.getAttribute("on");
 							e.target.setAttribute("toggled", tv ? 'false' : 'true');
-							new ajax(_g.api + '/user/avatar/color', 'POST', "avatarColor=" + tv + "&colorAvatar=" + _g.session.colorAvatar);
+							new ajax(_g.api + '/user/avatar/color', 'POST', "colorAvatar=" + tv + "&avatarColor=" + _g.session.colorAvatar);
 						});
 						_i('settings-avclr-save').addEventListener('click',function(){
-							new ajax(_g.api + '/user/avatar/color', 'POST', "avatarColor=true&colorAvatar=" + _c('color-' + _g.session._id)[0].background,{
+							new ajax(_g.api + '/user/avatar/color', 'POST', "colorAvatar=true&avatarColor=" + _i('settings-avatclr-input').value,{
 								load	: function(r){
 									if(r.responseText !== '') _g.pu.open({
 										title			: "Error!",
