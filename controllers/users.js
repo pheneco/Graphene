@@ -228,8 +228,14 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		});
 		});
 	});
-	app.post('/user/avatar/generate',function(req,res){
-		
+	app.post('/user/avatar/color',function(req,res){
+		User.update({_id:req.session.user}, {
+			avatarColor	: req.body.avatarColor,
+			colorAvatar	: req.body.colorAvatar
+		}, {upsert: true}, function(e){
+			if(e) res.send(e);
+			else res.send("");
+		});
 	});
 	app.post('/user/bio/set', function(req,res){
 		User.update({_id:req.session.user}, {

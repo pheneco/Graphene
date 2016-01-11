@@ -1586,17 +1586,17 @@
 							}
 						});
 						_i('settings-clravat').addEventListener('click',function(e){
-							var tv = e.target.getAttribute("toggled"),
+							var tv = e.target.getAttribute("toggled") == 'true',
 								a = _c('avatar-' + _g.session._id),
 								c = _c('color-' + _g.session._id);
 							for(var i = 0; i < a.length; i++)
-								a[i].style.display = tv != 'true' ? 'none' : 'block';
+								a[i].style.display = !tv ? 'none' : 'block';
 							for(var i = 0; i < c.length; i++)
-								c[i].style.display = tv == 'true' ? 'none' : 'block';
-							_i('imgavatthing').style.display = tv != 'true' ? 'none' : 'block';
-							_i('clravatthing').style.display = tv == 'true' ? 'none' : 'block';
+								c[i].style.display = tv ? 'none' : 'block';
+							_i('imgavatthing').style.display = !tv ? 'none' : 'block';
+							_i('clravatthing').style.display = tv ? 'none' : 'block';
 							e.target.innerHTML = tv == 'true' ? e.target.getAttribute("off") : e.target.getAttribute("on");
-							e.target.setAttribute("toggled", tv == 'true' ? 'false' : 'true');
+							e.target.setAttribute("toggled", tv ? 'false' : 'true');
 						});
 					}
 					_g.t.update(info.accent);
