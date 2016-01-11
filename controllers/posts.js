@@ -288,7 +288,9 @@ module.exports = function(app, Graphene, Notification){
 								userName: uu[j].userName,
 								id		: uu[j]._id,
 								url		: Graphene.url + "/user/" + uu[j].userName,
-								avatar	: Graphene.img + "/" + uu[j].avatar + "/" + uu[j].avatarHash + "-36.jpg"
+								avatar	: Graphene.img + "/" + uu[j].avatar + "/" + uu[j].avatarHash + "-36.jpg",
+								avatarColor : uu[j].avatarColor,
+								colorAvatar : uu[j].colorAvatar
 							};
 					//	THIS IS WHERE POST TYPE HANDLING WILL GO
 					if(post.type == 'link') {
@@ -465,7 +467,9 @@ module.exports = function(app, Graphene, Notification){
 							userName: uu[m].userName,
 							id		: uu[m]._id,
 							url		: Graphene.url + "/user/" + uu[m].userName,
-							avatar	: Graphene.img + "/" + uu[m].avatar + "/" + uu[m].avatarHash + "-36.jpg"
+							avatar	: Graphene.img + "/" + uu[m].avatar + "/" + uu[m].avatarHash + "-36.jpg",
+							avatarColor : uu[m].avatarColor,
+							colorAvatar : uu[m].colorAvatar
 						};
 				res.send(cs);
 			});
