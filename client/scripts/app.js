@@ -1822,6 +1822,8 @@
 				card	: !0,
 				avat	: info.avatarFull,
 				toCrop	: info.toCrop,
+				clravat	: info.colorAvatar,
+				avatclr	: info.avatarColor,
 				name	: info.name,
 				bio		: info.bio,
 				id		: info.id,
