@@ -51,7 +51,7 @@ User.find({},function(e,uu){
 			// subject	: 'Graphene Update',
 			// text	: plainText,
 			// html	: EmailTemp({
-				// content : richText,
+				// content	: richText,
 				// prefix	: 'gra'
 			// })
 		// },function(e,i){

@@ -140,7 +140,7 @@
 			return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][stamp.getMonth()] + ' ' + stamp.getDate() + ', ' + stamp.getFullYear();
 		};
 		this.toggle = function(el){
-			var tv = el.getAttribute("toggled");;
+			var tv = el.getAttribute("toggled");
 			el.innerHTML = tv == 'true' ? el.getAttribute("off") : el.getAttribute("on");
 			el.setAttribute("toggled", tv == 'true' ? 'false' : 'true');
 		}
@@ -1525,6 +1525,7 @@
 						url		: info.url,
 						avat	: info.avatarFull,
 						toCrop	: info.toCrop,
+						clravat	: info.colorAvatar,
 						name	: info.name,
 						bio		: info.bio,
 						id		: info.id,
@@ -1573,6 +1574,18 @@
 								}
 							}
 						},0);
+						new _g.cl.picker(_i('settings-avatclr'), {
+							input	: _i('settings-avatclr-input'),
+							color	: _g.session.accent,
+							func	: _g.t.update
+						});
+						_i('settings-clravat').addEventListener('click',function(e){
+							var tv = e.target.getAttribute("toggled");
+							_i('imgavatthing').style.display = tv != 'true' ? 'none' : 'block';
+							_i('clravatthing').style.display = tv == 'true' ? 'none' : 'block';
+							e.target.innerHTML = tv == 'true' ? e.target.getAttribute("off") : e.target.getAttribute("on");
+							e.target.setAttribute("toggled", tv == 'true' ? 'false' : 'true');
+						});
 					}
 					_g.t.update(info.accent);
 					_g.u.loaded = !0;

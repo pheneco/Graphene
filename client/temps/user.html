@@ -34,9 +34,17 @@
 				{{/if}}
 			{{/each}}
 			{{#if shwedit}}
-			<div class="space"></div>
-			<div class="user-link" style="position:relative;"><input type="file" id="avatinput" onchange="_g.u.avatar()" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;z-index:1;cursor:pointer;font-size:0;"/>Upload Avatar</div>
-			{{#if shwcrp}}<div class="user-link" onclick="_g.u.crop('{{toCrop}}')" style="cursor:pointer;">Edit Avatar</div>{{/if}}
+				<div class="space"></div>
+				<div id="settings-clravat" class="settings-toggle" toggled="{{clravat}}" off="Image Avatar" on="Color Avatar">{{#if clravat}}Color Avatar{{else}}Image Avatar{{/if}}</div>
+				<div id="imgavatthing" style="display:{{#if clravat}}none{{else}}block{{/if}}">
+					<div class="user-link" style="position:relative;"><input type="file" id="avatinput" onchange="_g.u.avatar()" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;z-index:1;cursor:pointer;font-size:0;"/>Upload Avatar</div>
+					{{#if shwcrp}}<div class="user-link" onclick="_g.u.crop('{{toCrop}}')" style="cursor:pointer;">Edit Avatar</div>{{/if}}
+				</div>
+				<div id="clravatthing" style="display:{{#if clravat}}block{{else}}none{{/if}}">
+					<input type="text" id="settings-avatclr-input" class="settings-text" placeholder="#93D2FF" value="">
+					<div id="settings-avatclr"></div>
+					<div style="width:178px;text-align:center;margin-top:10px;" class="settings-toggle">Save</div>
+				</div>
 			{{/if}}
 			{{#if listed}}</td></tr></table>{{/if}}
 		</div>

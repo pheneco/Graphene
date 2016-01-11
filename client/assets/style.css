@@ -206,6 +206,9 @@
 	.feed-user				{padding:2px;}
 	.feed-user-r:hover		{cursor:pointer;color:#fff;background:#CD3E3E;}
 	#advset-link			{position:absolute;margin-top:5px;width:100%;text-align:center;}
+	#settings-clravat		{width:178px;text-align:center;}
+	#settings-avatclr-input	{width:176px;}
+	#settings-avatclr .gra_clr-sat {width:142px !important;}
 	
 #changelog td				{padding:3px;}
 	#changelog tr *:first-child{padding-right:10px;vertical-align:top;}
