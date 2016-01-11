@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	Dec 28, 2015
+ *	Jan 10, 2016
  */
 
 module.exports = function(app, Graphene, Notification){

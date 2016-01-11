@@ -1576,7 +1576,7 @@
 								}
 							}
 						},0);
-						new _g.cl.picker(_i('settings-avatclr'), {
+						var avclr = new _g.cl.picker(_i('settings-avatclr'), {
 							input	: _i('settings-avatclr-input'),
 							color	: _g.session.avatarColor,
 							func	: function(clr){
@@ -1597,6 +1597,25 @@
 							_i('clravatthing').style.display = tv ? 'none' : 'block';
 							e.target.innerHTML = tv == 'true' ? e.target.getAttribute("off") : e.target.getAttribute("on");
 							e.target.setAttribute("toggled", tv ? 'false' : 'true');
+							new ajax(_g.api + '/user/avatar/color', 'POST', "avatarColor=" + tv + "&colorAvatar=" + _g.session.colorAvatar);
+						});
+						_i('settings-avclr-save').addEventListener('click',function(){
+							new ajax(_g.api + '/user/avatar/color', 'POST', "avatarColor=true&colorAvatar=" + _c('color-' + _g.session._id)[0].background,{
+								load	: function(r){
+									if(r.responseText !== '') _g.pu.open({
+										title			: "Error!",
+										text			: r.responseText,
+										titleColor		: "#ff2727",
+										titleTextColor	: "#fff"
+									});
+									else _g.pu.open({
+										title			: "Saved",
+										text			: "Your settings have been saved.",
+										titleColor		: "#62ff62",
+										titleTextColor	: "#fff"
+									});
+								}
+							});
 						});
 					}
 					_g.t.update(info.accent);
