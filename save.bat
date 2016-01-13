@@ -27,10 +27,6 @@ rmdir /s /q %serverDir%\changelog\tmp
 echo returning to server dir
 cd %serverDir%
 
-echo copying client code
-if not exist %serverDir%\client md %serverDir%\client
-xcopy %clientDir% %serverDir%\client\ /e /h /c /r /q /y >nul
-
 echo pushing changes to github
 git add .
 echo.
@@ -38,6 +34,7 @@ set /p changeDesc=describe changes:
 git commit -m "%changeDesc%" >nul
 echo.
 git remote add origin https://github.com/Trewbot/Graphene.git >nul 2>&1
-git push origin master >nul
+set /p branch=branch: 
+git push origin %branch% >nul
 
 backup
