@@ -1,0 +1,17 @@
+{
+    "sub" : "dev",
+    "port" : 3000,
+    "imgDir" : "c:/web/img",
+    "audDir" : "c:/web/aud",
+	"database" : "graphene",
+    "sessionSecret" : "",
+    "mailService" : "",
+    "mailUser" : "",
+    "mailPass" : "",
+    "mongoDir" : "c:/web/bin/mongo",
+    "serverDir" : "c:/web/graphene",
+    "backupDir" : "c:/web/backup",
+    "sevenZipDir" : "c:/program files/7-zip",
+    "googleMapsEmbedAPIKey" : "",
+    "soundcloudAPIKey" : ""
+}
