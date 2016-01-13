@@ -17,6 +17,8 @@ var root		= __dirname,
 	Handlebars	= require('handlebars'),
 	entities	= new (require('html-entities').AllHtmlEntities)(),
 	app			= require('express')(),
+	client		= require('express')(),
+	serveStatic = require('serve-static'),
 	events		= require('events'),
 	config		= require('./config.json'),
 	User		= require('./models/user'),
@@ -200,18 +202,25 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 	
 	//	Listen
 	app.listen(config.port, function(){
-		mailer.sendMail({
-			from	: 'support@phene.co',
-			to		: 'trewbot@phene.co',
-			subject	: 'Graphene Server API Running',
-			text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-			html	: EmailTemp({
-				content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-				url		: config.addr.web
-			})
-		},function(e,i){
-			if(e) console.log(e);
+		client.use(serveStatic(__dirname + '/client', {
+			'index': [
+				'index.html'
+			]
+		}));
+		client.listen(80, function(){
+			mailer.sendMail({
+				from	: config.email.support,
+				to		: config.email.admin,
+				subject	: 'Graphene Server API Running',
+				text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+				html	: EmailTemp({
+					content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+					url		: config.addr.web
+				})
+			},function(e,i){
+				if(e) console.log(e);
+			});
+			console.log("Server running.");
 		});
-		console.log("Server running.");
 	});
 });
