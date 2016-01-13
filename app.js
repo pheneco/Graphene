@@ -1,7 +1,7 @@
 /*
  *	Graphene
  *	Written by Trevor J Hoglund
- *	Jan 10, 2016
+ *	Jan 12, 2016
  */
 
 //	Set Up
@@ -9,6 +9,7 @@ var root		= __dirname,
 	path		= require('path'),
 	os			= require('os'),
 	fs			= require('fs'),
+	config		= require('./config.json'),
 	mongoose	= require('mongoose'),
 	session		= require('express-session'),
 	MongoStore	= require('connect-mongo')(session),
@@ -20,7 +21,6 @@ var root		= __dirname,
 	client		= require('express')(),
 	serveStatic = require('serve-static'),
 	events		= require('events'),
-	config		= require('./config.json'),
 	User		= require('./models/user'),
 	Feed		= require('./models/feed'),
 	Post		= require('./models/post'),
@@ -158,7 +158,7 @@ var root		= __dirname,
 	Notification = new events.EventEmitter();
 Notification.setMaxListeners(0)
 mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
-
+require('epipebomb')();
 
 //	Enable CORS
 app.use(function(req,res,next) {
@@ -202,24 +202,21 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 	
 	//	Listen
 	app.listen(config.port, function(){
-		client.use(serveStatic(__dirname + '/client', {
-			'index': [
-				'index.html'
-			]
-		}));
+		client.use(serveStatic(__dirname + '/client', {'index': ['index.html']}));
 		client.listen(80, function(){
-			mailer.sendMail({
-				from	: config.email.support,
-				to		: config.email.admin,
-				subject	: 'Graphene Server API Running',
-				text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-				html	: EmailTemp({
-					content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-					url		: config.addr.web
-				})
-			},function(e,i){
-				if(e) console.log(e);
-			});
+			if(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev')
+				mailer.sendMail({
+					from	: config.email.support,
+					to		: config.email.admin,
+					subject	: 'Graphene Server API Running',
+					text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+					html	: EmailTemp({
+						content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+						url		: config.addr.web
+					})
+				},function(e,i){
+					if(e) console.log(e);
+				});
 			console.log("Server running.");
 		});
 	});
