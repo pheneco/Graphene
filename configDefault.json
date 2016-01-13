@@ -1,5 +1,5 @@
 {
-    "sub" : "dev",
+    "sub" : "gra",
     "port" : 3000,
     "imgDir" : "c:/web/img",
     "audDir" : "c:/web/aud",
@@ -13,5 +13,15 @@
     "backupDir" : "c:/web/backup",
     "sevenZipDir" : "c:/program files/7-zip",
     "googleMapsEmbedAPIKey" : "",
-    "soundcloudAPIKey" : ""
+    "soundcloudAPIKey" : "",
+	"email" : {
+		"admin" : "admin@example.com",
+		"support" : "support@example.com"
+	},
+	"addr" : {
+		"web" : "http://example.com",
+		"mongo" : "localhost",
+		"img" : "http://img.example.com",
+		"aud" : "http://aud.example.com"
+	}
 }

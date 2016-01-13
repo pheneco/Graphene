@@ -29,11 +29,11 @@ var root		= __dirname,
 	EmailTemp	= Handlebars.compile(EmailSrc),
 	Graphene	= new(function(){
 		this.sub			= config.sub;
-		this.url			= "http://" + this.sub + ".phene.co";
-		this.api			= "http://phene.co:" + config.port;
-		this.img			= "http://img.phene.co";
+		this.url			= config.addr.web;
+		this.api			= config.addr.web + config.port;
+		this.img			= config.addr.img;
 		this.imgDir			= config.imgDir;
-		this.aud			= "http://aud.phene.co";
+		this.aud			= config.addr.aud;
 		this.audDir			= config.audDir;
 		this.getWords		= function(string,num){
 			var a;
@@ -155,12 +155,12 @@ var root		= __dirname,
 	}),
 	Notification = new events.EventEmitter();
 Notification.setMaxListeners(0)
-mongoose.connect('mongodb://localhost/' + Graphene.sub + 'phene');
+mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
 
 
 //	Enable CORS
 app.use(function(req,res,next) {
-	res.header("Access-Control-Allow-Origin", "http://" + Graphene.sub + ".phene.co");
+	res.header("Access-Control-Allow-Origin", config.addr.web);
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE');
@@ -207,7 +207,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 			text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
 			html	: EmailTemp({
 				content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-				prefix	: Graphene.sub
+				url		: config.addr.web
 			})
 		},function(e,i){
 			if(e) console.log(e);
