@@ -158,7 +158,6 @@ var root		= __dirname,
 	Notification = new events.EventEmitter();
 Notification.setMaxListeners(0)
 mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
-require('epipebomb')();
 
 //	Enable CORS
 app.use(function(req,res,next) {

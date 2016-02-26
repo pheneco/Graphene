@@ -12,7 +12,6 @@
     "serverDir" : "c:/web/graphene",
     "backupDir" : "c:/web/backup",
     "sevenZipDir" : "c:/program files/7-zip",
-	"phpDir" : "c:\web\bin\php",
     "googleMapsEmbedAPIKey" : "",
     "soundcloudAPIKey" : "",
 	"email" : {

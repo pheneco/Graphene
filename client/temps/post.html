@@ -32,26 +32,6 @@
 				{{#if twitterLink}}
 					{{{link}}}
 				{{/if}}
-				{{#if fakkuLink}}
-					{{#if error}}
-						<div class="post-link-error">
-							error loading post link!
-						</div>
-					{{else}}
-						<div class="post-images-2">
-							<a lightbox href="javascript:_g.pu.lightbox('api','{{fakkuapi}}','pages.*.image',0);void(0);"><img src="{{fakkuinfo.content.content_images.cover}}"></a>
-							<a lightbox href="javascript:_g.pu.lightbox('api','{{fakkuapi}}','pages.*.image',0);void(0);"><img src="{{fakkuinfo.content.content_images.sample}}"></a>
-						</div>
-						<div class="post-link-cont">
-							<div class="post-link">
-								<a target="_blank" href="{{fakkuinfo.content.content_url}}">
-									{{fakkuinfo.content.content_name}}
-								</a>
-							</div>
-							{{{fakkuinfo.content.content_description}}}
-						</div>
-					{{/if}}
-				{{/if}}
 				{{#if imageLink}}
 					<a href="{{link}}" target="_blank"><img src="{{link}}" class="post-image"></a>
 				{{/if}}
