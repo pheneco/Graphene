@@ -29,10 +29,12 @@ cd %serverDir%
 
 echo pushing changes to github
 git add .
-echo.
-set /p changeDesc=describe changes: 
+if [%1]==[] (
+	set /p changeDesc=describe changes: 
+) else (
+	set changeDesc=%*
+)
 git commit -m "%changeDesc%" >nul
-echo.
 git remote add origin https://github.com/Trewbot/Graphene.git >nul 2>&1
 set /p branch=branch: 
 git push origin %branch% >nul
