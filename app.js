@@ -148,6 +148,10 @@ var root		= __dirname,
 				}
 			});
 		};
+		this.time	= function(){
+			var stamp = new Date();
+			return stamp.getHours() + ":" + stamp.getMinutes + ":" + stamp.getSeconds + " " + ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][stamp.getMonth()] + ' ' + stamp.getDate() + ', ' + stamp.getFullYear() + " ";
+		};
 	})(),
 	mailer		= nodemailer.createTransport({
 		service	: config.mailService,
@@ -197,7 +201,7 @@ require('./controllers/notes')(app, Graphene, Notification);
 
 //	Get Server Version
 
-ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.log(e);
+ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.log(Graphene.time() + e);
 	Graphene.v = sc.version;
 	
 	//	Listen
@@ -209,7 +213,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		client.use(serve);
 		client.all('*',function(req,res){
 			fs.readFile(__dirname + '/client/index.html',function(e,data){
-				if(e) return console.log(e);
+				if(e) return console.log(Graphene.time() + e);
 				res.header('Content-Type', 'text/html');
 				res.send(data);
 			});
@@ -226,9 +230,11 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 						url		: config.addr.web
 					})
 				},function(e,i){
-					if(e) console.log(e);
+					if(e) console.log(Graphene.time() + e);
 				});
-			console.log("Server running.");
+			console.log(Graphene.time() + "Graphene server is now running.");
+			console.log(Graphene.time() + "    CDN: " + config.addr.web);
+			console.log(Graphene.time() + "    API: " + config.addr.web + ":" + config.port);
 		});
 	});
 });

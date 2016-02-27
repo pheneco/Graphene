@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	Jan 10, 2016
+ *	Feb 26, 2016
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -97,7 +97,7 @@ module.exports = function(app, Graphene, Notification){
 						for(var i = 0; i < users.length; i++) Posts.emit("@"+users[i]);
 						res.send("");
 						User.find({username:{$in:users}},function(e,u){
-							if(e) return console.log(e);
+							if(e) return console.log(Graphene.time() + e);
 							for(var i = 0; i < u.length; i++){
 								var note = new Note({
 									recipient	: ""+u[i]._id,
@@ -115,7 +115,7 @@ module.exports = function(app, Graphene, Notification){
 						});
 					}else{
 						res.send("Error creating post.");	
-						console.log("Error creating post.");	
+						console.log(Graphene.time() + "Error creating post.");	
 					}
 				});
 			});

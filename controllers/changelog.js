@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Changelog Routes
  *	Written by Trewbot
- *	Oct 22, 2015
+ *	Feb 26, 2015
  */
 
 module.exports	= function(app,Graphene){
@@ -37,16 +37,16 @@ module.exports	= function(app,Graphene){
 	app.get('/changes/:app?', function(req,res){
 		if(!req.params.app || req.params.app == 'webClient') return Change.find().sort('_id').exec(function(e,c){
 			if(!e) return res.send(c);
-			else return console.log(e);
+			else return console.log(Graphene.time() + e);
 		});
 		if(req.params.app == 'server') return ServerChange.find().sort('_id').exec(function(e,c){
 			if(!e) return res.send(c);
-			else return console.log(e);
+			else return console.log(Graphene.time() + e);
 		});
 	});
 	app.post('/change/:app?', function(req,res){
 		User.findOne({"_id": req.session.user}, function(e,u){
-			if(e) return console.log('Error finding user from session user id: ' + req.session.user);
+			if(e) return console.log(Graphene.time() + 'Error finding user from session user id: ' + req.session.user);
 			if(u.rank < 10) return res.send("Only cool kids can post changes");
 			var o = {
 				version		: req.body.version,
@@ -56,7 +56,7 @@ module.exports	= function(app,Graphene){
 			c.save(function(e){
 				if(e) return res.send("Error saving change.");
 				if(req.params.app == 'webClient') Changelog.emit('change', req.body.date, req.body.version);
-				if(req.params.app == 'server') console.log("Restart server to update.");
+				if(req.params.app == 'server') console.log(Graphene.time() + "Restart server to update.");
 				res.send("");
 			});
 		});
