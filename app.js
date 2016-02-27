@@ -1,7 +1,7 @@
 /*
  *	Graphene
  *	Written by Trevor J Hoglund
- *	Feb 26, 2016
+ *	Feb 27, 2016
  */
 
 //	Set Up
@@ -172,7 +172,7 @@ mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
 
 //	Enable CORS
 app.use(function(req,res,next) {
-	res.header("Access-Control-Allow-Origin", config.addr.web);
+	res.header("Access-Control-Allow-Origin", config.addr.web + ":" + config.webPort);
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE');
@@ -211,7 +211,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 	Graphene.v = sc.version;
 	
 	//	Listen
-	app.listen(config.port, function(){
+	app.listen(config.apiPort, function(){
 		var serve = serveStatic(__dirname + '/client', {
 			'index': ['index.html'],
 			'extensions' : ['html']
@@ -224,23 +224,35 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 				res.send(data);
 			});
 		});
-		client.listen(80, function(){
+		client.listen(config.webPort, function(){
 			if(!dev)
 				mailer.sendMail({
 					from	: config.email.support,
 					to		: config.email.admin,
 					subject	: 'Graphene Server API Running',
-					text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+					text	: 'Graphene Server API Running\n\n'
+							+ 'Server Uptime: '
+							+ ~~(os.uptime()/36e2) + 'h'
+							+ ~~((os.uptime()%36e2)/60) + 'm'
+							+ '\nCPU: ' + os.cpus()[0].model
+							+ '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz'
+							+ '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
 					html	: EmailTemp({
-						content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-						url		: config.addr.web
+						content : 'Graphene Server API Running<br><br>'
+								+ 'Server Uptime: '
+								+ ~~(os.uptime()/36e2) + 'h'
+								+ ~~((os.uptime()%36e2)/60) + 'm'
+								+ '<br>CPU: ' + os.cpus()[0].model
+								+ '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz'
+								+ '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+						url		: config.addr.web + ":" + config.webPort
 					})
 				},function(e,i){
 					if(e) console.log(Graphene.time() + e);
 				});
 			console.log(Graphene.time() + "Graphene server is now running.");
-			console.log(Graphene.time() + "    CDN: " + config.addr.web);
-			console.log(Graphene.time() + "    API: " + config.addr.web + ":" + config.port);
+			console.log(Graphene.time() + "    CDN: " + config.addr.web + ":" + config.webPort);
+			console.log(Graphene.time() + "    API: " + config.addr.web + ":" + config.apiPort);
 		});
 	});
 });
