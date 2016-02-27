@@ -29,6 +29,7 @@ var root		= __dirname,
 	Change		= require('./models/changelog'),
 	EmailSrc	= fs.readFileSync('email.html', "utf8"),
 	EmailTemp	= Handlebars.compile(EmailSrc),
+	dev			= !(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev'),
 	Graphene	= new(function(){
 		this.sub			= config.sub;
 		this.url			= config.addr.web;
@@ -214,7 +215,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 			});
 		});
 		client.listen(80, function(){
-			if(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev')
+			if(!dev)
 				mailer.sendMail({
 					from	: config.email.support,
 					to		: config.email.admin,

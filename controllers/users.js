@@ -39,7 +39,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 									avatar		: 'default',
 									avatarHash	: '0',
 									background	: 'default',
-									rank		: 0,
+									rank		: dev?10:0,
 									accent		: '#444444',
 									nameHandle	: false,
 									feeds		: [{
@@ -61,18 +61,19 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 								nu.save(function(e,u){
 									if(!e){
 										console.log(req.body.username + " (" + u._id + ") registered.");
-										mailer.sendMail({
-											from	: 'support@phene.co',
-											to		: req.body.email,
-											subject	: 'Activate Graphene Account',
-											text	: 'To activate your Graphene account go to ' + Graphene.api + '/activate/' + u._id + '/' + encodeURIComponent(bcrypt.hashSync(u._id)) + '\nNote: Graphene w0.4.0 is a preview release, all content on the site is subject to spontaneous removal. This applies especially to posts, seeing as plans for w0.5.0 include restructuring them.',
-											html	: EmailTemp({
-												content : 'To activate your Graphene account click here: <a style="margin-top:10px;text-align:center;display:block;width:490px;padding:5px;background:#444;color:white;text-decoration:none;" href="' + Graphene.api + '/activate/' + u._id + '/' + encodeURIComponent(bcrypt.hashSync(u._id)) + '">ACTIVATE</a><br><span style="color:red">Note: Graphene w0.4.0 is a preview release, all content on the site is subject to spontaneous removal. This applies especially to posts, seeing as plans for w0.5.0 include restructuring them.</span>',
-												prefix	: Graphene.sub
-											})
-										},function(e,i){
-											if(e) console.log(e);
-										});
+										if(!dev)
+											mailer.sendMail({
+												from	: 'support@phene.co',
+												to		: req.body.email,
+												subject	: 'Activate Graphene Account',
+												text	: 'To activate your Graphene account go to ' + Graphene.api + '/activate/' + u._id + '/' + encodeURIComponent(bcrypt.hashSync(u._id)) + '\nNote: Graphene w0.4.0 is a preview release, all content on the site is subject to spontaneous removal. This applies especially to posts, seeing as plans for w0.5.0 include restructuring them.',
+												html	: EmailTemp({
+													content : 'To activate your Graphene account click here: <a style="margin-top:10px;text-align:center;display:block;width:490px;padding:5px;background:#444;color:white;text-decoration:none;" href="' + Graphene.api + '/activate/' + u._id + '/' + encodeURIComponent(bcrypt.hashSync(u._id)) + '">ACTIVATE</a><br><span style="color:red">Note: Graphene w0.4.0 is a preview release, all content on the site is subject to spontaneous removal. This applies especially to posts, seeing as plans for w0.5.0 include restructuring them.</span>',
+													prefix	: Graphene.sub
+												})
+											},function(e,i){
+												if(e) console.log(e);
+											});
 										req.session.user = u._id;
 										res.send("1");
 									}else{
