@@ -207,7 +207,11 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		});
 		client.use(serve);
 		client.all('*',function(req,res){
-			res.send('404 <i>FUCKING PANIC</i>');
+			fs.readFile(__dirname + '/client/index.html',function(e,data){
+				if(e) return console.log(e);
+				res.header('Content-Type', 'text/html');
+				res.send(data);
+			});
 		});
 		client.listen(80, function(){
 			if(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev')
