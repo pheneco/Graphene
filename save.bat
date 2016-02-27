@@ -5,22 +5,21 @@ echo saving update
 
 echo reading config.json
 for /f "delims=" %%i in ('node cfg.js mongoDir') do set mongoDir=%%i
-for /f "delims=" %%i in ('node cfg.js sub') do set sub=%%i
-for /f "delims=" %%i in ('node cfg.js %sub%ServerDir') do set serverDir=%%i
-for /f "delims=" %%i in ('node cfg.js %sub%ClientDir') do set clientDir=%%i
+for /f "delims=" %%i in ('node cfg.js database') do set database=%%i
+for /f "delims=" %%i in ('node cfg.js serverDir') do set serverDir=%%i
 
 echo moving to changelog dir
 if not exist %serverDir%\changelog md %serverDir%\changelog
 cd %serverDir%\changelog
 
 echo dumping web client changelog
-%mongoDir%\mongoDump --out "tmp" --db %sub%phene --collection webClientChanges >nul 2>&1
+%mongoDir%\mongoDump --out "tmp" --db %database% --collection webClientChanges >nul 2>&1
 
 echo dumping server changelog
-%mongoDir%\mongoDump --out "tmp" --db %sub%phene --collection serverChanges >nul 2>&1
+%mongoDir%\mongoDump --out "tmp" --db %database% --collection serverChanges >nul 2>&1
 
 echo moving .bson files
-move /y %serverDir%\changelog\tmp\%sub%phene\*.bson %serverDir%\changelog >nul
+move /y %serverDir%\changelog\tmp\%database%\*.bson %serverDir%\changelog >nul
 
 echo removing temporary dir
 rmdir /s /q %serverDir%\changelog\tmp
@@ -28,17 +27,16 @@ rmdir /s /q %serverDir%\changelog\tmp
 echo returning to server dir
 cd %serverDir%
 
-echo copying client code
-if not exist %serverDir%\client md %serverDir%\client
-xcopy %clientDir% %serverDir%\client\ /e /h /c /r /q /y >nul
-
 echo pushing changes to github
 git add .
-echo.
-set /p changeDesc=describe changes: 
+if [%1]==[] (
+	set /p changeDesc=describe changes: 
+) else (
+	set changeDesc=%*
+)
 git commit -m "%changeDesc%" >nul
-echo.
 git remote add origin https://github.com/Trewbot/Graphene.git >nul 2>&1
-git push origin master >nul
+set /p branch=branch: 
+git push origin %branch% >nul
 
 backup

@@ -1,0 +1,27 @@
+{
+    "sub" : "gra",
+    "port" : 3000,
+    "imgDir" : "c:/web/graphene/client/img",
+    "audDir" : "c:/web/graphene/client/aud",
+	"database" : "graphene",
+    "sessionSecret" : "",
+    "mailService" : "",
+    "mailUser" : "",
+    "mailPass" : "",
+    "mongoDir" : "c:/web/bin/mongo",
+    "serverDir" : "c:/web/graphene",
+    "backupDir" : "c:/web/backup",
+    "sevenZipDir" : "c:/program files/7-zip",
+    "googleMapsEmbedAPIKey" : "",
+    "soundcloudAPIKey" : "",
+	"email" : {
+		"admin" : "admin@localhost",
+		"support" : "support@localhost"
+	},
+	"addr" : {
+		"web" : "http://localhost",
+		"mongo" : "localhost",
+		"img" : "http://localhost/img",
+		"aud" : "http://localhost/aud"
+	}
+}

@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	Jan 10, 2016
+ *	Feb 26, 2016
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -97,7 +97,7 @@ module.exports = function(app, Graphene, Notification){
 						for(var i = 0; i < users.length; i++) Posts.emit("@"+users[i]);
 						res.send("");
 						User.find({username:{$in:users}},function(e,u){
-							if(e) return console.log(e);
+							if(e) return console.log(Graphene.time() + e);
 							for(var i = 0; i < u.length; i++){
 								var note = new Note({
 									recipient	: ""+u[i]._id,
@@ -115,7 +115,7 @@ module.exports = function(app, Graphene, Notification){
 						});
 					}else{
 						res.send("Error creating post.");	
-						console.log("Error creating post.");	
+						console.log(Graphene.time() + "Error creating post.");	
 					}
 				});
 			});
@@ -206,7 +206,7 @@ module.exports = function(app, Graphene, Notification){
 						req.query.start && req.query.start != 'default'
 							? {_id:{$lt:req.query.start},$or:[{user:{$in:e}},{users:u.username}]}
 							: {$or:[{user:{$in:e}},{users:u.username}]}
-					).sort('-_id').limit(req.query.amount).exec(cont);
+					).sort('-_id').limit(+req.query.amount).exec(cont);
 				});
 			});
 		} else if(req.query.set == 'feed' && req.session.user){
@@ -215,7 +215,7 @@ module.exports = function(app, Graphene, Notification){
 					req.query.start && req.query.start != 'default'
 						? {_id:{$lt:req.query.start},user:{$in:e}}
 						: {user:{$in:e}}
-				).sort('-_id').limit(req.query.amount).exec(cont);
+				).sort('-_id').limit(+req.query.amount).exec(cont);
 			});
 		} else if(req.query.set == 'tag'){
 			Post.find(
@@ -229,20 +229,20 @@ module.exports = function(app, Graphene, Notification){
 					req.query.start && req.query.start != 'default'
 						? {_id:{$lt:req.query.start},$or:[{user:req.query.data},{users:u.username}]}
 						: {$or:[{user:req.query.data},{users:u.username}]}
-				).sort('-_id').limit(req.query.amount).exec(cont);
+				).sort('-_id').limit(+req.query.amount).exec(cont);
 			});
 		} else if(req.query.set == 'userPosts'){
 			Post.find(
 				req.query.start && req.query.start != 'default'
 					? {_id:{$lt:req.query.start},user:req.query.data}
 					: {user:req.query.data}
-			).sort('-_id').limit(req.query.amount).exec(cont);
+			).sort('-_id').limit(+req.query.amount).exec(cont);
 		} else if(req.query.set == 'search'){
 			Post.find(
 				req.query.start && req.query.start != 'default'
 					? {_id:{$lt:req.query.start},$text:{$search:req.query.data}}
 					: {$text:{$search:req.query.data}}
-			).sort('-_id').limit(req.query.amount).exec(cont);
+			).sort('-_id').limit(+req.query.amount).exec(cont);
 		} else res.send(['only']);
 	});
 	app.get('/post/:id', function(req,res){

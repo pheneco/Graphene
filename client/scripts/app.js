@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	Jan 10, 2016
+ *	Feb 26, 2016
  */
 
    (function bippity(){
@@ -48,6 +48,7 @@
 				title	: _g.page
 			});
 			ga('send', 'pageview');
+			window.setTimeout(_g.b.update,500);
 		}
 		window.resize = function(){
 			window.setTimeout((function(){
@@ -156,6 +157,7 @@
 		error  : !1,
 		update : function(){
 			if(this.error) return;
+			if(!this.toLoad) this.toLoad = 1, this.loaded = 1;
 			var sl	= _i('side-loading'),
 				lb	= _i('loading-bar'),
 				le	= _i('loading'),
@@ -1879,8 +1881,8 @@
 	page('*', _g.p.clear);
 	page('*', _g.t.side);
 	page('*', function(ctx,next){
-		var lnk = document.getElementsByTagName('link');
-		lnk[lnk.length-1].href = '/assets/img/fav.php?c=' + _g.session.accent.replace('#','');
+		//	var lnk = document.getElementsByTagName('link');
+		//	lnk[lnk.length-1].href = '/assets/img/fav.php?c=' + _g.session.accent.replace('#','');
 		next();
 	});
 	page('/', function(ctx,next){

@@ -1,7 +1,7 @@
 /*
  *	Graphene
  *	Written by Trevor J Hoglund
- *	Jan 10, 2016
+ *	Feb 26, 2016
  */
 
 //	Set Up
@@ -9,6 +9,7 @@ var root		= __dirname,
 	path		= require('path'),
 	os			= require('os'),
 	fs			= require('fs'),
+	config		= require('./config.json'),
 	mongoose	= require('mongoose'),
 	session		= require('express-session'),
 	MongoStore	= require('connect-mongo')(session),
@@ -17,8 +18,9 @@ var root		= __dirname,
 	Handlebars	= require('handlebars'),
 	entities	= new (require('html-entities').AllHtmlEntities)(),
 	app			= require('express')(),
+	client		= require('express')(),
+	serveStatic = require('serve-static'),
 	events		= require('events'),
-	config		= require('./config.json'),
 	User		= require('./models/user'),
 	Feed		= require('./models/feed'),
 	Post		= require('./models/post'),
@@ -27,13 +29,14 @@ var root		= __dirname,
 	Change		= require('./models/changelog'),
 	EmailSrc	= fs.readFileSync('email.html', "utf8"),
 	EmailTemp	= Handlebars.compile(EmailSrc),
+	dev			= !(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev'),
 	Graphene	= new(function(){
 		this.sub			= config.sub;
-		this.url			= "http://" + this.sub + ".phene.co";
-		this.api			= "http://phene.co:" + config.port;
-		this.img			= "http://img.phene.co";
+		this.url			= config.addr.web;
+		this.api			= config.addr.web + config.port;
+		this.img			= config.addr.img;
 		this.imgDir			= config.imgDir;
-		this.aud			= "http://aud.phene.co";
+		this.aud			= config.addr.aud;
 		this.audDir			= config.audDir;
 		this.getWords		= function(string,num){
 			var a;
@@ -145,6 +148,16 @@ var root		= __dirname,
 				}
 			});
 		};
+		this.time	= function(){
+			var stamp = new Date(),t;
+			return stamp.getFullYear()
+				+ "."  + ((t=""+(stamp.getMonth()+1)).length==1?"0"+t:t)
+				+ "." + ((t=""+stamp.getDate()).length==1?"0"+t:t)
+				+ " " + ((t=""+stamp.getHours()).length==1?"0"+t:t)
+				+ "." + ((t=""+stamp.getMinutes()).length==1?"0"+t:t)
+				+ "." + ((t=""+stamp.getSeconds()).length==1?"0"+t:t)
+				+ " ";
+		};
 	})(),
 	mailer		= nodemailer.createTransport({
 		service	: config.mailService,
@@ -155,12 +168,11 @@ var root		= __dirname,
 	}),
 	Notification = new events.EventEmitter();
 Notification.setMaxListeners(0)
-mongoose.connect('mongodb://localhost/' + Graphene.sub + 'phene');
-
+mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
 
 //	Enable CORS
 app.use(function(req,res,next) {
-	res.header("Access-Control-Allow-Origin", "http://" + Graphene.sub + ".phene.co");
+	res.header("Access-Control-Allow-Origin", config.addr.web);
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE');
@@ -195,23 +207,40 @@ require('./controllers/notes')(app, Graphene, Notification);
 
 //	Get Server Version
 
-ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.log(e);
+ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.log(Graphene.time() + e);
 	Graphene.v = sc.version;
 	
 	//	Listen
 	app.listen(config.port, function(){
-		mailer.sendMail({
-			from	: 'support@phene.co',
-			to		: 'trewbot@phene.co',
-			subject	: 'Graphene Server API Running',
-			text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-			html	: EmailTemp({
-				content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
-				prefix	: Graphene.sub
-			})
-		},function(e,i){
-			if(e) console.log(e);
+		var serve = serveStatic(__dirname + '/client', {
+			'index': ['index.html'],
+			'extensions' : ['html']
 		});
-		console.log("Server running.");
+		client.use(serve);
+		client.all('*',function(req,res){
+			fs.readFile(__dirname + '/client/index.html',function(e,data){
+				if(e) return console.log(Graphene.time() + e);
+				res.header('Content-Type', 'text/html');
+				res.send(data);
+			});
+		});
+		client.listen(80, function(){
+			if(!dev)
+				mailer.sendMail({
+					from	: config.email.support,
+					to		: config.email.admin,
+					subject	: 'Graphene Server API Running',
+					text	: 'Graphene Server API Running\n\nServer Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm\nCPU: ' + os.cpus()[0].model + '\nCores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '\nMemory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+					html	: EmailTemp({
+						content : 'Graphene Server API Running<br><br>Server Uptime: ' + ~~(os.uptime()/36e2) + 'h' + ~~((os.uptime()%36e2)/60) + 'm<br>CPU: ' + os.cpus()[0].model + '<br>Cores: ' + os.cpus().length + ' @ ' + (~~(os.cpus()[0].speed/100)/10) + 'GHz' + '<br>Memory: ' + (~~((os.totalmem()/0x40000000)*100)/100) + 'GB',
+						url		: config.addr.web
+					})
+				},function(e,i){
+					if(e) console.log(Graphene.time() + e);
+				});
+			console.log(Graphene.time() + "Graphene server is now running.");
+			console.log(Graphene.time() + "    CDN: " + config.addr.web);
+			console.log(Graphene.time() + "    API: " + config.addr.web + ":" + config.port);
+		});
 	});
 });

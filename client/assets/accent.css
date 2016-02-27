@@ -1,11 +1,3 @@
-<?php
-	header('Content-Type: text/css');
-	$accent = '#444444';
-	$darkac = '#333333';
-?>
-
-/** <?=$darkac?> **/
-
 /**  [0]  **/
 html						{background:#f8f8f8 url("../assets/img/back.png");background-position:center center;background-attachment:fixed;}
 
@@ -35,24 +27,24 @@ html						{background:#f8f8f8 url("../assets/img/back.png");background-position:
 .comment-avatar,
 .comment-more:hover,
 
-.settings-toggle			{background:<?=$accent?>;color:#fff;}
+.settings-toggle			{background:#444;color:#fff;}
 
 /**  [2]  **/
 .user-ribbon::before,
-.post-button::after			{border-top-color:<?=$darkac?>;}
+.post-button::after			{border-top-color:#333;}
 
 /**  [3]  **/
 #side-head::after,
 .comment-active,			
-.post-text blockquote		{border-left-color:<?=$accent?>;}
+.post-text blockquote		{border-left-color:#444;}
 
 /**  [4]  **/
 .notes-title::after,
-.user-ribbon::after			{border-right-color:<?=$darkac?>;}
+.user-ribbon::after			{border-right-color:#333;}
 
 /**  [5]  **/
 .usr-link-active,
-.usr-link:hover				{border-bottom-color:<?=$accent?>}
+.usr-link:hover				{border-bottom-color:#444}
 
 /**  [6]  **/
 .post-name a:hover,
@@ -61,16 +53,16 @@ html						{background:#f8f8f8 url("../assets/img/back.png");background-position:
 
 .comment-name a:hover,
 .comment-content a,
-.comment-content a:hover	{color:<?=$accent?>;}
+.comment-content a:hover	{color:#444;}
 
 /**  [7]  **/
-#side-logo					{background:rgba(0,0,0,0) url("../assets/img/<?=(isset($_GET['dev']))?'dev':'gra';?>.svg") no-repeat top;z-index:1;}
+#side-logo					{background:rgba(0,0,0,0) url("../assets/img/gra.svg") no-repeat top;z-index:1;}
 
 /**  [8]  **/
-::selection					{background:<?=$accent?>;color:#fff;}
+::selection					{background:#444;color:#fff;}
 
 /**  [9]  **/
-::-moz-selection			{background:<?=$accent?>;color:#fff;}
+::-moz-selection			{background:#444;color:#fff;}
 
 /**  [10]  **/
-::-webkit-selection			{background:<?=$accent?>;color:#fff;}
+::-webkit-selection			{background:#444;color:#fff;}

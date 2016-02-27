@@ -1,10 +1,9 @@
 <!--
-  --	Graphene Login Page w0.4.2
+  --	Graphene Login Page w0.5.0
   --	Written by Trewbot
-  --	Oct 17, 2015
+  --	Feb 26, 2015
   -->
 
-<? require('/scripts/dev.php'); ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -14,8 +13,7 @@
 <body>
 	<div id="login-container">
 	<div id="login-box">
-	<form id="login-form" method="post" action="<?=$dev?"http://dev.phene.co:3000/login":"http://gra.phene.co:3200/login"?>">
-		<?=(isset($_GET['fail']))?'<div class="login-fail">Login Failed :\</div>':'';?>
+	<form id="login-form" method="post" action="">
 		<input class="login-text" name="email"    type="text"       autofocus="autofocus"   placeholder="Email Address">
 		<input class="login-text" name="password" type="password"   placeholder="Password">
 		<input class="login-butn" name="submit"   type="submit"     value="Login">
@@ -26,5 +24,8 @@
 	<a href="http://phene.co"><div id="brand" style="color:#111 !important;font-family:serif;">
 		phene.co
 	</div></a>
+	<script>
+		document.getElementById('login-form').action = window.location.origin + ":3000/login";
+	</script>
 </body>
 </html>

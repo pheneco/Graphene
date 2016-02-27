@@ -39,7 +39,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 									avatar		: 'default',
 									avatarHash	: '0',
 									background	: 'default',
-									rank		: 0,
+									rank		: dev?10:0,
 									accent		: '#444444',
 									nameHandle	: false,
 									feeds		: [{
@@ -60,31 +60,32 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 								});
 								nu.save(function(e,u){
 									if(!e){
-										console.log(req.body.username + " (" + u._id + ") registered.");
-										mailer.sendMail({
-											from	: 'support@phene.co',
-											to		: req.body.email,
-											subject	: 'Activate Graphene Account',
-											text	: 'To activate your Graphene account go to ' + Graphene.api + '/activate/' + u._id + '/' + encodeURIComponent(bcrypt.hashSync(u._id)) + '\nNote: Graphene w0.4.0 is a preview release, all content on the site is subject to spontaneous removal. This applies especially to posts, seeing as plans for w0.5.0 include restructuring them.',
-											html	: EmailTemp({
-												content : 'To activate your Graphene account click here: <a style="margin-top:10px;text-align:center;display:block;width:490px;padding:5px;background:#444;color:white;text-decoration:none;" href="' + Graphene.api + '/activate/' + u._id + '/' + encodeURIComponent(bcrypt.hashSync(u._id)) + '">ACTIVATE</a><br><span style="color:red">Note: Graphene w0.4.0 is a preview release, all content on the site is subject to spontaneous removal. This applies especially to posts, seeing as plans for w0.5.0 include restructuring them.</span>',
-												prefix	: Graphene.sub
-											})
-										},function(e,i){
-											if(e) console.log(e);
-										});
+										console.log(Graphene.time() + req.body.username + " (" + u._id + ") registered.");
+										if(!dev)
+											mailer.sendMail({
+												from	: 'support@phene.co',
+												to		: req.body.email,
+												subject	: 'Activate Graphene Account',
+												text	: 'To activate your Graphene account go to ' + Graphene.api + '/activate/' + u._id + '/' + encodeURIComponent(bcrypt.hashSync(u._id)) + '\nNote: Graphene w0.4.0 is a preview release, all content on the site is subject to spontaneous removal. This applies especially to posts, seeing as plans for w0.5.0 include restructuring them.',
+												html	: EmailTemp({
+													content : 'To activate your Graphene account click here: <a style="margin-top:10px;text-align:center;display:block;width:490px;padding:5px;background:#444;color:white;text-decoration:none;" href="' + Graphene.api + '/activate/' + u._id + '/' + encodeURIComponent(bcrypt.hashSync(u._id)) + '">ACTIVATE</a><br><span style="color:red">Note: Graphene w0.4.0 is a preview release, all content on the site is subject to spontaneous removal. This applies especially to posts, seeing as plans for w0.5.0 include restructuring them.</span>',
+													prefix	: Graphene.sub
+												})
+											},function(e,i){
+												if(e) console.log(Graphene.time() + e);
+											});
 										req.session.user = u._id;
 										res.send("1");
 									}else{
-										console.log(e);
+										console.log(Graphene.time() + e);
 										res.send("0");
 									}
 								})
 							} else res.send("A user with the email address \'" + req.body.email + "\' already exists.");
-						} else console.log("Error checking user database for email address.");
+						} else console.log(Graphene.time() + "Error checking user database for email address.");
 					});
 				} else res.send("A user with the name \'" + req.body.username + "\' already exists.");
-			} else console.log("Error checking user database for username.");
+			} else console.log(Graphene.time() + "Error checking user database for username.");
 		});
 	});
 	app.post('/login', function(req,res){
@@ -94,13 +95,13 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 					User.find({email:{$regex: new RegExp("^" + req.body.email + "$", "i")}}, function(e,u){
 						if(!e){
 							if(bcrypt.compareSync(req.body.password, u[0].password)) {
-								console.log("User " + u[0].userName + " ("+ (req.session.user = u[0]._id) + ") logged in");
+								console.log(Graphene.time() + "User " + u[0].userName + " ("+ (req.session.user = u[0]._id) + ") logged in");
 								res.redirect(Graphene.url);
 							} else res.redirect(Graphene.url + '/login?fail');
-						} else console.log("Error retrieving user information from database.");
+						} else console.log(Graphene.time() + "Error retrieving user information from database.");
 					});
 				} else res.redirect(Graphene.url + '/login?fail');
-			} else console.log("Error checking user database for email address.");
+			} else console.log(Graphene.time() + "Error checking user database for email address.");
 		});
 	});
 	app.get('/logout', function(req,res){
@@ -205,7 +206,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 	});
 	app.post('/user/avatar/crop',function(req,res){
 		if(!req.session.user) return res.send("Must be logged in");
-		if(!(req.body.left && req.body.top && req.body.width && req.body.height)){ return res.send("Invalid values"); console.log("Invalid values");}
+		if(!(req.body.left && req.body.top && req.body.width && req.body.height)){ return res.send("Invalid values"); console.log(Graphene.time() + "Invalid values");}
 		User.findOne({_id:req.session.user},function(e,u){ if(e) return res.send(e);
 		u.avatarHash = "" + req.body.left + req.body.top + req.body.width + req.body.height;
 		u.save(function(e,uu){ if(e) return res.send(e);
@@ -287,7 +288,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 				req.query.start && req.query.start != 'default'
 					? {_id:{$lt:req.query.start},$text:{$search:req.query.data}}
 					: {$text:{$search:req.query.data}}
-			).sort('-_id').limit(req.query.amount).exec(cont);
+			).sort('-_id').limit(+req.query.amount).exec(cont);
 		} else res.send(['only']);
 	});
 	app.get('/user/:user', function(req,res){
