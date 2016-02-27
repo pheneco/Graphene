@@ -1,7 +1,7 @@
 #Important
 config.json
-client/img
-client/aud
+client/img/*
+client/aud/*
 
 #Node Stuffs
 logs

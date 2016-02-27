@@ -1,8 +1,8 @@
 {
     "sub" : "gra",
     "port" : 3000,
-    "imgDir" : "c:/web/img",
-    "audDir" : "c:/web/aud",
+    "imgDir" : "c:/web/graphene/client/img",
+    "audDir" : "c:/web/graphene/client/aud",
 	"database" : "graphene",
     "sessionSecret" : "",
     "mailService" : "",
@@ -15,13 +15,13 @@
     "googleMapsEmbedAPIKey" : "",
     "soundcloudAPIKey" : "",
 	"email" : {
-		"admin" : "admin@example.com",
-		"support" : "support@example.com"
+		"admin" : "admin@localhost",
+		"support" : "support@localhost"
 	},
 	"addr" : {
-		"web" : "http://example.com",
+		"web" : "http://localhost",
 		"mongo" : "localhost",
-		"img" : "http://img.example.com",
-		"aud" : "http://aud.example.com"
+		"img" : "http://localhost/img",
+		"aud" : "http://localhost/aud"
 	}
 }
