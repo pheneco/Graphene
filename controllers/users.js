@@ -288,7 +288,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 				req.query.start && req.query.start != 'default'
 					? {_id:{$lt:req.query.start},$text:{$search:req.query.data}}
 					: {$text:{$search:req.query.data}}
-			).sort('-_id').limit(req.query.amount).exec(cont);
+			).sort('-_id').limit(+req.query.amount).exec(cont);
 		} else res.send(['only']);
 	});
 	app.get('/user/:user', function(req,res){
