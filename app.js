@@ -149,8 +149,14 @@ var root		= __dirname,
 			});
 		};
 		this.time	= function(){
-			var stamp = new Date();
-			return stamp.getHours() + ":" + stamp.getMinutes + ":" + stamp.getSeconds + " " + ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][stamp.getMonth()] + ' ' + stamp.getDate() + ', ' + stamp.getFullYear() + " ";
+			var stamp = new Date(),t;
+			return stamp.getFullYear()
+				+ "."  + ((t=""+(stamp.getMonth()+1)).length==1?"0"+t:t)
+				+ "." + ((t=""+stamp.getDate()).length==1?"0"+t:t)
+				+ " " + ((t=""+stamp.getHours()).length==1?"0"+t:t)
+				+ "." + ((t=""+stamp.getMinutes()).length==1?"0"+t:t)
+				+ "." + ((t=""+stamp.getSeconds()).length==1?"0"+t:t)
+				+ " ";
 		};
 	})(),
 	mailer		= nodemailer.createTransport({
