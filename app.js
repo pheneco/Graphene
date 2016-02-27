@@ -1,7 +1,7 @@
 /*
  *	Graphene
  *	Written by Trevor J Hoglund
- *	Jan 12, 2016
+ *	Feb 26, 2016
  */
 
 //	Set Up
@@ -201,7 +201,14 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 	
 	//	Listen
 	app.listen(config.port, function(){
-		client.use(serveStatic(__dirname + '/client', {'index': ['index.html']}));
+		var serve = serveStatic(__dirname + '/client', {
+			'index': ['index.html'],
+			'extensions' : ['html']
+		});
+		client.use(serve);
+		client.all('*',function(req,res){
+			res.send('404 <i>FUCKING PANIC</i>');
+		});
 		client.listen(80, function(){
 			if(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev')
 				mailer.sendMail({
