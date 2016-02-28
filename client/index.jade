@@ -10,15 +10,15 @@ html(lang="en")
 	link#prismcss(rel="stylesheet", href="/assets/prism.css")
 	link(rel="icon", href="assets/img/fav.png")
 	
-	script#change-template: include temps/change.hbs
-	script#comment-template: include temps/comment.hbs
-	script#creator-template: include temps/creator.hbs
-	script#note-template: include temps/note.hbs
-	script#post-template: include temps/post.hbs
-	script#register-template: include temps/register.hbs
-	script#settings-template: include temps/settings.hbs
-	script#sidebar-template: include temps/sidebar.hbs
-	script#user-template: include temps/user.hbs
+	script#change-template(type="text/x-handlebars-template"): include temps/change.hbs
+	script#comment-template(type="text/x-handlebars-template"): include temps/comment.hbs
+	script#creator-template(type="text/x-handlebars-template"): include temps/creator.hbs
+	script#note-template(type="text/x-handlebars-template"): include temps/note.hbs
+	script#post-template(type="text/x-handlebars-template"): include temps/post.hbs
+	script#register-template(type="text/x-handlebars-template"): include temps/register.hbs
+	script#settings-template(type="text/x-handlebars-template"): include temps/settings.hbs
+	script#sidebar-template(type="text/x-handlebars-template"): include temps/sidebar.hbs
+	script#user-template(type="text/x-handlebars-template"): include temps/user.hbs
 	
 	script
 		|	var url = "#{cdn}",
