@@ -1,0 +1,21 @@
+//
+	Graphene Login Page w0.5.0
+	Written by Trevor J Hoglund
+	Feb 27, 2016
+
+doctype html
+html
+	head
+		link#bacecss(rel="stylesheet", href="../assets/style.css", type="text/css")
+		title Login - Graphene
+	body
+		div#login-container
+			div#login-box
+				form(id="login-form", method="post", action=api + "/login")
+					input.login-text(name="email", type="text", autofocus, placeholder="Email Address")
+					input.login-text(name="password", type="password", placeholder="Password")
+					input.login-butn(name="submit", type="submit", value="Login")
+					div#login-link
+						a(href="../register") Sign Up
+		a(href="http://phene.co")
+			div#brand(style="color:#111 !important;font-family:serif") phene.co

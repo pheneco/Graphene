@@ -20,6 +20,7 @@ var root		= __dirname,
 	app			= require('express')(),
 	client		= require('express')(),
 	serveStatic = require('serve-static'),
+	jade		= require('jade'),
 	events		= require('events'),
 	User		= require('./models/user'),
 	Feed		= require('./models/feed'),
@@ -213,16 +214,16 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 	//	Listen
 	app.listen(config.apiPort, function(){
 		var serve = serveStatic(__dirname + '/client', {
-			'index': ['index.html'],
-			'extensions' : ['html']
+			//	'index': ['index.html'],
+			//	'extensions' : ['html']
 		});
 		client.use(serve);
 		client.all('*',function(req,res){
-			fs.readFile(__dirname + '/client/index.html',function(e,data){
-				if(e) return console.log(Graphene.time() + e);
-				res.header('Content-Type', 'text/html');
-				res.send(data);
+			var data = jade.renderFile(req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade',{
+				cdn	: config.addr.web + ":" + (config.webPort == 80 ? '' : config.webPort),
+				api : config.addr.web + ":" + config.apiPort
 			});
+			res.send(data);
 		});
 		client.listen(config.webPort, function(){
 			if(!dev)
