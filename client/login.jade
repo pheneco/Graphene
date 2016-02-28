@@ -10,7 +10,7 @@ html
 	body
 		div#login-container
 			div#login-box
-				form(id="login-form", method="post", action="")
+				form(id="login-form", method="post", action=api + "/login")
 					input.login-text(name="email", type="text", autofocus, placeholder="Email Address")
 					input.login-text(name="password", type="password", placeholder="Password")
 					input.login-butn(name="submit", type="submit", value="Login")
