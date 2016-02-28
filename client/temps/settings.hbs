@@ -1,0 +1,26 @@
+<table>
+	{{#each settings}}
+	<tr style="vertical-align:top;">
+		<td class="settings-label">{{name}}</td>
+		<td class="settings-inputs">
+			{{#if input}}
+				{{#each input}}
+					<input type="{{#if password}}password{{else}}text{{/if}}" id="settings-{{id}}" class="settings-text" placeholder="{{placeholder}}" value="{{value}}">
+				{{/each}}
+			{{/if}}
+			{{#if toggle}}
+				<div id="settings-{{id}}" class="settings-toggle" onclick="Graphene.toggle(this)" toggled="{{value}}" off="{{offValue}}" on="{{onValue}}">{{#if value}}{{{onValue}}}{{else}}{{{offValue}}}{{/if}}</div>
+			{{/if}}
+			{{#if color}}
+				<input type="text" id="settings-accent" class="settings-text" placeholder="#93D2FF" value="{{color}}">
+				<div id="settings-{{id}}"></div>
+			{{/if}}
+		</td>
+		{{#if info}}
+		<td>
+			<div style="margin-left:10px;padding-bottom:10px;text-align:justify;">{{info}}</div>
+		</td>
+		{{/if}}
+	</tr>
+	{{/each}}
+</table>
