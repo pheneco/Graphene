@@ -33,8 +33,8 @@ var root		= __dirname,
 	dev			= !(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev'),
 	Graphene	= new(function(){
 		this.sub			= config.sub;
-		this.url			= config.addr.web;
-		this.api			= config.addr.web + config.port;
+		this.url			= config.addr.web  + (config.webPort == 80 ? '' : ":" + config.webPort);
+		this.api			= config.addr.web + config.apiPort;
 		this.img			= config.addr.img;
 		this.imgDir			= config.imgDir;
 		this.aud			= config.addr.aud;
@@ -220,7 +220,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		client.use(serve);
 		client.all('*',function(req,res){
 			var data = jade.renderFile(req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade',{
-				cdn	: config.addr.web + ":" + (config.webPort == 80 ? '' : config.webPort),
+				cdn	: config.addr.web + (config.webPort == 80 ? '' : ":" + config.webPort),
 				api : config.addr.web + ":" + config.apiPort
 			});
 			res.send(data);
