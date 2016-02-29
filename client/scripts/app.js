@@ -696,7 +696,7 @@
 					_g.b.loaded += 3;
 					_g.b.update();
 				}
-				_i('posts').insertAdjacentHTML('beforeend', '<div class="post" id="post-0">No more posts to load.</div>');
+				_i('posts').insertAdjacentHTML('beforeend', '<div class="post" id="post-0">This is the end.</div>');
 				return;
 			}
 			if(id == 'only'){
@@ -704,7 +704,7 @@
 					_g.b.loaded += 3;
 					_g.b.update();
 				}
-				if(_i('post-0') == null) _i('posts').insertAdjacentHTML('beforeend', '<div class="post" id="post-0">No posts to load.</div>');
+				if(_i('post-0') == null) _i('posts').insertAdjacentHTML('beforeend', '<div class="post" id="post-0">There is nothing here.</div>');
 				return;
 			}
 			var post = _i('post-' + id);
