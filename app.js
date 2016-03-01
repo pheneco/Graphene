@@ -1,7 +1,7 @@
 /*
  *	Graphene Server s0.5.0
  *	Written by Trevor J Hoglund
- *	Feb 27, 2016
+ *	Mar 01, 2016
  */
 
 //	Set Up
@@ -173,7 +173,7 @@ mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
 
 //	Enable CORS
 app.use(function(req,res,next) {
-	res.header("Access-Control-Allow-Origin", config.addr.web + ":" + config.webPort);
+	res.header("Access-Control-Allow-Origin", config.addr.web  + (config.webPort == 80 ? '' : ":" + config.webPort));
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE');
