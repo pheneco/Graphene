@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	Feb 26, 2016
+ *	Mar 03, 2016
  */
 
    (function bippity(){
@@ -1597,9 +1597,9 @@
 								c[i].style.display = tv ? 'none' : 'block';
 							_i('imgavatthing').style.display = !tv ? 'none' : 'block';
 							_i('clravatthing').style.display = tv ? 'none' : 'block';
-							e.target.innerHTML = tv == 'true' ? e.target.getAttribute("off") : e.target.getAttribute("on");
+							e.target.innerHTML = tv ? e.target.getAttribute("off") : e.target.getAttribute("on");
 							e.target.setAttribute("toggled", tv ? 'false' : 'true');
-							new ajax(_g.api + '/user/avatar/color', 'POST', "colorAvatar=" + tv + "&avatarColor=" + _g.session.avatarCvatar);
+							new ajax(_g.api + '/user/avatar/color', 'POST', "colorAvatar=" + !tv + "&avatarColor=" + _g.session.avatarCvatar);
 						});
 						_i('settings-avclr-save').addEventListener('click',function(){
 							new ajax(_g.api + '/user/avatar/color', 'POST', "colorAvatar=true&avatarColor=" + _i('settings-avatclr-input').value,{
