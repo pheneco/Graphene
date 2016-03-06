@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trevor J Hoglund
- *	Jan 10, 2016
+ *	Mar 05, 2016
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -151,7 +151,10 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			u.rank = 1;
 			u.save(function(e,u){
 				if(e) return res.send(e);
-				else res.redirect(Graphene.url);
+				else{
+					console.log(Graphene.time() + u.userName + " (" + u._id + ") activated their account.");
+					res.redirect(Graphene.url);
+				}
 			});
 		});
 	});
@@ -163,7 +166,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			album.images.push({
 				ext	: req.file.mimetype.split('/')[1],
 				plainText : 'An Avatar',
-				richText : 'An Avatar'
+				richText  : 'An Avatar'
 			});
 			album.save(function(e,album){
 			var newim	= album.images[album.images.length-1],
@@ -180,6 +183,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 					sharp(path).resize(200,200).crop(sharp.gravity.center).toFile(Graphene.imgDir + '/' + album._id + '/' + newim._id + '/' + u.avatarHash + '-200.jpg',function(e,i){
 					sharp(path).resize(36,36).crop(sharp.gravity.center).toFile(Graphene.imgDir + '/' + album._id + '/' + newim._id + '/' + u.avatarHash + '-36.jpg',function(e,i){
 					sharp(path).resize(500,null).toFile(Graphene.imgDir + '/' + album._id + '/' + newim._id + '/500.jpg',function(e,i){
+						console.log(Graphene.time() + u.userName + " (" + u._id + ") uploaded an avatar (" + newim._id + ").");
 						res.send('Success!');
 					});
 					});
@@ -230,20 +234,30 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		});
 	});
 	app.post('/user/avatar/color',function(req,res){
+		User.findOne({_id:req.session.user},function(e,u){ if(e) return res.send(e);
 		User.update({_id:req.session.user}, {
 			avatarColor	: req.body.avatarColor,
 			colorAvatar	: req.body.colorAvatar
 		}, {upsert: true}, function(e){
 			if(e) res.send(e);
-			else res.send("");
+			else{
+				console.log(Graphene.time() + u.userName + " (" + u._id + ") changed avatar color.");
+				res.send("");
+			}
+		});
 		});
 	});
 	app.post('/user/bio/set', function(req,res){
+		User.findOne({_id:req.session.user},function(e,u){ if(e) return res.send(e);
 		User.update({_id:req.session.user}, {
 			bio			: striptags(req.body.bio)
 		}, {upsert: true}, function(e){
 			if(e) res.send(e);
-			else res.send("");
+			else{
+				console.log(Graphene.time() + u.userName + " (" + u._id + ") changed bio information.");
+				res.send("");
+			}
+		});
 		});
 	});
 	

@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	Feb 26, 2016
+ *	Mar 05, 2016
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -96,6 +96,7 @@ module.exports = function(app, Graphene, Notification){
 						for(var i = 0; i < tags.length; i++) Tags.emit(""+tags[i]);
 						for(var i = 0; i < users.length; i++) Posts.emit("@"+users[i]);
 						res.send("");
+						console.log(Graphene.time() + u.userName + " (" + u._id + ") posted " + p._id + ".");
 						User.find({username:{$in:users}},function(e,u){
 							if(e) return console.log(Graphene.time() + e);
 							for(var i = 0; i < u.length; i++){
@@ -158,15 +159,18 @@ module.exports = function(app, Graphene, Notification){
 	})
 	app.delete('/post/:id', function(req,res){
 		if(!req.session.user) return res.send("");
+		User.findOne({_id:req.session.user}, function(e,u){if(e) return res.send(e);
 		Post.findOne({_id:req.params.id}, function(e,p){if(e || p == null) return res.send(e);
 			if(p.user !== req.session.user) return false;
 			Post.remove({_id:req.params.id}, function(e){if(e) return res.send(e);
-			Note.remove({data:req.params.id}, function(e){if(e) return res.send(e);
-				Posts.emit(""+req.session.user);
-				for(var i = 0; i < p.users.length; i++) Posts.emit("@"+p.users[i]);
-				return res.send("Post deleted succesfully!");
+				console.log(Graphene.time() + u.userName + " (" + u._id + ") deleted post " + p._id + ".");
+				Note.remove({data:req.params.id}, function(e){if(e) return res.send(e);
+					Posts.emit(""+req.session.user);
+					for(var i = 0; i < p.users.length; i++) Posts.emit("@"+p.users[i]);
+					return res.send("Post deleted succesfully!");
+				});
 			});
-			});
+		});
 		});
 	});
 	app.delete('/post/:post/comment/:comment',function(req,res){
