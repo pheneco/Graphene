@@ -9,6 +9,7 @@
 		</a>
 		<div class="post-name"><a href="{{user.url}}"><b>{{user.name}}</b></a></div>
 		<div class="post-time">{{#if url}}<a permalink href="{{url}}" class="timestamp" unix-time="{{time}}">{{/if}}{{#if timestamp}}{{timestamp}}{{else}}{{time}}{{/if}}{{#if url}}</a>{{/if}}</div>
+		{{#if menu}}<div class="post-menu">v</div>{{/if}}
 	</div>
 	{{/ifCond}}
 	{{#ifCond all '||' content}}

@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	Mar 03, 2016
+ *	Mar 17, 2016
  */
 
    (function bippity(){
@@ -736,14 +736,16 @@
 				info.you		= _g.session;
 				info.timestamp	= _g.time(info.time);
 				info.loadMore	= info.commentCount > 5 ? 'block' : 'none';
+				info.menu		= !0;
 				for(var i in info.commentList)
 					info.commentList[i].owner = info.commentList[i].user.id == _g.session.user,
 					info.commentList[i].post = id,
 					info.commentList[i].timestamp = _g.time(info.commentList[i].time);
-				template		= _g.temps.post(info);
+				var template	= _g.temps.post(info);
 				if(info.all){
 					post.innerHTML = template;
-					post.oncontextmenu = function(e){
+					post._c('post-menu')[0].postId = id;
+					post._c('post-menu')[0].onclick = post.oncontextmenu = function(e){
 						e.preventDefault();
 						var post = this.postId,
 							info = _g.p.info[post];
