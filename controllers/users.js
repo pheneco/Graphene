@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trevor J Hoglund
- *	Mar 05, 2016
+ *	Mar 17, 2016
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
