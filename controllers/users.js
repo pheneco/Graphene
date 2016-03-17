@@ -39,7 +39,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 									avatar		: 'default',
 									avatarHash	: '0',
 									background	: 'default',
-									rank		: dev?10:1,
+									rank		: Graphene.dev?10:1,
 									accent		: '#444444',
 									nameHandle	: false,
 									feeds		: [{
@@ -61,7 +61,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 								nu.save(function(e,u){
 									if(!e){
 										console.log(Graphene.time() + req.body.username + " (" + u._id + ") registered.");
-										if(!dev)
+										if(!Graphene.dev)
 											mailer.sendMail({
 												from	: 'support@phene.co',
 												to		: req.body.email,

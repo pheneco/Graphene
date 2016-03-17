@@ -39,6 +39,7 @@ var root		= __dirname,
 		this.imgDir			= config.imgDir;
 		this.aud			= config.addr.aud;
 		this.audDir			= config.audDir;
+		this.dev			= dev;
 		this.getWords		= function(string,num){
 			var a;
 			return entities.decode((a = string
