@@ -298,7 +298,24 @@
 			_g.b.toLoad = 3;
 			_g.b.loaded = 0;
 			_g.b.update();
-			new ajax(_g.api + "/changes/" + app, "GET", "", {
+			if(app.split(".")[0] == "_g"){
+				var lib		= app.split(".")[1],
+					list	= lib == "menu"
+								? _g.m.changes
+								:(lib == "crop"
+									? _g.x.changes
+									: []);
+					_i('changes')._c('post-time')[0].innerHTML = list[list.length-1][0];
+					_i('changes')._c('post-content')[0].outerHTML = '<div class="post-inputs"><table id="changelog"></table></div>';
+					var tb = _i("changelog"),tr,td;
+					for(var i = 0; i < list.length; i++){
+						tr = tb.insertRow();
+						tr.insertCell().innerHTML = list[i][0];
+						tr.insertCell().innerHTML = list[i][2];
+						_g.b.loaded = 3;
+						_g.b.update();
+					}
+			} else new ajax(_g.api + "/changes/" + app, "GET", "", {
 				change : function(){
 					_g.b.loaded++;
 					_g.b.update();
