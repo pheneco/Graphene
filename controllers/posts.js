@@ -96,7 +96,7 @@ module.exports = function(app, Graphene, Notification){
 						for(var i = 0; i < tags.length; i++) Tags.emit(""+tags[i]);
 						for(var i = 0; i < users.length; i++) Posts.emit("@"+users[i]);
 						res.send("");
-						console.log(Graphene.time() + u.userName + " (" + u._id + ") posted " + p._id + ".");
+						console.log(Graphene.time() + u.userName + " (" + u._id + ") created post " + p._id + ".");
 						User.find({username:{$in:users}},function(e,u){
 							if(e) return console.log(Graphene.time() + e);
 							for(var i = 0; i < u.length; i++){

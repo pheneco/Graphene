@@ -39,7 +39,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 									avatar		: 'default',
 									avatarHash	: '0',
 									background	: 'default',
-									rank		: dev?10:0,
+									rank		: dev?10:1,
 									accent		: '#444444',
 									nameHandle	: false,
 									feeds		: [{
@@ -148,7 +148,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			if(e) return res.send(e);
 			if(u==null) return res.send('User Does Not Exist');
 			u.activated = true;
-			u.rank = 1;
+			u.rank = 2;
 			u.save(function(e,u){
 				if(e) return res.send(e);
 				else{
@@ -241,7 +241,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		}, {upsert: true}, function(e){
 			if(e) res.send(e);
 			else{
-				console.log(Graphene.time() + u.userName + " (" + u._id + ") changed avatar color.");
+				if(req.body.colorAvatar) console.log(Graphene.time() + u.userName + " (" + u._id + ") changed avatar color to " + req.body.avatarColor);
 				res.send("");
 			}
 		});
