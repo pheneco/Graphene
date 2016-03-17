@@ -53,7 +53,7 @@
 	#loading-container		{position:absolute;width:500px;height:5px;top:calc(50% + 140px);left:calc(50% - 250px);}
 	#loading-bar			{position:absolute;top:0;left:0;width:0;height:100%;background:#fff;}
 	
-#brand						{position:absolute;bottom:20px;right:20px;}
+#brand						{position:absolute;bottom:17px;right:20px;}
 	#brand-logo svg			{width:40px;height:40px;}
 	#brand-name				{width:60px;text-align:center;margin-left:-10px;}
 	
