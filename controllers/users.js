@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trevor J Hoglund
- *	Mar 17, 2016
+ *	Mar 20, 2016
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -75,7 +75,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 												if(e) console.log(Graphene.time() + e);
 											});
 										req.session.user = u._id;
-										res.send("1");
+										res.redirect(Graphene.url);
 									}else{
 										console.log(Graphene.time() + e);
 										res.send("0");
@@ -95,7 +95,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 					User.find({email:{$regex: new RegExp("^" + req.body.email + "$", "i")}}, function(e,u){
 						if(!e){
 							if(bcrypt.compareSync(req.body.password, u[0].password)) {
-								console.log(Graphene.time() + "User " + u[0].userName + " ("+ (req.session.user = u[0]._id) + ") logged in");
+								console.log(Graphene.time() + u[0].userName + " ("+ (req.session.user = u[0]._id) + ") logged in");
 								res.redirect(Graphene.url);
 							} else res.redirect(Graphene.url + '/login?fail');
 						} else console.log(Graphene.time() + "Error retrieving user information from database.");
