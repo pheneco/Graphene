@@ -1,7 +1,7 @@
 /*
  *	Graphene Server s0.5.0
  *	Written by Trevor J Hoglund
- *	Mar 01, 2016
+ *	Mar 17, 2016
  */
 
 //	Set Up
@@ -26,7 +26,7 @@ var root		= __dirname,
 	Feed		= require('./models/feed'),
 	Post		= require('./models/post'),
 	Note		= require('./models/notification'),
-	ServerChange = require('./models/serverchangelog'),
+	ServerChange= require('./models/serverchangelog'),
 	Change		= require('./models/changelog'),
 	EmailSrc	= fs.readFileSync('email.html', "utf8"),
 	EmailTemp	= Handlebars.compile(EmailSrc),
@@ -54,8 +54,8 @@ var root		= __dirname,
 				len = arguments.length;
 			for(var i = 0; i < len; i++)
 				for(p in arguments[i])
-				  if(arguments[i].hasOwnProperty(p))
-					ret[p] = arguments[i][p];
+					if(arguments[i].hasOwnProperty(p))
+						ret[p] = arguments[i][p];
 			return ret;
 		};
 		this.getUserInfo	= function(user,name,callback,req,res){

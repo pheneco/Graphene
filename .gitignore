@@ -2,6 +2,7 @@
 config.json
 client/img/*
 client/aud/*
+!client/img/default
 
 #Node Stuffs
 logs
