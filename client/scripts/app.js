@@ -779,7 +779,7 @@
 						_g.m.open(e, {
 							Comment		: "_g.c.toggle('" + post + "');",
 							Delete		: info.editable ? "_g.p.delete('" + post + "');" : "",
-							Unfollow	: ~info.followers.indexOf(_g.session.user) ? "_g.p.unfollow('" + post + "');" : "",
+							"Unfollow Post"	: ~info.followers.indexOf(_g.session.user) ? "_g.p.unfollow('" + post + "');" : "",
 							Edit		: info.editable ? "_g.e.open('" + post + "');" : ""
 						})
 					};
