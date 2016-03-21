@@ -150,7 +150,7 @@ var root		= __dirname,
 				}
 			});
 		};
-		this.time	= function(){
+		this.time			= function(){
 			var stamp = new Date(),t;
 			return stamp.getFullYear()
 				+ "."  + ((t=""+(stamp.getMonth()+1)).length==1?"0"+t:t)
@@ -205,6 +205,7 @@ require('./controllers/changelog')(app, Graphene);
 require('./controllers/users')(app, Graphene, EmailTemp, mailer);
 require('./controllers/posts')(app, Graphene, Notification);
 require('./controllers/notes')(app, Graphene, Notification);
+require('./controllers/drafts')(app, Graphene);
 
 
 //	Get Server Version
