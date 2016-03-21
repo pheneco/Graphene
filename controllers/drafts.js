@@ -31,5 +31,9 @@ module.exports = function(app, Graphene){
 			plainText	: req.body.text,
 			lastEdit	: +(new Date())
 		});
+		draft.save(function(e){
+			if(e) res.send(e);
+			else res.send();
+		});
 	});
 }
