@@ -1,7 +1,7 @@
 /*
  *	Graphene Standard CSS w0.5.0
  *	Written by Trevor J Hoglund
- *	Mar 17, 2015
+ *	Mar 22, 2015
  */
  
 	*						{margin:0px;zoom:1;font-size:10pt;}
@@ -207,10 +207,16 @@
 	#settings-clravat		{width:178px;text-align:center;}
 	#settings-avatclr-input	{width:176px;}
 	#settings-avatclr .gra_clr-sat {width:142px !important;}
-	
+
+.draft-list td,	
 #changelog td				{padding:3px;}
+	.draft-list tr *:first-child,
 	#changelog tr *:first-child{padding-right:10px;vertical-align:top;}
+	.draft-list tr:nth-child(even),
 	#changelog tr:nth-child(even){background:#f8f8f8;}
+	.draft-list				{width:100%;}
+	.draft-list td:first-child{width:400px;}
+	.draft-list td:nth-child(2){color:#ccc;}
 #version					{position:fixed;left:0;bottom:0;width:calc(100% - 8px);padding:4px;color:#fff;background:#CD3E3E;text-align:center;z-index:20;}
 	#version a				{color:#fff !important;font-weight:bold;}
 	

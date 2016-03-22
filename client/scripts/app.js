@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	Mar 20, 2016
+ *	Mar 22, 2016
  */
 
    (function bippity(){
@@ -431,7 +431,7 @@
 				e.preventDefault();
 				_g.m.open(e, {
 					"Save as Draft" : "",
-					"Open Draft"	: "",
+					"Open Draft"	: "_g.cr.drafts.list()",
 					Schedule		: "",
 					"Markdown Help"	: ""
 				})
@@ -444,7 +444,7 @@
 			*/
 			return !0;
 		},
-		renderImages	: function(){
+		renderImages	: function(){	//	deprecated
 			var img, pr
 				cre	= _i('post-new'),
 				pm	= cre._c('post-mediabox')[0];
@@ -469,7 +469,7 @@
 				}
 			}
 		},
-		renderLink		: function(){
+		renderLink		: function(){	//	deprecated
 			var cre = _i('post-new'),
 				pm = cre._c('post-mediabox')[0];
 			if(cre.getAttribute('post-type') == 'text'){
@@ -482,12 +482,12 @@
 				window.setTimeout(pr.focus(), 0);
 			}
 		},
-		dragover		: function(e){
+		dragover		: function(e){	//	deprecated
 			e.stopPropagation();
 			e.preventDefault();
 			e.dataTransfer.dropEffect = 'move';
 		},
-		drop			: function(e){
+		drop			: function(e){	//	deprecated
 			var files	= (typeof e.dataTransfer !== 'undefined') ? e.dataTransfer.files : this.files,
 				cre		= _i('post-new'), f;
 			if((cre.getAttribute('post-type') == 'text' || cre.getAttribute('post-type') == 'image') && files[0].type.match('image.*')){
@@ -526,7 +526,7 @@
 				reader.readAsDataURL(files[0]);
 			}
 		},
-		remove			: function(id){
+		remove			: function(id){	//	deprecated
 			this.images.splice(id, 1);
 			for(var i in this.imageLayout){
 				for(var j in this.imageLayout[i]){
@@ -575,9 +575,31 @@
 					_g.cr.load();
 				}
 			})
+		},
+		drafts			: {
+			list		: function(){
+				new ajax(_g.api + '/drafts', 'GET', '', {load : function(r){
+					var drafts = JSON.parse(r.responseText);
+					_g.pu.open({
+						title	: "Open Draft",
+						text	: '<table class="draft-list"></table><div class="popup-button" onclick="">Open</div>',
+						width	: "500px"
+					});
+					var tb = _c("draft-list")[0],tr,td;
+					for(var i = 0; i < drafts.length; i++){
+						tr = tb.insertRow();
+						tr.setAttribute('draftId','');
+						tr.insertCell().innerHTML = drafts[i].name;
+						tr.insertCell().innerHTML = '<span class="timestamp" unix-time="' + drafts[i].date + '">' + _g.time(drafts[i].date) + '</span>';
+					}
+				}});
+			},
+			open		: function(){},
+			save		: function(){},
+			delete		: function(){}
 		}
 	});
-	_g.ct	= (_g.chat		= {
+	_g.ct	= (_g.chat		= {	//	Reservation for future
 		
 	});
 	_g.e	= (_g.editor	= {
