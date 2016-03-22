@@ -10,9 +10,9 @@ module.exports = function(app, Graphene){
 	
 	//	Routes
 	app.get('/drafts',function(req,res){
-		Draft.find({user:req.session.user},null,{sort:{date:-1}},function(e,d){
+		Draft.find({user:req.session.user},function(e,d){
 			var drafts = [];
-			for(var i = 0; i < d.length; d++)
+			for(var i = 0; i < d.length; i++)
 				drafts[i]	= {
 					name	: d[i].name,
 					text	: d[i].plainText,
