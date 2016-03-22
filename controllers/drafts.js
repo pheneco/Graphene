@@ -23,7 +23,14 @@ module.exports = function(app, Graphene){
 		});
 	});
 	app.get('/draft/:id',function(req,res){
-		//	Get a single draft based on id
+		Draft.findOne({_id:req.params.id},function(e,d){if(e)return res.send(e);
+			res.send({
+				id		: d._id,
+				name	: d.name,
+				text	: d.plainText,
+				date	: d.lastEdit
+			});
+		});
 	});
 	app.post('/drafts/new',function(req,res){
 		if(!req.session.user) return res.send("Must be logged in to save drafts");
