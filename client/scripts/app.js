@@ -600,6 +600,13 @@
 							btn.className = 'popup-button inactive';
 							btn.setAttribute('onmousedown','');
 						};
+						tr.oncontextmenu = function(e){
+							e.preventDefault();
+							_g.m.open(e,{
+								Delete	: "",
+								Rename	: ""
+							});
+						}
 						tr.insertCell().innerHTML = drafts[i].name;
 						tr.insertCell().innerHTML = '<span class="timestamp" unix-time="' + drafts[i].date + '">' + _g.time(drafts[i].date) + '</span>';
 					}
@@ -821,7 +828,7 @@
 							Comment		: "_g.c.toggle('" + post + "');",
 							Delete		: info.editable ? "_g.p.delete('" + post + "');" : "",
 							"Unfollow Post"	: ~info.followers.indexOf(_g.session.user) ? "_g.p.unfollow('" + post + "');" : "",
-							Edit		: info.editable ? "_g.e.open('" + post + "');" : ""
+							Edit		: "" //info.editable ? "_g.e.open('" + post + "');" : ""
 						})
 					};
 				}
