@@ -606,7 +606,13 @@
 				}});
 			},
 			open		: function(id){
-				_i('popup-shade').remove()
+				_i('popup-shade').remove();
+				new ajax(_g.api + '/draft/' + id, 'GET', '', {load : function(r){
+					var draft	= JSON.parse(r.responseText),
+						tb		= _i('post-new')._c('post-textbox')[0];
+					tb.innerText = draft.text;
+					resize.bind(tb);
+				}});
 			},
 			save		: function(){},
 			delete		: function(){}
