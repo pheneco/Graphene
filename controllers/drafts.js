@@ -32,6 +32,17 @@ module.exports = function(app, Graphene){
 			});
 		});
 	});
+	app.delete('/draft/:id',function(req,res){
+		if(!req.session.user) return res.send("");
+		User.findOne({_id:req.session.user}, function(e,u){if(e) return res.send(e);
+		Draft.findOne({_id:req.params.id}, function(e,d){if(e || d == null) return res.send(e);
+			if(d.user !== req.session.user) return res.send("You can't delete another user's drafts!");
+			Draft.remove({_id:req.params.id}, function(e){if(e) return res.send(e);
+				console.log(Graphene.time() + u.userName + " (" + u._id + ") deleted draft " + d._id + ".");
+			});
+		});
+		});
+	});
 	app.post('/drafts/new',function(req,res){
 		if(!req.session.user) return res.send("Must be logged in to save drafts");
 		User.findOne({_id:req.session.user}, function(e,u){

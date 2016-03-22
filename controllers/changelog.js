@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Changelog Routes
  *	Written by Trewbot
- *	Mar 05, 2015
+ *	Mar 22, 2015
  */
 
 module.exports	= function(app,Graphene){
@@ -55,7 +55,7 @@ module.exports	= function(app,Graphene){
 			}, c = req.params.app == 'server' ? new ServerChange(o) : new Change(o);
 			c.save(function(e){
 				if(e) return res.send("Error saving change.");
-				console.log(Graphene.time() + "User " + u.userName + "(" + u._id + ") posted change " + req.body.version);
+				console.log(Graphene.time() + u.userName + "(" + u._id + ") posted change " + req.body.version);
 				if(req.params.app == 'webClient') Changelog.emit('change', req.body.date, req.body.version);
 				if(req.params.app == 'server') console.log(Graphene.time() + "Restart server to update.");
 				res.send("");
