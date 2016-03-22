@@ -603,7 +603,7 @@
 						tr.oncontextmenu = function(e){
 							e.preventDefault();
 							_g.m.open(e,{
-								Delete	: "",
+								Delete	: "_g.cr.drafts.delete('" + this.getAttribute('draftId') + "')",
 								Rename	: ""
 							});
 						}
@@ -622,7 +622,13 @@
 				}});
 			},
 			save		: function(){},
-			delete		: function(){}
+			delete		: function(id){
+				console.log('deleteing thign: ' + id);
+				new ajax(_g.api + '/draft/' + id, 'DELETE', '', {load : function(r){
+					_i('popup-shade').remove();
+					_g.cr.drafts.list();
+				}});
+			}
 		}
 	});
 	_g.ct	= (_g.chat		= {	//	Reservation for future
