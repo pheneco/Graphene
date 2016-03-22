@@ -582,19 +582,32 @@
 					var drafts = JSON.parse(r.responseText);
 					_g.pu.open({
 						title	: "Open Draft",
-						text	: '<table class="draft-list"></table><div class="popup-button" onclick="">Open</div>',
+						text	: '<table class="draft-list"></table><div class="popup-button inactive">Open</div>',
 						width	: "500px"
 					});
 					var tb = _c("draft-list")[0],tr,td;
 					for(var i = 0; i < drafts.length; i++){
 						tr = tb.insertRow();
-						tr.setAttribute('draftId','');
+						tr.setAttribute('draftId',drafts[i].id);
+						tr.setAttribute('tabindex','-1');
+						tr.onfocus = function(){
+							var btn = _i('popup-content')._c('popup-button')[0];
+							btn.className = 'popup-button';
+							btn.setAttribute('onmousedown','_g.cr.drafts.open("' + this.getAttribute('draftId') + '")');
+						};
+						tr.onblur = function(){
+							var btn = _i('popup-content')._c('popup-button')[0];
+							btn.className = 'popup-button inactive';
+							btn.setAttribute('onmousedown','');
+						};
 						tr.insertCell().innerHTML = drafts[i].name;
 						tr.insertCell().innerHTML = '<span class="timestamp" unix-time="' + drafts[i].date + '">' + _g.time(drafts[i].date) + '</span>';
 					}
 				}});
 			},
-			open		: function(){},
+			open		: function(id){
+				_i('popup-shade').remove()
+			},
 			save		: function(){},
 			delete		: function(){}
 		}

@@ -44,6 +44,7 @@
 	#popup-no				{background:#ddd;}
 	.popup-option			{cursor:pointer;padding:8px;width:184px;text-align:center;text-transform:uppercase;color:#FFF;display:inline-block;}
 	.popup-button			{padding:6px;width:200px;background:#444444;color:#fff;margin:auto;margin-top:10px;font-weight:bold;text-align:center;cursor:pointer;}
+	.popup-button.inactive	{cursor:not-allowed;opacity:0.5;}
 	
 #loading					{position:fixed;width:100%;height:100%;top:0;left:0;z-index:1500;background:#444444;transition-duration:0.3s;-webkit-transition-duration:0.3s;}
 	#loading-icon			{position:absolute;width:250px;height:250px;top:calc(50% - 125px);left:calc(50% - 125px);}
@@ -215,6 +216,7 @@
 	.draft-list tr:nth-child(even),
 	#changelog tr:nth-child(even){background:#f8f8f8;}
 	.draft-list				{width:100%;}
+	.draft-list tr:focus	{background:#fed;outline:none;}
 	.draft-list td:first-child{width:400px;}
 	.draft-list td:nth-child(2){color:#ccc;}
 #version					{position:fixed;left:0;bottom:0;width:calc(100% - 8px);padding:4px;color:#fff;background:#CD3E3E;text-align:center;z-index:20;}
