@@ -621,9 +621,16 @@
 					resize.bind(tb)();
 				}});
 			},
-			save		: function(){},
+			save		: function(){
+				new ajax(_g.api + '/drafts/new', 'POST', JSON.stringify({
+					name : prompt(),
+					text : _i('post-new')._c('post-textbox')[0].value
+				}), {
+					type : 'application/json',
+					load : function(){}
+				});
+			},
 			delete		: function(id){
-				console.log('deleteing thign: ' + id);
 				new ajax(_g.api + '/draft/' + id, 'DELETE', '', {load : function(r){
 					_i('popup-shade').remove();
 					_g.cr.drafts.list();
