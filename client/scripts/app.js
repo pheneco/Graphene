@@ -430,7 +430,7 @@
 			post._c('post-menu')[0].onclick = post.oncontextmenu = function(e){
 				e.preventDefault();
 				_g.m.open(e, {
-					"Save as Draft" : "",
+					"Save as Draft" : "_g.cr.drafts.save()",
 					"Open Draft"	: "_g.cr.drafts.list()",
 					Schedule		: "",
 					"Markdown Help"	: ""
