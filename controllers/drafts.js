@@ -33,7 +33,7 @@ module.exports = function(app, Graphene){
 				plainText	: req.body.text,
 				lastEdit	: +(new Date())
 			});
-			draft.save(function(e){
+			draft.save(function(e,d){
 				if(e) return res.send(e);
 				console.log(Graphene.time() + u.userName + " (" + u._id + ") saved draft " + d._id + ".");
 				res.send();
