@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Drafts Routes
  *	Written by Trevor J Hoglund
- *	Mar 21, 2016
+ *	Mar 22, 2016
  */
  
 module.exports = function(app, Graphene){
@@ -25,15 +25,19 @@ module.exports = function(app, Graphene){
 		//	Get a single draft based on id
 	});
 	app.post('/drafts/new',function(req,res){
-		var draft	= new Draft({
-			user		: req.session.user,
-			name		: req.body.name,
-			plainText	: req.body.text,
-			lastEdit	: +(new Date())
-		});
-		draft.save(function(e){
-			if(e) res.send(e);
-			else res.send();
+		if(!req.session.user) return res.send("Must be logged in to save drafts");
+		User.findOne({_id:req.session.user}, function(e,u){
+			var draft	= new Draft({
+				user		: req.session.user,
+				name		: req.body.name,
+				plainText	: req.body.text,
+				lastEdit	: +(new Date())
+			});
+			draft.save(function(e){
+				if(e) return res.send(e);
+				console.log(Graphene.time() + u.userName + " (" + u._id + ") saved draft " + d._id + ".");
+				res.send();
+			});
 		});
 	});
 }
