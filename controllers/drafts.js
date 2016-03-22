@@ -14,6 +14,7 @@ module.exports = function(app, Graphene){
 			var drafts = [];
 			for(var i = 0; i < d.length; i++)
 				drafts[i]	= {
+					id		: d[i]._id,
 					name	: d[i].name,
 					text	: d[i].plainText,
 					date	: d[i].lastEdit
