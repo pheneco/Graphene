@@ -39,6 +39,7 @@ module.exports = function(app, Graphene){
 			if(d.user !== req.session.user) return res.send("You can't delete another user's drafts!");
 			Draft.remove({_id:req.params.id}, function(e){if(e) return res.send(e);
 				console.log(Graphene.time() + u.userName + " (" + u._id + ") deleted draft " + d._id + ".");
+				res.send();
 			});
 		});
 		});
