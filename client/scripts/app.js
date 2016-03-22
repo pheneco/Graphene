@@ -611,7 +611,7 @@
 					var draft	= JSON.parse(r.responseText),
 						tb		= _i('post-new')._c('post-textbox')[0];
 					tb.value	= draft.text;
-					resize.bind(tb);
+					resize.bind(tb)();
 				}});
 			},
 			save		: function(){},
