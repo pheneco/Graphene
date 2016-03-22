@@ -436,6 +436,12 @@
 					"Markdown Help"	: ""
 				})
 			};
+			new ajax(_g.api + '/drafts/default', 'GET', '', {load : function(r){
+				var draft	= JSON.parse(r.responseText),
+					tb		= _i('post-new')._c('post-textbox')[0];
+				tb.value	= draft.text;
+				resize.bind(tb)();
+			}});
 			/*
 			_i('post-new-image').onchange = this.drop;
 			_i('post-new-audio').onchange = this.drop;
@@ -953,7 +959,7 @@
 			
 			//	USER PAGES
 			if(_g.u.loaded && ctx.path.toLowerCase().indexOf('/user/' + _g.u.name.toLowerCase())){
-				console.log(!ctx.path.toLowerCase().indexOf('/user/' + _g.u.name.toLowerCase()));
+				//console.log(!ctx.path.toLowerCase().indexOf('/user/' + _g.u.name.toLowerCase()));
 				if(se = _i('user')) se.remove();
 				_g.u.loaded = !1;
 			}
@@ -1974,13 +1980,20 @@
 		
 	});
 	
-	page('*', _g.p.clear);
-	page('*', _g.t.side);
 	page('*', function(ctx,next){
 		//	var lnk = document.getElementsByTagName('link');
 		//	lnk[lnk.length-1].href = '/assets/img/fav.php?c=' + _g.session.accent.replace('#','');
+		if(_i('post-new'))
+			new ajax(_g.api + '/drafts/default', 'POST', JSON.stringify({
+				text : _i('post-new')._c('post-textbox')[0].value
+			}), {
+				type : 'application/json',
+				load : function(){}
+			});
 		next();
 	});
+	page('*', _g.p.clear);
+	page('*', _g.t.side);
 	page('/', function(ctx,next){
 		if(!_g.user) page.redirect('/login');
 		else {
