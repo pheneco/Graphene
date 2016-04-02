@@ -956,6 +956,7 @@
 				_g.p.loaded = !1;
 			}
 			_g.p.posts = [];
+			_g.p.needLoad = true;
 			
 			//	USER PAGES
 			if(_g.u.loaded && ctx.path.toLowerCase().indexOf('/user/' + _g.u.name.toLowerCase())){
