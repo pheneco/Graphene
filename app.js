@@ -1,7 +1,7 @@
 /*
  *	Graphene Server s0.5.0
  *	Written by Trevor J Hoglund
- *	Mar 21, 2016
+ *	Apr 02, 2016
  */
 
 //	Set Up
@@ -33,7 +33,7 @@ var root		= __dirname,
 	dev			= !(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev'),
 	Graphene	= new(function(){
 		this.sub			= config.sub;
-		this.url			= config.addr.web  + (config.webPort == 80 ? '' : ":" + config.webPort);
+		this.url			= config.addr.web  + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort);
 		this.api			= config.addr.web + config.apiPort;
 		this.img			= config.addr.img;
 		this.imgDir			= config.imgDir;
@@ -174,7 +174,7 @@ mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
 
 //	Enable CORS
 app.use(function(req,res,next) {
-	res.header("Access-Control-Allow-Origin", config.addr.web  + (config.webPort == 80 ? '' : ":" + config.webPort));
+	res.header("Access-Control-Allow-Origin", config.addr.web  + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort));
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE');
@@ -222,7 +222,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		client.use(serve);
 		client.all('*',function(req,res){
 			var data = jade.renderFile(req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade',{
-				cdn	: config.addr.web + (config.webPort == 80 ? '' : ":" + config.webPort),
+				cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
 				api : config.addr.web + ":" + config.apiPort
 			});
 			res.send(data);

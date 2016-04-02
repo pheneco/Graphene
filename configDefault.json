@@ -24,5 +24,6 @@
 		"mongo" : "localhost",
 		"img" : "http://localhost/img",
 		"aud" : "http://localhost/aud"
-	}
+	},
+	"literalWebAddr" : false
 }
