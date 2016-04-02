@@ -221,7 +221,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		});
 		client.use(serve);
 		client.all('*',function(req,res){
-			var data = jade.renderFile(req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade',{
+			var data = jade.renderFile(req.path == '/register' ? __dirname + '/client/register.jade' : (req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade'),{
 				cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
 				api : config.addr.web + ":" + config.apiPort
 			});
