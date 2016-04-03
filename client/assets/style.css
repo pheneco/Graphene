@@ -25,7 +25,7 @@
 
 #register-container,
 #login-container			{width:272px;margin:0 auto;display:block;height:100%;}
-	#login-box				{position:absolute;width:270px;top:256px;}
+	#login-box				{position:absolute;width:272px;top:calc(50vh - 100px);}
 	#login-link				{width:100%;text-align:center;}
 	.register-text			{font-size:14px;width:254px;padding:9px;border:0;margin-bottom:1em;outline:none;border:0;}
 	.login-text				{font-size:14px;width:254px;padding:8px;border:0;margin-bottom:1em;outline:none;border:1px solid #ddd;}
