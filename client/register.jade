@@ -4,26 +4,26 @@
 	Apr 02, 2016
 
 doctype html
-html
+html(style="background: url('http://41.media.tumblr.com/4d4064a29e76757e7391f32079dff3f4/tumblr_o40kyuZVgo1utn57jo1_1280.jpg');background-size:cover;")
 	head
 		link#bacecss(rel="stylesheet", href="../assets/style.css", type="text/css")
 		title Register - Graphene
 	body
-		div#login-container
+		div#register-container
 			div#login-box
-				form(id="login-form", method="post", action=api + "/login")
-					input.login-text(name="name", type="text", autofocus, placeholder="Username")
-					input.login-text(name="email", type="text", placeholder="Email Address")
-					input.login-text(name="password", type="password", placeholder="Password")
-					input.login-butn(name="submit", type="submit", value="Register")
+				form(id="register-form", method="post", action=api + "/register")
+					input.register-text(name="name", type="text", autofocus, placeholder="Username")
+					input.register-text(name="email", type="text", placeholder="Email Address")
+					input.register-text(name="password", type="password", placeholder="Password")
+					input.register-butn(name="submit", type="submit", value="Register", style="color:#444;background:#fff;")
 					div#login-link
-						a(href="../register") Sign Up
+						a(href="../login", style="color:#fff;") Already have an account?
 		a(href="http://phene.co")
-			div#brand(style="color:#444 !important;font-family:serif")
+			div#brand
 				div#brand-logo
 					|	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.61 204.61">
 					|		<defs>
-					|			<style>.cls-1{fill:none;stroke:#444;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}</style>
+					|			<style>.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}</style>
 					|		</defs>
 					|		<title>phene.co</title>
 					|		<path class="cls-1" d="M172.88,76.6a75,75,0,1,0-17.35,78.94A74.69,74.69,0,0,0,172.88,76.6Z" transform="translate(-0.2 -0.2)"/>

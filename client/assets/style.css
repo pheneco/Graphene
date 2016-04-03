@@ -23,13 +23,16 @@
 	.column-fix				{position:absolute;top:0;}
 	.space					{height:10px;}
 
+#register-container,
 #login-container			{width:272px;margin:0 auto;display:block;height:100%;}
 	#login-box				{position:absolute;width:270px;top:256px;}
 	#login-link				{width:100%;text-align:center;}
-	.login-text				{font-size:14px;width:254px;padding:8px;border:0;margin-bottom:1em;outline:none;border: 1px solid #ddd;}
+	.register-text			{font-size:14px;width:254px;padding:9px;border:0;margin-bottom:1em;outline:none;border:0;}
+	.login-text				{font-size:14px;width:254px;padding:8px;border:0;margin-bottom:1em;outline:none;border:1px solid #ddd;}
 	.login-butn				{font-size:14px;width:272px;padding:8px;border:0;margin-bottom:8px;color:#fff;background:#444444;}
+	.register-butn			{font-size:14px;width:272px;padding:8px;border:0;margin-bottom:8px;color:#444;background:#fff;}
 	.login-fail				{font-size:14px;width:256px;padding:8px;border:0;margin-bottom:1em;color:#fff;background:rgb(255,53,53);text-align:center;}
-
+	
 #context					{background:#fff;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;width:200px;padding:2px;}
 	.context-option			{cursor:pointer;padding:3px 15px;color:#111 !important;}
 	.context-option:hover	{background:#f8f8f8;}
