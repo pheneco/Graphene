@@ -1,7 +1,7 @@
 /*
  *	Graphene >> User Model
  *	Written by Trevor J Hoglund
- *	Jan 10, 2016
+ *	Apr 08, 2016
  */
 
 var mongoose	= require('mongoose'),
@@ -14,6 +14,7 @@ var mongoose	= require('mongoose'),
 	userSchema	= new mongoose.Schema({
 		userName	: String,
 		username	: String,
+		name		: String,
 		firstName	: String,
 		lastName	: String,
 		email		: String, 

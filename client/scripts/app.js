@@ -304,7 +304,9 @@
 								? _g.m.changes
 								:(lib == "crop"
 									? _g.x.changes
-									: []);
+									: (lib == "popup"
+										? _g.pu.changes
+										: []));
 					_i('changes')._c('post-time')[0].innerHTML = list[list.length-1][0];
 					_i('changes')._c('post-content')[0].outerHTML = '<div class="post-inputs"><table id="changelog"></table></div>';
 					var tb = _i("changelog"),tr,td;
@@ -1555,7 +1557,7 @@
 												"<a href='" + _g.url + "/changes/server' title='Server'>" + _g.session.sVersion + "</a> " +
 												"<a title='Color Picker'>c0.1.0.0006</a> " +
 												"<a href='" + _g.url + "/changes/_g.crop' title='Crop Tool'>" + _g.x.changes[_g.x.changes.length-1][0] + "</a> " +
-												"<a title='Popup'>p0.1.0.0012</a> " +
+												"<a href='" + _g.url + "/changes/_g.popup' title='Popup'>" + _g.pu.changes[_g.pu.changes.length-1][0] + "</a> " +
 												"<a href='" + _g.url + "/changes/_g.menu' title='Context Menu'>" + _g.m.changes[_g.m.changes.length-1][0] + "</a>";
 				_g.b.toLoad = 0;
 				next();
