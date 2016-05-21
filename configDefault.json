@@ -15,6 +15,12 @@
     "sevenZipDir" : "c:/program files/7-zip",
     "googleMapsEmbedAPIKey" : "",
     "soundcloudAPIKey" : "",
+	"tumblrAPI" : {
+		"consumerKey" : "",
+		"consumerSecret" : "",
+		"token" : "",
+		"tokenSecret" : ""
+	},
 	"email" : {
 		"admin" : "admin@localhost",
 		"support" : "support@localhost"

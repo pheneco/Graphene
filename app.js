@@ -22,7 +22,12 @@ var root		= __dirname,
 	serveStatic = require('serve-static'),
 	jade		= require('jade'),
 	events		= require('events'),
-	tumblr		= require('tumblr.js').createClient({consumer_key:'bp3c8BQWfnXaU7WRfFEn98QG8okgq5BfBmuUd6jlEVj2dNA3xF'}),
+	tumblr		= require('tumblr.js').createClient({
+		consumer_key	: config.tumblrAPI.consumerKey,
+		consumer_secret	: config.tumblrAPI.consumerSecret,
+		token			: config.tumblrAPI.token,
+		token_secret	: config.tumblrAPI.tokenSecret
+	}),
 	User		= require('./models/user'),
 	Feed		= require('./models/feed'),
 	Post		= require('./models/post'),
@@ -222,11 +227,11 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		});
 		client.use(serve);
 		client.all('*',function(req,res){
-			tumblr.posts('theworstfucking.tumblr.com',{type:'photo',filter:'raw'},function(err,p){
+			tumblr.blogPosts('theworstfucking.tumblr.com',{type:'photo',filter:'raw'},function(err,p){
 				var data = jade.renderFile(req.path == '/register' ? __dirname + '/client/register.jade' : (req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade'),{
 					cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
 					api : config.addr.web + ":" + config.apiPort,
-					img	: p.response.posts[~~(Math.random()*p.response.posts.length)].photos[0].original_size.url
+					img	: p.posts[~~(Math.random()*p.posts.length)].photos[0].original_size.url
 				});
 				res.send(data);
 			});
