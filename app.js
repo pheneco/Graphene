@@ -1,7 +1,7 @@
 /*
  *	Graphene Server s0.5.0
  *	Written by Trevor J Hoglund
- *	Apr 02, 2016
+ *	May 21, 2016
  */
 
 //	Set Up
@@ -22,6 +22,7 @@ var root		= __dirname,
 	serveStatic = require('serve-static'),
 	jade		= require('jade'),
 	events		= require('events'),
+	tumblr		= require('tumblr.js').createClient({consumer_key:'bp3c8BQWfnXaU7WRfFEn98QG8okgq5BfBmuUd6jlEVj2dNA3xF'}),
 	User		= require('./models/user'),
 	Feed		= require('./models/feed'),
 	Post		= require('./models/post'),
@@ -221,11 +222,14 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		});
 		client.use(serve);
 		client.all('*',function(req,res){
-			var data = jade.renderFile(req.path == '/register' ? __dirname + '/client/register.jade' : (req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade'),{
-				cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
-				api : config.addr.web + ":" + config.apiPort
+			tumblr.posts('theworstfucking.tumblr.com',{type:'photo',filter:'raw'},function(err,p){
+				var data = jade.renderFile(req.path == '/register' ? __dirname + '/client/register.jade' : (req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade'),{
+					cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
+					api : config.addr.web + ":" + config.apiPort,
+					img	: p.response.posts[~~(Math.random()*p.response.posts.length)].photos[0].original_size.url
+				});
+				res.send(data);
 			});
-			res.send(data);
 		});
 		client.listen(config.webPort, function(){
 			if(!dev)

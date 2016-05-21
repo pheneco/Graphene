@@ -30,7 +30,8 @@
 		"striptags"			: ">=2.0.4",
 		"node-soundcloud"	: ">=0.0.4",
 		"serve-static"		: ">=1.10.0",
-		"jade"				: ">=1.11.0"
+		"jade"				: ">=1.11.0",
+		"tumblr.js"			: ">=1.0.0"
 	},
 	"bugs"			: {
 		"url"		: "https://github.com/Trewbot/Graphene/issues",
