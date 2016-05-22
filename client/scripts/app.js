@@ -116,8 +116,10 @@
 					var cf = _c('column-fix');
 					for(var i = 0; i < cf.length; i++)
 						cf[i].style.top = ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) + "px";
-					if((_g.p.loaded && _g.p.needLoad && !_g.p.loading && _g.p.loadMore) && (((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) > (document.body.scrollHeight - 600 - window.innerHeight)))
+					if((_g.p.loaded && _g.p.needLoad && !_g.p.loading && _g.p.loadMore) && (((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) > (document.body.scrollHeight - 600 - window.innerHeight))){
+						_g.b.toLoad = 0;
 						_g.p.list(20);
+					}
 				});
 				window.addEventListener('mousemove',_g.u.hovercard);
 			}
@@ -151,6 +153,9 @@
 				if(!isNaN(parseInt(ts[i].getAttribute('unix-time')))) ts[i].innerHTML = Graphene.time(ts[i].getAttribute('unix-time'));
 		}, 1e3);
 	})(url,api,name));boppity();
+	_g.a	= (_g.audio		= {	//	Reservation (module)
+		
+	});
 	_g.b	= (_g.bar		= {
 		toLoad : 0,
 		loaded : 0,
@@ -269,7 +274,7 @@
 	_g.ca	= (_g.calendar	= {
 		
 	});
-	_g.cl	= (_g.color		= {	//	Reservation
+	_g.cl	= (_g.color		= {	//	Reservation (library)
 		
 	});
 	_g.cn	= (_g.changes	= {
@@ -646,7 +651,13 @@
 			}
 		}
 	});
-	_g.ct	= (_g.chat		= {	//	Reservation for future
+	_g.ct	= (_g.chat		= {	//	Reservation (module)
+		
+	});
+	_g.d	= (_g.data		= {	//	Reservation (module)
+		
+	});
+	_g.de	= (_g.ide		= {	//	Reservation (module)
 		
 	});
 	_g.e	= (_g.editor	= {
@@ -655,7 +666,7 @@
 	_g.g	= (_g.groups	= {
 		
 	});
-	_g.m	= (_g.menu		= {	//	Reservation
+	_g.m	= (_g.menu		= {	//	Reservation (library)
 		
 	});
 	_g.n	= (_g.notes		= {
@@ -775,7 +786,6 @@
 							_i("posts").innerHTML = "<div id='_post'></div>";
 						var pls		= JSON.parse(r.responseText);
 						this.posts	= this.posts.concat(pls);
-						// window.__prl();
 						_g.b.toLoad += pls.length * 3;
 						_g.b.loaded = 0;
 						for(var i = 0; i < pls.length; i++) this.load(pls[i], 'all', 'a');
@@ -1000,7 +1010,7 @@
 			next();
 		}
 	});
-	_g.pu	= (_g.popup		= {	//	Reservation
+	_g.pu	= (_g.popup		= {	//	Reservation (library)
 		
 	});
 	_g.rg	= (_g.register	= {
@@ -1979,7 +1989,7 @@
 		],
 		blocks	: []
 	});
-	_g.x	= (_g.crop		= {	//	Reservation
+	_g.x	= (_g.crop		= {	//	Reservation (library)
 		
 	});
 	
