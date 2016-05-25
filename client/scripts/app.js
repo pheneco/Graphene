@@ -1370,8 +1370,9 @@
 		},
 		save	: function(){
 			new ajax(_g.api + '/settings', 'POST', JSON.stringify({
-				firstName	: _i('settings-fname').value,
-				lastName	: _i('settings-lname').value,
+				//firstName	: _i('settings-fname').value,
+				//lastName	: _i('settings-lname').value,
+				name		: _i('settings-name').value,
 				nameHandle	: _i('settings-nh').getAttribute('toggled'),
 				accent		: _i('settings-accent').value
 			}), {
