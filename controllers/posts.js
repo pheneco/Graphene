@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	Mar 05, 2016
+ *	May 25, 2016
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -255,7 +255,8 @@ module.exports = function(app, Graphene, Notification){
 		User.findOne({_id:p.user}, function(e,u){
 			var post = {
 				user		: {
-					name	: u.nameHandle ? u.userName : u.firstName + " " + u.lastName,
+					//name	: u.nameHandle ? u.userName : u.firstName + " " + u.lastName,
+					name	: u.nameHandle ? u.userName : u.name,
 					userName: u.userName,
 					id		: u._id,
 					url		: Graphene.url + "/user/" + u.userName,
