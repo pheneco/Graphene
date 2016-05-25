@@ -214,27 +214,48 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 	});
 	app.post('/user/avatar/crop',function(req,res){
 		if(!req.session.user) return res.send("Must be logged in");
-		if(!(req.body.left && req.body.top && req.body.width && req.body.height)){ return res.send("Invalid values"); console.log(Graphene.time() + "Invalid values");}
+		if(!(
+			typeof req.body.left != 'undefined' &&
+			typeof req.body.top != 'undefined' &&
+			typeof req.body.width != 'undefined' &&
+			typeof req.body.height != 'undefined'
+		)){
+			console.log(Graphene.time() + "Invalid values");
+			return res.send("Invalid values");
+		}
 		User.findOne({_id:req.session.user},function(e,u){ if(e) return res.send(e);
-		u.avatarHash = "" + req.body.left + req.body.top + req.body.width + req.body.height;
-		u.save(function(e,uu){ if(e) return res.send(e);
-		sharp(Graphene.imgDir + '/' + u.avatar + '/500.jpg').extract(~~req.body.top,~~req.body.left,~~req.body.width,~~req.body.height).resize(200,200).crop(sharp.gravity.center).toFile(Graphene.imgDir + '/' + u.avatar + '/' + u.avatarHash + '-200.jpg',function(e,i){
-		sharp(Graphene.imgDir + '/' + u.avatar + '/' + u.avatarHash + '-200.jpg').resize(36,36).crop(sharp.gravity.center).toFile(Graphene.imgDir + '/' + u.avatar + '/' + u.avatarHash + '-36.jpg',function(e,i){
-			Album.findOne({user:req.session.user,name:'Avatars'},function(e,a){
-				var avt = a.images[a.images.length-1];
-				avt.crops.push({
-					top		: req.body.top,
-					left	: req.body.left,
-					height	: req.body.height,
-					width	: req.body.width
-				});
-				a.save(function(e,aa){ if(e) return res.send(e);
-					res.send('Success!');
+			u.avatarHash = "" + ~~(+req.body.left) + "" + ~~(+req.body.top) + "" + ~~(+req.body.width) + "" + ~~(+req.body.height);
+			console.log(u.avatarHash);
+			u.save(function(e,uu){
+				if(e) return res.send(e);
+				sharp(Graphene.imgDir + '/' + u.avatar + '/500.jpg')
+				.extract({
+					top		: ~~(+req.body.top),
+					left	: ~~(+req.body.left),
+					height	: ~~(+req.body.height),
+					width	: ~~(+req.body.width)
+				})
+				.resize(200,200).crop(sharp.gravity.center)
+				.toFile(Graphene.imgDir + '/' + u.avatar + '/' + u.avatarHash + '-200.jpg',function(e,i){
+					sharp(Graphene.imgDir + '/' + u.avatar + '/' + u.avatarHash + '-200.jpg')
+					.resize(36,36)
+					.crop(sharp.gravity.center)
+					.toFile(Graphene.imgDir + '/' + u.avatar + '/' + u.avatarHash + '-36.jpg',function(e,i){
+						Album.findOne({user:req.session.user,name:'Avatars'},function(e,a){
+							var avt = a.images[a.images.length-1];
+							avt.crops.push({
+								top		: ~~(+req.body.top),
+								left	: ~~(+req.body.left),
+								height	: ~~(+req.body.height),
+								width	: ~~(+req.body.width)
+							});
+							a.save(function(e,aa){ if(e) return res.send(e);
+								res.send('Success!');
+							});
+						});
+					});
 				});
 			});
-		});
-		});
-		});
 		});
 	});
 	app.post('/user/avatar/color',function(req,res){
