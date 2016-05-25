@@ -35,7 +35,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 									//lastName	: req.body.lastname,
 									firstName	: 'DEPRECATED',
 									lastName	: 'DEPRECATED',
-									name		: req.body.name,
+									name		: req.body.username,
 									email		: req.body.email,
 									password	: bcrypt.hashSync(req.body.password),
 									activated	: false,
