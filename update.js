@@ -37,6 +37,7 @@ User.find({},function(e,uu){
 		
 		if(typeof u.colorAvatar == 'undefined') u.colorAvatar = false;
 		if(typeof u.avatarColor == 'undefined') u.avatarColor = '#444444';
+		if(typeof u.name == 'undefined') u.name = u.firstName + " " + u.lastName;
 		
 		//	dev version
 		u.save(function(){

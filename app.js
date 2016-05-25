@@ -1,7 +1,7 @@
 /*
  *	Graphene Server s0.5.0
  *	Written by Trevor J Hoglund
- *	May 21, 2016
+ *	May 24, 2016
  */
 
 //	Set Up
@@ -97,9 +97,10 @@ var root		= __dirname,
 					follows[k] = {
 						_id			: id,
 						userName	: fu[k].userName,
-						firstName	: fu[k].firstName,
-						lastName	: fu[k].lastName,
-						name		: fu[k].nameHandle ? fu[k].userName : fu[k].firstName + " " + fu[k].lastName,
+						//firstName	: fu[k].firstName,
+						//lastName	: fu[k].lastName,
+						//name		: fu[k].nameHandle ? fu[k].userName : fu[k].firstName + " " + fu[k].lastName,
+						name		: fu[k].nameHandle ? fu[k].userName : fu[k].name,
 						avatar		: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-36.jpg",
 						avatarFull	: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-200.jpg",
 						toCrop		: Graphene.img + "/" + fu[k].avatar + "/500.jpg",
@@ -108,7 +109,8 @@ var root		= __dirname,
 				u.password = "";
 				callback(JSON.stringify(Graphene.collect(u._doc,{
 					user		: user,
-					name		: u.nameHandle ? u.userName : u.firstName + " " + u.lastName,
+					//name		: u.nameHandle ? u.userName : u.firstName + " " + u.lastName,
+					name		: u.nameHandle ? u.userName : u.name,
 					avatar		: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-36.jpg",
 					avatarFull	: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-200.jpg",
 					toCrop		: Graphene.img + "/" + u.avatar + "/500.jpg",
