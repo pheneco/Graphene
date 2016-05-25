@@ -40,7 +40,7 @@ var root		= __dirname,
 	Graphene	= new(function(){
 		this.sub			= config.sub;
 		this.url			= config.addr.web  + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort);
-		this.api			= config.addr.web + config.apiPort;
+		this.api			= config.addr.web + ':' + config.apiPort;
 		this.img			= config.addr.img;
 		this.imgDir			= config.imgDir;
 		this.aud			= config.addr.aud;
