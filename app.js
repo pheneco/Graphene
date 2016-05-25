@@ -271,6 +271,11 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 			console.log(Graphene.time() + "Graphene server is now running.");
 			console.log(Graphene.time() + "    CDN: " + config.addr.web + ":" + config.webPort);
 			console.log(Graphene.time() + "    API: " + config.addr.web + ":" + config.apiPort);
+			if(Graphene.dev){
+				console.log(Graphene.time() + "\x1b[31m\x1b[1mGraphene is running in dev mode.\x1b[39m\x1b[0m");
+				console.log(Graphene.time() + "\x1b[31m\x1b[1mAll new users will default to permission level 10 (developer).\x1b[39m\x1b[0m");
+				console.log(Graphene.time() + "\x1b[31m\x1b[1mEmails will not be sent for verification.\x1b[39m\x1b[0m");
+			}
 		});
 	});
 });
