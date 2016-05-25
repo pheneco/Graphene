@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trevor J Hoglund
- *	Mar 20, 2016
+ *	Mar 24, 2016
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -20,7 +20,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		striptags = require('striptags');
 	
 	//	Accounts
-	app.post('/user/new', function(req,res){
+	app.post('/register', function(req,res){
 		User.count({userName:{$regex: new RegExp("^" + req.body.username + "$", "i")}}, function(e,c){
 			if(!e){
 				if(c==0){

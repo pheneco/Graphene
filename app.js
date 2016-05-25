@@ -236,7 +236,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 				var data = jade.renderFile(req.path == '/register' ? __dirname + '/client/register.jade' : (req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade'),{
 					cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
 					api : config.addr.web + ":" + config.apiPort,
-					img	: p.posts[~~(Math.random()*p.posts.length)].photos[0].original_size.url
+					img	: p ? p.posts[~~(Math.random()*p.posts.length)].photos[0].original_size.url : '../assets/img/regbg/jpg'
 				});
 				res.send(data);
 			});
