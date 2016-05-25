@@ -1121,7 +1121,7 @@
 								input	: [{
 									id			: "name",
 									placeholder	: "Name",
-									value		: sess.name
+									value		: sess.literalName
 								}]
 								/*input	: [
 									{
