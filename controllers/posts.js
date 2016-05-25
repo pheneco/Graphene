@@ -308,21 +308,6 @@ module.exports = function(app, Graphene, Notification){
 								post.link = JSON.parse(body).html;
 								res.send(post);
 							});
-						} else if(fakku = p.content.match(/fakku.net\/(manga|doujinshi)\/(.+)/)){
-							post.fakkuLink = true;
-							return request('https://api.fakku.net/' + fakku[1] + '/' + fakku[2] + '/read', function(error,response,body){
-								if(error) post.error = 'link', res.send(post);
-								try{
-									post.fakkuinfo = JSON.parse(body);
-									post.fakkuapi = 'https://api.fakku.net/' + fakku[1] + '/' + fakku[2] + '/read';
-									res.send(post);
-								}catch(e){
-									post.error = 'link';
-									res.send(post);
-								}
-								//I can use the fucking source files for WHATEVER I WANT
-								//note to self: https://www.youtube.com/watch?v=vwOds8z2wwE
-							});
 						} else if(p.content.match(/soundcloud.com\/(.+)\/(.+)/)){
 							post.soundcloudLink = true;
 							post.link = p.content;

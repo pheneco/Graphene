@@ -2,6 +2,7 @@
     "sub" : "gra",
 	"webPort" : 80,
     "apiPort" : 3000,
+	"localLibraries" : false,
     "imgDir" : "c:/web/graphene/client/img",
     "audDir" : "c:/web/graphene/client/aud",
 	"database" : "graphene",
