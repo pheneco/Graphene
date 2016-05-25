@@ -468,7 +468,8 @@ module.exports = function(app, Graphene, Notification){
 				for(var m = 0; m < uu.length; m++)
 					for(var n = 0; n < cl.length; n++)
 						if(uu[m]._id == cl[n].user) cs[n].user = {
-							name	: uu[m].nameHandle ? uu[m].userName : uu[m].firstName + " " + uu[m].lastName,
+							//name	: uu[m].nameHandle ? uu[m].userName : uu[m].firstName + " " + uu[m].lastName,
+							name	: uu[m].nameHandle ? uu[m].userName : uu[m].name,
 							userName: uu[m].userName,
 							id		: uu[m]._id,
 							url		: Graphene.url + "/user/" + uu[m].userName,
