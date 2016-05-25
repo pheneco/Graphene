@@ -1,7 +1,7 @@
 /*
  *	Graphene Update Commands
  *	Written by Trevor J Hoglund
- *	Jan 10, 2016
+ *	May 24, 2016
  */
 
 console.log('running update commands');
@@ -29,7 +29,7 @@ var User		= require('./models/user'),
 console.log('connecting to database');
 mongoose.connect('mongodb://localhost/' + config.sub + 'phene');
 
-console.log('adding color avatar option');
+console.log('adding User.name field');
 User.find({},function(e,uu){
 	if(e) return console.log(e);
 	uu.forEach(function(u){

@@ -1040,8 +1040,9 @@
 		save	: function(){
 			new ajax(_g.api + '/user/new', 'POST', JSON.stringify({
 				username	: _i('settings-uname').value,
-				firstname	: _i('settings-fname').value,
-				lastname	: _i('settings-lname').value,
+				//firstname	: _i('settings-fname').value,
+				//lastname	: _i('settings-lname').value,
+				name		: _i('settings-name').value,
 				password	: _i('settings-pass').value,
 				email		: _i('settings-email').value
 			}), {
@@ -1117,7 +1118,12 @@
 						settings	: [
 							{
 								name	: "Name",
-								input	: [
+								input	: [{
+									id			: "name",
+									placeholder	: "Name",
+									value		: sess.name
+								}]
+								/*input	: [
 									{
 										id			: "fname",
 										placeholder	: "First",
@@ -1128,14 +1134,15 @@
 										placeholder	: "Last",
 										value		: sess.lastName
 									}
-								]
+								]*/
 							},
 							{
 								name		: "Display Name",
 								id			: "nh",
 								toggle		: !0,
 								value		: sess.nameHandle,
-								offValue	: sess.firstName + " " + sess.lastName,
+								//offValue	: sess.firstName + " " + sess.lastName,
+								offValue	: sess.name,
 								onValue		: sess.userName
 							},
 							{
