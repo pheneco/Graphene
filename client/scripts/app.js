@@ -1142,7 +1142,7 @@
 								toggle		: !0,
 								value		: sess.nameHandle,
 								//offValue	: sess.firstName + " " + sess.lastName,
-								offValue	: sess.name,
+								offValue	: sess.literalName,
 								onValue		: sess.userName
 							},
 							{
