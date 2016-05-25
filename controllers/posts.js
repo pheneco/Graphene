@@ -289,7 +289,8 @@ module.exports = function(app, Graphene, Notification){
 					for(var j = 0; j < uu.length; j++)
 						for(var k = 0; k < p.comments.length; k++)
 							if(uu[j]._id == p.comments[k].user) post.commentList[k].user = {
-								name	: uu[j].nameHandle ? uu[j].userName : uu[j].firstName + " " + uu[j].lastName,
+								//name	: uu[j].nameHandle ? uu[j].userName : uu[j].firstName + " " + uu[j].lastName,
+								name	: uu[j].nameHandle ? uu[j].userName : uu[j].name,
 								userName: uu[j].userName,
 								id		: uu[j]._id,
 								url		: Graphene.url + "/user/" + uu[j].userName,
