@@ -49,7 +49,7 @@ module.exports = function(app, Graphene, Notification){
 				var richText	= (~plainText.indexOf('@html') && u.rank >= 10)
 									? plainText.replace('@html','') // CHAOS XD
 									: marked(plainText),
-					regex		= /#(\w+)/g,
+					regex		= /#([\w\ud83c\udf00-\udfff\ud83d\udc00-\ude4f\ud83d\ude80-\udeff\u2600-\u26ff]+)/g,
 					regexu		= /@(\w+)/g,
 					tags		= [],
 					users		= [],
@@ -61,7 +61,7 @@ module.exports = function(app, Graphene, Notification){
 						at			: req.body.set,
 						richText	: richText
 							.replace(/<a/g,'<a target="_blank"')
-							.replace(/(\s+|^|\>)#(\w+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>')
+							.replace(/(\s+|^|\>)#([\w\ud83c\udf00-\udfff\ud83d\udc00-\ude4f\ud83d\ude80-\udeff\u2600-\u26ff]+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>')
 							.replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>')
 							.replace(/<p><a target="_blank" href="https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9-_]+)&?(.*)">(.*)<\/a><\/p>/,'<div class="post-video"><iframe src="https://www.youtube.com/embed/$1?$2"></iframe></div>')
 							.replace(/<p>\/bandcamp album (.*)<\/p>/g, '<iframe style="border:0;" src="https://bandcamp.com/EmbeddedPlayer/album=$1/size=large/bgcol=ffffff/linkcol=444444/artwork=small/transparent=true/" seamless>Bandcamp Embed</iframe>')
@@ -225,8 +225,8 @@ module.exports = function(app, Graphene, Notification){
 			Post.find(
 				req.query.start && req.query.start != 'default'
 					? {_id:{$lt:req.query.start},tags:req.query.data.toLowerCase()}
-					: {tags:req.query.data}
-			).sort('-_id').limit(req.query.amount).exec(cont);
+					: {tags:req.query.data.toLowerCase()}
+			).sort('-_id').limit(+req.query.amount).exec(cont);
 		} else if(req.query.set == 'user'){
 			User.findOne({_id:req.query.data},function(e,u){if(e) return res.send(e);
 				Post.find(
@@ -267,6 +267,7 @@ module.exports = function(app, Graphene, Notification){
 				url			: Graphene.url + "/post/" + p._id,
 				id			: p._id,
 				type		: p.type,
+				tags		: p.tags,
 				time		: p._id.getTimestamp().getTime(),
 				editable	: u._id == req.session.user,
 				plainText	: p.plainText,
@@ -300,7 +301,7 @@ module.exports = function(app, Graphene, Notification){
 							};
 					//	THIS IS WHERE POST TYPE HANDLING WILL GO
 					if(post.type == 'link') {
-						var tweet,fakku;
+						var tweet;
 						if(tweet = p.content.match(/twitter.com\/(.+)\/status\/(.+)/)){
 							post.twitterLink = true;
 							return request('https://api.twitter.com/1/statuses/oembed.json?id=' + tweet[2] + '&size=large&border=off&done=null', function(error, response, body){

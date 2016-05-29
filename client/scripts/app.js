@@ -664,7 +664,15 @@
 		
 	});
 	_g.g	= (_g.groups	= {
-		
+		loaded	: !1,
+		info	: {},
+		current	: '',
+		name	: '',
+		page	: function(){},
+		list	: function(){},
+		load	: function(){},
+		join	: function(){},
+		leave	: function(){}
 	});
 	_g.m	= (_g.menu		= {	//	Reservation (library)
 		
