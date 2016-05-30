@@ -886,6 +886,7 @@
 					_g.c.toggle(id);
 				Prism.highlightAll();
 				twttr.widgets.load();
+				twemoji.parse(document.body);
 				greenText();
 				if(_g.session.advanced[0].hoverColors){
 					var a = document.getElementsByTagName('a');

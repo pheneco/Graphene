@@ -60,14 +60,18 @@ module.exports = function(app, Graphene, Notification){
 								u[l].password	= "";
 								if(~notes[y].senders.indexOf(""+u[l]._id)) notes[y].users.push(Graphene.collect(u[l]._doc,{
 									user		: u[l].userName,
-									name		: u[l].nameHandle ? u[l].userName : u[l].firstName + " " + u[l].lastName,
+									// name		: u[l].nameHandle ? u[l].userName : u[l].firstName + " " + u[l].lastName,
+									name		: u[l].nameHandle ? u[l].userName : u[l].name,
 									avatar		: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-36.jpg",
 									avatarFull	: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-200.jpg",
 									url			: Graphene.url + "/user/" + u[l].userName
 								}));
+								//	Maybe i should just have user fields always return the Graphene.getUserInfo object
+								//	May 29, 2016
 								if(""+u[l]._id == notes[y].post.user) notes[y].owner = Graphene.collect(u[l]._doc,{
 									user		: u[l].userName,
-									name		: u[l].nameHandle ? u[l].userName : u[l].firstName + " " + u[l].lastName,
+									// name		: u[l].nameHandle ? u[l].userName : u[l].firstName + " " + u[l].lastName,
+									name		: u[l].nameHandle ? u[l].userName : u[l].name,
 									avatar		: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-36.jpg",
 									avatarFull	: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-200.jpg",
 									url			: Graphene.url + "/user/" + u[l].userName
