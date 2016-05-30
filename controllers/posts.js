@@ -49,7 +49,7 @@ module.exports = function(app, Graphene, Notification){
 				var richText	= (~plainText.indexOf('@html') && u.rank >= 10)
 									? plainText.replace('@html','') // CHAOS XD
 									: marked(plainText),
-					regex		= /#([\w\ud83c\udf00-\udfff\ud83d\udc00-\ude4f\ud83d\ude80-\udeff\u2600-\u26ff]+)/g,
+					regex		= Graphene.hashtagRegExp,
 					regexu		= /@(\w+)/g,
 					tags		= [],
 					users		= [],
@@ -61,7 +61,7 @@ module.exports = function(app, Graphene, Notification){
 						at			: req.body.set,
 						richText	: richText
 							.replace(/<a/g,'<a target="_blank"')
-							.replace(/(\s+|^|\>)#([\w\ud83c\udf00-\udfff\ud83d\udc00-\ude4f\ud83d\ude80-\udeff\u2600-\u26ff]+)/gm, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>')
+							.replace(Graphene.hashtagRegExp2, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>')
 							.replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>')
 							.replace(/<p><a target="_blank" href="https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9-_]+)&?(.*)">(.*)<\/a><\/p>/,'<div class="post-video"><iframe src="https://www.youtube.com/embed/$1?$2"></iframe></div>')
 							.replace(/<p>\/bandcamp album (.*)<\/p>/g, '<iframe style="border:0;" src="https://bandcamp.com/EmbeddedPlayer/album=$1/size=large/bgcol=ffffff/linkcol=444444/artwork=small/transparent=true/" seamless>Bandcamp Embed</iframe>')
