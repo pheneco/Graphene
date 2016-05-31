@@ -15,6 +15,20 @@
 			var l = ['change','cut','paste','drop','keydown'];
 			for(var i in l) this.addEventListener(l[i], resize.bind(this), !1);
 		}
+		HTMLTextAreaElement.prototype.insertAtCaret = function(text){
+			text = text || '';
+			if(document.selection){
+				this.focus();
+				var sel		= document.selection.createRange();
+				sel.text	= text;
+			}else if(this.selectionStart || this.selectionStart === 0){
+				var start	= this.selectionStart,
+					end		= this.selectionEnd;
+				this.value = this.value.substring(0, start) + text + this.value.substring(end, this.value.length);
+				this.selectionStart = start + text.length;
+				this.selectionEnd = start + text.length;
+			}else this.value += text;
+		};
 		Handlebars.registerHelper('ifCond', function(u,s,v,o){
 			return eval(u + s + v) ? o.fn(this) : o.inverse(this);
 		});
@@ -452,9 +466,9 @@
 			/*
 			_i('post-new-image').onchange = this.drop;
 			_i('post-new-audio').onchange = this.drop;
+			*/
 			post.addEventListener('dragover', this.dragover);
 			post.addEventListener('drop', this.drop);
-			*/
 			return !0;
 		},
 		renderImages	: function(){	//	deprecated
@@ -500,43 +514,22 @@
 			e.preventDefault();
 			e.dataTransfer.dropEffect = 'move';
 		},
-		drop			: function(e){	//	deprecated
-			var files	= (typeof e.dataTransfer !== 'undefined') ? e.dataTransfer.files : this.files,
-				cre		= _i('post-new'), f;
-			if((cre.getAttribute('post-type') == 'text' || cre.getAttribute('post-type') == 'image') && files[0].type.match('image.*')){
-				if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
-				for(var i in f = files[i]){
-					if(!f.type.match('image.*')) continue;
-					cre.setAttribute('post-type', 'image');
-					var reader = new FileReader();
-					reader.onload = function(e){
-						var pclen = _g.cr.images.length;
-						if(pclen < 11){
-							_g.cr.images[pclen] = e.target.result;
-							_g.cr.imageLayout[_g.cr.imageLayout.length] = [pclen];
-							cre._c('post-medias')[0].style.display = 'none';
-							_g.cr.renderImages();
-						}
-					};
-					reader.readAsDataURL(f);
+		drop			: function(e){
+			var f	= (typeof e.dataTransfer !== 'undefined') ? e.dataTransfer.files[0] : this.files[0],
+				d	= new FormData();
+			if(!/\/(jpe?g|png|gif)$/i.test(f.type)) return !1;
+			if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
+			var r = new XMLHttpRequest();
+			if(r.upload && f.size <= 1e6){
+				r.withCredentials = !0;
+				r.open("POST", _g.api + '/upload/img', !0);
+				d.append('image',f);
+				r.send(d);
+				r.onload = function(){
+					console.log(r);
+					var urls = JSON.parse(r.response);
+					_i('post-new')._c('post-textbox')[0].insertAtCaret('![](' + urls[1280] + ')\n');
 				}
-			} else if(cre.getAttribute('post-type') == 'text' && files[0].type.match('audio.*') && _g.cr.audio == ''){
-				pm = cre._c('post-mediabox')[0];
-				if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
-				cre.setAttribute('post-type', 'audio');
-				var reader = new FileReader();
-				reader.onload = function(f){
-					return function(e){
-						_g.cr.audio = e.target.result;
-						_g.cr.audioElement = window.URL.createObjectURL(f);
-						cre._c('post-medias')[0].style.display = 'none';
-						pm.innerHTML = '<div id="post-creator-blob"></div>';
-						new gra_aud(_i('post-creator-blob'), _g.cr.audioElement, {
-							color : _g.t.accent
-						});
-					};
-				}(files[0]);
-				reader.readAsDataURL(files[0]);
 			}
 		},
 		remove			: function(id){	//	deprecated

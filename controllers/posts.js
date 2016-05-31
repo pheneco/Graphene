@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	May 25, 2016
+ *	May 30, 2016
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -17,6 +17,7 @@ module.exports = function(app, Graphene, Notification){
 		sharp			= require('sharp'),
 		multer			= require('multer'),
 		upload			= multer({dest:'/tmp/'}),
+		autoReap		= require('multer-autoreap'),
 		sse				= require('connect-sse')(),
 		http			= require('http'),
 		https			= require('https'),
@@ -195,9 +196,12 @@ module.exports = function(app, Graphene, Notification){
 	});
 
 	//	Upload
-	app.post('/upload/img', function(req,res){
+	app.post('/upload/img',upload.single('image'),autoReap,function(req,res){
 		var savior = function(album){
-			if(!req.file) return res.send("Must send image");
+			if(!req.file){
+				console.log("NO IMAGES SENT");
+				return res.send("Must send image");
+			}
 			fs.readFile(req.file.path, function(e,i){ if(e) return res.send(e);
 			album.images.push({
 				ext	: req.file.mimetype.split('/')[1],
@@ -215,9 +219,9 @@ module.exports = function(app, Graphene, Notification){
 					sharp(path).resize(1280,null).toFile(Graphene.imgDir + '/' + album._id + '/' + newim._id + '/1280.' + newim.ext,function(e,i){
 					sharp(path).resize(500,null).toFile(Graphene.imgDir + '/' + album._id + '/' + newim._id + '/500.' + newim.ext,function(e,i){
 						res.send({
-							original	: Graphene.img + album._id + '/' + newim._id + '/original.' + newim.ext,
-							1280		: Graphene.img + album._id + '/' + newim._id + '/1280.' + newim.ext,
-							500			: Graphene.img + album._id + '/' + newim._id + '/500.' + newim.ext
+							original	: Graphene.img + '/' + album._id + '/' + newim._id + '/original.' + newim.ext,
+							1280		: Graphene.img + '/' + album._id + '/' + newim._id + '/1280.' + newim.ext,
+							500			: Graphene.img + '/' + album._id + '/' + newim._id + '/500.' + newim.ext
 						});
 					});
 					});
