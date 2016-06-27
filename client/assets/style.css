@@ -157,10 +157,10 @@
 	.comment				{position:relative;margin-bottom:8px;z-index:0;margin-top:4px;clear:both;margin-left:-13px;border-left:3px solid transparent;padding-left:10px;transition:border-left-color 0.5s;}
 	.comment-active			{border-left-color:#444444;}
 	.comment-avatar			{position:relative;float:left;cursor:pointer;width:36px;height:36px;}
-	.comment-name			{position:relative;float:left;z-index:5;}
+	.comment-name			{position:relative;/*float:left;*/z-index:5;}
 	.comment-name a			{color:#555;}
 	.comment-name a:hover	{color:#444444;}
-	.comment-content		{position:relative;float:left;margin-left:5px;max-width:459px;}
+	.comment-content		{position:relative;float:left;margin-left:5px;max-width:459px;width:100%;}
 	.comment-content img	{max-width:459px;}
 	.comment-time,
 	.comment-time span,
