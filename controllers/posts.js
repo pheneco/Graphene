@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	May 31, 2016
+ *	2016.06.27
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -45,12 +45,7 @@ module.exports = function(app, Graphene, Notification){
 	app.post('/post', function(req,res){
 		if(req.session.user){
 			User.findOne({_id:req.session.user}, function(e,u){
-				var plainText	= req.body.text,
-					test,link;
-				if(test			= plainText.match(/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])\n/)){
-					link		= test[1];
-					plainText	= plainText.replace(/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])\n/,'');
-				}
+				var plainText	= req.body.text;
 				var richText	= (~plainText.indexOf('@html') && u.rank >= 10)
 									? plainText.replace('@html','') // CHAOS XD
 									: marked(plainText),
@@ -82,18 +77,9 @@ module.exports = function(app, Graphene, Notification){
 						users		: users,
 						followers	: [req.session.user]
 					});
-				if(req.body.type == "text"){
-					if(plainText.length > 0){
-						post.type = "text";
-					} else return res.send("Post cannot be empty!");
-					if(link) post.type = "link", post.content = link;
-				} else if(req.body.type == "image"){
-					post.type = "image";
-				} else if(req.body.type == "link") {
-					if(!req.body.content.match(/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/)) return res.send("Invalid URL!");
-					post.type = "link";
-					post.content = req.body.content;
-				}else return res.send("Invalid post type!");
+				if(plainText.length > 0){
+					post.type = "text";
+				} else return res.send("Post cannot be empty!");
 				post.save(function(e,p){
 					if(!e){
 						//Fire event listeners
@@ -353,54 +339,6 @@ module.exports = function(app, Graphene, Notification){
 								avatarColor : uu[j].avatarColor,
 								colorAvatar : uu[j].colorAvatar
 							};
-					//	THIS IS WHERE POST TYPE HANDLING WILL GO
-					if(post.type == 'link') {
-						var tweet;
-						if(tweet = p.content.match(/twitter.com\/(.+)\/status\/(.+)/)){
-							post.twitterLink = true;
-							return request('https://api.twitter.com/1/statuses/oembed.json?id=' + tweet[2] + '&size=large&border=off&done=null', function(error, response, body){
-								if(error) post.error = 'link', res.send(post);
-								post.link = JSON.parse(body).html;
-								res.send(post);
-							});
-						} else if(p.content.match(/soundcloud.com\/(.+)\/(.+)/)){
-							post.soundcloudLink = true;
-							post.link = p.content;
-							return res.send(post);
-						} else return request({
-								url		: p.content,
-								method	: 'HEAD'
-							}, function(error, head){
-								if(head.headers['content-type'].match(/video\//)) {
-									post.videoLink = true;
-									post.link = p.content;
-									return res.send(post);
-								}
-								if(head.headers['content-type'].match(/image\//)) {
-									post.imageLink = true;
-									post.link = p.content;
-									return res.send(post);
-								}
-								if(head.headers['content-length'] > 125000){
-									post.regularLink = true;
-									post.link = p.content;
-									res.send(post);
-								} else request(p.content, function(error, response, body){
-									if(error) post.error = 'link', res.send(post);
-									var m = cheerio.load(body)('meta'), meta = {};
-									for(var n = 0; n < m.length; n++)
-										meta[m[n].attribs.name] = m[n].attribs.content;
-									if(meta['twitter:player']){
-										post.embedLink = true;
-										post.link = meta['twitter:player'];
-									} else {
-										post.regularLink = true;
-										post.link = p.content;
-									}
-									res.send(post);
-								});
-							});
-					}
 					res.send(post);
 				});
 			});
