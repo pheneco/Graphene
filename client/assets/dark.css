@@ -1,7 +1,7 @@
 /*
  *	Graphene Dark CSS w0.5.0
  *	Written by Trevor J Hoglund
- *	2016.06.26
+ *	2016.06.27
  */
 
 html						{background:#303030 url("../assets/img/back_dark.png");background-position:center center;background-attachment:fixed;color:#fff;}
@@ -44,6 +44,7 @@ a:hover						{color:#fff;}
 #loading-bar,
 textarea[id*='post-editbox-'],
 .post-textbox				{background:#444 !important;color:#fff;}
+.notes-read,
 .context-option:hover,
 .draft-list tr:nth-child(even),
 #changelog tr:nth-child(even),
