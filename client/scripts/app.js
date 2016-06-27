@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	Apr 02, 2016
+ *	2016.06.26
  */
 
    (function bippity(){
@@ -520,7 +520,7 @@
 			if(!/\/(jpe?g|png|gif)$/i.test(f.type)) return !1;
 			if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
 			var r = new XMLHttpRequest();
-			if(r.upload && f.size <= 1e6){
+			if(r.upload && f.size <= 6e6){
 				r.withCredentials = !0;
 				r.open("POST", _g.api + '/upload/img', !0);
 				d.append('image',f);
@@ -1151,6 +1151,14 @@
 								name		: "Accent Color",
 								id			: "clr",
 								color		: sess.accent
+							},
+							{
+								name		: "Theme",
+								id			: "theme",
+								toggle		: !0,
+								value		: _g.session.dark,
+								offValue	: "Light Theme",
+								onValue		: "Dark Theme"
 							}
 						],
 						save		: '_g.s.save()'
@@ -1162,6 +1170,10 @@
 						input	: _i('settings-accent'),
 						color	: sess.accent,
 						func	: _g.t.update
+					});
+					_i('settings-theme').addEventListener('click',function(){
+						_g.t.dark = (_i('settings-theme').getAttribute('toggled') == "true");
+						_g.t.update(_g.t.accent);
 					});
 					
 					var pass		= document.createElement('div');
@@ -1376,7 +1388,8 @@
 				//lastName	: _i('settings-lname').value,
 				name		: _i('settings-name').value,
 				nameHandle	: _i('settings-nh').getAttribute('toggled'),
-				accent		: _i('settings-accent').value
+				accent		: _i('settings-accent').value,
+				dark		: _i('settings-theme').getAttribute('toggled')
 			}), {
 				type	: 'application/json',
 				load	: function(r){
@@ -1490,18 +1503,25 @@
 	_g.t	= (_g.theme		= {	
 		menuOpen	: !1,
 		accent		: '#333333',
+		dark		: !1,
 		menu		: function(){
 			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-200px" : "0px";
 		},
 		update		: function(c){
-			var s = document.styleSheets[1].cssRules, r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'];
+			var s = document.styleSheets[1].cssRules,
+				r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'],
+				l = document.getElementsByTagName('link');
 			for(i in r) s[++i].style[r[--i]] = c;
 			this.accent = c;
+			l[l.length-2].disabled = !_g.t.dark;
+			document.getElementsByTagName('style')[2].disabled = true;
+			_i('hexagon').style.stroke = _i('brandlogocss').sheet.cssRules[0].style.stroke = _g.t.dark ? "#444444" : "#FFFFFF";
 		},
 		side		: function(ctx, next){
 			new ajax(_g.api + "/session", "GET", "", {load : function(r){
 				if(_g.session.user) {
 					_g.session = JSON.parse(r.responseText);
+					_g.t.dark = _g.session.dark;
 					_g.t.update(_g.session.accent);
 					var o = {
 						sections : [

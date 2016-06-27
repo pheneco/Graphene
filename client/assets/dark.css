@@ -1,0 +1,53 @@
+/*
+ *	Graphene Dark CSS w0.5.0
+ *	Written by Trevor J Hoglund
+ *	2016.06.26
+ */
+
+html						{background:#303030 url("../assets/img/back_dark.png");background-position:center center;background-attachment:fixed;color:#fff;}
+a							{color:#ccc;}
+a:hover						{color:#fff;}
+.context-option,
+.comment-textbox,
+.user-link,
+.side-link					{color:#fff !important;}
+#popup-yes,
+.popup-button,
+#loading,
+#side-head,
+#side-loading,
+#side-cache,
+.side-select,
+.side-select:hover,
+.user-select,
+.notes-title,
+.user-avatar,
+.user-follow,
+.post-ribbon,
+.post-loading,
+.post-button,
+.comment-avatar,
+.comment-more:hover,
+.settings-toggle			{color:#111 !important;}
+#side-bar,
+#notes,
+#context,
+#search,
+#search-box,
+.hovercard,
+.user,
+.post,
+#lightbox					{background:#444 !important;color:#fff;box-shadow:rgba(0,0,0,0.4) 0 0 5px;}
+.settings-text,
+#settings-clr table			{background:#444 !important;color:#fff;border-color:#333 !important;}
+#loading-bar,
+textarea[id*='post-editbox-'],
+.post-textbox				{background:#444 !important;color:#fff;}
+.context-option:hover,
+.draft-list tr:nth-child(even),
+#changelog tr:nth-child(even),
+.post-comments				{background:#383838 !important;}
+#side-logo					{background:rgba(0,0,0,0) url("../assets/img/gra_dark.svg") no-repeat top;z-index:1;}
+::selection					{color:#111;}
+::-moz-selection			{color:#111;}
+::-webkit-selection			{color:#111;}

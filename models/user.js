@@ -1,7 +1,7 @@
 /*
  *	Graphene >> User Model
  *	Written by Trevor J Hoglund
- *	Apr 08, 2016
+ *	2016.06.26
  */
 
 var mongoose	= require('mongoose'),
@@ -30,7 +30,8 @@ var mongoose	= require('mongoose'),
 		advanced	: [Advanced],
 		bio			: String,
 		colorAvatar	: Boolean,
-		avatarColor	: String
+		avatarColor	: String,
+		dark		: Boolean
 	});
 	userSchema.index({
 		username	: 'text',

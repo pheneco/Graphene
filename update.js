@@ -1,7 +1,7 @@
 /*
  *	Graphene Update Commands
  *	Written by Trevor J Hoglund
- *	May 24, 2016
+ *	2016.06.26
  */
 
 console.log('running update commands');
@@ -38,6 +38,7 @@ User.find({},function(e,uu){
 		if(typeof u.colorAvatar == 'undefined') u.colorAvatar = false;
 		if(typeof u.avatarColor == 'undefined') u.avatarColor = '#444444';
 		if(typeof u.name == 'undefined') u.name = u.firstName + " " + u.lastName;
+		if(typeof u.dark == 'undefined') u.dark = false;
 		
 		//	dev version
 		u.save(function(){

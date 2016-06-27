@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trevor J Hoglund
- *	Mar 24, 2016
+ *	2016.06.26
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -118,6 +118,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			name		: req.body.name,
 			nameHandle	: req.body.nameHandle,
 			accent		: req.body.accent,
+			dark		: req.body.dark
 		}, {upsert: true}, function(e){
 			if(e) res.send(e);
 			else res.send("");

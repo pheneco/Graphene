@@ -1,13 +1,14 @@
 //
 	Graphene Index Page w0.5.0
 	Written by Trevor J Hoglund
-	May 25, 2016
+	2016.06.26
 
 doctype html
 html(lang="en")
 	link#basecss(rel="stylesheet", href="/assets/style.css")
 	link#phpcss(rel="stylesheet", href="/assets/accent.css")
 	link#prismcss(rel="stylesheet", href="/assets/prism.css")
+	link#darkcss(rel="stylesheet", href="/assets/dark.css", disabled)
 	link(rel="icon", href="assets/img/fav.png")
 	
 	script#change-template(type="text/x-handlebars-template"): include temps/change.hbs
@@ -64,7 +65,7 @@ body(style="overflow:hidden")
 		div#loading-icon(style="opacity:1")
 			|	<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 500" enable-background="new 0 0 500 500" xml:space="preserve">
 			|		<g>
-			|			<polygon fill="none" stroke="#FFFFFF" stroke-width="15" points="410.8,342 249.3,435.2 87.9,342 87.9,155.5 249.3,62.3 410.8,155.5"/>
+			|			<polygon id="hexagon" fill="none" stroke="#FFFFFF" stroke-width="15" points="410.8,342 249.3,435.2 87.9,342 87.9,155.5 249.3,62.3 410.8,155.5"/>
 			|		</g>
 			|	</svg>
 		div#loading-container
@@ -75,7 +76,7 @@ body(style="overflow:hidden")
 				div#brand-logo
 					|	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.61 204.61">
 					|		<defs>
-					|			<style>.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}</style>
+					|			<style id="brandlogocss">.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}</style>
 					|		</defs>
 					|		<title>phene.co</title>
 					|		<path class="cls-1" d="M172.88,76.6a75,75,0,1,0-17.35,78.94A74.69,74.69,0,0,0,172.88,76.6Z" transform="translate(-0.2 -0.2)"/>
