@@ -29,7 +29,7 @@ a:hover						{color:#fff;}
 .post-button,
 .comment-avatar,
 .comment-more:hover,
-.settings-toggle			{color:#111 !important;}
+.settings-toggle			{color:#444 !important;}
 #side-bar,
 #notes,
 #context,
@@ -49,6 +49,6 @@ textarea[id*='post-editbox-'],
 #changelog tr:nth-child(even),
 .post-comments				{background:#383838 !important;}
 #side-logo					{background:rgba(0,0,0,0) url("../assets/img/gra_dark.svg") no-repeat top;z-index:1;}
-::selection					{color:#111;}
-::-moz-selection			{color:#111;}
-::-webkit-selection			{color:#111;}
+::selection					{color:#444;}
+::-moz-selection			{color:#444;}
+::-webkit-selection			{color:#444;}
