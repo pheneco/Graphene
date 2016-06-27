@@ -1508,6 +1508,7 @@
 			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-200px" : "0px";
 		},
 		update		: function(c){
+			_g.t.accent = c;
 			var s = document.styleSheets[1].cssRules,
 				r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'],
 				l = document.getElementsByTagName('link');
