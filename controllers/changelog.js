@@ -30,8 +30,8 @@ module.exports	= function(app,Graphene){
 		req.on('close', function(){
 			Changelog.removeListener('change',call);
 		});
-		Change.findOne({},{},{sort:{_id:-1}},function(e,c){if(e) return false;
-			if(c.version == req.params.cv) call(c.date,c.version);
+		Change.findOne({},{},{sort:{_id:-1}},function(e,c){if(e) return console.log(e);
+			if(c.version !== req.params.cv) call('?',c.version);
 		});
 	});
 	app.get('/changes/:app?', function(req,res){
