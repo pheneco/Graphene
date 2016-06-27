@@ -119,8 +119,8 @@
 				_g.user		= _g.session.user;
 				_g.lvl		= _g.session.rank;
 				_g.t.update(_g.session.accent);
-				var lnk = document.getElementsByTagName('link');
-				lnk[lnk.length-1].href = '/assets/img/fav.php?c=' + _g.session.accent.replace('#','');
+				// var lnk = document.getElementsByTagName('link');
+				// lnk[lnk.length-1].href = '/assets/img/fav.php?c=' + _g.session.accent.replace('#','');
 				_g.t.search();
 				if(_g.session.user) _g.n.open();
 				page();

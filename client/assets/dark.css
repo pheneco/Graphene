@@ -10,6 +10,7 @@ a:hover						{color:#fff;}
 .context-option,
 .comment-textbox,
 .user-link,
+.user-name a:hover,
 .side-link					{color:#fff !important;}
 #popup-yes,
 .popup-button,
