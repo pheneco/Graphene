@@ -1766,6 +1766,7 @@
 							});
 						});
 					}
+					_g.t.dark = info.dark;
 					_g.t.update(info.accent);
 					_g.u.loaded = !0;
 				}
