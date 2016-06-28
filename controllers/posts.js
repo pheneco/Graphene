@@ -35,7 +35,8 @@ module.exports = function(app, Graphene, Notification){
 	SC.init({
 		client_id	: config.soundcloudAPIKey
 	});
-	renderer.heading	= function(text,level){for(var i = 1; i < level; i++) text = '#' + text; return text;}	//	Kill header rendering
+	renderer.heading	= function(text,level){for(var i = 1; i < level; i++) text = '#' + text; return text;};	//	Kill header rendering
+	renderer.image		= function(href,title,text){return '<a onclick="_g.pu.lightbox(\'object\',{pages:[\'' + href + '\']},\'pages.*\',0);"><img src="' + href + '" alt="' + text + '" title="' + title + '"></a>';};
 	marked.setOptions({
 		renderer	: renderer,
 		sanitize	: true

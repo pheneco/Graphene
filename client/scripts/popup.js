@@ -1,7 +1,7 @@
 /*
  *	Graphene Popup
  *	Written by Trevor J Hoglund
- *	Apr 25, 2016
+ *	May 30, 2016
  */
 
 function _i(i){return document.getElementById(i);}
@@ -47,7 +47,7 @@ __cms__.innerHTML	+= '#popup-content {padding:10px;}';
 __cms__.innerHTML	+= '#popup-confirm {position:relative;width:410px;margin:20px auto auto;}';
 __cms__.innerHTML	+= '#popup-yes {background:#444444;margin-right:10px;}';
 __cms__.innerHTML	+= '#popup-no {background:#ddd;}';
-__cms__.innerHTML	+= '.popup-option {cursor:pointer;padding:8px;width:184px;text-align:center;text-transform:uppercase;color:#FFF;display:inline-block;}';
+__cms__.innerHTML	+= '.popup-option {cursor:pointer;padding:8px;width:184px;text-align:center;color:#FFF;display:inline-block;}';
 __cms__.innerHTML	+= '.popup-button {padding:6px;width:200px;background:#444444;color:#fff;margin:auto;margin-top:10px;font-weight:bold;text-align:center;cursor:pointer;}';
 __cms__.innerHTML	+= '#lightbox {position:relative;min-width:500px;height:auto;margin:auto;background:#fff;vertical-align:middle;}';
 __cms__.innerHTML	+= '#lightbox-shade {position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:1000;display:inline-flex;}';
@@ -70,12 +70,35 @@ _g.pu = (_g.popup = {
 	lbList		: [],
 	lbIndx		: 0,
 	open		: function(ops){
-		var fhtm = '<div id="popup-shade"><div style="' + (typeof ops.width == 'string' ? 'width:' + (parseInt(ops.width) + 20) + 'px;' : '') + '" id="popup">' + (typeof ops.title == 'string' ? '<div id="popup-title" style="' + (typeof ops.titleColor == 'string' ? 'background:' + ops.titleColor + ';' : '') + (typeof ops.titleTextColor == 'string' ? 'color:' + ops.titleTextColor + ';' : '') + (typeof ops.width == 'string' ? 'width:' + (parseInt(ops.width) + 8) + 'px;' : '') + '">' + ops.title + '</div>' : '') + '<div id="popup-content" style="' + (typeof ops.textCenter == 'boolean' && ops.textCenter ? 'text-align:center' : '') + '">' + ops.text + (typeof ops.confirm == 'boolean' && ops.confirm ? '<div id="popup-confirm"><div id="popup-yes" class="popup-option" onclick="' + ops.onyes + 'gra_pu_close();">Yes</div><div id="popup-no" class="popup-option" onclick="gra_pu_close();">No</div></div>' : '') + '</div></div></div>';
+		var fhtm =
+			'<div id="popup-shade"><div style="' +
+				(typeof ops.width == 'string'
+					? 'width:' + (parseInt(ops.width) + 20) + 'px;'
+					: '') +
+				'" id="popup">' +
+			(typeof ops.title == 'string' ? '<div id="popup-title" style="' +
+				(typeof ops.titleColor == 'string'
+					? 'background:' + ops.titleColor + ';'
+					: '') +
+				(typeof ops.titleTextColor == 'string'
+					? 'color:' + ops.titleTextColor + ';'
+					: '') +
+				(typeof ops.width == 'string'
+					? 'width:' + (parseInt(ops.width) + 8) + 'px;'
+					: '') +
+				'">' + ops.title + '</div>' : '') +
+			'<div id="popup-content" style="' +
+				(typeof ops.textCenter == 'boolean' && ops.textCenter ? 'text-align:center' : '') + '">' +
+				ops.text +
+				(typeof ops.confirm == 'boolean' && ops.confirm
+					? '<div id="popup-confirm"><div id="popup-yes" class="popup-option" onclick="' + ops.onyes + 'gra_pu_close();">Yes</div><div id="popup-no" class="popup-option" onclick="gra_pu_close();">No</div></div>'
+					: '') +
+			'</div></div></div>';
 		document.body.insertAdjacentHTML('afterbegin', fhtm);
 		window.setTimeout(function(){
 			window.addEventListener('click', function grapopClick(e){
 				if(_i('popup') == null){
-					window.removeEventListener('click', grapopClick);
+					window.removeEventListener('click', this);
 					return;
 				}
 				var rect = _i('popup').getBoundingClientRect();
@@ -156,9 +179,12 @@ _g.pu = (_g.popup = {
 				_g.pu.lbInfo[source] = JSON.parse(res.response);
 				open();
 			}}); else open();
+		} else {
+			_g.pu.lbInfo[source] = JSON.parse(source);
+			open();
 		}
 	},
-	lbClick : function(e){
+	lbClick 	: function(e){
 		if(_i('lightbox') == null){
 			window.removeEventListener('click', _g.pu.lbClick);
 			return;
@@ -170,7 +196,54 @@ _g.pu = (_g.popup = {
 			window.removeEventListener('click', _g.pu.lbClick);
 		}
 	},
-	changes	: [
+	tutorial	: function(steps, ops){
+		this.steps = steps;
+		this.ops = ops || {};
+		this.step = 0;
+		this.next = function(){
+			if(_i('popup-shade')) _i('popup-shade').remove();
+			if(this.step >= this.steps.length) return 0;
+			step = this.steps[this.step];
+			if(step.type.toLowerCase() == "popup"){
+				_g.pu.open(_g.pu.collect(this.ops,{
+					title	: step.title || "Step " + this.step,
+					text	: step.text +
+						'<div id="popup-confirm"><div style="' + 
+						(typeof ops.titleColor == 'string'
+							? 'background:' + this.ops.titleColor + ';'
+							: '') +
+						'" id="popup-yes" class="popup-option" onclick="_i(\'popup-shade\').remove();">Okay</div>' + 
+						(typeof step.showExitButton == 'boolean' && step.showExitButton
+							? '<div id="popup-no" class="popup-option">Exit Tutorial</div>'
+							: '') +
+						'</div>'
+				}));
+				_i('popup-yes').onclick = this.next.bind(this);
+				if(typeof step.showExitButton == 'boolean' && step.showExitButton) _i('popup-no').onclick = this.exit.bind(this);
+			}
+			else if(step.type.toLowerCase() == "pointer"){
+				
+			}
+			this.step++;
+		}
+		this.exit = function(){
+			this.step = this.steps.length;
+			if(typeof this.ops.onExit == "function") this.ops.onExit();
+			if(_i('popup-shade')) _i('popup-shade').remove();
+		}
+		this.next();
+		return this;
+	},
+	collect		: function(){
+		var ret = {},
+			len = arguments.length;
+		for(var i = 0; i < len; i++)
+			for(p in arguments[i])
+				if(arguments[i].hasOwnProperty(p))
+					ret[p] = arguments[i][p];
+		return ret;
+	},
+	changes		: [
 		["v0.1.0.0001","Mar 23, 2015","Moved popup script to separate file."],
 		["v0.1.0.0002","Mar 23, 2015","Added lightbox framework."],
 		["v0.1.0.0003","Mar 23, 2015","Added lightbox base url."],
@@ -195,7 +268,10 @@ _g.pu = (_g.popup = {
 		["v0.1.1.0016","Dec 22, 2015","Fixed references to document.body for standalone"],
 		["v0.1.1.0017","Dec 22, 2015","Added lightbox styling"],
 		["v0.1.1.0018","Dec 31, 2015","Removed extraneous details"],
-		["p0.1.1.0019","Apr 25, 2016","Added changelog as array"]
+		["p0.1.1.0019","Apr 25, 2016","Added changelog as array"],
+		["p0.2.0.0020","May 30, 2016","Added tutorial framework (popups only)"],
+		["p0.2.0.0021","May 30, 2016","Added a return to the tutorial command"],
+		["p0.2.0.0022","Jun 27, 2016","Fixed object source lightboxes (must be JSON string)"]
 	]
 });
 
