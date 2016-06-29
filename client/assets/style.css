@@ -160,7 +160,7 @@
 	.comment-name			{position:relative;/*float:left;*/z-index:5;}
 	.comment-name a			{color:#555;}
 	.comment-name a:hover	{color:#444444;}
-	.comment-content		{position:relative;float:left;margin-left:5px;max-width:459px;width:100%;}
+	.comment-content		{position:relative;float:left;margin-left:5px;max-width:459px;width:100%;word-break:break-word;text-align:justify;}
 	.comment-content img	{max-width:459px;}
 	.comment-time,
 	.comment-time span,
