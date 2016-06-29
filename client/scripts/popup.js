@@ -1,7 +1,7 @@
 /*
  *	Graphene Popup
  *	Written by Trevor J Hoglund
- *	May 30, 2016
+ *	Jun 29, 2016
  */
 
 function _i(i){return document.getElementById(i);}
@@ -116,7 +116,7 @@ _g.pu = (_g.popup = {
 		_g.pu.lbLayt = layout;
 		var open = function(){
 			layout = layout.split('.');
-			for(var i = 0, click = !1, list = _g.pu.lbInfo[source]; i < layout.length; i++){
+			for(var i = 0, click = !1, list = JSON.parse(JSON.stringify(_g.pu.lbInfo[source])); i < layout.length; i++){
 				if(!click && layout[i] !== '*') list = list[layout[i]];
 				else {
 					click = !0;
@@ -125,6 +125,7 @@ _g.pu = (_g.popup = {
 				}
 			}
 			_g.pu.lbList = list;
+			if(typeof _g.pu.lbIndx == "string") _g.pu.lbIndx = list.indexOf(_g.pu.lbIndx);
 			if(_g.pu.lbIndx < 0) _g.pu.lbIndx = 0;
 			if(_g.pu.lbIndx >= list.length) _g.pu.lbIndx = list.length - 1;
 			var img = new Image();
@@ -192,6 +193,7 @@ _g.pu = (_g.popup = {
 		var rect = _i('lightbox').getBoundingClientRect();
 		if(e.clientY > rect.bottom || e.clientY < rect.top || e.pageX > rect.right || e.pageX < rect.left){
 			_g.pu.lbOpen = !1;
+			_g.pu.lbList = [];
 			_i('lightbox-shade').remove();
 			window.removeEventListener('click', _g.pu.lbClick);
 		}
@@ -271,7 +273,9 @@ _g.pu = (_g.popup = {
 		["p0.1.1.0019","Apr 25, 2016","Added changelog as array"],
 		["p0.2.0.0020","May 30, 2016","Added tutorial framework (popups only)"],
 		["p0.2.0.0021","May 30, 2016","Added a return to the tutorial command"],
-		["p0.2.0.0022","Jun 27, 2016","Fixed object source lightboxes (must be JSON string)"]
+		["p0.2.0.0022","Jun 27, 2016","Fixed object source lightboxes (must be JSON string)"],
+		["p0.2.0.0023","Jun 29, 2016","Fixed layouts with names after * failing"],
+		["p0.2.0.0024","Jun 29, 2016","Added option to set index based on url of image"]
 	]
 });
 

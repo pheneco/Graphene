@@ -228,6 +228,7 @@ require('./controllers/users')(app, Graphene, EmailTemp, mailer);
 require('./controllers/posts')(app, Graphene, Notification);
 require('./controllers/notes')(app, Graphene, Notification);
 require('./controllers/drafts')(app, Graphene);
+require('./controllers/albums')(app, Graphene);
 
 
 //	Get Server Version

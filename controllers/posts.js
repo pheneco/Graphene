@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	2016.06.27
+ *	2016.06.28
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -36,7 +36,14 @@ module.exports = function(app, Graphene, Notification){
 		client_id	: config.soundcloudAPIKey
 	});
 	renderer.heading	= function(text,level){for(var i = 1; i < level; i++) text = '#' + text; return text;};	//	Kill header rendering
-	renderer.image		= function(href,title,text){return '<a lightbox onclick=\'_g.pu.lightbox(\"object\",\"{\\"pages\\":[\\"' + href + '\\"]}\",\"pages.*\",0);\'><img src="' + href + '" alt="' + text + '" title="' + title + '"></a>';};
+	renderer.image		= function(href,title,text){
+		var img = '<a lightbox onclick=\'_g.pu.lightbox(' +
+			(new RegExp(Graphene.img + "/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/1280.jpeg").test(href)
+				? '\"api\",\"' + Graphene.api + '/album/' + href.split(Graphene.img)[1].split('/')[1] + '\",\"images.*.1280\",\"' + href + '\"'
+				: '\"object\",\"{\\"pages\\":[\\"' + href + '\\"]}\",\"pages.*\",0') +
+			');\'><img src="' + href + '"' + (text?' alt="' + text + '"':'') + (title?' title="' + title + '"':'') + '></a>';
+		return img;
+	};
 	marked.setOptions({
 		renderer	: renderer,
 		sanitize	: true
@@ -179,55 +186,6 @@ module.exports = function(app, Graphene, Notification){
 					res.send(".");
 				}
 			});
-		});
-	});
-
-	//	Upload
-	app.post('/upload/img',upload.single('image'),autoReap,function(req,res){
-		var savior = function(album){
-			if(!req.file){
-				console.log("NO IMAGES SENT");
-				return res.send("Must send image");
-			}
-			fs.readFile(req.file.path, function(e,i){ if(e) return res.send(e);
-			album.images.push({
-				ext	: req.file.mimetype.split('/')[1],
-				plainText : 'An Image',
-				richText  : 'An Image'
-			});
-			album.save(function(e,album){
-				var newim	= album.images[album.images.length-1],
-					path	= Graphene.imgDir + '/' + album._id + '/' + newim._id + '/original.' + newim.ext;
-				fs.mkdir(Graphene.imgDir + '/' + album._id,function(e){
-				if(e && e.code !== 'EEXIST') return res.send(e);
-				fs.mkdir(Graphene.imgDir + '/' + album._id + '/' + newim._id,function(e){
-				if(e && e.code !== 'EEXIST') return res.send(e);
-				fs.writeFile(path,i,function(e){ if(e) return res.send(e);
-					sharp(path).resize(1280,null).toFile(Graphene.imgDir + '/' + album._id + '/' + newim._id + '/1280.' + newim.ext,function(e,i){
-					sharp(path).resize(500,null).toFile(Graphene.imgDir + '/' + album._id + '/' + newim._id + '/500.' + newim.ext,function(e,i){
-						res.send({
-							original	: Graphene.img + '/' + album._id + '/' + newim._id + '/original.' + newim.ext,
-							1280		: Graphene.img + '/' + album._id + '/' + newim._id + '/1280.' + newim.ext,
-							500			: Graphene.img + '/' + album._id + '/' + newim._id + '/500.' + newim.ext
-						});
-					});
-					});
-				});
-				});
-				});
-			});
-			});
-		};
-		Album.findOne({user:req.session.user,name:'Posts'},function(e,a){
-			if(!a) Album.create({
-				user		: req.session.user,
-				name		: 'Posts',
-				plainText	: "System created album for storing user&apos;s posted images.",
-				richText	: "System created album for storing user&apos;s posted images."
-			},function(e,aa){ if(e) return res.send(e);
-				savior(aa);
-			});
-			else savior(a);
 		});
 	});
 	
