@@ -1612,7 +1612,7 @@
 				pcn.insertBefore(nw, pcn.children[0]);
 				nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
 			}
-			_i('info-column').innerHTML += '<div id="search"><div class="notes-title">Search</div><input id="search-box"></div>';
+			_i('info-column').innerHTML += '<div id="search"><div class="notes-title">Search</div><input placeholder="Search something..." id="search-box"></div>';
 			window.setTimeout(function(){
 				_i('search-box').onkeypress = function(e){
 					if(e.keyCode == 13 && this.value != '') page('/search/' + encodeURIComponent(this.value));
