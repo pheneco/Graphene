@@ -236,6 +236,7 @@
 							cmts[0].insertAdjacentHTML('beforebegin', Handlebars.partials.comment(ret[i]));
 					_g.c.loading = !1;
 					post._c('comment-more')[0].style.display = (post._c('comment').length-1 == (+post._c('comment-num')[0].innerHTML)) ? 'none' : 'block';
+					twemoji.parse(document.body);
 				}
 			});
 		},
@@ -1821,6 +1822,7 @@
 						fllwng	: info.following
 					});
 					_i('users').innerHTML += '<div class="user listed">'+utmp+'</div>';
+					twemoji.parse(document.body);
 				}
 			})
 		},
