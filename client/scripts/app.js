@@ -1515,7 +1515,7 @@
 			for(i in r) s[++i].style[r[--i]] = c;
 			this.accent = c;
 			l[l.length-2].disabled = !_g.t.dark;
-			document.getElementsByTagName('style')[2].disabled = true;
+			document.getElementsByTagName('style')[1].disabled = true;
 			_i('hexagon').style.stroke = _i('brandlogocss').sheet.cssRules[0].style.stroke = _g.t.dark ? "#444444" : "#FFFFFF";
 		},
 		side		: function(ctx, next){
