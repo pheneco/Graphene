@@ -49,6 +49,7 @@ textarea[id*='post-editbox-'],
 .draft-list tr:nth-child(even),
 #changelog tr:nth-child(even),
 .post-comments				{background:#383838 !important;}
+.comment-more				{background:#333333;}
 #side-logo					{background:rgba(0,0,0,0) url("../assets/img/gra_dark.svg") no-repeat top;z-index:1;}
 ::selection					{color:#444;}
 ::-moz-selection			{color:#444;}
