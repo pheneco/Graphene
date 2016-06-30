@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	2016.06.27
+ *	2016.06.29
  */
 
    (function bippity(){
@@ -275,16 +275,15 @@
 		},
 		toggle	: function(id, focus){
 			var cpp = _i('post-' + id),
-				ccr = cpp._c('post-comments')[0];
-			if(ccr.style.display == 'none'){
+				ccr = cpp._c('post-comments')[0],
+				p = _i('post-' + id).children[0],
+				i = _g.p.info[id];
+			i.active = !i.active;
+			p.className = 'post' + (i.active ? ' post-active' : '') + (i.expanded ? ' post-expanded' : '');
+			if(i.active){
 				ccr.style.display = 'block';
-				cpp._c('post')[0].className += ' post-active';
 				if(typeof focus !== 'boolean' || focus) window.setTimeout(function(){ccr._c('comment-textbox')[0].focus();}, 0);
-			} else {
-				ccr.style.display = 'none';
-				cpp._c('post post-active')[0].className = 'post';
-				cpp._c('post post-expanded post-active')[0].className = 'post post-expanded';
-			}
+			} else ccr.style.display = 'none';
 		}
 	});
 	_g.ca	= (_g.calendar	= {
@@ -845,6 +844,8 @@
 				info.you		= _g.session;
 				info.timestamp	= _g.time(info.time);
 				info.loadMore	= info.commentCount > 5 ? 'block' : 'none';
+				info.expanded	= !1;
+				info.active		= !1;
 				info.menu		= !0;
 				info.enlarge	= ~info.richText.indexOf('<div class="post-video"') && window.innerWidth > 1340;
 				for(var i in info.commentList)
@@ -960,18 +961,10 @@
 			});
 		},
 		enlarge		: function(id){
-			var cpp = _i('post-' + id);
-			if(cpp._c('post post-active post-expanded').length || cpp._c('post post-expanded').length){
-				if(cpp._c('post post-active post-expanded').length)
-					cpp._c('post post-active post-expanded')[0].className = 'post post-active';
-				else
-					cpp._c('post post-expanded')[0].className = 'post';
-			} else {
-				if(cpp._c('post post-active').length)
-					cpp._c('post post-active')[0].className = 'post post-active post-expanded';
-				else
-					cpp._c('post')[0].className = 'post post-expanded';
-			}
+			var p = _i('post-' + id).children[0],
+				i = _g.p.info[id];
+			i.expanded = !i.expanded;
+			p.className = 'post' + (i.active ? ' post-active' : '') + (i.expanded ? ' post-expanded' : '');
 		},
 		clear		: function(ctx, next){
 			var se;
