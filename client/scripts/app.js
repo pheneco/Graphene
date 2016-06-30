@@ -965,6 +965,7 @@
 				i = _g.p.info[id];
 			i.expanded = !i.expanded;
 			p.className = 'post' + (i.active ? ' post-active' : '') + (i.expanded ? ' post-expanded' : '');
+			p._c('post-enlarge')[0].style.backgroundImage = 'url("../assets/img/' + (i.expanded ? 'reduce' : 'enlarge') + '.svg")';
 		},
 		clear		: function(ctx, next){
 			var se;
