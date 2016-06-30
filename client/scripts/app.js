@@ -1715,7 +1715,7 @@
 			})
 		},
 		list	: function(amount){
-			if(!_i('users')) _i('body').insertAdjacentHTML('afterbegin', '<div id="users"></div>');
+			if(!_i('users')) _g.ui.getColumn('posts').insertAdjacentHTML('afterbegin', '<div id="users"></div>');
 			var last	= _i('users').children[_i('users').children.length - 1],
 				lastId	= last == void 0 ? 'default' : last.id.split('-')[1];
 			if(lastId !== '0'){
