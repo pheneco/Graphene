@@ -127,9 +127,23 @@
 				_g.cn.recheck(_g.session.v);
 				_g.n.check();
 				window.addEventListener('scroll', function(){
-					var cf = _c('column-fix');
-					for(var i = 0; i < cf.length; i++)
-						cf[i].style.top = ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) + "px";
+					var cf = _c('column-fix'),
+						sy = ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY),rect,top;
+					for(var i = 0; i < cf.length; i++){
+						rect = cf[i].getBoundingClientRect();
+						top = sy;
+						for(var j = 0; j < _g.ui.blocks.length; j++){
+							var block = _g.ui.blocks[j].getBoundingClientRect();
+							if(	block.left < rect.right &&
+								block.right > rect.left &&
+								block.top < (rect.height + 80) &&
+								block.bottom > 0){
+									if(window.innerHeight - block.bottom > 0) top = sy + block.bottom;
+									else top = sy + block.top - rect.height - 80;
+								}
+						}
+						cf[i].style.top = top + "px";
+					}
 					if((_g.p.loaded && _g.p.needLoad && !_g.p.loading && _g.p.loadMore) && (((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY) > (document.body.scrollHeight - 600 - window.innerHeight))){
 						_g.b.toLoad = 0;
 						_g.p.list(20);
@@ -966,6 +980,8 @@
 			i.expanded = !i.expanded;
 			p.className = 'post' + (i.active ? ' post-active' : '') + (i.expanded ? ' post-expanded' : '');
 			p._c('post-enlarge')[0].style.backgroundImage = 'url("../assets/img/' + (i.expanded ? 'reduce' : 'enlarge') + '.svg")';
+			if(i.expanded) _g.ui.blocks[_g.ui.blocks.length] = p;
+			else if(~_g.ui.blocks.indexOf(p)) _g.ui.blocks.splice(p,1);
 		},
 		clear		: function(ctx, next){
 			var se;
