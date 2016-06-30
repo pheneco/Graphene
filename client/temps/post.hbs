@@ -11,6 +11,7 @@
 		<div class="post-time">{{#if url}}<a permalink href="{{url}}" class="timestamp" unix-time="{{time}}">{{/if}}{{#if timestamp}}{{timestamp}}{{else}}{{time}}{{/if}}{{#if url}}</a>{{/if}}</div>
 		{{#if menu}}<div class="post-menu"></div>{{/if}}
 		{{#if enlarge}}<div class="post-enlarge" onclick="Graphene.posts.enlarge('{{id}}')"></div>{{/if}}
+		{{#if newFeed}}<div class="feed-new" onclick="Graphene.settings.newFeed(prompt('New name:'))"></div>{{/if}}
 	</div>
 	{{/ifCond}}
 	{{#ifCond all '||' content}}

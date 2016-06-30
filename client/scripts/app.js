@@ -1267,7 +1267,9 @@
 						time	: "Feeds",
 						url		: "",
 						all		: !0,
-						blankPost : !0
+						blankPost : !0,
+						menu	: !0,
+						newFeed	: !0
 					});
 					edit._c('post-content')[0].innerHTML = '';
 					for(var i = 0; i < sess.follows.length; i++)
@@ -1275,7 +1277,7 @@
 					if(sess.follows.length == 0) edit._c('post-content')[0].innerHTML = '<i>You are so lonely.</i>';
 					for(var i = 0; i < sess.feeds.length; i++)
 						_g.s.loadFeed(sess.feeds[i])
-					if(load) edit.oncontextmenu = function(e){
+					if(load) edit._c('post-menu')[0].onclick = edit.oncontextmenu = function(e){
 						e.preventDefault();
 						_g.m.open(e,{
 							"Create New Feed":"_g.s.newFeed(prompt('New name:'))"
@@ -1301,7 +1303,8 @@
 					time	: "Feed",
 					url		: info.url,
 					all		: !0,
-					blankPost : !0
+					blankPost : !0,
+					menu	: !0
 				});
 				feed.innerHTML += "<textarea class='feed-drop' style='position:absolute;top:0px;left:0px;border:0px none;width:100%;height:100%;z-index:5;opacity:0;display:none;'></textarea>";
 				_i('feeds').appendChild(feed);
@@ -1313,7 +1316,8 @@
 					_g.u.followLink(this.value,this.parentElement.feed);
 					this.value = '';
 				}
-				feed.oncontextmenu = function(e){
+				feed._c('post-menu')[0].feed	= info._id;
+				feed._c('post-menu')[0].onclick = feed.oncontextmenu = function(e){
 					e.preventDefault();
 					var id  = this.feed;
 					_g.m.open(e,{
@@ -1972,10 +1976,10 @@
 					_i('body').innerHTML += '<div class="column ' + _g.ui.columns[i].width + '"></div>';
 		},
 		update		: function(){
-			var ctr;
+			var ctr,left;
 			for(var i = 0; i < _g.ui.columns.length; i++)
 				if(_g.ui.columns[i].center) ctr = _i('body')._c('column')[i].getBoundingClientRect();
-			_i('body').style.marginLeft = ((window.innerWidth / 2) - (ctr.width / 2) - (ctr.left - _i('body').getBoundingClientRect().left)) + 'px';
+			_i('body').style.marginLeft = Math.max(40,((window.innerWidth / 2) - (ctr.width / 2) - (ctr.left - _i('body').getBoundingClientRect().left))) + 'px';
 		},
 		getColumn	: function(contains){
 			for(var i = 0; i < _g.ui.columns.length; i++)
