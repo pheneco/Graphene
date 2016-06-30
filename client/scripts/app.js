@@ -138,7 +138,7 @@
 								block.right > rect.left &&
 								block.top < (rect.height + 80) &&
 								block.bottom > 0){
-									if(window.innerHeight - block.bottom > 0) top = sy + block.bottom;
+									if(window.innerHeight - block.bottom > 40) top = sy + block.bottom;
 									else top = sy + block.top - rect.height - 80;
 								}
 						}
@@ -982,6 +982,7 @@
 			p._c('post-enlarge')[0].style.backgroundImage = 'url("../assets/img/' + (i.expanded ? 'reduce' : 'enlarge') + '.svg")';
 			if(i.expanded) _g.ui.blocks[_g.ui.blocks.length] = p;
 			else if(~_g.ui.blocks.indexOf(p)) _g.ui.blocks.splice(p,1);
+			window.scrollBy(10,10);window.scrollBy(-10,-10);
 		},
 		clear		: function(ctx, next){
 			var se;
