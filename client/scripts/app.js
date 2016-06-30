@@ -1975,7 +1975,7 @@
 			var ctr;
 			for(var i = 0; i < _g.ui.columns.length; i++)
 				if(_g.ui.columns[i].center) ctr = _i('body')._c('column')[i].getBoundingClientRect();
-			_i('body').style.marginLeft = ((window.innerWidth / 2) - (ctr.width / 2) - ctr.left) + 'px';
+			_i('body').style.marginLeft = ((window.innerWidth / 2) - (ctr.width / 2) - (ctr.left - _i('body').getBoundingClientRect().left)) + 'px';
 		},
 		getColumn	: function(contains){
 			for(var i = 0; i < _g.ui.columns.length; i++)
