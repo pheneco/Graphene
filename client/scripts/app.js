@@ -57,6 +57,7 @@
 					p[i].style.color = "green";
 		}
 		window.pageview = function(ctx){
+			_g.ui.update();
 			ga('set', {
 				page	: ctx.path,
 				title	: _g.page
@@ -118,14 +119,14 @@
 				_g.v		= _g.session.version;
 				_g.user		= _g.session.user;
 				_g.lvl		= _g.session.rank;
+				_g.ui.load();
 				_g.t.update(_g.session.accent);
-				// var lnk = document.getElementsByTagName('link');
-				// lnk[lnk.length-1].href = '/assets/img/fav.php?c=' + _g.session.accent.replace('#','');
 				_g.t.search();
 				if(_g.session.user) _g.n.open();
 				page();
 				_g.cn.recheck(_g.session.v);
 				_g.n.check();
+				_g.ui.update();
 				window.addEventListener('scroll', function(){
 					var cf = _c('column-fix'),
 						sy = ((document.documentElement.scrollTop) ? document.documentElement.scrollTop : scrollY),rect,top;
@@ -150,6 +151,7 @@
 					}
 				});
 				window.addEventListener('mousemove',_g.u.hovercard);
+				window.addEventListener('resize',_g.ui.update);
 			}
 		});
 		});
@@ -315,8 +317,7 @@
 			if(post == null){
 				post = document.createElement('div');
 				post.id = "changes";
-				cont = _i('body');
-				cont.appendChild(post);
+				_g.ui.getColumn('changes').appendChild(post);
 			}
 			post.innerHTML = _g.temps.post({
 				user	: {
@@ -371,8 +372,7 @@
 					if(post == null){
 						post = document.createElement('div');
 						post.id = "change";
-						cont = _i('body');
-						cont.appendChild(post);
+						_g.ui.getColumn('changes').appendChild(post);
 					}
 					post.innerHTML = _g.temps.post({
 						user	: _g.session,
@@ -439,13 +439,12 @@
 		audio			: '',
 		posting			: !1,
 		load			: function(){
-			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
 			var post = _i('post-new');
 			if(post == null){
 				post = document.createElement('div');
 				post.className = "post-increment";
 				post.id = "post-new";
-				cont = _i('body');
+				var cont = _g.ui.getColumn('posts');
 				cont.insertBefore(post, cont.children[0]);
 			}
 			_g.session.id = _g.session._id;
@@ -720,15 +719,9 @@
 		},
 		open	: function(){
 			if(!_g.n.opened){
-				if(!_i('info-column')){
-					var nw = document.createElement('div');
-					nw.className = 'column thin right';
-					pcn = _i('body');
-					pcn.insertBefore(nw, pcn.children[0]);
-					nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
-				}
+				if(!_i('info-column'))
+					_g.ui.getColumn('notes').insertAdjacentHTML('beforeend', '<div id="info-column" class="column-fix"></div>');
 				_i('info-column').innerHTML += '<div id="notes"><div class="notes-title">Notifications (<span id="notes-num">' + _g.n.amount + '</span> unread)</div><div id="notes-notes"></div></div>';
-				// _i('side-notes').style.display = 'none';
 				_g.n.opened = !0;
 				_g.n.load();
 			}
@@ -792,7 +785,8 @@
 		cache		: [],
 		list 		: function(amount){
 			this.loaded = this.loading = !0;
-			if(!_i('posts')) _i('body').insertAdjacentHTML('beforeend', '<div id="posts"></div>');
+			if(!_i('posts'))
+				_g.ui.getColumn('posts').insertAdjacentHTML('beforeend', '<div id="posts"></div>');
 			var last	= _i('posts').children[_i('posts').children.length - 1],
 				lastId	= (last == void 0 || last.id == 'post-new') ? 'default' : last.id.split('-')[1];
 			if(lastId !== '0'){
@@ -1043,80 +1037,6 @@
 	_g.pu	= (_g.popup		= {	//	Reservation (library)
 		
 	});
-	_g.rg	= (_g.register	= {
-		load	: function(ctx,next){
-			_g.b.toLoad = 1;
-			_g.b.loaded = 1;
-			_g.b.update();
-			document.title = _g.page = "Register | " + _g.name;
-			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
-			var reg			= document.createElement('div');
-			reg.id			= "register";
-			reg.innerHTML	= _g.temps.post({
-				user	: {
-					name	: "New User"
-				},
-				time	: "Register",
-				url		: "",
-				all		: !0,
-				blankPost : !0
-			});
-			
-			reg._c('post-content')[0].innerHTML = _g.temps.reg();
-			_i('body').appendChild(reg);
-			reg._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.rg.save()">Register</div></div>');	
-			next();
-		},
-		save	: function(){
-			new ajax(_g.api + '/user/new', 'POST', JSON.stringify({
-				username	: _i('settings-uname').value,
-				//firstname	: _i('settings-fname').value,
-				//lastname	: _i('settings-lname').value,
-				name		: _i('settings-name').value,
-				password	: _i('settings-pass').value,
-				email		: _i('settings-email').value
-			}), {
-				type	: 'application/json',
-				load	: function(r){
-					if(r.responseText !== '1') _g.pu.open({
-						title			: "Error!",
-						text			: r.responseText,
-						titleColor		: "#ff2727",
-						titleTextColor	: "#fff"
-					});
-					else page('/');
-				}
-			});
-		},
-		check	: {
-			userName	: function(){
-				new ajax(_g.api + '/test/userName', 'GET', JSON.stringify({
-					username	: _i('settings-uname').value
-				}), {
-					type	: 'application/json',
-					load	: function(r){
-						_i('un-taken').style.display = r.responseText == "taken" ? 'inline-block' : 'open';
-					}
-				});
-			},
-			email		: function(){
-				_i('em-taken').style.display = 'none';
-				if(!_i('settings-email').value.isEmail()) return _i('em-false').style.display = 'inline-block';
-				_i('em-false').style.display = 'none';
-				new ajax(_g.api + '/test/email', 'GET', JSON.stringify({
-					username	: _i('settings-email').value
-				}), {
-					type	: 'application/json',
-					load	: function(r){
-						_i('em-taken').style.display = r.responseText == "taken" ? 'inline-block' : 'none';
-					}
-				});
-			},
-			passwords	: function(){
-				_i('ps-nomatch').style.display = _i('settings-pass').value !== _i('settings-pass2').value ? 'inline-block' : 'none';
-			}
-		},
-	});
 	_g.s	= (_g.settings	= {
 		feedsPg	: !1,
 		load	: function(ctx,next){
@@ -1132,9 +1052,9 @@
 				load	: function(r){
 					var sess = _g.session = JSON.parse(r.responseText);
 					if(!sess.user) return !1;
-					if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
 					
-					var sets		= document.createElement('div');
+					var sets		= document.createElement('div'),
+						cont = _g.ui.getColumn('settings');
 					sets.id			= "settings";
 					sets.innerHTML	= _g.temps.post({
 						user	: _g.session,
@@ -1191,7 +1111,7 @@
 						],
 						save		: '_g.s.save()'
 					});
-					_i('body').appendChild(sets);
+					cont.appendChild(sets);
 					sets._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.save()">Save</div></div><div id="advset-link"><a href="'+_g.url+'/settings/advanced">Advanced Settings</a></div>');
 					
 					var clr	= new _g.cl.picker(_i('settings-clr'), {
@@ -1246,7 +1166,7 @@
 						],
 						save		: '_g.s.savePass()'
 					});
-					_i('body').appendChild(pass);
+					cont.appendChild(pass);
 					pass._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.savePass()">Save</div></div>');
 				}
 			});
@@ -1265,7 +1185,8 @@
 				load	: function(r){
 					var sess = _g.session = JSON.parse(r.responseText);
 					if(!sess.user) return !1;
-					var advset		= document.createElement('div');
+					var advset		= document.createElement('div'),
+						cont = _g.ui.getColumn('settings');
 					advset.id			= "advset";
 					advset.innerHTML	= _g.temps.post({
 						user	: _g.session,
@@ -1319,7 +1240,7 @@
 			document.title = _g.page = "Feeds | " + _g.name;
 			if(!_i('feeds')){
 				load = !0;
-				_i('body').insertAdjacentHTML('beforeend', "<div id='feeds'><div id='post-feed' class='post-feed'>" + _g.temps.post({
+				_g.ui.getColumn('settings').insertAdjacentHTML('beforeend', "<div id='feeds'><div id='post-feed' class='post-feed'>" + _g.temps.post({
 					user	: {
 						name	: "Loading...",
 						url		: "",
@@ -1629,17 +1550,15 @@
 												"<a href='" + _g.url + "/changes/_g.popup' title='Popup'>" + _g.pu.changes[_g.pu.changes.length-1][0] + "</a> " +
 												"<a href='" + _g.url + "/changes/_g.menu' title='Context Menu'>" + _g.m.changes[_g.m.changes.length-1][0] + "</a>";
 				_g.b.toLoad = 0;
+				_g.ui.update();
 				next();
 			}});
 		},
 		search		: function(){
-			if(!_i('info-column')){
-				var nw = document.createElement('div');
-				nw.className = 'column thin right';
-				pcn = _i('body');
-				pcn.insertBefore(nw, pcn.children[0]);
-				nw.innerHTML = '<div id="info-column" class="column-fix"></div>';
-			}
+			if(!_i('info-column'))
+				for(var i = 0; i < _g.ui.columns.length; i++)
+					if(~_g.ui.columns[i].contains.indexOf('search'))
+						_i('body')._c('column')[i].insertAdjacentHTML('beforeend', '<div id="info-column" class="column-fix"></div>');
 			_i('info-column').innerHTML += '<div id="search"><div class="notes-title">Search</div><input placeholder="Search something..." id="search-box"></div>';
 			window.setTimeout(function(){
 				_i('search-box').onkeypress = function(e){
@@ -1729,14 +1648,9 @@
 							}
 						]
 					});
-					if(!_i('page-column')){
-						var nw = document.createElement('div');
-						nw.className = 'column slim left';
-						pcn = _i('body');
-						pcn.insertBefore(nw, pcn.children[0]);
-						nw.innerHTML = '<div id="page-column" class="column-fix"></div>';
-					}
-					if(!_g.u.loaded) _i('page-column').insertAdjacentHTML('afterbegin',utmp);
+					if(!_i('user-column'))
+						_g.ui.getColumn('user').insertAdjacentHTML('beforeend', '<div id="user-column" class="column-fix"></div>');
+					if(!_g.u.loaded) _i('user-column').insertAdjacentHTML('afterbegin',utmp);
 					else _i('user').outerHTML = utmp;
 					if(_g.session.user && info.id == _g.session.user){
 						window.setTimeout(function(){
@@ -2032,11 +1946,13 @@
 				]
 			},
 			{
-				width		: 'post',	//	500px
+				width		: 'wide',	//	500px
 				defaultOfSize : !0,
 				center		: !0,
 				contains	: [
-					'posts'
+					'posts',
+					'settings',
+					'changes'
 				]
 			},
 			{
@@ -2048,7 +1964,24 @@
 				]
 			}
 		],
-		blocks	: []
+		blocks		: [],
+		load		: function(){
+			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
+			if(_i('body').innerHTML == '')
+				for(var i = 0; i < _g.ui.columns.length; i++)
+					_i('body').innerHTML += '<div class="column ' + _g.ui.columns[i].width + '"></div>';
+		},
+		update		: function(){
+			var ctr;
+			for(var i = 0; i < _g.ui.columns.length; i++)
+				if(_g.ui.columns[i].center) ctr = _i('body')._c('column')[i].getBoundingClientRect();
+			_i('body').style.marginLeft = ((window.innerWidth / 2) - (ctr.width / 2) - ctr.left) + 'px';
+		},
+		getColumn	: function(contains){
+			for(var i = 0; i < _g.ui.columns.length; i++)
+				if(~_g.ui.columns[i].contains.indexOf(contains))
+					return _i('body')._c('column')[i];
+		},
 	});
 	_g.x	= (_g.crop		= {	//	Reservation (library)
 		
@@ -2085,7 +2018,6 @@
 	page('/logout', function(){
 		window.location.replace(_g.api + "/logout");
 	});
-	page('/register', _g.rg.load, pageview),
 	page('/feed/:name', function(ctx,next){
 		if(!_g.user) page.redirect('/login');
 		else {
