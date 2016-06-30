@@ -278,11 +278,12 @@
 				ccr = cpp._c('post-comments')[0];
 			if(ccr.style.display == 'none'){
 				ccr.style.display = 'block';
-				cpp._c('post')[0].className = 'post post-active';
+				cpp._c('post')[0].className += ' post-active';
 				if(typeof focus !== 'boolean' || focus) window.setTimeout(function(){ccr._c('comment-textbox')[0].focus();}, 0);
 			} else {
 				ccr.style.display = 'none';
 				cpp._c('post post-active')[0].className = 'post';
+				cpp._c('post post-expanded post-active')[0].className = 'post post-expanded';
 			}
 		}
 	});
@@ -845,6 +846,7 @@
 				info.timestamp	= _g.time(info.time);
 				info.loadMore	= info.commentCount > 5 ? 'block' : 'none';
 				info.menu		= !0;
+				info.enlarge	= ~info.richText.indexOf('<div class="post-video"') && window.innerWidth > 1340;
 				for(var i in info.commentList)
 					info.commentList[i].owner = info.commentList[i].user.id == _g.session.user,
 					info.commentList[i].post = id,
@@ -956,6 +958,13 @@
 						_g.p.listen();
 				}
 			});
+		},
+		enlarge		: function(id){
+			var cpp = _i('post-' + id);
+			cpp._c('post')[0].className += ' post-expanded';
+			cpp._c('post post-active')[0].className += ' post-expanded';
+			if(cpp._c('post post-active post-expanded').length) cpp._c('post post-active post-expanded')[0].className = 'post post-active';
+			else cpp._c('post post-expanded')[0].className = 'post';
 		},
 		clear		: function(ctx, next){
 			var se;
