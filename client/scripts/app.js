@@ -961,10 +961,17 @@
 		},
 		enlarge		: function(id){
 			var cpp = _i('post-' + id);
-			cpp._c('post')[0].className += ' post-expanded';
-			cpp._c('post post-active')[0].className += ' post-expanded';
-			if(cpp._c('post post-active post-expanded').length) cpp._c('post post-active post-expanded')[0].className = 'post post-active';
-			else cpp._c('post post-expanded')[0].className = 'post';
+			if(cpp._c('post post-active post-expanded').length || cpp._c('post post-expanded').length){
+				if(cpp._c('post post-active post-expanded').length)
+					cpp._c('post post-active post-expanded')[0].className = 'post post-active';
+				else
+					cpp._c('post post-expanded')[0].className = 'post';
+			} else {
+				if(cpp._c('post post-active').length)
+					cpp._c('post post-active')[0].className = 'post post-active post-expanded';
+				else
+					cpp._c('post')[0].className = 'post post-expanded';
+			}
 		},
 		clear		: function(ctx, next){
 			var se;
