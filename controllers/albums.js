@@ -13,6 +13,19 @@ module.exports = function(app, Graphene){
 		multer			= require('multer'),
 		upload			= multer({dest:'/tmp/'}),
 		autoReap		= require('multer-autoreap');
+	function getPostedAlbum(req,res,savior){
+		Album.findOne({user:req.session.user,name:'Posts'},function(e,a){
+			if(!a) Album.create({
+				user		: req.session.user,
+				name		: 'Posts',
+				plainText	: "System created album for storing user&apos;s posted images.",
+				richText	: "System created album for storing user&apos;s posted images."
+			},function(e,aa){ if(e) return res.send(e);
+				savior(aa);
+			});
+			else savior(a);
+		});
+	}
 	
 	//	Info
 	app.get('/album/:id',function(req,res){
@@ -72,16 +85,34 @@ module.exports = function(app, Graphene){
 			});
 			});
 		};
-		Album.findOne({user:req.session.user,name:'Posts'},function(e,a){
-			if(!a) Album.create({
-				user		: req.session.user,
-				name		: 'Posts',
-				plainText	: "System created album for storing user&apos;s posted images.",
-				richText	: "System created album for storing user&apos;s posted images."
-			},function(e,aa){ if(e) return res.send(e);
-				savior(aa);
+		getPostedAlbum(req,res,savior);
+	});
+	app.post('/upload/webm',upload.single('webm'),autoReap,function(req,res){
+		var savior = function(album){
+			if(!req.file) return res.send("Must send image");
+			fs.readFile(req.file.path, function(e,i){ if(e) return res.send(e);
+				album.images.push({
+					ext	: 'webm',
+					plainText : 'A WebM Video',
+					richText  : 'A WebM Video'
+				});
+				album.save(function(e,album){
+					var newim	= album.images[album.images.length-1],
+						path	= Graphene.imgDir + '/' + album._id + '/' + newim._id + '/original.' + newim.ext;
+					fs.mkdir(Graphene.imgDir + '/' + album._id,function(e){
+						if(e && e.code !== 'EEXIST') return res.send(e);
+					fs.mkdir(Graphene.imgDir + '/' + album._id + '/' + newim._id,function(e){
+						if(e && e.code !== 'EEXIST') return res.send(e);
+					fs.writeFile(path,i,function(e){ if(e) return res.send(e);
+						res.send({
+							original	: Graphene.img + '/' + album._id + '/' + newim._id + '/original.' + newim.ext
+						});
+					});
+					});
+					});
+				});
 			});
-			else savior(a);
-		});
+		};
+		getPostedAlbum(req,res,savior);
 	});
 }
