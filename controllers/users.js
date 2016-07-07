@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trevor J Hoglund
- *	2016.06.26
+ *	2016.06.30
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -285,6 +285,9 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			}
 		});
 		});
+	});
+	app.post('/deactivate',function(req,res){
+		res.send('NOT A THING YET');
 	});
 	
 	//	Info

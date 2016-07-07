@@ -103,7 +103,7 @@
 	.user-link				{padding:3px;margin:-3px -3px 5px -3px;color:#111 !important;}
 	.user-follow			{padding:10px;text-align:center;background:#444444;color:white !important;}
 	.user-select			{background:#444444;color:#fff !important;}
-	.user-bio				{margin-bottom:10px;font-size:8pt !important;text-align:justify;}
+	.user-bio				{margin-bottom:10px;font-size:8pt !important;text-align:justify;word-break:break-word;}
 	#user-bio-input			{font-size:8pt !important;}
 	
 .post						{position:relative;display:inline-block;text-align:left;margin-bottom:40px;background:#fff;width:520px;border:0 !important;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;transition:margin-bottom 0.3s;}
@@ -121,7 +121,7 @@
 .post-content				{padding:10px;}
 	.post-shared			{margin-left:-20px;background:#fff;padding:20px;width:500px;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;}
 	.post-desc				{-webkit-animation-duration:.5s;animation-duration:.5s;}
-	.post-text				{clear:both;text-align:justify;width:500px;-webkit-animation-duration:.5s;animation-duration:.5s;}
+	.post-text				{clear:both;text-align:justify;word-break:break-word;width:500px;-webkit-animation-duration:.5s;animation-duration:.5s;}
 	.post-text ol			{margin-bottom:10px;}
 	.post-text ul,
 	.post-text li,
