@@ -243,14 +243,24 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 			//	'extensions' : ['html']
 		});
 		client.use(serve);
+		client.get('/player',function(req,res){
+			res.send('<style>*{margin:0;padding:0;}</style><video style="background:black;width:100%;height:100%;" controls src="' + req.query.src + '">');
+		});
 		client.all('*',function(req,res){
 			tumblr.blogPosts('theworstfucking.tumblr.com',{type:'photo',filter:'raw'},function(err,p){
-				var data = jade.renderFile(req.path == '/register' ? __dirname + '/client/register.jade' : (req.path == '/login' ? __dirname + '/client/login.jade' : __dirname + '/client/index.jade'),{
-					localLibraries : config.localLibraries,
-					cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
-					api : config.addr.web + ":" + config.apiPort,
-					img	: p ? p.posts[~~(Math.random()*p.posts.length)].photos[0].original_size.url : '../assets/img/regbg/jpg'
-				});
+				var data = jade.renderFile(
+					req.path == '/register'
+						? __dirname + '/client/register.jade'
+						: (req.path == '/login'
+							? __dirname + '/client/login.jade'
+							: __dirname + '/client/index.jade'),
+					{
+						localLibraries : config.localLibraries,
+						cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
+						api : config.addr.web + ":" + config.apiPort,
+						img	: p ? p.posts[~~(Math.random()*p.posts.length)].photos[0].original_size.url : '../assets/img/regbg/jpg'
+					}
+				);
 				res.send(data);
 			});
 		});
