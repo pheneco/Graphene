@@ -43,7 +43,7 @@ module.exports = function(app, Graphene, Notification){
 					? '\"api\",\"' + Graphene.api + '/album/' + href.split(Graphene.img)[1].split('/')[1] + '\",\"images.*.1280\",\"' + href + '\"'
 					: '\"object\",\"{\\"pages\\":[\\"' + href + '\\"]}\",\"pages.*\",0') +
 				');\'><img src="' + href + '"' + (text?' alt="' + text + '"':'') + (title?' title="' + title + '"':'') + '></a>')
-			: '<iframe src="/player?src=' + href + '">');
+			: '<iframe src="/player?src=' + href + '"></iframe>');
 		return img;
 	};
 	marked.setOptions({
