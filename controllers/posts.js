@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	2016.06.28
+ *	2016.07.07
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -37,11 +37,13 @@ module.exports = function(app, Graphene, Notification){
 	});
 	renderer.heading	= function(text,level){for(var i = 1; i < level; i++) text = '#' + text; return text;};	//	Kill header rendering
 	renderer.image		= function(href,title,text){
-		var img = '<a lightbox onclick=\'_g.pu.lightbox(' +
-			(new RegExp(Graphene.img + "/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/1280.jpeg").test(href)
-				? '\"api\",\"' + Graphene.api + '/album/' + href.split(Graphene.img)[1].split('/')[1] + '\",\"images.*.1280\",\"' + href + '\"'
-				: '\"object\",\"{\\"pages\\":[\\"' + href + '\\"]}\",\"pages.*\",0') +
-			');\'><img src="' + href + '"' + (text?' alt="' + text + '"':'') + (title?' title="' + title + '"':'') + '></a>';
+		var img = (!new RegExp(Graphene.img + "/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/original.webm").test(href)
+			? ('<a lightbox onclick=\'_g.pu.lightbox(' +
+				(new RegExp(Graphene.img + "/([a-zA-Z0-9]+)/([a-zA-Z0-9]+)/1280.jpeg").test(href)
+					? '\"api\",\"' + Graphene.api + '/album/' + href.split(Graphene.img)[1].split('/')[1] + '\",\"images.*.1280\",\"' + href + '\"'
+					: '\"object\",\"{\\"pages\\":[\\"' + href + '\\"]}\",\"pages.*\",0') +
+				');\'><img src="' + href + '"' + (text?' alt="' + text + '"':'') + (title?' title="' + title + '"':'') + '></a>')
+			: '<video controls class="post-video" src="' + href + '"' + (text?' alt="' + text + '"':'') + (title?' title="' + title + '"':'') + '>');
 		return img;
 	};
 	marked.setOptions({

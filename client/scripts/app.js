@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	2016.06.29
+ *	2016.07.07
  */
 
    (function bippity(){
@@ -531,18 +531,19 @@
 		drop			: function(e){
 			var f	= (typeof e.dataTransfer !== 'undefined') ? e.dataTransfer.files[0] : this.files[0],
 				d	= new FormData();
-			if(!/\/(jpe?g|png|gif)$/i.test(f.type)) return !1;
+			if(!/\/(jpe?g|png|gif|webm)$/i.test(f.type)) return !1;
 			if(typeof e.dataTransfer !== 'undefined') e.preventDefault();
 			var r = new XMLHttpRequest();
 			if(r.upload && f.size <= 6e6){
+				var webm = /\/webm$/i.test(f.type);
 				r.withCredentials = !0;
-				r.open("POST", _g.api + '/upload/img', !0);
-				d.append('image',f);
+				r.open("POST", _g.api + '/upload/' + (webm ? 'webm' : 'img'), !0);
+				d.append(webm ? 'webm' : 'image',f);
 				r.send(d);
 				r.onload = function(){
 					console.log(r);
 					var urls = JSON.parse(r.response);
-					_i('post-new')._c('post-textbox')[0].insertAtCaret('![](' + urls[1280] + ')\n');
+					_i('post-new')._c('post-textbox')[0].insertAtCaret('![](' + (webm ? urls['original'] : urls[1280]) + ')\n');
 				}
 			}
 		},

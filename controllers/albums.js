@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Album Routes
  *	Written by Trevor J Hoglund
- *	2016.06.28
+ *	2016.07.07
  */
  
 module.exports = function(app, Graphene){
