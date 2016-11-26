@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	2016.07.07
+ *	2016.11.18
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -90,7 +90,7 @@ module.exports = function(app, Graphene, Notification){
 					});
 				if(plainText.length > 0){
 					post.type = "text";
-				} else return res.send("Post cannot be empty!");
+				} else return res.send("Oh, I see, we're sending empty posts now... how am I ever supposed to fill the void in my life if all you send is more emptiness?");
 				post.save(function(e,p){
 					if(!e){
 						//Fire event listeners
@@ -102,6 +102,7 @@ module.exports = function(app, Graphene, Notification){
 						User.find({username:{$in:users}},function(e,u){
 							if(e) return console.log(Graphene.time() + e);
 							for(var i = 0; i < u.length; i++){
+								if(""+u[i]._id == req.session.user) continue;
 								var note = new Note({
 									recipient	: ""+u[i]._id,
 									sender		: req.session.user,
@@ -118,11 +119,11 @@ module.exports = function(app, Graphene, Notification){
 						});
 					}else{
 						res.send("Error creating post.");	
-						console.log(Graphene.time() + "Error creating post.");	
+						console.log(Graphene.time() + "Error creating post.");
 					}
 				});
 			});
-		} else return res.send("Must be logged in to post!");
+		} else return res.send("You didn't even bother logging into an account... ok... that's fine... I didn't really like this site either...");
 	});
 	app.post('/post/:id/comment', function(req,res){
 		if(!req.session.user) return res.send("Must be logged in to comment.");
@@ -169,7 +170,7 @@ module.exports = function(app, Graphene, Notification){
 				Note.remove({data:req.params.id}, function(e){if(e) return res.send(e);
 					Posts.emit(""+req.session.user);
 					for(var i = 0; i < p.users.length; i++) Posts.emit("@"+p.users[i]);
-					return res.send("Post deleted succesfully!");
+					return res.send("Your post is gone now... just like she is...");
 				});
 			});
 		});
@@ -253,7 +254,7 @@ module.exports = function(app, Graphene, Notification){
 	});
 	app.get('/post/:id', function(req,res){
 		Post.findOne({_id:req.params.id}, function(e,p){if(e) return res.send(e);
-		if(!p) return res.send("Post does not exist.");
+		if(!p) return res.send("The post you're looking for, just like my will to live, doesn't exist.");
 		User.findOne({_id:p.user}, function(e,u){
 			var post = {
 				user		: {

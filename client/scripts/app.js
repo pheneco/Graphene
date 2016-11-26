@@ -302,7 +302,7 @@
 			} else ccr.style.display = 'none';
 		}
 	});
-	_g.ca	= (_g.calendar	= {
+	_g.ca	= (_g.calendar	= {	//	Reservation (module)
 		
 	});
 	_g.cl	= (_g.color		= {	//	Reservation (library)
@@ -1473,11 +1473,14 @@
 			_i('hexagon').style.stroke = _i('brandlogocss').sheet.cssRules[0].style.stroke = _g.t.dark ? "#444444" : "#FFFFFF";
 		},
 		side		: function(ctx, next){
+			console.log("CUNTS");
 			new ajax(_g.api + "/session", "GET", "", {load : function(r){
+				console.log("FUCK");
 				if(_g.session.user) {
 					_g.session = JSON.parse(r.responseText);
 					_g.t.dark = _g.session.dark;
 					_g.t.update(_g.session.accent);
+					console.log("SHIT");
 					var o = {
 						sections : [
 							{
@@ -1531,6 +1534,7 @@
 							}
 						]
 					};
+					console.log("DICKS");
 					for(var i = 1; i < o.sections[0].links.length - 1; i++){
 						o.sections[0].links[i].url = _g.url + "/feed/" + o.sections[0].links[i].name;
 						o.sections[0].links[i].active = ctx.path == "/feed/" + o.sections[0].links[i].name;
@@ -1546,6 +1550,7 @@
 						]
 					}
 				}
+				console.log("MOVING ON");
 				_i('side-content').innerHTML = _g.temps.side(o);
 				_i('side-version').innerHTML =	"<a href='http://phene.co'>phene.co, 2016<br></a>" +
 												"<a href='" + _g.url + "/changes/webClient' title='Web Client'>" + _g.v + "</a> " +
@@ -1554,8 +1559,10 @@
 												"<a href='" + _g.url + "/changes/_g.crop' title='Crop Tool'>" + _g.x.changes[_g.x.changes.length-1][0] + "</a> " +
 												"<a href='" + _g.url + "/changes/_g.popup' title='Popup'>" + _g.pu.changes[_g.pu.changes.length-1][0] + "</a> " +
 												"<a href='" + _g.url + "/changes/_g.menu' title='Context Menu'>" + _g.m.changes[_g.m.changes.length-1][0] + "</a>";
+				console.log("HYPE");
 				_g.b.toLoad = 0;
 				_g.ui.update();
+				console.log("WoOP");
 				next();
 			}});
 		},
@@ -1987,6 +1994,9 @@
 				if(~_g.ui.columns[i].contains.indexOf(contains))
 					return _i('body')._c('column')[i];
 		},
+		modal		: function(){
+			
+		}
 	});
 	_g.x	= (_g.crop		= {	//	Reservation (library)
 		
