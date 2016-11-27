@@ -1,7 +1,7 @@
 /*
  *	Graphene Standard CSS w0.5.0
  *	Written by Trevor J Hoglund
- *	2016.06.26
+ *	2016.11.27
  */
  
 	*						{margin:0px;zoom:1;font-size:10pt;}
@@ -25,13 +25,17 @@
 
 #register-container,
 #login-container			{width:272px;margin:0 auto;display:block;height:100%;}
-	#login-box				{position:absolute;width:272px;top:calc(50vh - 100px);}
+	#login-box				{position:absolute;width:272px;top:calc(50vh - 85px);}
 	#login-link				{width:100%;text-align:center;}
 	.register-text			{font-size:14px;width:254px;padding:9px;border:0;margin-bottom:1em;outline:none;border:0;}
-	.login-text				{font-size:14px;width:254px;padding:8px;border:0;margin-bottom:1em;outline:none;border:1px solid #ddd;}
-	.login-butn				{font-size:14px;width:272px;padding:8px;border:0;margin-bottom:8px;color:#fff;background:#444444;}
+	.login-text				{font-size:14px;width:256px;padding:8px;border:0;margin-bottom:1em;outline:none;border:0;}
+	.login-butn				{font-size:14px;width:272px;padding:6px;border:0;margin-bottom:8px;color:#fff;border:2px solid white;background:none;}
 	.register-butn			{font-size:14px;width:272px;padding:8px;border:0;margin-bottom:8px;color:#444;background:#fff;}
 	.login-fail				{font-size:14px;width:256px;padding:8px;border:0;margin-bottom:1em;color:#fff;background:rgb(255,53,53);text-align:center;}
+	.login-text,
+	.login-butn,
+	#login-link				{transition-duration:0.2s;-webkit-transition-duration:0.2s;}
+	#login-link a			{color:white;font-size:10pt;}
 	
 #context					{background:#fff;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;width:200px;padding:2px;}
 	.context-option			{cursor:pointer;padding:3px 15px;color:#111 !important;}
@@ -50,7 +54,7 @@
 	.popup-button.inactive	{cursor:not-allowed;opacity:0.5;}
 	
 #loading					{position:fixed;width:100%;height:100%;top:0;left:0;z-index:1500;background:#444444;transition-duration:0.3s;-webkit-transition-duration:0.3s;}
-	#loading-icon			{position:absolute;width:250px;height:250px;top:calc(50% - 125px);left:calc(50% - 125px);}
+	#loading-icon			{position:absolute;width:250px;height:250px;top:calc(50% - 125px);left:calc(50% - 125px);transition-duration:0.3s;-webkit-transition-duration:0.3s;background:rgba(0,0,0,0) url(../assets/img/gra.svg) no-repeat top;}
 	#loading-error			{position:absolute;top:calc(50% + 155px);left:calc(50% - 250px);}
 	#loading-error a		{color:#fff !important;}
 	#loading-error-bar		{position:absolute;width:500px;height:5px;background-size:20px 20px;-webkit-animation:barberpole 1.5s linear infinite;animation:barberpole 1.5s linear infinite;background-image:-webkit-linear-gradient(-45deg, white 0%, white 25%, transparent 25%, transparent 50%, white 50%, white 75%, transparent 75%, transparent 100%);background-image:linear-gradient(-45deg, white 25%, transparent 25%, transparent 50%, white 50%, white 75%, transparent 75%, transparent);}
@@ -61,19 +65,19 @@
 	#brand-logo svg			{width:40px;height:40px;}
 	#brand-name				{width:60px;text-align:center;margin-left:-10px;}
 	
-#side						{position:fixed;top:0;left:-200px;height:100%;transition-duration:0.3s;-webkit-transition-duration:0.3s;transition-timing-function:cubic-bezier(0, 0.4, 0.2, 1.3);z-index:10;}
-#side-bar					{position:absolute;top:0;left:0;width:210px;height:100%;padding:0;background:#fff;border:0 !important;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;}
-#side-head					{position:absolute;top:40px;left:0;height:60px;width:250px;background:#444444;color:#fff;font-weight:bold;font-size:30px;z-index:1;}
-	#side-head::after		{position:absolute;top:0;left:250px;border-left:17.32px solid #444444;border-top:30px solid transparent;border-bottom:30px solid transparent;content: "";}
-	#side-logo				{position:absolute;top:10px;left:210px;width:40px;height:40px;cursor:pointer;z-index:1;}
+#side						{position:fixed;top:0;left:-220px;height:100%;transition-duration:0.3s;-webkit-transition-duration:0.3s;transition-timing-function:cubic-bezier(0, 0.4, 0.2, 1.3);z-index:10;}
+#side-bar					{position:absolute;top:0;left:0;width:230px;height:100%;padding:0;background:#fff;border:0 !important;box-shadow:rgba(50, 50, 50, 0.3) 0 0 3px;}
+#side-head					{position:absolute;top:40px;left:0;height:60px;width:270px;background:#444444;color:#fff;font-weight:bold;font-size:30px;z-index:1;}
+	#side-head::after		{position:absolute;top:0;left:270px;border-left:17.32px solid #444444;border-top:30px solid transparent;border-bottom:30px solid transparent;content: "";}
+	#side-logo				{position:absolute;top:10px;left:230px;width:40px;height:40px;cursor:pointer;z-index:1;}
 	#side-notes				{position:absolute;top:36px;left:250px;background:rgb(255,53,53);padding:2px 4px;font-size:8pt;color:#fff;z-index:1;}
 #side-scroll				{position:absolute;top:120px;left:210px;width:40px;z-index:0;background:rgba(0,0,0,0.3);height:60px;transition-duration:0.5s;-webkit-transition-duration:0.5s;}
 	#side-scroll::after		{position:absolute;top:0;left:40px;border-left:17.32px solid rgba(0,0,0,0.3);border-top:30px solid transparent;border-bottom:30px solid transparent;content: "";}
 	#side-cache				{position:absolute;top:36px;left:40px;background:#444444;padding:2px 4px;font-size:8pt;color:#fff;z-index:1;}
-#side-content				{position:absolute;top:110px;left:0;padding:10px;width:calc(100% - 20px);}
+#side-content				{position:absolute;top:110px;left:20px;padding:10px;width:calc(100% - 40px);}
 	.side-link				{padding:2px 6px;margin:4px;color:#111 !important;}
 	.side-select			{background:#444444;color:#fff !important;}
-#side-version				{position:absolute;left:0;bottom:0;width:190px;padding:10px;color:#aaa !important;font-style:italic;text-align:center;}
+#side-version				{position:absolute;left:20px;bottom:0;width:190px;padding:10px;color:#aaa !important;font-style:italic;text-align:center;}
 	#side-version a			{color:#aaa;}
 #side-loading				{position:absolute;top:0;right:-5px;width:5px;background:#444444;opacity:0.75;}
 

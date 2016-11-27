@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trevor J Hoglund
- *	2016.06.30
+ *	2016.11.27
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -99,11 +99,11 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 						if(!e){
 							if(bcrypt.compareSync(req.body.password, u[0].password)) {
 								console.log(Graphene.time() + u[0].userName + " ("+ (req.session.user = u[0]._id) + ") logged in");
-								res.redirect(Graphene.url);
-							} else res.redirect(Graphene.url + '/login?fail');
+								res.send('');
+							} else res.send('FAIL');
 						} else console.log(Graphene.time() + "Error retrieving user information from database.");
 					});
-				} else res.redirect(Graphene.url + '/login?fail');
+				} else res.send('FAIL');
 			} else console.log(Graphene.time() + "Error checking user database for email address.");
 		});
 	});

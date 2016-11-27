@@ -1,0 +1,15 @@
+/*
+ *	Test CSS
+ *	Written by Trevor J Hoglund
+ *	2016.11.27
+ */
+
+#loading				{/*background:#b2e1d9;*/transition-duration:0.3s;-webkit-transition-duration:0.3s;}
+#loading-icon			{cursor:pointer;transition-duration:0.3s;-webkit-transition-duration:0.3s;background:rgba(0,0,0,0) url(../assets/img/gra.svg) no-repeat top;}
+#login-box				{top:calc(50vh - 85px);}
+.login-text				{width:256px;border:none;}
+.login-butn				{width:272px;padding:6px;outline:none;border:2px solid white;background:none;}
+.login-text,
+.login-butn,
+#login-link				{transition-duration:0.2s;-webkit-transition-duration:0.2s;}
+#login-link a			{color:white;font-size:10pt;}

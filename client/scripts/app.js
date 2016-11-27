@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	2016.07.07
+ *	2016.11.27
  */
 
    (function bippity(){
@@ -58,11 +58,13 @@
 		}
 		window.pageview = function(ctx){
 			_g.ui.update();
-			ga('set', {
-				page	: ctx.path,
-				title	: _g.page
-			});
-			ga('send', 'pageview');
+			if(typeof ga == "fuction"){
+				ga('set', {
+					page	: ctx.path,
+					title	: _g.page
+				});
+				ga('send', 'pageview');
+			}
 			window.setTimeout(_g.b.update,500);
 		}
 		window.resize = function(){
@@ -191,7 +193,7 @@
 		loaded : 0,
 		error  : !1,
 		update : function(){
-			if(this.error) return;
+			if(this.error || _g.t.login) return;
 			if(!this.toLoad) this.toLoad = 1, this.loaded = 1;
 			var sl	= _i('side-loading'),
 				lb	= _i('loading-bar'),
@@ -1458,8 +1460,12 @@
 		menuOpen	: !1,
 		accent		: '#333333',
 		dark		: !1,
+		login		: !1,
 		menu		: function(){
-			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-200px" : "0px";
+			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-220px" : "-20px";
+			_i("side").style.transitionTimingFunction  = !this.menuOpen
+				? "cubic-bezier(0.7, 0.0, 1.0, 1.0)"
+				: "cubic-bezier(0.5, 0.0, 0.0, 1.5)";
 		},
 		update		: function(c){
 			_g.t.accent = c;
@@ -1473,14 +1479,13 @@
 			_i('hexagon').style.stroke = _i('brandlogocss').sheet.cssRules[0].style.stroke = _g.t.dark ? "#444444" : "#FFFFFF";
 		},
 		side		: function(ctx, next){
-			console.log("CUNTS");
 			new ajax(_g.api + "/session", "GET", "", {load : function(r){
-				console.log("FUCK");
 				if(_g.session.user) {
 					_g.session = JSON.parse(r.responseText);
+					_g.user		= _g.session.user;
+					_g.lvl		= _g.session.rank;
 					_g.t.dark = _g.session.dark;
 					_g.t.update(_g.session.accent);
-					console.log("SHIT");
 					var o = {
 						sections : [
 							{
@@ -1534,7 +1539,6 @@
 							}
 						]
 					};
-					console.log("DICKS");
 					for(var i = 1; i < o.sections[0].links.length - 1; i++){
 						o.sections[0].links[i].url = _g.url + "/feed/" + o.sections[0].links[i].name;
 						o.sections[0].links[i].active = ctx.path == "/feed/" + o.sections[0].links[i].name;
@@ -1550,7 +1554,6 @@
 						]
 					}
 				}
-				console.log("MOVING ON");
 				_i('side-content').innerHTML = _g.temps.side(o);
 				_i('side-version').innerHTML =	"<a href='http://phene.co'>phene.co, 2016<br></a>" +
 												"<a href='" + _g.url + "/changes/webClient' title='Web Client'>" + _g.v + "</a> " +
@@ -1559,10 +1562,8 @@
 												"<a href='" + _g.url + "/changes/_g.crop' title='Crop Tool'>" + _g.x.changes[_g.x.changes.length-1][0] + "</a> " +
 												"<a href='" + _g.url + "/changes/_g.popup' title='Popup'>" + _g.pu.changes[_g.pu.changes.length-1][0] + "</a> " +
 												"<a href='" + _g.url + "/changes/_g.menu' title='Context Menu'>" + _g.m.changes[_g.m.changes.length-1][0] + "</a>";
-				console.log("HYPE");
 				_g.b.toLoad = 0;
 				_g.ui.update();
-				console.log("WoOP");
 				next();
 			}});
 		},
@@ -1577,6 +1578,105 @@
 					if(e.keyCode == 13 && this.value != '') page('/search/' + encodeURIComponent(this.value));
 				}
 			},0);
+		},
+		animations	: {
+			loadLogin	: function(){
+				var form = [
+					_c('login-text')[0],
+					_c('login-text')[1],
+					_c('login-butn')[0],
+					_i('login-link')
+				];
+				for(var i = 0; i < form.length; i++){
+					form[i].style.opacity = 0;
+					form[i].style.transform = "scale(0.75)";
+					form[i].style.transformOrigin = "center";
+				}
+				var index = (function*(){
+					var inx = 0;
+					for(;;) yield inx++;
+				})();
+				function stdStep(){
+					var inx = index.next().value;
+					form[inx].style.opacity = 1;
+					form[inx].style.transform = "scale(1)";
+					window.setTimeout(step.next().value,130);
+				}
+				_i('login-container').style.display = 'block';
+				_i('login-container').style.opacity = 1;
+				var steps = [
+					function(){
+						var ldic			= _i('loading-icon');
+						ldic.style.width	= "40px";
+						ldic.style.height	= "40px";
+						ldic.style.left		= "calc(50vw - 20px)";
+						ldic.style.top		= "calc(50vh - 155px)";
+						window.setTimeout(step.next().value,300);
+					},
+					stdStep,
+					stdStep,
+					stdStep,
+					stdStep
+				];
+				var step = (function*(s){
+					for(var i = 0; i < s.length; i++) yield s[i];
+				})(steps);
+				step.next().value();
+			},
+			login		: function(){
+				var form = [
+					_c('login-text')[0],
+					_c('login-text')[1],
+					_c('login-butn')[0],
+					_i('login-link')
+				];
+				var index = (function*(){
+					var inx = 0;
+					for(;;) yield inx++;
+				})();
+				function stdStep(){
+					var inx = index.next().value;
+					form[inx].style.opacity = 0;
+					form[inx].style.transform = "scale(0.75)";
+					window.setTimeout(step.next().value,50);
+				}
+				var steps = [
+					stdStep,
+					stdStep,
+					stdStep,
+					stdStep,
+					function(){
+						var ldic			= _i('loading-icon'),
+							ldng			= _i('loading');
+						ldic.style.position	= "fixed";
+						ldic.style.left		= "10px";
+						ldic.style.top		= "50px";
+						ldng.style.left		= "-220px";
+						ldng.style.top		= "40px";
+						ldng.style.width	= "270px";
+						ldng.style.height	= "60px";
+						window.setTimeout(step.next().value,300);
+					},
+					function(){
+						var ldic			= _i('loading-icon'),
+							ldng			= _i('loading');
+						ldng.style.display	= "none";
+						ldic.style.position	= "absolute";
+						ldic.style.left		= "calc(50vw - 125px)";
+						ldic.style.top		= "calc(50vh - 125px)";
+						ldic.style.width	= "250px";
+						ldic.style.height	= "250px";
+						ldng.style.left		= "0px";
+						ldng.style.top		= "0px";
+						ldng.style.width	= "100%";
+						ldng.style.height	= "100%";
+					},
+				],
+				step = (function*(s){
+					for(var i = 0; i < s.length; i++) yield s[i];
+				})(steps);
+				step.next().value();
+			}
 		}
 	});
 	_g.tp	= (_g.temps		= {
@@ -1620,6 +1720,22 @@
 		cardSrc	: {},
 		cards	: {},
 		cardTime: 0,
+		login	: function(){
+			var data = {
+				email : _c('login-text')[0].value,
+				password : _c('login-text')[1].value
+			};
+			new ajax(_g.api + '/login', 'POST', JSON.stringify(data), {
+				type	: 'application/json',
+				load	: function(r){
+					if(r.responseText == ''){
+						_g.session.user = 1;
+						page('/');
+					}
+					else alert("Wrong password or something");
+				}
+			});
+		},
 		page	: function(user,ctx){
 			_g.u.name = user;
 			new ajax(_g.api + '/user/' + user, 'GET', '', {
@@ -2017,7 +2133,8 @@
 	page('*', _g.p.clear);
 	page('*', _g.t.side);
 	page('/', function(ctx,next){
-		if(!_g.user) page.redirect('/login');
+		console.log(_g.user);
+		if(!_g.user && !_g.t.login) page('/login');
 		else {
 			document.title = _g.page = _g.name;
 			_g.p.set = 'dash';
@@ -2025,11 +2142,18 @@
 			_g.cr.load();
 			_g.p.list(20);
 		}
+		if(_g.t.login){
+			_g.t.login = !1;
+			_g.t.animations.login();
+		}
 		next();
 	}, pageview);
-	page('/login', function(){
-		window.location.replace(_g.url + "/login");
-	});
+	page('/login', function(ctx,next){
+		document.title = _g.page = "Login | " + _g.name;
+		_g.t.login = !0;
+		_g.t.animations.loadLogin();
+		next();
+	}, pageview);
 	page('/logout', function(){
 		window.location.replace(_g.api + "/logout");
 	});
