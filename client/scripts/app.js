@@ -485,6 +485,12 @@
 			*/
 			post.addEventListener('dragover', this.dragover);
 			post.addEventListener('drop', this.drop);
+			post._c('post-textbox')[0].addEventListener('focus',function(){
+				_i('post-new')._c('card')[0].className = 'card lifted';
+			});
+			post._c('post-textbox')[0].addEventListener('blur',function(){
+				_i('post-new')._c('card lifted')[0].className = 'card';
+			});
 			return !0;
 		},
 		renderImages	: function(){	//	deprecated

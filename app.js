@@ -91,9 +91,6 @@ var root		= __dirname,
 								feeds[i].users[j] = {
 									_id			: id,
 									userName	: fu[k].userName,
-									//firstName	: fu[k].firstName,
-									//lastName	: fu[k].lastName,
-									//name		: fu[k].nameHandle ? fu[k].userName : fu[k].firstName + " " + fu[k].lastName,
 									literalName	: fu[k].name,
 									name		: fu[k].nameHandle ? fu[k].userName : fu[k].name,
 									avatar		: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-36.jpg",
@@ -109,9 +106,6 @@ var root		= __dirname,
 					follows[k] = {
 						_id			: id,
 						userName	: fu[k].userName,
-						//firstName	: fu[k].firstName,
-						//lastName	: fu[k].lastName,
-						//name		: fu[k].nameHandle ? fu[k].userName : fu[k].firstName + " " + fu[k].lastName,
 						literalName	: fu[k].name,
 						name		: fu[k].nameHandle ? fu[k].userName : fu[k].name,
 						avatar		: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-36.jpg",
@@ -123,7 +117,6 @@ var root		= __dirname,
 				callback(JSON.stringify(Graphene.collect(u._doc,{
 					user		: user,
 					literalName	: u.name,
-					//name		: u.nameHandle ? u.userName : u.firstName + " " + u.lastName,
 					name		: u.nameHandle ? u.userName : u.name,
 					avatar		: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-36.jpg",
 					avatarFull	: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-200.jpg",
@@ -238,16 +231,13 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 	
 	//	Listen
 	app.listen(config.apiPort, function(){
-		var serve = serveStatic(__dirname + '/client', {
-			//	'index': ['index.html'],
-			//	'extensions' : ['html']
-		});
+		var serve = serveStatic(__dirname + '/client', {});
 		client.use(serve);
 		client.get('/player',function(req,res){
 			res.send('<style>*{margin:0;padding:0;}</style><video style="background:black;width:100%;height:100%;" controls src="' + req.query.src + '">');
 		});
 		client.all('*',function(req,res){
-			tumblr.blogPosts('theworstfucking.tumblr.com',{type:'photo',filter:'raw'},function(err,p){
+			tumblr.blogPosts('trewbot.tumblr.com',{type:'photo',filter:'raw'},function(err,p){
 				var data = jade.renderFile(
 					req.path == '/register'
 						? __dirname + '/client/register.jade'

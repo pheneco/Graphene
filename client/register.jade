@@ -1,52 +1,31 @@
 //
-	Animation Test
-	This is not really the register page but im too fucking lazy to alter the server
+	Graphene Login Page w0.5.0
 	Written by Trevor J Hoglund
-	2016.11.27
+	May 21, 2016
 
 doctype html
-html(lang="en")
-	link#basecss(rel="stylesheet", href="/assets/style.css")
-	link#phpcss(rel="stylesheet", href="/assets/accent.css")
-	link(rel="stylesheet", href="/assets/test.css")
-	link(rel="icon", href="/assets/img/fav.png")
-	
-	script(src="/scripts/test.js")
-	
-	title Graphene
-	
-body(style="overflow:hidden")
-	div#loading
-		div#loading-icon(style="opacity:1")
-		div#loading-container
-			div#loading-bar
-		div#loading-error
+html(style="background: url('" + img + "');background-size:cover;background-position:center;")
+	head
+		link#bacecss(rel="stylesheet", href="../assets/style.css", type="text/css")
+		title Register | Graphene
+	body(style="height:100vh;background:rgba(0,0,0,0.3);")
+		div#register-container
+			div#login-box
+				form(id="register-form", method="post", action=api + "/register")
+					input.register-text(name="username", type="text", autofocus, placeholder="Username")
+					input.register-text(name="email", type="text", placeholder="Email Address")
+					input.register-text(name="password", type="password", placeholder="Password")
+					input.register-butn(name="submit", type="submit", value="Register", style="color:#444;background:#fff;")
+					div#login-link
+						a(href="../login", style="color:#fff;") Already have an account?
 		a(href="http://phene.co")
-			div#brand(style="color:white !important;font-family:serif;")
+			div#brand
 				div#brand-logo
 					|	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.61 204.61">
 					|		<defs>
-					|			<style id="brandlogocss">.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}</style>
+					|			<style>.cls-1{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:20px;}</style>
 					|		</defs>
 					|		<title>phene.co</title>
 					|		<path class="cls-1" d="M172.88,76.6a75,75,0,1,0-17.35,78.94A74.69,74.69,0,0,0,172.88,76.6Z" transform="translate(-0.2 -0.2)"/>
 					|		<path class="cls-1" d="M128.4,32.12c29-19.5,53.17-27.32,62.48-18s1.49,33.53-18,62.48C161.74,93.15,146.78,111.26,129,129S93.15,161.74,76.6,172.88c-29,19.5-53.17,27.32-62.48,18s-1.49-33.53,18-62.48" transform="translate(-0.2 -0.2)"/>
 					|	</svg>
-		div#login-container(style="display:none;opacity:0")
-			div#login-box
-				form(id="form", method="post", autocomplete="new-password")
-					input.login-text(name="addr", type="text", placeholder="Email Address")
-					input.login-text(name="pass", type="password", placeholder="Password")
-					a(href="/")
-						input.login-butn(name="submit", type="button", value="Login")
-					div#login-link
-						a(href="../register") Sign Up
-	div#side
-		div#side-bar
-			div#side-head
-				div#side-logo(onclick="Graphene.theme.menu()")
-				div#side-notes(style="display:none;") 0
-				audio#notification_sound(src="/assets/aud/note.mp3", preload="auto")
-			div#side-content
-			div#side-loading
-			div#side-version
