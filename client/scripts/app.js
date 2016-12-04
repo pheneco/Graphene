@@ -1730,7 +1730,7 @@
 		animations : {
 			background : function(xPos,yPos){
 				var bg = _i('user-back'),
-					endRad = Math.max(window.innerHeight,window.innerWidth);
+					endRad = Math.sqrt(Math.pow(window.innerHeight,2) + Math.pow(window.innerWidth,2));
 				bg.style.transition = "";
 				bg.style.webkitClipPath = "circle(0% at "+xPos+"px "+yPos+"px)";
 				window.setTimeout(function(){
