@@ -1028,7 +1028,8 @@
 				'changes',
 				'change',
 				'post-new',
-				'users'
+				'users',
+				'user-back'
 			]
 			for(var i in p) if(se = _i(p[i])) se.remove();
 			
@@ -1726,6 +1727,18 @@
 		cardSrc	: {},
 		cards	: {},
 		cardTime: 0,
+		animations : {
+			background : function(xPos,yPos){
+				var bg = _i('user-back'),
+					endRad = Math.max(window.innerHeight,window.innerWidth);
+				bg.style.transition = "";
+				bg.style.webkitClipPath = "circle(0% at "+xPos+"px "+yPos+"px)";
+				window.setTimeout(function(){
+					bg.style.transitionDuration = "0.8s";
+					bg.style.webkitClipPath = "circle(" + endRad + "px at "+xPos+"px "+yPos+"px)";
+				},10);
+			}
+		},
 		login	: function(){
 			var data = {
 				email : _c('login-text')[0].value,
@@ -1786,6 +1799,7 @@
 						_g.ui.getColumn('user').insertAdjacentHTML('beforeend', '<div id="user-column" class="column-fix"></div>');
 					if(!_g.u.loaded) _i('user-column').insertAdjacentHTML('afterbegin',utmp);
 					else _i('user').outerHTML = utmp;
+					_i('loading').insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div></div><div></div></div></div>');
 					if(_g.session.user && info.id == _g.session.user){
 						window.setTimeout(function(){
 							_i('user-bio-input').onkeypress = function(e){
@@ -1845,6 +1859,7 @@
 					_g.t.dark = info.dark;
 					_g.t.update(info.accent);
 					_g.u.loaded = !0;
+					//_g.u.animations.background(100,100);
 				}
 			})
 		},
