@@ -38,6 +38,7 @@ a:hover						{color:#fff;}
 .hovercard,
 .user,
 .post,
+.card,
 #lightbox					{background:#444 !important;color:#fff;box-shadow:rgba(0,0,0,0.4) 0 0 5px;}
 .settings-text,
 #settings-clr table			{background:#444 !important;color:#fff;border-color:#333 !important;}
