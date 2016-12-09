@@ -1481,8 +1481,9 @@
 			for(i in r) s[++i].style[r[--i]] = c;
 			this.accent = c;
 			_i('darkcss').disabled = !_g.t.dark;
-			_i('prismtwilightcss').disabled = !_g.t.dark;
-			_i('prismcss').disabled = _g.t.dark;
+			// _i('prismtwilightcss').disabled = !_g.t.dark;
+			// _i('prismcss').disabled = _g.t.dark;
+			document.getElementsByTagName('html')[0].className = _g.t.dark ? 'dark' : '';
 			_i('hexagon').style.stroke = _i('brandlogocss').sheet.cssRules[0].style.stroke = _g.t.dark ? "#444444" : "#FFFFFF";
 		},
 		side		: function(ctx, next){
