@@ -164,7 +164,7 @@
 		this.api	= api;
 		this.name	= name;
 		this.temps	= {};
-		this.time	= function(unix){
+		this.time	= function(unix, HE = !1){
 			var ago = ~~(+new Date / 1e3) - (unix / 1e3),
 				num = {1:'',60:' second',3600:' minute',86400:' hour',2678400:' day'},
 				k	= Object.keys(num),
@@ -172,7 +172,7 @@
 			for(var i in num)
 				if(ago < +i) return ago > 0 ? (s = ~~(ago / k[k.indexOf(""+i)-1])) + num[i] + (s != 1 ? 's' : '') : 'Right Now!';
 			var stamp = new Date(+unix);
-			return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][stamp.getMonth()] + ' ' + stamp.getDate() + ', ' + stamp.getFullYear();
+			return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][stamp.getMonth()] + ' ' + stamp.getDate() + ', ' + (stamp.getFullYear() + HE ? 1e4 : 0);
 		};
 		this.toggle = function(el){
 			var tv = el.getAttribute("toggled");
