@@ -4,9 +4,6 @@
  *	2016.06.27
  */
 
-html						{background:#303030 url("../assets/img/back_dark.png");background-position:center center;background-attachment:fixed;color:#fff;}
-a							{color:#ccc;}
-a:hover						{color:#fff;}
 .context-option,
 .comment-textbox,
 .user-link,
