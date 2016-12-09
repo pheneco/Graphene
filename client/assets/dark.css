@@ -51,6 +51,8 @@ textarea[id*='post-editbox-'],
 #changelog tr:nth-child(even),
 .post-comments				{background:#383838 !important;}
 .comment-more				{background:#333333;}
+.post-text code,
+.post-text pre				{background:#141414;}
 #side-logo					{background:rgba(0,0,0,0) url("../assets/img/gra_dark.svg") no-repeat top;z-index:1;}
 ::selection					{color:#444;}
 ::-moz-selection			{color:#444;}

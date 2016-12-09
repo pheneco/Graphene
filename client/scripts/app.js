@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	2016.11.27
+ *	2016.12.09
  */
 
    (function bippity(){
@@ -1477,12 +1477,12 @@
 		update		: function(c){
 			_g.t.accent = c;
 			var s = document.styleSheets[1].cssRules,
-				r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'],
-				l = document.getElementsByTagName('link');
+				r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'];
 			for(i in r) s[++i].style[r[--i]] = c;
 			this.accent = c;
-			l[l.length-2].disabled = !_g.t.dark;
-			document.getElementsByTagName('style')[1].disabled = true;
+			_i('darkcss').disabled = !_g.t.dark;
+			_i('prismtwilightcss').disabled = !_g.t.dark;
+			_i('prismcss').disabled = _g.t.dark;
 			_i('hexagon').style.stroke = _i('brandlogocss').sheet.cssRules[0].style.stroke = _g.t.dark ? "#444444" : "#FFFFFF";
 		},
 		side		: function(ctx, next){
