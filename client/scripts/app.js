@@ -947,7 +947,7 @@
 			};
 		},
 		handle		: function(){
-			new ajax(_g.api + '/posts?set=' + _g.p.set + '&amount=' + (_c('post').length * 2) + '&data=' + _g.p.setData + '&start=default', 'GET', '', {
+			new ajax(_g.api + '/posts?set=' + _g.p.set + '&amount=' + (_i('posts')._c('card').length * 2) + '&data=' + _g.p.setData + '&start=default', 'GET', '', {
 				load : function(r){
 					var i = JSON.parse(r.responseText),
 						l = _g.p.posts,
