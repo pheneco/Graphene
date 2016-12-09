@@ -172,7 +172,7 @@
 			for(var i in num)
 				if(ago < +i) return ago > 0 ? (s = ~~(ago / k[k.indexOf(""+i)-1])) + num[i] + (s != 1 ? 's' : '') : 'Right Now!';
 			var stamp = new Date(+unix);
-			return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][stamp.getMonth()] + ' ' + stamp.getDate() + ', ' + (stamp.getFullYear() + HE ? 1e4 : 0);
+			return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][stamp.getMonth()] + ' ' + stamp.getDate() + ', ' + (stamp.getFullYear() + (HE ? 1e4 : 0));
 		};
 		this.toggle = function(el){
 			var tv = el.getAttribute("toggled");
