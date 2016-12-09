@@ -93,3 +93,6 @@
 .token.important			{color:#A1887F;}	/* Material Color: Brown 300 */
 .token.important			{font-weight:bold;}
 .token.entity				{cursor:help;}
+.language-markup .token.tag,
+.language-markup .token.attr-name,
+.language-markup .token.punctuation {color:#607D8B} /* Material Color: Blue Grey */
