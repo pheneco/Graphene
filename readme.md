@@ -1,0 +1,3 @@
+#Graphene
+
+The idea of Graphene is to build a comfortable and efficient workspace for creators to collaborate and produce content in a variety of differing fields. The name 'Graphene' is used to compare the user interaction to the molecular bonds in actual graphene, an infinite lattice wherein information should easily flow from point to another just as electrons would between these molecules. To accomplish this goal, Graphene will employ a modular system, with a core through which all information will eventually pass and modules for projects to be edited or eventually showcased.
