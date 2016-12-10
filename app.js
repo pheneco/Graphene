@@ -20,7 +20,7 @@ var root		= __dirname,
 	app			= require('express')(),
 	client		= require('express')(),
 	serveStatic = require('serve-static'),
-	jade		= require('jade'),
+	pug			= require('pug'),
 	events		= require('events'),
 	tumblr		= require('tumblr.js').createClient({
 		consumer_key	: config.tumblrAPI.consumerKey,
@@ -238,10 +238,10 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		});
 		client.all('*',function(req,res){
 			tumblr.blogPosts('trewbot.tumblr.com',{type:'photo',filter:'raw'},function(err,p){
-				var data = jade.renderFile(
+				var data = pug.renderFile(
 					req.path == '/register'
-						? __dirname + '/client/register.jade'
-						: __dirname + '/client/index.jade',
+						? __dirname + '/client/register.pug'
+						: __dirname + '/client/index.pug',
 					{
 						localLibraries : config.localLibraries,
 						cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),

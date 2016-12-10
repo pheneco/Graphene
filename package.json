@@ -1,45 +1,45 @@
 {
-	"name"			: "Graphene",
-	"version"		: "0.5.0",
-	"description"	: "Server API application for the Graphene Social Network.",
-	"author"		: {
-		"name"		: "Trevor J Hoglund",
-		"email"		: "trewbot@phene.co",
-		"url"		: "trevorjhoglund.com"
-	},
-	"contributors"	: [],
-	"main"			: "app.js",
-	"dependencies"	: {
-		"express"			: ">=4.10.7",
-		"express-session"	: ">=1.9.3",
-		"mongoose"			: ">=3.8.21",
-		"bcrypt-nodejs"		: ">=0.0.3",
-		"body-parser"		: ">=1.10.1",
-		"connect-mongo"		: ">=0.5.3",
-		"marked"			: ">=0.3.2",
-		"cors"				: ">=2.5.3",
-		"connect-sse"		: ">=1.0.6",
-		"cheerio"			: ">=0.18.0",
-		"request"			: ">=2.53.0",
-		"html-entities"		: ">=1.1.2",
-		"nodemailer"		: ">=1.4.0",
-		"handlebars"		: ">=4.0.3",
-		"sharp"				: ">=0.11.3",
-		"multer"			: ">=1.0.6",
-		"multer-autoreap"	: ">=0.0.9",
-		"striptags"			: ">=2.0.4",
-		"node-soundcloud"	: ">=0.0.4",
-		"serve-static"		: ">=1.10.0",
-		"jade"				: ">=1.11.0",
-		"tumblr.js"			: ">=1.0.0"
-	},
-	"bugs"			: {
-		"url"		: "https://github.com/Trewbot/Graphene/issues",
-		"email"		: "trewbot@phene.co"
-	},
-	"repository"	: {
-		"type"		: "git",
-		"url"		: "https://github.com/Trewbot/Graphene.git"
-	},
-	"license"		: "MIT"
+  "name": "Graphene",
+  "version": "0.5.0",
+  "description": "Server API application for the Graphene Social Network.",
+  "author": {
+    "name": "Trevor J Hoglund",
+    "email": "trewbot@phene.co",
+    "url": "trevorjhoglund.com"
+  },
+  "contributors": [],
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt-nodejs": ">=0.0.3",
+    "body-parser": ">=1.10.1",
+    "cheerio": ">=0.18.0",
+    "connect-mongo": ">=0.5.3",
+    "connect-sse": ">=1.0.6",
+    "cors": ">=2.5.3",
+    "express": ">=4.10.7",
+    "express-session": ">=1.9.3",
+    "handlebars": ">=4.0.3",
+    "html-entities": ">=1.1.2",
+    "marked": ">=0.3.2",
+    "mongoose": ">=3.8.21",
+    "multer": ">=1.0.6",
+    "multer-autoreap": ">=0.0.9",
+    "node-soundcloud": ">=0.0.4",
+    "nodemailer": ">=1.4.0",
+    "pug": "^2.0.0-beta6",
+    "request": ">=2.53.0",
+    "serve-static": ">=1.10.0",
+    "sharp": ">=0.11.3",
+    "striptags": ">=2.0.4",
+    "tumblr.js": ">=1.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Trewbot/Graphene/issues",
+    "email": "trewbot@phene.co"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Trewbot/Graphene.git"
+  },
+  "license": "MIT"
 }
