@@ -5,13 +5,14 @@ The idea of Graphene is to build a comfortable and efficient workspace for creat
 ##Installation
 
 In the past I have only ever ran Graphene on Windows machines for one reason or another, so all the installation and some of the library choices are based on using Windows.
+
 1. Before you begin, there are a few dependencies:
+   
    - [MongoDB 3+](https://www.mongodb.com/)
    - [Node.JS 7+](https://nodejs.org/en/)
    - [Git 2+](https://git-scm.com/download/win)
    - [7-Zip](http://www.7-zip.org/)
-   - [Visual Studio Express 2013*](https://www.microsoft.com/en-us/download/details.aspx?id=44914)
-   *Some of the dependencies require this particular version of VS.
+   - [Visual Studio Express 2013](https://www.microsoft.com/en-us/download/details.aspx?id=44914) (Some of the dependencies require this particular version of VS.)
 
 2. Once you have all of the above programs installed (make sure to have all of these in your PATH), pick a directory to install Graphene into and naviagate to it in Windows Explorer (I normally use c:\web).
 
