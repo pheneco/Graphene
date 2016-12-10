@@ -34,7 +34,7 @@ var root		= __dirname,
 	Note		= require('./models/notification'),
 	ServerChange= require('./models/serverchangelog'),
 	Change		= require('./models/changelog'),
-	EmailSrc	= fs.readFileSync('email.hbs', "utf8"),
+	EmailSrc	= fs.readFileSync('templates/email.hbs', "utf8"),
 	EmailTemp	= Handlebars.compile(EmailSrc),
 	dev			= !(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev'),
 	Graphene	= new(function(){
