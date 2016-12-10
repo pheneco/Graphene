@@ -1476,7 +1476,7 @@
 		},
 		update		: function(c){
 			_g.t.accent = c;
-			var s = document.styleSheets[1].cssRules,
+			var s = _i('accent').sheet.cssRules,
 				r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'];
 			for(i in r) s[++i].style[r[--i]] = c;
 			this.accent = c;
