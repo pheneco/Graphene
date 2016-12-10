@@ -1,7 +1,7 @@
 //
 	Graphene Index Page w0.5.0
 	Written by Trevor J Hoglund
-	2016.12.09
+	2016.12.10
 
 doctype html
 html(lang="en")
@@ -12,15 +12,15 @@ html(lang="en")
 	link(rel="icon", href="/assets/img/fav.png")
 	
 	
-	script#change-template(type="text/x-handlebars-template"): include temps/change.hbs
-	script#comment-template(type="text/x-handlebars-template"): include temps/comment.hbs
-	script#creator-template(type="text/x-handlebars-template"): include temps/creator.hbs
-	script#note-template(type="text/x-handlebars-template"): include temps/note.hbs
-	script#post-template(type="text/x-handlebars-template"): include temps/post.hbs
-	script#register-template(type="text/x-handlebars-template"): include temps/register.hbs
-	script#settings-template(type="text/x-handlebars-template"): include temps/settings.hbs
-	script#sidebar-template(type="text/x-handlebars-template"): include temps/sidebar.hbs
-	script#user-template(type="text/x-handlebars-template"): include temps/user.hbs
+	script#change-template(type="text/x-handlebars-template"): include ../templates/change.hbs
+	script#comment-template(type="text/x-handlebars-template"): include ../templates/comment.hbs
+	script#creator-template(type="text/x-handlebars-template"): include ../templates/creator.hbs
+	script#note-template(type="text/x-handlebars-template"): include ../templates/note.hbs
+	script#post-template(type="text/x-handlebars-template"): include ../templates/post.hbs
+	script#register-template(type="text/x-handlebars-template"): include ../templates/register.hbs
+	script#settings-template(type="text/x-handlebars-template"): include ../templates/settings.hbs
+	script#sidebar-template(type="text/x-handlebars-template"): include ../templates/sidebar.hbs
+	script#user-template(type="text/x-handlebars-template"): include ../templates/user.hbs
 	
 	if localLibraries
 		script(src="/scripts/page.js")
