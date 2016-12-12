@@ -294,8 +294,10 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 					User.findOne({_id:req.session.user},function(e,u){ if(e) return res.send(e);
 					u.background = '' + album._id + '/' + newim._id;
 					u.save(function(e,uu){ if(e) return res.send(e);
-						console.log(Graphene.time() + u.userName + " (" + u._id + ") uploaded a background (" + newim._id + ").");
-						res.send('Success!');
+						sharp(path).resize(1280,null).toFile(Graphene.imgDir + '/' + album._id + '/' + newim._id + '/1280.jpg',function(e,i){
+							console.log(Graphene.time() + u.userName + " (" + u._id + ") uploaded a background (" + newim._id + ").");
+							res.send('Success!');
+						});
 					});
 					});
 				});
