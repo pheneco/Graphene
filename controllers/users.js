@@ -273,6 +273,49 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		});
 		});
 	});
+	app.post('/user/background/set',upload.single('background'),autoReap,function(req,res){
+		if(!req.session.user) return res.send("Must be logged in");
+		var savior = function(album){
+			if(!req.file) return res.send("Must send image");
+			fs.readFile(req.file.path, function(e,i){ if(e) return res.send(e);
+			album.images.push({
+				ext	: req.file.mimetype.split('/')[1],
+				plainText : 'A Background',
+				richText  : 'A Background'
+			});
+			album.save(function(e,album){
+			var newim	= album.images[album.images.length-1],
+				path	= Graphene.imgDir + '/' + album._id + '/' + newim._id + '/original.' + newim.ext;
+			fs.mkdir(Graphene.imgDir + '/' + album._id,function(e){
+				if(e && e.code !== 'EEXIST') return res.send(e);
+				fs.mkdir(Graphene.imgDir + '/' + album._id + '/' + newim._id,function(e){
+				if(e && e.code !== 'EEXIST') return res.send(e);
+				fs.writeFile(path,i,function(e){ if(e) return res.send(e);
+					User.findOne({_id:req.session.user},function(e,u){ if(e) return res.send(e);
+					u.background = '' + album._id + '/' + newim._id;
+					u.save(function(e,uu){ if(e) return res.send(e);
+						console.log(Graphene.time() + u.userName + " (" + u._id + ") uploaded a background (" + newim._id + ").");
+						res.send('Success!');
+					});
+					});
+				});
+				});
+			});
+			});
+			});
+		};
+		Album.findOne({user:req.session.user,name:'Backgrounds'},function(e,a){
+			if(!a) Album.create({
+				user		: req.session.user,
+				name		: 'Backgrounds',
+				plainText	: "System created album for storing user&apos;s backgrounds.",
+				richText	: "System created album for storing user&apos;s backgrounds."
+			},function(e,aa){ if(e) return res.send(e);
+				savior(aa);
+			});
+			else savior(a);
+		});
+	});
 	app.post('/user/bio/set', function(req,res){
 		User.findOne({_id:req.session.user},function(e,u){ if(e) return res.send(e);
 		User.update({_id:req.session.user}, {
