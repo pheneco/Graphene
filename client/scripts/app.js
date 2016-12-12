@@ -100,6 +100,11 @@
 				}
 			});
 		}(document, "script", "twitter-wjs"));
+		window.lastClick = {x:0,y:0};
+		window.addEventListener('click',(e)=>{
+			window.lastClick.x = e.pageX;
+			window.lastClick.y = e.pageY;
+		});
 		//	This is the thing that does everything important
 		window.addEventListener('load', function(){
 		new ajax(_g.api + "/session", "GET", "", {
@@ -1494,6 +1499,7 @@
 					_g.lvl		= _g.session.rank;
 					_g.t.dark = _g.session.dark;
 					_g.t.update(_g.session.accent);
+					_g.u.info.name[_g.session.username] = _g.session;
 					var o = {
 						sections : [
 							{
@@ -1728,6 +1734,7 @@
 		cardSrc	: {},
 		cards	: {},
 		cardTime: 0,
+		bganimed: !1,
 		animations : {
 			background : function(xPos,yPos){
 				var bg = _i('user-back'),
@@ -1757,6 +1764,14 @@
 			});
 		},
 		page	: function(user,ctx){
+			_g.u.bganimed = !1;
+			if(_g.u.info.name[user.toLowerCase()]){
+				_i('loading').insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + _g.u.info.name[user.toLowerCase()].background + ')"></div><div></div></div></div>');
+				window.setTimeout(function(){
+					_g.u.animations.background(lastClick.x, lastClick.y);
+					_g.u.bganimed = !0;
+				},0);
+			}
 			_g.u.name = user;
 			new ajax(_g.api + '/user/' + user, 'GET', '', {
 				load	: function(r){
@@ -1800,10 +1815,12 @@
 						_g.ui.getColumn('user').insertAdjacentHTML('beforeend', '<div id="user-column" class="column-fix"></div>');
 					if(!_g.u.loaded) _i('user-column').insertAdjacentHTML('afterbegin',utmp);
 					else _i('user').outerHTML = utmp;
-					_i('loading').insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + info.background + ')"></div><div></div></div></div>');
-					window.setTimeout(function(){
-						_g.u.animations.background(_i('body').getBoundingClientRect().left + 105, 145);
-					},0);
+					if(!_g.u.bganimed){
+						_i('loading').insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + info.background + ')"></div><div></div></div></div>');
+						window.setTimeout(function(){
+							_g.u.animations.background(_i('body').getBoundingClientRect().left + 105, 145);
+						},0);
+					}
 					if(_g.session.user && info.id == _g.session.user){
 						window.setTimeout(function(){
 							_i('user-bio-input').onkeypress = function(e){
