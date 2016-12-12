@@ -1800,7 +1800,10 @@
 						_g.ui.getColumn('user').insertAdjacentHTML('beforeend', '<div id="user-column" class="column-fix"></div>');
 					if(!_g.u.loaded) _i('user-column').insertAdjacentHTML('afterbegin',utmp);
 					else _i('user').outerHTML = utmp;
-					_i('loading').insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div></div><div></div></div></div>');
+					_i('loading').insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + info.background + ')"></div><div></div></div></div>');
+					window.setTimeout(function(){
+						_g.u.animations.background(_i('body').getBoundingClientRect().left + 105, 145);
+					},0);
 					if(_g.session.user && info.id == _g.session.user){
 						window.setTimeout(function(){
 							_i('user-bio-input').onkeypress = function(e){
