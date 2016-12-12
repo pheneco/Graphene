@@ -189,7 +189,7 @@ mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
 
 //	Enable CORS
 app.use(function(req,res,next) {
-	res.header("Access-Control-Allow-Origin", config.addr.web  + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort));
+	res.header("Access-Control-Allow-Origin", req.headers.origin);
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 	res.header('Access-Control-Allow-Credentials', 'true');
 	res.header('Access-Control-Allow-Methods', 'POST, GET, DELETE');
@@ -244,8 +244,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 						: __dirname + '/client/index.pug',
 					{
 						localLibraries : config.localLibraries,
-						cdn	: config.addr.web + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort),
-						api : config.addr.web + ":" + config.apiPort,
+						api : config.apiPort,
 						img	: p ? p.posts[~~(Math.random()*p.posts.length)].photos[0].original_size.url : '../assets/img/regbg/jpg'
 					}
 				);
@@ -279,8 +278,8 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 					if(e) console.log(Graphene.time() + e);
 				});
 			console.log(Graphene.time() + "Graphene server is now running.");
-			console.log(Graphene.time() + "    CDN: " + config.addr.web + ":" + config.webPort);
-			console.log(Graphene.time() + "    API: " + config.addr.web + ":" + config.apiPort);
+			console.log(Graphene.time() + "    CDN: " + config.webPort);
+			console.log(Graphene.time() + "    API: " + config.apiPort);
 			if(Graphene.dev){
 				console.log(Graphene.time() + "\x1b[31m\x1b[1mGraphene is running in dev mode.\x1b[39m\x1b[0m");
 				console.log(Graphene.time() + "\x1b[31m\x1b[1mAll new users will default to permission level 10 (developer).\x1b[39m\x1b[0m");

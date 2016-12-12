@@ -34,8 +34,8 @@ html(lang="en")
 		
 	
 	script
-		|	var url = "#{cdn}",
-		|		api	= "#{api}",
+		|	var url = window.location.origin,
+		|		api	= window.location.protocol + window.location.origin.split(':')[1] + ":" + "#{api}",
 		|		name = "Graphene";
 	
 	script(src="/scripts/prism.js")
