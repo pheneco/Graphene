@@ -1987,6 +1987,19 @@
 			xhr.withCredentials = true;
 			xhr.send(data);
 		},
+		background : function(){
+			if(!_g.u.loaded || !_g.session.user || _g.u.current != _g.session.user) return false;
+			var xhr		= new XMLHttpRequest(),
+				file	= _i('backinput').files[0],
+				data	= new FormData();
+			data.append("background", file);
+			xhr.onreadystatechange = function(e){
+				if(this.readyState==4) page(window.location.pathname);
+            };
+			xhr.open('POST',_g.api+'/user/background/set',true);
+			xhr.withCredentials = true;
+			xhr.send(data);
+		},
 		crop	: function(img){
 			_g.popup.open({
 				title	: "Crop Avatar",
