@@ -132,12 +132,52 @@ selector					{top:$variable;}
   
 ```scss
 selector                    {
-    $variable=value;
+    $variable='value';
 	@extend selector;
 	@include function($variable);
 	name:value;name:value;
 	@include media($var)    {name:value;name:value;}
 	&::before               {content:'Hello';name:value;}
-	selector                {name:value;}
+	.selector               {name:value;}
 }
+```
+
+###Units
+
+####Measurements
+
+- Use `rem` units for font sizes with a px fallback. 18F supplies a mixin to help do this. To ensure the ratio remains consistent, the HTML font size should be set to `10px` making `0.1rem` equal to `1px`.
+
+```scss
+html                        {font-size:10px;}
+@mixin font-size($size: 1.6){font-size:($size * 10) + px;font-size:$size + rem;}
+```
+
+- Use `em` for positioning, padding, margins, etc.
+
+- Use `%` when layout components should stay relational to one another.
+
+- Use `px` when a measurement should not change based on user set font sizes or browser zooming or when requiring pixel values below 5px.
+
+- Use unitless values for `line-height` (this will inherit from `font-size`).
+
+- Use no units for a value of `0`.
+
+- Always use units when available except with a value of `0`.
+
+###Colors
+
+- Use `hex` notation for colors without alpha values.
+
+- For colors with alpha values, use `rgba()`.
+
+- Use either three- or six-digit notation for colors.
+
+- Use all lowercase letters for colors.
+
+- Do not use spaces in `rgba()` notation.
+
+```scss
+$primary:#ac7878;
+$secondary:(0,0,0,0.3);
 ```
