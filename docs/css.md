@@ -12,13 +12,15 @@ To allow for more efficient production, it is recommended that a CSS preprocesso
 
 ###Linting
 
-**WIP** Linting allows you to check and fix your code so as to ensure your code follows this styleguide. A `.scss-lint.yml` file will be supplied to aid in this process. While there are several tools to do this, [stylelint](http://stylelint.io/) appears to be the best for the purposes of this guide, as it also avoids a Ruby dependency.
+`WIP` Linting allows you to check and fix your code so as to ensure your code follows this styleguide. A `.scss-lint.yml` file will be supplied to aid in this process. While there are several tools to do this, [stylelint](http://stylelint.io/) appears to be the best for the purposes of this guide, as it also avoids a Ruby dependency.
 
 ###Autoprefixing
 
 Continuing on the theme of concise and consistent coding, [Autoprefixer](https://github.com/postcss/autoprefixer) is another recommended tool for development. This will remove the necessity of repeating sections of code for multiple vendors by checking with [Can I Use](http://caniuse.com/) to determine if a style requires vendor prefixes and subsequently applies said prefixes to the styles.
 
 ##Styling
+
+This section is based in part on [18F's Front End Guide](https://pages.18f.gov/frontend/), with modifications to the actual styling described.
 
 ###Spacing
 
@@ -35,14 +37,70 @@ Continuing on the theme of concise and consistent coding, [Autoprefixer](https:/
 - Multiple selectors should each be on a single line, with no space after the comma.
 
 ```css
-// Bad
-.rule {
+selector {
   margin: 1em;
 }
 
 // Bad
-.rule{margin:1em;text-align:right;}
+selector{margin:1em;text-align:right;}
 
 // Good
-.rule                       {margin:1em;text-align:right;}
+selector                    {name:value;name:value;}
+selector                    {name:value;}
+```
+
+###Property-Value Pairs
+
+- Put each pair on the same line, only adding new lines when the 200 character mark has been reached.
+
+- Indent new lines to column 29.
+
+- End each pair in a semicolon.
+
+- Separate values and operators with spaces.
+
+```css
+// Bad
+selector                    {margin:($variable+1em);}
+
+// Good
+selector                    {margin:($variable + 1em);}
+```
+
+- Wrap calculations in parentheses.
+
+```css
+// Bad
+selector                    {margin:$variable + 1em;}
+
+// Good
+selector                    {margin:($variable + 1em);}
+```
+
+- Do not use shorthand declarations unless explicitly setting all values.
+
+```css
+// Bad
+selector                    {margin:inherit 1em;}
+
+// Good
+selector                    {margin-bottom:1em;}
+selector                    {margin:1em 2em 3em 4em;}
+```
+
+- Use single-quotes for URLs and string values.
+
+```css
+selector                    {background-image:('/assets/background.jpg');font-family:'Roboto',sans-serif;}
+```
+
+- Avoid arbitrary values that are repeated, linked, or dependent on other parts of the code.
+
+```css
+// Bad
+selector                    {top:0.112em;}
+
+// Good
+$variable:100%;
+selector					{top:$variable;}
 ```
