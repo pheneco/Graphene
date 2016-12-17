@@ -1,0 +1,3 @@
+#JS Guide
+
+##Purpose

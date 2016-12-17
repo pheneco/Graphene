@@ -1,4 +1,4 @@
-#CSS
+#CSS Guide
 
 ##Purpose
 
@@ -36,7 +36,7 @@ This section is based in part on [18F's Front End Guide](https://pages.18f.gov/f
 
 - Multiple selectors should each be on a single line, with no space after the comma.
 
-```css
+```scss
 selector {
   margin: 1em;
 }
@@ -59,7 +59,7 @@ selector                    {name:value;}
 
 - Separate values and operators with spaces.
 
-```css
+```scss
 // Bad
 selector                    {margin:($variable+1em);}
 
@@ -69,7 +69,7 @@ selector                    {margin:($variable + 1em);}
 
 - Wrap calculations in parentheses.
 
-```css
+```scss
 // Bad
 selector                    {margin:$variable + 1em;}
 
@@ -79,7 +79,7 @@ selector                    {margin:($variable + 1em);}
 
 - Do not use shorthand declarations unless explicitly setting all values.
 
-```css
+```scss
 // Bad
 selector                    {margin:inherit 1em;}
 
@@ -90,13 +90,13 @@ selector                    {margin:1em 2em 3em 4em;}
 
 - Use single-quotes for URLs and string values.
 
-```css
+```scss
 selector                    {background-image:('/assets/background.jpg');font-family:'Roboto',sans-serif;}
 ```
 
 - Avoid arbitrary values that are repeated, linked, or dependent on other parts of the code.
 
-```css
+```scss
 // Bad
 selector                    {top:0.112em;}
 
@@ -104,3 +104,5 @@ selector                    {top:0.112em;}
 $variable:100%;
 selector					{top:$variable;}
 ```
+
+###Ordering
