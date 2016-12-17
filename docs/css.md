@@ -37,6 +37,7 @@ This section is based in part on [18F's Front End Guide](https://pages.18f.gov/f
 - Multiple selectors should each be on a single line, with no space after the comma.
 
 ```scss
+// Bad
 selector {
   margin: 1em;
 }
@@ -106,3 +107,37 @@ selector					{top:$variable;}
 ```
 
 ###Ordering
+
+- Selectors should be grouped by categories, broadest categories first.
+
+- Selectors of the same level should all be ordered alphabetically.
+
+- Within a selector, the following order should be used:
+
+  1. Variables
+  
+  2. @extend directives
+  
+  3. @include directives
+  
+  4. Property declaration list (`name:value;`)
+  
+  5. Media queries
+  
+  6. Pseudo-States (`:checked`,`:target`,etc.) and pseudo-elements (`::after`,`::selection`,etc.)
+  
+  7. Nested Elements
+  
+  8. Nested Classes
+  
+```scss
+selector                    {
+    $variable=value;
+	@extend selector;
+	@include function($variable);
+	name:value;name:value;
+	@include media($var)    {name:value;name:value;}
+	&::before               {content:'Hello';name:value;}
+	selector                {name:value;}
+}
+```
