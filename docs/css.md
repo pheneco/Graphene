@@ -18,3 +18,31 @@ To allow for more efficient production, it is recommended that a CSS preprocesso
 
 Continuing on the theme of concise and consistent coding, [Autoprefixer](https://github.com/postcss/autoprefixer) is another recommended tool for development. This will remove the necessity of repeating sections of code for multiple vendors by checking with [Can I Use](http://caniuse.com/) to determine if a style requires vendor prefixes and subsequently applies said prefixes to the styles.
 
+##Styling
+
+###Spacing
+
+- Limit the CSS files' width to 200 characters.
+
+- Use four character tabs.
+
+- Do not put spaces after `:` in property declarations.
+
+- Tabulate the `{` in rule declarations to column 29 or 7 tabs from the baseline.
+
+- Keep all declarations in a single line. Add a new line when the declarations in a rule reach 200 characters, tabbing out the next line to column 29. This may cause difficulty in line-by-line error reporting; however, all CSS debuging should be done in browser.
+
+- Multiple selectors should each be on a single line, with no space after the comma.
+
+```css
+// Bad
+.rule {
+  margin: 1em;
+}
+
+// Bad
+.rule{margin:1em;text-align:right;}
+
+// Good
+.rule                       {margin:1em;text-align:right;}
+```
