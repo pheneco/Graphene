@@ -132,7 +132,7 @@ selector					{top:$variable;}
   
 ```scss
 selector                    {
-    $variable='value';
+    $variable:value;
 	@extend selector;
 	@include function($variable);
 	name:value;name:value;
@@ -179,5 +179,5 @@ html                        {font-size:10px;}
 
 ```scss
 $primary:#ac7878;
-$secondary:(0,0,0,0.3);
+$secondary:rgba(0,0,0,0.3);
 ```
