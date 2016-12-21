@@ -29,8 +29,8 @@
 	"addr" : {
 		"web" : "http://localhost",
 		"mongo" : "localhost",
-		"img" : "http://localhost/img",
-		"aud" : "http://localhost/aud"
+		"img" : "/img",
+		"aud" : "/aud"
 	},
 	"literalWebAddr" : false
 }

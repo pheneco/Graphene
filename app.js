@@ -39,7 +39,7 @@ var root		= __dirname,
 	dev			= !(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev'),
 	Graphene	= new(function(){
 		this.sub			= config.sub;
-		this.url			= config.addr.web  + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort);
+		this.url			= '';//config.addr.web  + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort);
 		this.api			= config.addr.web + ':' + config.apiPort;
 		this.img			= config.addr.img;
 		this.imgDir			= config.imgDir;

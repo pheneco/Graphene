@@ -2,7 +2,7 @@
 
 ##Purpose
 
-This document is written to create a standard coduing styleguide for CSS or CSS preprocessors within all Phene.co projects. Modifications can be made per project, and should be noted within the appropriate documentation.
+This document is written to create a standard coding styleguide for CSS or CSS preprocessors within all Phene.co projects. Modifications can be made per project, and should be noted within the appropriate documentation.
 
 ##Tools and Rationales
 
