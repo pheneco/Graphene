@@ -10,7 +10,11 @@
 		<div class="post-name"><a href="{{user.url}}"><b>{{user.name}}</b></a></div>
 		<div class="post-time">{{#if url}}<a permalink href="{{url}}" class="timestamp" unix-time="{{time}}">{{/if}}{{#if timestamp}}{{timestamp}}{{else}}{{time}}{{/if}}{{#if url}}</a>{{/if}}</div>
 		{{#if menu}}	<div class="material-icons icon post-menu">expand_more</div>{{/if}}
-		{{#if favoritable}} <div class="material-icons icon post-favorite {{#if favorite}}is-favorite{{/if}}" onclick="_g.p.favorite('{{id}}')">favorite_outline</div>{{/if}}
+		{{#if favoritable}} <div class="material-icons icon post-favorite
+			{{#if favorited}}is-favorite{{/if}}"
+			onclick="_g.p.{{#if favorited}}un{{/if}}favorite('{{id}}')">
+			favorite{{#unless favorited}}_outline{{/unless}}
+		</div>{{/if}}
 		{{#if enlarge}}	<div class="material-icons icon post-enlarge" onclick="_g.p.enlarge('{{id}}')">fullscreen</div>{{/if}}
 		{{#if newFeed}}	<div class="feed-new" onclick="_g.s.newFeed(prompt('New name:'))"></div>{{/if}}
 	</div>
