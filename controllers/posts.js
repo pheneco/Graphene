@@ -211,6 +211,7 @@ module.exports = function(app, Graphene, Notification){
 	
 	//	Info
 	app.get('/posts', function(req,res){
+		if(typeof req.query.set == ""+void 0 || typeof req.query.data == ""+void 0) res.send('You fucked up, it\'s ok tho, we all do sometimes.');
 		var cont = function(e,p){
 			if(e) return res.send(e);
 			var posts = [];
