@@ -350,7 +350,7 @@
 										? _g.pu.changes
 										: []));
 					_i('changes')._c('post-time')[0].innerHTML = list[list.length-1][0];
-					_i('changes')._c('post-content')[0].outerHTML = '<div class="post-inputs"><table id="changelog"></table></div>';
+					_i('changes')._c('post-content')[0].innerHTML = '<table id="changelog"></table>';
 					var tb = _i("changelog"),tr,td;
 					for(var i = 0; i < list.length; i++){
 						tr = tb.insertRow();
@@ -367,7 +367,7 @@
 				load : function(r){
 					var cl = JSON.parse(r.responseText);
 					_i('changes')._c('post-time')[0].innerHTML = cl[cl.length - 1].version;
-					_i('changes')._c('post-content')[0].outerHTML = '<div class="post-inputs"><table id="changelog"></table></div>';
+					_i('changes')._c('post-content')[0].innerHTML = '<table id="changelog"></table>';
 					var tb = _i("changelog"),tr,td;
 					for(var i in cl){
 						tr = tb.insertRow();
@@ -394,12 +394,12 @@
 						v2 += (parseInt(v1[3]) + 1);
 					var d1 = new Date(),
 						d2 = (d1.getMonth() + 1) + "/" + d1.getDate() + "/" + d1.getFullYear();
-					post._c('post-content')[0].outerHTML = _g.temps.change({
+					post._c('post-content')[0].innerHTML = _g.temps.change({
 						app		: app,
 						version : v2,
 						date	: d2
 					});
-					post._c('post-inputs')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.cn.save(\'' + app + '\')">Save</div></div>');
+					post._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options"><div class="button post-button" tabindex="-1" onclick="_g.cn.save(\'' + app + '\')">Save</div></div>');
 					scrollToPos(document.documentElement.scrollHeight);
 				}
 			});
@@ -1128,7 +1128,7 @@
 						save		: '_g.s.save()'
 					});
 					cont.appendChild(sets);
-					sets._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.save()">Save</div></div><div id="advset-link"><a href="'+_g.url+'/settings/advanced">Advanced Settings</a></div>');
+					sets._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options"><div class="button post-button" tabindex="-1" onclick="_g.s.save()">Save</div></div><div id="advset-link"><a href="'+_g.url+'/settings/advanced">Advanced Settings</a></div>');
 					
 					var clr	= new _g.cl.picker(_i('settings-clr'), {
 						input	: _i('settings-accent'),
@@ -1183,7 +1183,7 @@
 						save		: '_g.s.savePass()'
 					});
 					cont.appendChild(pass);
-					pass._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.savePass()">Save</div></div>');
+					pass._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options"><div class="button post-button" tabindex="-1" onclick="_g.s.savePass()">Save</div></div>');
 				}
 			});
 			next();
@@ -1241,8 +1241,8 @@
 						],
 						save		: 'alert("WIP")'
 					});
-					_i('body').appendChild(advset);
-					advset._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.s.saveAdv()">Save</div></div>');
+					cont.appendChild(advset);
+					advset._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options"><div class="button post-button" tabindex="-1" onclick="_g.s.saveAdv()">Save</div></div>');
 				}
 			});
 			next();
