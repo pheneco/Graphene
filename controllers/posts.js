@@ -261,7 +261,7 @@ module.exports = function(app, Graphene, Notification){
 					req.query.start && req.query.start != 'default'
 						? {_id:{$lt:req.query.start},'ratings.user':u._id}
 						: {'ratings.user':u._id}
-				).sort('-_id').limit(+req.query.amount).exec(cont);
+				).sort('-_id').limit(+req.query.amount).exec(cont); //liek dis if u crie evry tiem
 			});
 		} else if(req.query.set == 'userPosts'){
 			Post.find(

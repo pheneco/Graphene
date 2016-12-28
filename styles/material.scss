@@ -61,7 +61,10 @@ $red:			#F44336;
 
 /* Page Layout */
 
-.body						{transition:filter 0.5s;}
+#body						{transition:filter 1.0s;}
+	#body.is-blurred		{filter:blur(3px);}
+#side						{transition:filter 1.0s;}
+	#side.is-blurred		{filter:blur(3px);}
 	
 /* Models (ordered by height) */
 .icon						{color:#ccc;cursor:pointer;font-size:16px !important;}

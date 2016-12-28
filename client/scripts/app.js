@@ -2067,6 +2067,7 @@
 				||  e.clientX < a.left
 				||  e.clientX > a.right){
 					window.setTimeout(function(){_g.u.cards[_g.u.card].style.display = 'none';},500);
+					_i('body').className = _i('side').className = '';
 					_g.u.cards[_g.u.card].style.opacity = 0;
 					_g.u.hovering = !1;
 				}
@@ -2133,6 +2134,7 @@
 				c = card.getBoundingClientRect();
 			card.style.top = a.bottom + 'px';
 			card.style.left = (a.left + (a.width/2)) - (c.width/2) + 'px';
+			_i('body').className = _i('side').className = 'is-blurred';
 			card.style.opacity = 1;
 		}
 	});
