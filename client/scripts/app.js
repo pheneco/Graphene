@@ -1536,10 +1536,10 @@
 									},
 									{
 										tabled	: !0,
-										name	: "Upvotes:",
-										value	: _g.session.upvoteCount,
-										url		: _g.session.url + "/upvotes",
-										active	: ctx.path == _g.session.url.split(_g.url)[1] + "/upvotes"
+										name	: "Favorites:",
+										value	: _g.session.favoriteCount,
+										url		: _g.session.url + "/favorites",
+										active	: ctx.path == _g.session.url.split(_g.url)[1] + "/favorites"
 									},
 									{
 										name	: "Settings",
