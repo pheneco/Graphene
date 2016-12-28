@@ -582,9 +582,7 @@
 			this.audioElement = '';
 			var cre		= _i('post-new'),
 				type	= cre.getAttribute('post-type'),
-				shade	= cre._c('post-shade')[0],
 				text	= cre._c('post-textbox')[0].value.replace(/\r\n|\r|\n/g, "\n");
-			shade.style.display = 'block';
 			cre.style.opacity = '0.5';
 			new ajax(_g.api + '/post', 'POST', JSON.stringify({
 				set		: 'dash',
@@ -987,8 +985,8 @@
 			var p = _i('post-' + id).children[0],
 				i = _g.p.info[id];
 			i.expanded = !i.expanded;
-			p.className = 'post' + (i.active ? ' post-active' : '') + (i.expanded ? ' post-expanded' : '');
-			p._c('post-enlarge')[0].style.backgroundImage = 'url("../assets/img/' + (i.expanded ? 'reduce' : 'enlarge') + '.svg")';
+			p.className = 'post card ' + (i.active ? ' post-active' : '') + (i.expanded ? ' is-expanded' : '');
+			p._c('post-enlarge')[0].innerHTML = i.expanded ? 'fullscreen_exit' : 'fullscreen';
 			if(i.expanded) _g.ui.blocks[_g.ui.blocks.length] = p;
 			else if(~_g.ui.blocks.indexOf(p)) _g.ui.blocks.splice(p,1);
 			window.scrollBy(10,10);window.scrollBy(-10,-10);
