@@ -112,7 +112,7 @@
 				if(r.target.status !== 200) {
 					if(_g.b.error) return;
 					_g.b.error						= !0;
-					var le							= _i('loading');
+					var le							= _c('loading')[0];
 					_i('loading-bar').id			= 'loading-error-bar';
 					_i('loading-error-bar').style.width	= "100%";
 					_i('loading-error').innerHTML	= "Error " + r.target.status + " " + r.target.statusText;
@@ -202,17 +202,17 @@
 			if(!this.toLoad) this.toLoad = 1, this.loaded = 1;
 			var sl	= _i('side-loading'),
 				lb	= _i('loading-bar'),
-				le	= _i('loading'),
+				le	= _c('loading')[0],
 				lr	= this.loaded / this.toLoad;
 			sl.style.height		= Math.min(lr,1) * 100 + "%";
 			lb.style.width		= Math.min(lr,1) * 100 + "%";
 			sl.style.display	= (lr >= 1) ? 'none' : 'block';
 			if(lr >= 1){
 				window.setTimeout(function(){
-					_i('loading').style.opacity = '0';
+					_c('loading')[0].style.opacity = '0';
 					window.setTimeout(function(){
 						document.getElementsByTagName('html')[0].style.overflowY = 'scroll'
-						_i('loading').style.display = 'none'
+						_c('loading')[0].style.display = 'none'
 					}, 310);
 					document.body.style.overflow = '';
 				}, 2500);
@@ -1678,7 +1678,7 @@
 					stdStep,
 					function(){
 						var ldic			= _i('loading-icon'),
-							ldng			= _i('loading');
+							ldng			= _c('loading')[0];
 						ldic.style.position	= "fixed";
 						ldic.style.left		= "10px";
 						ldic.style.top		= "50px";
@@ -1690,7 +1690,7 @@
 					},
 					function(){
 						var ldic			= _i('loading-icon'),
-							ldng			= _i('loading');
+							ldng			= _c('loading')[0];
 						ldng.style.display	= "none";
 						ldic.style.position	= "absolute";
 						ldic.style.left		= "calc(50vw - 125px)";
@@ -1783,7 +1783,7 @@
 		page	: function(user,ctx){
 			_g.u.bganimed = !1;
 			if(_g.u.info.name[user.toLowerCase()]){
-				_i('loading').insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + _g.u.info.name[user.toLowerCase()].background + ')"></div><div></div></div></div>');
+				_c('loading')[0].insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + _g.u.info.name[user.toLowerCase()].background + ')"></div><div></div></div></div>');
 				window.setTimeout(function(){
 					_g.u.animations.background(lastClick.x, lastClick.y);
 					_g.u.bganimed = !0;
@@ -1833,7 +1833,7 @@
 					if(!_g.u.loaded) _i('user-column').insertAdjacentHTML('afterbegin',utmp);
 					else _i('user').outerHTML = utmp;
 					if(!_g.u.bganimed){
-						_i('loading').insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + info.background + ')"></div><div></div></div></div>');
+						_c('loading')[0].insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + info.background + ')"></div><div></div></div></div>');
 						window.setTimeout(function(){
 							_g.u.animations.background(_i('body').getBoundingClientRect().left + 105, 145);
 						},0);
@@ -2308,7 +2308,7 @@
 	page('/feeds', _g.s.feeds, pageview);
 	page('*', function(ctx, next){
 		_g.b.error						= !0;
-		var le							= _i('loading');
+		var le							= _c('loading')[0];
 		_i('loading-bar').id			= 'loading-error-bar';
 		_i('loading-error-bar').style.width	= "100%";
 		_i('loading-error').innerHTML	= "Error 404 Not Found";
