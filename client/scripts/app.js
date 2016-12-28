@@ -2295,7 +2295,7 @@
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
 			_g.u.page(ctx.params.user,ctx)
-			_g.p.set = 'userPosts';
+			_g.p.set = 'favorites';
 			_g.p.setData = user;
 			_g.p.list(20);
 			next();

@@ -255,6 +255,14 @@ module.exports = function(app, Graphene, Notification){
 						: {$or:[{user:req.query.data},{users:u.username}]}
 				).sort('-_id').limit(+req.query.amount).exec(cont);
 			});
+		}  else if(req.query.set == 'favorites'){
+			User.findOne({_id:req.query.data},function(e,u){if(e) return res.send(e);
+				Post.find(
+					req.query.start && req.query.start != 'default'
+						? {_id:{$lt:req.query.start},'ratings.user':u._id}
+						: {'ratings.user':u._id}
+				).sort('-_id').limit(+req.query.amount).exec(cont);
+			});
 		} else if(req.query.set == 'userPosts'){
 			Post.find(
 				req.query.start && req.query.start != 'default'
