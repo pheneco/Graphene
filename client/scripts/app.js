@@ -820,6 +820,8 @@
 			} else this.needLoad = !1;
 		},
 		load 		: function(id, parts, ba){
+			if(!_i('posts'))
+				_g.ui.getColumn('posts').insertAdjacentHTML('beforeend', '<div id="posts"></div>');
 			if(id == 'last'){
 				if(parts == 'all'){
 					_g.b.loaded += 3;
@@ -2240,7 +2242,6 @@
 	}, pageview);
 	page('/changes/:app?', _g.cn.load, pageview),
 	page('/post/:id', function(ctx,next){
-		if(!_i('posts')) _i('body').insertAdjacentHTML('beforeend', '<div id="posts"></div>');
 		_g.p.set = 'post';
 		_g.p.setData = ctx.params.id;
 		_g.p.posts = [ctx.params.id];
