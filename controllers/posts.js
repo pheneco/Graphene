@@ -272,6 +272,13 @@ module.exports = function(app, Graphene, Notification){
 		Post.findOne({_id:req.params.id}, function(e,p){if(e) return res.send(e);
 		if(!p) return res.send("The post you're looking for, just like my will to live, doesn't exist.");
 		User.findOne({_id:p.user}, function(e,u){
+			favorited = !1;
+			if(req.session.user)
+				for(var i = 0; i < p.ratings.length; i++)
+					if(p.ratings[i].user == req.session.user){
+						favorited = !0;
+						break;
+					}
 			var post = {
 				user		: {
 					//name	: u.nameHandle ? u.userName : u.firstName + " " + u.lastName,
@@ -295,7 +302,9 @@ module.exports = function(app, Graphene, Notification){
 				preview		: Graphene.getWords(p.richText,3),
 				commentCount: p.comments.length,
 				commentList	: [],
-				commentable	: req.session.user ? true : false 
+				commentable	: req.session.user ? true : false,
+				favorited
+				// favorited	: favorited //Testing something
 			}
 			Post.findOne({_id:req.params.id}, {comments: {$slice:-5}}, function(e,p){if(e) return res.send(e);
 				for(var i = 0, cu = []; i < p.comments.length; i++) if(!~cu.indexOf(p.comments[i].user)) cu[cu.length] = p.comments[i].user;
