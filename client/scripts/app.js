@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	2016.12.09
+ *	2016.12.28
  */
 
    (function bippity(){
@@ -302,7 +302,7 @@
 				p = _i('post-' + id).children[0],
 				i = _g.p.info[id];
 			i.active = !i.active;
-			p.className = 'post' + (i.active ? ' post-active' : '') + (i.expanded ? ' post-expanded' : '');
+			p.className = 'post card' + (i.active ? ' post-active' : '') + (i.expanded ? ' post-expanded' : '');
 			if(i.active){
 				ccr.style.display = 'block';
 				if(typeof focus !== 'boolean' || focus) window.setTimeout(function(){ccr._c('comment-textbox')[0].focus();}, 0);
@@ -464,11 +464,10 @@
 			});
 			post.setAttribute('post-type', 'text');
 			post._c('post-content')[0].innerHTML = _g.temps.creator({url:_g.url});
-			post._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options" style="position:relative;max-height:21px;text-align:right;"><div class="post-ribbon" tabindex="-1" onclick="_g.cr.post()">Post</div></div>');
-			post.insertAdjacentHTML('afterbegin', '<div class="post-shade"></div>');
+			post._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options"><div class="button post-button" tabindex="-1" onclick="_g.cr.post()">Post</div></div>');
 			post.style.display = 'block';
 			post.style.opacity = '1';
-			_i('post-textbox-1').fitContent();
+			post._c('post-textbox')[0].fitContent();
 			post._c('post-menu')[0].onclick = post.oncontextmenu = function(e){
 				e.preventDefault();
 				_g.m.open(e, {
@@ -491,10 +490,10 @@
 			post.addEventListener('dragover', this.dragover);
 			post.addEventListener('drop', this.drop);
 			post._c('post-textbox')[0].addEventListener('focus',function(){
-				_i('post-new')._c('card')[0].className = 'card lifted';
+				_i('post-new')._c('card')[0].className = 'card is-lifted';
 			});
 			post._c('post-textbox')[0].addEventListener('blur',function(){
-				_i('post-new')._c('card lifted')[0].className = 'card';
+				_i('post-new')._c('card is-lifted')[0].className = 'card';
 			});
 			return !0;
 		},
@@ -2188,7 +2187,6 @@
 	page('*', _g.p.clear);
 	page('*', _g.t.side);
 	page('/', function(ctx,next){
-		console.log(_g.user);
 		if(!_g.user && !_g.t.login) page('/login');
 		else {
 			document.title = _g.page = _g.name;

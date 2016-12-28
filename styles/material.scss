@@ -1,7 +1,7 @@
 /*
  *	Graphene Material Design CSS
  *	Written by Trevor J Hoglund
- *	2016.12.09
+ *	2016.12.28
  *
  *	Z-Index are somewhere in the range n * 100 < z-index < ((n + 1) * 100) - 100, where n is the material elevation
  *	This allows flexibility in the graphics, using z-index to control the actual imaging
@@ -48,22 +48,37 @@
 
 /* Page Layout */
 
+.body						{transition:filter 0.5s;}
 	
-/* Base Materials (ordered by height) */
+/* Models (ordered by height) */
 .card						{z-index:200;box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
 							width:100%;display:inline-block;background:#fff;margin-bottom:2rem;transition:all 0.3s cubic-bezier(.25,.8,.25,1);-webkit-transition:all 0.3s cubic-bezier(.25,.8,.25,1);}
-	.card.lifted			{z-index:800;box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);}
+	.card.is-lifted			{z-index:800;box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);}
+.button						{z-index:200;box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);}
+	.button.is-primary		{}
+	.button.is-secondary	{background:#757575 !important;}
 .menu						{z-index:800;box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);}
 .drawer						{z-index:1600;box-shadow: 0 8px 10px -5px rgba(0,0,0,.2),0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12);}
 .dialog						{z-index:2400;box-shadow: 0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12);}
 
-/* Dark Elements (oredered by whatever, really) */
-	html.dark				{background:#303030 url("../assets/img/back_dark.png");background-position:center center;background-attachment:fixed;color:#fff;}
-	.dark pre,
-	.dark code				{background:#383838;color:white;}
-	.dark a					{color:#ccc;}
-	.dark a:hover			{color:#fff;}
+/* Implementations and Elements */
+
+.post						{}
+	.post-options			{
+		padding:0 10px 10px 10px;text-align:right;
+		.post-button		{border:0;cursor:pointer;display:inline-block;outline:0;padding:3px;text-align:center;width:75px;}
+	}
 	
+
+/* Dark Elements (ordered by whatever, really) */
+html.dark					{background:#303030 url("../assets/img/back_dark.png");background-position:center center;background-attachment:fixed;color:#fff;}
+.dark						{
+	pre,
+	code					{background:#383838;color:white;}
+	a						{color:#ccc;}
+	a:hover					{color:#fff;}
+}
+
 /* Prism (these colors are meant to work with both light and dark themes) */
 .token.comment,
 .token.prolog,

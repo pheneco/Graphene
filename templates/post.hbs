@@ -19,76 +19,6 @@
 		{{#if blankPost}}
 			<br><br><br><br><br><br>
 		{{else}}
-			{{#if imagePost}}
-				{{#each imageRow}}
-					<div class="post-images-{{length}}">
-					{{#each image}}
-						<a lightbox href="{{lightboxURL}}"><img src="{{src}}"></a>
-					{{/each}}
-					<div></div></div>
-				{{/each}}
-			{{/if}}
-			{{#if audioPost}}
-				<div id="post-audio-{{id}}"></div>
-			{{/if}}
-			{{#if linkPost}}
-				{{#if twitterLink}}
-					{{{link}}}
-				{{/if}}
-				{{#if imageLink}}
-					<a href="{{link}}" target="_blank"><img src="{{link}}" class="post-image"></a>
-				{{/if}}
-				{{#if videoLink}}
-					<div class="post-video"><video controls src="{{link}}"></video></div>
-				{{/if}}
-				{{#if embedLink}}
-					<div class="post-video"><iframe src="{{link}}"></iframe></div>
-				{{/if}}
-				{{#if regularLink}}
-					<div class="post-link-cont">
-						{{#if thumbnail}}
-							<a target="_blank" href="{{link}}">
-								<img class="post-thumb" src="{{thumbnail}}">
-							</a>
-						{{/if}}	
-						<div class="post-link">
-							<a target="_blank" href="{{link}}">
-								{{#if linkTitle}}
-									{linkTitle}
-								{{else}}
-									{{link}}
-								{{/if}}
-							</a>
-						</div>
-						{{#if linkDecription}}
-							{{linkDescription}}
-						{{/if}}
-					</div>
-				{{/if}}
-			{{/if}}
-			{{#if pollPost}}
-				<div class="post-content-two" style="position:relative;">
-					<div class="poll-head">{Text}</div>
-					<table class="poll-table">
-						{{#each option}}
-							<tr>
-								<td class="poll-names">
-									<div class="poll-option" onclick="{{vote}}" title="{{name}}">
-										<span style="left:8px;" class="poll-hiding">
-											{{name}}
-										</span>
-									</div>
-								</td>
-								<td class="poll-ans">
-									<div class="poll-bar" style="background:#{{color}};width:{{width}}px">
-										{{votes}}
-									</div>
-								</td>
-							</tr>
-						{{/each}}
-					</table>
-				</div>
-			{{/if}}
 			<div class="post-desc" id="post-desc-{{id}}">
 				{{#if editable}}
 					<div style="display:none;" id="post-edit-{{id}}" class="post-edit">
@@ -104,11 +34,6 @@
 		{{/if}}
 	</div>
 	{{/ifCond}}
-	{{#ifCond all '||' options}}{{#unless blankPost}}
-		<div class="post-options">
-			<div class="post-ribbon" onclick="Graphene.comments.toggle('{{id}}')">Comments (<span class="comment-num">{{commentCount}}</span>)</div>
-		</div>
-	{{/unless}}{{/ifCond}}
 	{{#ifCond all '||' comments}}{{#unless blankPost}}
 		<div class="post-comments" style="display:none;">
 			<div style="display:{{loadMore}};" class="comment-more" onclick="Graphene.comments.load('{{id}}',false,5)">Load More</div>
