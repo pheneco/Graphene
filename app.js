@@ -78,7 +78,7 @@ var root		= __dirname,
 			Change.findOne({},{},{sort:{_id:-1}},function(e,c){if(e) return res.send(e);
 			User.findOne(name?{username:user.toLowerCase()}:{_id:user}, function(e,u){if(e) return res.send(e);if(u==null) return res.send(e);
 			Post.find({user:u._id}, function(e,p) { if(e) return res.send(e);
-			Post.find({"ratings":{$elemMatch:{field:"user",value:u._id}}}, function(e, uv){ if(e) return res.send(e);
+			Post.find({"ratings":{$elemMatch:{field:"user",value:u._id}}}, function(e,uv){if(e) return res.send(e);
 			Graphene.getFollowing(u._id, null, function(uf){
 			Graphene.getFollowing(req.session.user?req.session.user:'bypass',null,function(yf){
 			User.find({_id:{$in:uf}}, function(e,fu){if(e) return res.send(e);
@@ -128,7 +128,7 @@ var root		= __dirname,
 					version		: c.version,
 					sVersion	: Graphene.v,
 					postCount	: p.length,
-					upvoteCount	: uv.length,
+					favoriteCount: uv.length,
 					follows		: follows,
 					joined		: u._id.getTimestamp().getTime()
 				},(req.session.user

@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	2016.11.18
+ *	2016.12.28
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -189,6 +189,22 @@ module.exports = function(app, Graphene, Notification){
 					Comments.emit(""+p._id,""+p._id);
 					res.send(".");
 				}
+			});
+		});
+	});
+	
+	//	Interact
+	app.post('/post/:id/favorite',function(req,res){
+		if(!req.session.user) return res.send("Must be logged in!");
+		Post.findOne({_id:req.params.post},function(e,p){
+			if(e) return res.send(e);
+			post.ratings.push({
+				user		: req.session.user,
+				downVote	: !1
+			});
+			post.save(function(e,p){
+				if(e) return res.send(e);
+				res.send("Post favorited.");
 			});
 		});
 	});

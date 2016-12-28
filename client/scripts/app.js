@@ -1805,10 +1805,10 @@
 							},
 							{
 								tabled	: !0,
-								name	: "Upvotes:",
-								value	: info.upvoteCount,
-								url		: info.url + "/upvotes",
-								active	: ctx.path == info.url.split(_g.url)[1] + "/upvotes"
+								name	: "Favorites:",
+								value	: info.favoriteCount,
+								url		: info.url + "/favorites",
+								active	: ctx.path == info.url.split(_g.url)[1] + "/favorites"
 							}
 						]
 					});
@@ -2275,7 +2275,7 @@
 			next();
 		}});
 	}, pageview);
-	page('/user/:user/upvotes', function(ctx,next){
+	page('/user/:user/favorites', function(ctx,next){
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
 			_g.u.page(ctx.params.user,ctx)
