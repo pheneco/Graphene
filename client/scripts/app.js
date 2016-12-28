@@ -868,6 +868,7 @@
 				info.expanded	= !1;
 				info.active		= !1;
 				info.menu		= !0;
+				info.favoritable= !0;
 				info.enlarge	= ~info.richText.indexOf('<div class="post-video"') && window.innerWidth > 1340;
 				for(var i in info.commentList)
 					info.commentList[i].owner = info.commentList[i].user.id == _g.session.user,
@@ -990,6 +991,23 @@
 			if(i.expanded) _g.ui.blocks[_g.ui.blocks.length] = p;
 			else if(~_g.ui.blocks.indexOf(p)) _g.ui.blocks.splice(p,1);
 			window.scrollBy(10,10);window.scrollBy(-10,-10);
+		},
+		favorite	: function(id){
+			var post	= _i("post-" + id);
+			post._c('post-favorite')[0].className = 'material-icons icon post-favorite is-favorite';
+			post._c('post-favorite')[0].innerHTML = 'favorite';
+			new ajax(_g.api + '/post/' + id + '/favorite', 'POST', '', {
+				load	: function(r){
+					if(r.responseText !== ''){
+						post._c('post-favorite')[0].className = 'material-icons icon post-favorite';
+						post._c('post-favorite')[0].innerHTML = 'favorite_outline';
+						_g.pu.open({
+							title			: "Error!",
+							text			: r.responseText
+						});
+					}
+				}
+			});
 		},
 		clear		: function(ctx, next){
 			var se;

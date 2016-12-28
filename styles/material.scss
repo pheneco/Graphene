@@ -5,34 +5,47 @@
  *
  *	Z-Index are somewhere in the range n * 100 < z-index < ((n + 1) * 100) - 100, where n is the material elevation
  *	This allows flexibility in the graphics, using z-index to control the actual imaging
- *
- *	Shadows are based on AngularJS Whiteframe
- *		 1dp:	box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
- *		 2dp:	box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
- *		 3dp:	box-shadow: 0 1px 8px 0 rgba(0,0,0,.2),0 3px 4px 0 rgba(0,0,0,.14),0 3px 3px -2px rgba(0,0,0,.12);
- *		 4dp:	box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
- *		 5dp:	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 5px 8px 0 rgba(0,0,0,.14),0 1px 14px 0 rgba(0,0,0,.12);
- *		 6dp:	box-shadow: 0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);
- *		 7dp:	box-shadow: 0 4px 5px -2px rgba(0,0,0,.2),0 7px 10px 1px rgba(0,0,0,.14),0 2px 16px 1px rgba(0,0,0,.12);
- *		 8dp:	box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);
- *		 9dp:	box-shadow: 0 5px 6px -3px rgba(0,0,0,.2),0 9px 12px 1px rgba(0,0,0,.14),0 3px 16px 2px rgba(0,0,0,.12);
- *		10dp:	box-shadow: 0 6px 6px -3px rgba(0,0,0,.2),0 10px 14px 1px rgba(0,0,0,.14),0 4px 18px 3px rgba(0,0,0,.12);
- *		11dp:	box-shadow: 0 6px 6px -3px rgba(0,0,0,.2),0 10px 14px 1px rgba(0,0,0,.14),0 4px 18px 3px rgba(0,0,0,.12);
- *		12dp:	box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 12px 17px 2px rgba(0,0,0,.14),0 5px 22px 4px rgba(0,0,0,.12);
- *		13dp:	box-shadow: 0 7px 8px -4px rgba(0,0,0,.2),0 12px 17px 2px rgba(0,0,0,.14),0 5px 22px 4px rgba(0,0,0,.12);
- *		14dp:	box-shadow: 0 7px 9px -4px rgba(0,0,0,.2),0 14px 21px 2px rgba(0,0,0,.14),0 5px 26px 4px rgba(0,0,0,.12);
- *		15dp:	box-shadow: 0 8px 9px -5px rgba(0,0,0,.2),0 15px 22px 2px rgba(0,0,0,.14),0 6px 28px 5px rgba(0,0,0,.12);
- *		16dp:	box-shadow: 0 8px 10px -5px rgba(0,0,0,.2),0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12);
- *		17dp:	box-shadow: 0 8px 11px -5px rgba(0,0,0,.2),0 17px 26px 2px rgba(0,0,0,.14),0 6px 32px 5px rgba(0,0,0,.12);
- *		18dp:	box-shadow: 0 9px 11px -5px rgba(0,0,0,.2),0 18px 28px 2px rgba(0,0,0,.14),0 7px 34px 6px rgba(0,0,0,.12);
- *		19dp:	box-shadow: 0 9px 12px -6px rgba(0,0,0,.2),0 19px 29px 2px rgba(0,0,0,.14),0 7px 36px 6px rgba(0,0,0,.12);
- *		20dp:	box-shadow: 0 10px 13px -6px rgba(0,0,0,.2),0 20px 31px 3px rgba(0,0,0,.14),0 8px 38px 7px rgba(0,0,0,.12);
- *		21dp:	box-shadow: 0 10px 13px -6px rgba(0,0,0,.2),0 20px 31px 3px rgba(0,0,0,.14),0 8px 38px 7px rgba(0,0,0,.12);
- *		22dp:	box-shadow: 0 10px 14px -6px rgba(0,0,0,.2),0 22px 35px 3px rgba(0,0,0,.14),0 8px 42px 7px rgba(0,0,0,.12);
- *		23dp:	box-shadow: 0 11px 14px -7px rgba(0,0,0,.2),0 23px 36px 3px rgba(0,0,0,.14),0 9px 44px 8px rgba(0,0,0,.12);
- *		24dp:	box-shadow: 0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12);
  */
+ 
+ 
+/* Shadows  based on AngularJS Whiteframe */
 
+$shadow-1dp:	0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+$shadow-2dp:	0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
+$shadow-3dp:	0 1px 8px 0 rgba(0,0,0,.2),0 3px 4px 0 rgba(0,0,0,.14),0 3px 3px -2px rgba(0,0,0,.12);
+$shadow-4dp:	0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12);
+$shadow-5dp:	0 3px 5px -1px rgba(0,0,0,.2),0 5px 8px 0 rgba(0,0,0,.14),0 1px 14px 0 rgba(0,0,0,.12);
+$shadow-6dp:	0 3px 5px -1px rgba(0,0,0,.2),0 6px 10px 0 rgba(0,0,0,.14),0 1px 18px 0 rgba(0,0,0,.12);
+$shadow-7dp:	0 4px 5px -2px rgba(0,0,0,.2),0 7px 10px 1px rgba(0,0,0,.14),0 2px 16px 1px rgba(0,0,0,.12);
+$shadow-8dp:	0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);
+$shadow-9dp:	0 5px 6px -3px rgba(0,0,0,.2),0 9px 12px 1px rgba(0,0,0,.14),0 3px 16px 2px rgba(0,0,0,.12);
+$shadow-10dp:	0 6px 6px -3px rgba(0,0,0,.2),0 10px 14px 1px rgba(0,0,0,.14),0 4px 18px 3px rgba(0,0,0,.12);
+$shadow-11dp:	0 6px 6px -3px rgba(0,0,0,.2),0 10px 14px 1px rgba(0,0,0,.14),0 4px 18px 3px rgba(0,0,0,.12);
+$shadow-12dp:	0 7px 8px -4px rgba(0,0,0,.2),0 12px 17px 2px rgba(0,0,0,.14),0 5px 22px 4px rgba(0,0,0,.12);
+$shadow-13dp:	0 7px 8px -4px rgba(0,0,0,.2),0 12px 17px 2px rgba(0,0,0,.14),0 5px 22px 4px rgba(0,0,0,.12);
+$shadow-14dp:	0 7px 9px -4px rgba(0,0,0,.2),0 14px 21px 2px rgba(0,0,0,.14),0 5px 26px 4px rgba(0,0,0,.12);
+$shadow-15dp:	0 8px 9px -5px rgba(0,0,0,.2),0 15px 22px 2px rgba(0,0,0,.14),0 6px 28px 5px rgba(0,0,0,.12);
+$shadow-16dp:	0 8px 10px -5px rgba(0,0,0,.2),0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12);
+$shadow-17dp:	0 8px 11px -5px rgba(0,0,0,.2),0 17px 26px 2px rgba(0,0,0,.14),0 6px 32px 5px rgba(0,0,0,.12);
+$shadow-18dp:	0 9px 11px -5px rgba(0,0,0,.2),0 18px 28px 2px rgba(0,0,0,.14),0 7px 34px 6px rgba(0,0,0,.12);
+$shadow-19dp:	0 9px 12px -6px rgba(0,0,0,.2),0 19px 29px 2px rgba(0,0,0,.14),0 7px 36px 6px rgba(0,0,0,.12);
+$shadow-20dp:	0 10px 13px -6px rgba(0,0,0,.2),0 20px 31px 3px rgba(0,0,0,.14),0 8px 38px 7px rgba(0,0,0,.12);
+$shadow-21dp:	0 10px 13px -6px rgba(0,0,0,.2),0 20px 31px 3px rgba(0,0,0,.14),0 8px 38px 7px rgba(0,0,0,.12);
+$shadow-22dp:	0 10px 14px -6px rgba(0,0,0,.2),0 22px 35px 3px rgba(0,0,0,.14),0 8px 42px 7px rgba(0,0,0,.12);
+$shadow-23dp:	0 11px 14px -7px rgba(0,0,0,.2),0 23px 36px 3px rgba(0,0,0,.14),0 9px 44px 8px rgba(0,0,0,.12);
+$shadow-24dp:	0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12);
+
+/* Colors */
+
+$amber:			#FFC107;
+$blue-grey:		#607D8B;
+$brown-300:		#A1887F;
+$deep-orange:	#FF5722;
+$grey:			#9E9E9E;
+$light-green:	#8BC34A;
+$pink:			#E91E63;
+$red:			#F44336;
+ 
 /* General Elements */
 	*						{margin:0px;zoom:1;font-size:10pt;}
 	html					{background:#f8f8f8 url("../assets/img/back.png");background-position:center center;background-attachment:fixed;min-width:1100px;color:#111;font-family:Arial;background-attachment:fixed;}
@@ -52,15 +65,15 @@
 	
 /* Models (ordered by height) */
 .icon						{color:#ccc;cursor:pointer;font-size:16px !important;}
-.button						{z-index:200;box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);}
+.button						{z-index:200;box-shadow:$shadow-2dp;}
 	.button.is-primary		{}
 	.button.is-secondary	{background:#757575 !important;}
-.card						{z-index:200;box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12);
-							width:100%;display:inline-block;background:#fff;margin-bottom:2rem;transition:all 0.3s cubic-bezier(.25,.8,.25,1);-webkit-transition:all 0.3s cubic-bezier(.25,.8,.25,1);}
-	.card.is-lifted			{z-index:800;box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);}
-.menu						{z-index:800;box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12);}
-.drawer						{z-index:1600;box-shadow: 0 8px 10px -5px rgba(0,0,0,.2),0 16px 24px 2px rgba(0,0,0,.14),0 6px 30px 5px rgba(0,0,0,.12);}
-.dialog						{z-index:2400;box-shadow: 0 11px 15px -7px rgba(0,0,0,.2),0 24px 38px 3px rgba(0,0,0,.14),0 9px 46px 8px rgba(0,0,0,.12);}
+.card						{z-index:200;box-shadow:$shadow-2dp;
+							width:100%;display:inline-block;background:#fff;margin-bottom:2rem;transition:box-shadow 0.3s cubic-bezier(.25,.8,.25,1);}
+	.card.is-lifted			{z-index:800;box-shadow:$shadow-8dp;}
+.menu						{z-index:800;box-shadow:$shadow-8dp;}
+.drawer						{z-index:1600;box-shadow:$shadow-16dp;}
+.dialog						{z-index:2400;box-shadow:$shadow-24dp;}
 
 /* Implementations and Elements */
 
@@ -73,7 +86,9 @@
 	.post-header			{
 		height:36px;margin:10px 10px 0 10px;position:relative;
 		.post-menu			{position:absolute;right:0;}
-		.post-enlarge		{position:absolute;right:19px;}
+		.post-favorite		{font-size:14px !important;position:absolute;right:19px;}
+		.post-favorite.is-favorite{color:$red;}
+		.post-enlarge		{position:absolute;right:38px;}
 	}
 	.post-options			{
 		padding:0 10px 10px 10px;text-align:right;
@@ -95,14 +110,14 @@ html.dark					{background:#303030 url("../assets/img/back_dark.png");background-
 .token.prolog,
 .token.doctype,
 .token.cdata,
-.token.punctuation			{color:#9E9E9E;}	/* Material Color: Grey */
+.token.punctuation			{color:$grey;}
 .namespace					{opacity:.7;}		/* Actually just taken from the default prism theme */
 .token.property,
 .token.tag,
 .token.boolean,
 .token.number,
 .token.constant,
-.token.symbol				{color:#FFC107;}	/* Material Color: Amber */
+.token.symbol				{color:$amber;}
 .token.attr-name,
 .token.attr-value,
 .token.string,
@@ -113,15 +128,15 @@ html.dark					{background:#303030 url("../assets/img/back_dark.png");background-
 .language-css .token.string,
 .style .token.string,
 .token.variable,
-.token.inserted				{color:#FF5722;}	/* Material Color: Deep Orange */
+.token.inserted				{color:$deep-orange;}
 .token.atrule,
 .token.attr-value,
-.token.keyword				{color:#8BC34A;}	/* Material Color: Light Green */
-/* .token.function			{color:#E91E63;}*/	/* Material Color: Pink */
+.token.keyword				{color:$light-green;}
+/* .token.function			{color:$pink;}*/
 .token.regex,
-.token.important			{color:#A1887F;}	/* Material Color: Brown 300 */
+.token.important			{color:$brown-300;}
 .token.important			{font-weight:bold;}
 .token.entity				{cursor:help;}
 .language-markup .token.tag,
 .language-markup .token.attr-name,
-.language-markup .token.punctuation {color:#607D8B} /* Material Color: Blue Grey */
+.language-markup .token.punctuation {color:$blue-grey;}

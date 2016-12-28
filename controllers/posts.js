@@ -196,15 +196,15 @@ module.exports = function(app, Graphene, Notification){
 	//	Interact
 	app.post('/post/:id/favorite',function(req,res){
 		if(!req.session.user) return res.send("Must be logged in!");
-		Post.findOne({_id:req.params.post},function(e,p){
+		Post.findOne({_id:req.params.id},function(e,p){
 			if(e) return res.send(e);
-			post.ratings.push({
+			p.ratings.push({
 				user		: req.session.user,
 				downVote	: !1
 			});
-			post.save(function(e,p){
+			p.save(function(e,p){
 				if(e) return res.send(e);
-				res.send("Post favorited.");
+				res.send();
 			});
 		});
 	});
