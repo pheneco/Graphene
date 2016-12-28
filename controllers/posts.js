@@ -257,11 +257,14 @@ module.exports = function(app, Graphene, Notification){
 			});
 		}  else if(req.query.set == 'favorites'){
 			User.findOne({_id:req.query.data},function(e,u){if(e) return res.send(e);
-				Post.find(
-					req.query.start && req.query.start != 'default'
-						? {_id:{$lt:req.query.start},'ratings.user':u._id}
-						: {'ratings.user':u._id}
-				).sort('-_id').limit(+req.query.amount).exec(cont); //liek dis if u crie evry tiem
+				var pipeline = [
+					{$match:	req.query.start && req.query.start != 'default' ? {_id:{$lt:req.query.start},'ratings.user':req.query.data} : {'ratings.user':req.query.data}},
+					{$unwind:	'$ratings'},
+					{$match:	{'ratings.user':req.query.data}},
+					{$project:	{favID:'$ratings._id'}},
+					{$sort:		{favID:-1}}
+				];
+				Post.aggregate(pipeline).exec(cont);
 			});
 		} else if(req.query.set == 'userPosts'){
 			Post.find(
