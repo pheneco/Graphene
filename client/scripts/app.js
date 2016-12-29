@@ -993,36 +993,42 @@
 			window.scrollBy(10,10);window.scrollBy(-10,-10);
 		},
 		favorite	: function(id){
-			var post	= _i("post-" + id);
-			post._c('post-favorite')[0].className = 'material-icons icon post-favorite is-favorite';
-			post._c('post-favorite')[0].innerHTML = 'favorite';
+			var post		= _i("post-" + id),
+				fave		= post._c('post-favorite')[0];
+			fave.className	= 'material-icons icon post-favorite is-favorite';
+			fave.innerHTML	= 'favorite';
+			fave.onclick	= null;
 			new ajax(_g.api + '/post/' + id + '/favorite', 'POST', '', {
 				load	: function(r){
 					if(r.responseText !== ''){
-						post._c('post-favorite')[0].className = 'material-icons icon post-favorite';
-						post._c('post-favorite')[0].innerHTML = 'favorite_outline';
+						fave.className	= 'material-icons icon post-favorite';
+						fave.innerHTML	= 'favorite_outline';
+						fave.onclick	= (function(){_g.p.favorite(this)}).bind(id);
 						_g.pu.open({
 							title			: "Error!",
 							text			: r.responseText
 						});
-					}
+					} else  fave.onclick	= (function(){_g.p.unfavorite(this)}).bind(id);
 				}
 			});
 		},
 		unfavorite	: function(id){
-			var post	= _i("post-" + id);
-			post._c('post-favorite')[0].className = 'material-icons icon post-favorite';
-			post._c('post-favorite')[0].innerHTML = 'favorite_outline';
+			var post		= _i("post-" + id),
+				fave		= post._c('post-favorite')[0];
+			fave.className	= 'material-icons icon post-favorite';
+			fave.innerHTML	= 'favorite_outline';
+			fave.onclick	= null;
 			new ajax(_g.api + '/post/' + id + '/favorite', 'DELETE', '', {
 				load	: function(r){
 					if(r.responseText !== ''){
-						post._c('post-favorite')[0].className = 'material-icons icon post-favorite is-favorite';
-						post._c('post-favorite')[0].innerHTML = 'favorite';
+						fave.className	= 'material-icons icon post-favorite is-favorite';
+						fave.innerHTML	= 'favorite';
+						fave.onclick	= (function(){_g.p.unfavorite(this)}).bind(id);
 						_g.pu.open({
 							title			: "Error!",
 							text			: r.responseText
 						});
-					}
+					} else fave.onclick	= (function(){_g.p.favorite(this)}).bind(id);
 				}
 			});
 		},
