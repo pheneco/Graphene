@@ -198,6 +198,8 @@ module.exports = function(app, Graphene, Notification){
 		if(!req.session.user) return res.send("Must be logged in!");
 		Post.findOne({_id:req.params.id},function(e,p){
 			if(e) return res.send(e);
+			var r = p.ratings.filter((r)=>{return r.user == req.session.user;}).pop();
+			if(r != null) return res.send("You've already favorited this post.");
 			p.ratings.push({
 				user		: req.session.user,
 				downVote	: !1
@@ -213,7 +215,7 @@ module.exports = function(app, Graphene, Notification){
 		Post.findOne({_id:req.params.id},(e,p)=>{
 			if(e) return res.send(e);
 			var r = p.ratings.filter((r)=>{return r.user == req.session.user;}).pop();
-			if(r == null || r.user !== req.session.user) return res.send("SOMETHING WENT HORRIBLE WRONG!");
+			if(r == null || r.user !== req.session.user) return res.send("It would seem that you haven't even favorited this post.");
 			r.remove();
 			p.save((e,p)=>{
 				if(e) return res.send(e);
