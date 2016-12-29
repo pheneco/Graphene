@@ -208,6 +208,19 @@ module.exports = function(app, Graphene, Notification){
 			});
 		});
 	});
+	app.delete('/post/:id/favorite',(req,res)=>{
+		if(!req.session.user) return res.send("You just aren't logged in and I'm beginning to think you're just trying to spite me...");
+		Post.findOne({_id:req.params.id},(e,p)=>{
+			if(e) return res.send(e);
+			var r = p.ratings.filter((r)=>{return r.user == req.session.user;}).pop();
+			if(r == null || r.user !== req.session.user) return res.send("SOMETHING WENT HORRIBLE WRONG!");
+			r.remove();
+			p.save((e,p)=>{
+				if(e) return res.send(e);
+				res.send();
+			});
+		})
+	});
 	
 	//	Info
 	app.get('/posts', function(req,res){

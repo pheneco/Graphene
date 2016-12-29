@@ -1009,6 +1009,23 @@
 				}
 			});
 		},
+		unfavorite	: function(id){
+			var post	= _i("post-" + id);
+			post._c('post-favorite')[0].className = 'material-icons icon post-favorite';
+			post._c('post-favorite')[0].innerHTML = 'favorite_outline';
+			new ajax(_g.api + '/post/' + id + '/favorite', 'DELETE', '', {
+				load	: function(r){
+					if(r.responseText !== ''){
+						post._c('post-favorite')[0].className = 'material-icons icon post-favorite is-favorite';
+						post._c('post-favorite')[0].innerHTML = 'favorite';
+						_g.pu.open({
+							title			: "Error!",
+							text			: r.responseText
+						});
+					}
+				}
+			});
+		},
 		clear		: function(ctx, next){
 			var se;
 			
