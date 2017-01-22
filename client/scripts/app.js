@@ -869,7 +869,7 @@
 				info.active		= !1;
 				info.menu		= !0;
 				info.favoritable= !0;
-				info.enlarge	= ~info.richText.indexOf('<div class="post-video"') && window.innerWidth > 1340;
+				info.enlarge	= (~info.richText.indexOf('<div class="post-video"') || ~info.richText.indexOf('<iframe src="/player?src=')) && window.innerWidth > 1340;
 				for(var i in info.commentList)
 					info.commentList[i].owner = info.commentList[i].user.id == _g.session.user,
 					info.commentList[i].post = id,

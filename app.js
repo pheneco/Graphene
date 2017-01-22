@@ -1,7 +1,7 @@
 /*
  *	Graphene Server s0.5.0
  *	Written by Trevor J Hoglund
- *	2016.12.10
+ *	2017.01.21
  */
 
 //	Set Up
@@ -39,7 +39,7 @@ var root		= __dirname,
 	dev			= !(typeof process.argv[2] == 'undefined' || process.argv[2] != 'dev'),
 	Graphene	= new(function(){
 		this.sub			= config.sub;
-		this.url			= '';//config.addr.web  + (config.literalWebAddr || config.webPort == 80 ? '' : ":" + config.webPort);
+		this.url			= '';
 		this.api			= config.addr.web + ':' + config.apiPort;
 		this.img			= config.addr.img;
 		this.imgDir			= config.imgDir;
@@ -74,67 +74,54 @@ var root		= __dirname,
 						ret[p] = arguments[i][p];
 			return ret;
 		};
-		this.getUserInfo	= function(user,name,callback,req,res){
-			Change.findOne({},{},{sort:{_id:-1}},function(e,c){if(e) return res.send(e);
-			User.findOne(name?{username:user.toLowerCase()}:{_id:user}, function(e,u){if(e) return res.send(e);if(u==null) return res.send(e);
-			Post.find({user:u._id}, function(e,p) { if(e) return res.send(e);
-			Post.find({"ratings.user":u._id}, function(e,uv){if(e) return res.send(e);
-			Graphene.getFollowing(u._id, null, function(uf){
-			Graphene.getFollowing(req.session.user?req.session.user:'bypass',null,function(yf){
-			User.find({_id:{$in:uf}}, function(e,fu){if(e) return res.send(e);
+		this.abbrUserInfo	= (u)=>{
+			return {
+				_id			: u._id,
+				userName	: u.userName,
+				literalName	: u.name,
+				name		: u.name,
+				background	: Graphene.img + "/" + u.background + "/1280.jpg",
+				avatar		: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-36.jpg",
+				avatarFull	: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-200.jpg",
+				toCrop		: Graphene.img + "/" + u.avatar + "/500.jpg",
+				url			: Graphene.url + "/user/" + u.userName,
+			}
+		}
+		this.getUserInfo	= function(user,name,callback,q,s){
+			Change.findOne(			{},{},{sort:{_id:-1}},							(e,c)=>{	if(e) return s.send(e);
+			User.findOne(			name?{username:user.toLowerCase()}:{_id:user},	(e,u)=>{	if(e) return s.send(e);
+			Post.find(				{user:u._id},									(e,p)=>{	if(e) return s.send(e);
+			Post.find(				{"ratings.user":u._id},							(e,uv)=>{	if(e) return s.send(e);
+			Graphene.getFollowing(	u._id, null,									(uf)=>{
+			Graphene.getFollowing(	q.session.user ? q.session.user : 'bypass',null,(yf)=>{
+			User.find(				{_id:{$in:uf}},									(e,fu)=>{
+				if(e) return s.send(e);
 				var feeds = u.feeds;
 				for(var i = 0; i < feeds.length; i++)
-					for(var j = 0; j < feeds[i].users.length; j++){
-						var id = feeds[i].users[j];
+					for(var j = 0; j < feeds[i].users.length; j++)
 						for(var k = 0; k < fu.length; k++)
-							if(""+fu[k]._id == id){
-								feeds[i].users[j] = {
-									_id			: id,
-									userName	: fu[k].userName,
-									literalName	: fu[k].name,
-									name		: fu[k].nameHandle ? fu[k].userName : fu[k].name,
-									background	: Graphene.img + "/" + fu[k].background + "/1280.jpg",
-									avatar		: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-36.jpg",
-									avatarFull	: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-200.jpg",
-									toCrop		: Graphene.img + "/" + fu[k].avatar + "/500.jpg",
-									url			: Graphene.url + "/user/" + fu[k].userName,
-								}
+							if(""+fu[k]._id == feeds[i].users[j]){
+								feeds[i].users[j] = Graphene.abbrUserInfo(fu[k]);
 								break;
 							}
-					}
 				var follows = [];
 				for(var k = 0; k < fu.length; k++)
-					follows[k] = {
-						_id			: id,
-						userName	: fu[k].userName,
-						literalName	: fu[k].name,
-						name		: fu[k].nameHandle ? fu[k].userName : fu[k].name,
-						background	: Graphene.img + "/" + fu[k].background + "/1280.jpg",
-						avatar		: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-36.jpg",
-						avatarFull	: Graphene.img + "/" + fu[k].avatar + "/" + fu[k].avatarHash + "-200.jpg",
-						toCrop		: Graphene.img + "/" + fu[k].avatar + "/500.jpg",
-						url			: Graphene.url + "/user/" + fu[k].userName,
-					}
+					follows[k] = Graphene.abbrUserInfo(fu[k]);
 				u.password = "";
-				callback(JSON.stringify(Graphene.collect(u._doc,{
-					user		: user,
-					literalName	: u.name,
-					name		: u.nameHandle ? u.userName : u.name,
-					background	: Graphene.img + "/" + u.background + "/1280.jpg",
-					avatar		: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-36.jpg",
-					avatarFull	: Graphene.img + "/" + u.avatar + "/" + u.avatarHash + "-200.jpg",
-					toCrop		: Graphene.img + "/" + u.avatar + "/500.jpg",
-					url			: Graphene.url + "/user/" + u.userName,
-					version		: c.version,
-					sVersion	: Graphene.v,
-					postCount	: p.length,
-					favoriteCount: uv.length,
-					follows		: follows,
-					joined		: u._id.getTimestamp().getTime()
-				},(req.session.user
-					? {following : !!~yf.indexOf(""+u._id)}
-					: {following : !1}
-				))));
+				callback(JSON.stringify(Graphene.collect(
+					u._doc,
+					Graphene.abbrUserInfo(u),
+					{
+						user		: u._id,
+						version		: c.version,
+						sVersion	: Graphene.v,
+						postCount	: p.length,
+						favoriteCount: uv.length,
+						follows		: follows,
+						joined		: u._id.getTimestamp().getTime(),
+						following	: q.session.user ? !!~yf.indexOf(""+u._id) : !1
+					}
+				)));
 			});
 			});
 			});
