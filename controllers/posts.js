@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	2016.12.28
+ *	2017.01.21
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -52,9 +52,9 @@ module.exports = function(app, Graphene, Notification){
 	});
 	
 	//	Create/Change
-	app.post('/post', function(req,res){
+	app.post('/post', (req,res)=>{
 		if(req.session.user){
-			User.findOne({_id:req.session.user}, function(e,u){
+			User.findOne({_id:req.session.user}, (e,u)=>{
 				var plainText	= req.body.text;
 				var richText	= (~plainText.indexOf('@html') && u.rank >= 10)
 									? plainText.replace('@html','') // CHAOS XD
@@ -91,20 +91,20 @@ module.exports = function(app, Graphene, Notification){
 				if(plainText.length > 0){
 					post.type = "text";
 				} else return res.send("Oh, I see, we're sending empty posts now... how am I ever supposed to fill the void in my life if all you send is more emptiness?");
-				post.save(function(e,p){
+				post.save((e,p)=>{
 					if(!e){
 						//Fire event listeners
 						Posts.emit(""+u._id);
-						for(var i = 0; i < tags.length; i++) Tags.emit(""+tags[i]);
-						for(var i = 0; i < users.length; i++) Posts.emit("@"+users[i]);
+						for(var i of tags) Tags.emit(""+i);
+						for(var i of users) Posts.emit("@"+i);
 						res.send("");
 						console.log(Graphene.time() + u.userName + " (" + u._id + ") created post " + p._id + ".");
-						User.find({username:{$in:users}},function(e,u){
+						User.find({username:{$in:users}},(e,u)=>{
 							if(e) return console.log(Graphene.time() + e);
-							for(var i = 0; i < u.length; i++){
-								if(""+u[i]._id == req.session.user) continue;
+							for(var i of u){
+								if(""+i._id == req.session.user) continue;
 								var note = new Note({
-									recipient	: ""+u[i]._id,
+									recipient	: ""+i._id,
 									sender		: req.session.user,
 									type		: "attag",
 									data		: [
@@ -113,8 +113,8 @@ module.exports = function(app, Graphene, Notification){
 									read		: !1
 								});
 								note.save();
-								Notification.emit(""+u[i]._id);
-								Posts.emit("@"+u[i]._id);
+								Notification.emit(""+i._id);
+								Posts.emit("@"+i._id);
 							}
 						});
 					}else{
@@ -125,10 +125,10 @@ module.exports = function(app, Graphene, Notification){
 			});
 		} else return res.send("You didn't even bother logging into an account... ok... that's fine... I didn't really like this site either...");
 	});
-	app.post('/post/:id/comment', function(req,res){
+	app.post('/post/:id/comment', (req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in to comment.");
 		if(req.body.text == '' || typeof req.body.text !== 'string') return res.send("Comments shouldn't be blank.");
-		Post.findOne({_id:req.params.id}, function(e,post){
+		Post.findOne({_id:req.params.id}, (e,post)=>{
 			if(e) return res.send(e);
 			post.comments.push({
 				user		: req.session.user,
@@ -137,7 +137,7 @@ module.exports = function(app, Graphene, Notification){
 			});
 			if(req.session.user != post.user && !~post.followers.indexOf(req.session.user) && !~post.blockers.indexOf(req.session.user))
 				post.followers.push(req.session.user);
-			post.save(function(e,p){
+			post.save((e,p)=>{
 				if(e) return res.send(e);
 				res.send("Comment posted.");
 				for(var i = 0; i < post.followers.length; i++){
@@ -160,14 +160,14 @@ module.exports = function(app, Graphene, Notification){
 			});
 		});
 	})
-	app.delete('/post/:id', function(req,res){
+	app.delete('/post/:id', (req,res)=>{
 		if(!req.session.user) return res.send("");
-		User.findOne({_id:req.session.user}, function(e,u){if(e) return res.send(e);
-		Post.findOne({_id:req.params.id}, function(e,p){if(e || p == null) return res.send(e);
+		User.findOne({_id:req.session.user}, (e,u)=>{if(e) return res.send(e);
+		Post.findOne({_id:req.params.id}, (e,p)=>{if(e || p == null) return res.send(e);
 			if(p.user !== req.session.user) return false;
-			Post.remove({_id:req.params.id}, function(e){if(e) return res.send(e);
+			Post.remove({_id:req.params.id}, (e)=>{if(e) return res.send(e);
 				console.log(Graphene.time() + u.userName + " (" + u._id + ") deleted post " + p._id + ".");
-				Note.remove({data:req.params.id}, function(e){if(e) return res.send(e);
+				Note.remove({data:req.params.id}, (e)=>{if(e) return res.send(e);
 					Posts.emit(""+req.session.user);
 					for(var i = 0; i < p.users.length; i++) Posts.emit("@"+p.users[i]);
 					return res.send("Your post is gone now... just like she is...");
@@ -176,14 +176,14 @@ module.exports = function(app, Graphene, Notification){
 		});
 		});
 	});
-	app.delete('/post/:post/comment/:comment',function(req,res){
+	app.delete('/post/:post/comment/:comment',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in!");
-		Post.findOne({_id:req.params.post},function(e,p){
+		Post.findOne({_id:req.params.post},(e,p)=>{
 			if(e) return res.send(e);
 			var c = p.comments.id(req.params.comment);
 			if(c == null || c.user !== req.session.user) return res.send("");
 			c.remove();
-			p.save(function(e,p){
+			p.save((e,p)=>{
 				if(e) return res.send(e);
 				else {
 					Comments.emit(""+p._id,""+p._id);
@@ -194,9 +194,9 @@ module.exports = function(app, Graphene, Notification){
 	});
 	
 	//	Interact
-	app.post('/post/:id/favorite',function(req,res){
+	app.post('/post/:id/favorite',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in!");
-		Post.findOne({_id:req.params.id},function(e,p){
+		Post.findOne({_id:req.params.id},(e,p)=>{
 			if(e) return res.send(e);
 			var r = p.ratings.filter((r)=>{return r.user == req.session.user;}).pop();
 			if(r != null) return res.send("You've already favorited this post.");
@@ -204,7 +204,7 @@ module.exports = function(app, Graphene, Notification){
 				user		: req.session.user,
 				downVote	: !1
 			});
-			p.save(function(e,p){
+			p.save((e,p)=>{
 				if(e) return res.send(e);
 				res.send();
 			});
@@ -225,9 +225,9 @@ module.exports = function(app, Graphene, Notification){
 	});
 	
 	//	Info
-	app.get('/posts', function(req,res){
+	app.get('/posts', (req,res)=>{
 		if(typeof req.query.set == ""+void 0 || typeof req.query.data == ""+void 0) res.send('You fucked up, it\'s ok tho, we all do sometimes.');
-		var cont = function(e,p){
+		var cont = (e,p)=>{
 			if(e) return res.send(e);
 			var posts = [];
 			if(p.length == 0)
@@ -239,8 +239,8 @@ module.exports = function(app, Graphene, Notification){
 			res.send(posts);
 		}
 		if(req.query.set == 'dash' && req.query.data == 'home') {
-			User.findOne({_id:req.session.user},function(e,u){if(e) return res.send(e);
-				Graphene.getFollowing(req.session.user,null,function(e){
+			User.findOne({_id:req.session.user},(e,u)=>{if(e) return res.send(e);
+				Graphene.getFollowing(req.session.user,null,(e)=>{
 					Post.find(
 						req.query.start && req.query.start != 'default'
 							? {_id:{$lt:req.query.start},$or:[{user:{$in:e}},{users:u.username}]}
@@ -249,7 +249,7 @@ module.exports = function(app, Graphene, Notification){
 				});
 			});
 		} else if(req.query.set == 'feed' && req.session.user){
-			Graphene.getFollowing(req.session.user,req.query.data,function(e){
+			Graphene.getFollowing(req.session.user,req.query.data,(e)=>{
 				Post.find(
 					req.query.start && req.query.start != 'default'
 						? {_id:{$lt:req.query.start},user:{$in:e}}
@@ -263,7 +263,7 @@ module.exports = function(app, Graphene, Notification){
 					: {tags:req.query.data.toLowerCase()}
 			).sort('-_id').limit(+req.query.amount).exec(cont);
 		} else if(req.query.set == 'user'){
-			User.findOne({_id:req.query.data},function(e,u){if(e) return res.send(e);
+			User.findOne({_id:req.query.data},(e,u)=>{if(e) return res.send(e);
 				Post.find(
 					req.query.start && req.query.start != 'default'
 						? {_id:{$lt:req.query.start},$or:[{user:req.query.data},{users:u.username}]}
@@ -271,7 +271,7 @@ module.exports = function(app, Graphene, Notification){
 				).sort('-_id').limit(+req.query.amount).exec(cont);
 			});
 		}  else if(req.query.set == 'favorites'){
-			User.findOne({_id:req.query.data},function(e,u){if(e) return res.send(e);
+			User.findOne({_id:req.query.data},(e,u)=>{if(e) return res.send(e);
 				var pipeline = [
 					{$match:	req.query.start && req.query.start != 'default' ? {_id:{$lt:req.query.start},'ratings.user':req.query.data} : {'ratings.user':req.query.data}},
 					{$unwind:	'$ratings'},
@@ -295,10 +295,10 @@ module.exports = function(app, Graphene, Notification){
 			).sort('-_id').limit(+req.query.amount).exec(cont);
 		} else res.send(['only']);
 	});
-	app.get('/post/:id', function(req,res){
-		Post.findOne({_id:req.params.id}, function(e,p){if(e) return res.send(e);
+	app.get('/post/:id', (req,res)=>{
+		Post.findOne({_id:req.params.id}, (e,p)=>{if(e) return res.send(e);
 		if(!p) return res.send("The post you're looking for, just like my will to live, doesn't exist.");
-		User.findOne({_id:p.user}, function(e,u){
+		User.findOne({_id:p.user}, (e,u)=>{
 			favorited = !1;
 			if(req.session.user)
 				for(var i = 0; i < p.ratings.length; i++)
@@ -333,9 +333,9 @@ module.exports = function(app, Graphene, Notification){
 				favorited
 				// favorited	: favorited //Testing something
 			}
-			Post.findOne({_id:req.params.id}, {comments: {$slice:-5}}, function(e,p){if(e) return res.send(e);
+			Post.findOne({_id:req.params.id}, {comments: {$slice:-5}}, (e,p)=>{if(e) return res.send(e);
 				for(var i = 0, cu = []; i < p.comments.length; i++) if(!~cu.indexOf(p.comments[i].user)) cu[cu.length] = p.comments[i].user;
-				User.find({_id:{$in:cu}},function(e,uu){if(e) return res.send(e);
+				User.find({_id:{$in:cu}},(e,uu)=>{if(e) return res.send(e);
 					for(var l = 0; l < p.comments.length; l++) post.commentList[l] = {
 						richText	: p.comments[l].richText,
 						plainText	: p.comments[l].plainText,
@@ -360,10 +360,10 @@ module.exports = function(app, Graphene, Notification){
 		});
 		});
 	});
-	app.get('/post/:id/feed', sse, function(req,res){
+	app.get('/post/:id/feed', sse, (req,res)=>{
 		req.socket.setTimeout(31536e6);
-		var call	= function(){
-			Post.findOne({_id:req.params.id}, function(e,p){if(e) return;
+		var call	= ()=>{
+			Post.findOne({_id:req.params.id}, (e,p)=>{if(e) return;
 				for(var i = 0, list = []; i < p.comments.length; i++)
 					list[list.length] = p.comments[i]._id;
 				res.json({
@@ -374,11 +374,11 @@ module.exports = function(app, Graphene, Notification){
 			});
 		};
 		Comments.on(req.params.id,call);
-		req.on('close', function(){
+		req.on('close', ()=>{
 			Comments.removeListener(req.params.id,call);
 		});
 	});
-	app.get('/posts/listen/:ids/:set/:setData', sse, function(req,res){
+	app.get('/posts/listen/:ids/:set/:setData', sse, (req,res)=>{
 		req.socket.setTimeout(31536e6);
 		try{
 			var ids		= JSON.parse(req.params.ids);
@@ -386,8 +386,8 @@ module.exports = function(app, Graphene, Notification){
 			return res.send(e);
 		}
 		var users	= [],
-			comCall	= function(postID){
-				Post.findOne({_id:postID}, function(e,p){if(e) return;
+			comCall	= (postID)=>{
+				Post.findOne({_id:postID}, (e,p)=>{if(e) return;
 					for(var i = 0, list = []; i < p.comments.length; i++)
 						list[list.length] = p.comments[i]._id;
 					res.json({
@@ -398,7 +398,7 @@ module.exports = function(app, Graphene, Notification){
 					});
 				});
 			},
-			posCall	= function(){
+			posCall	= ()=>{
 				res.json({
 					type	: 'post'
 				});
@@ -406,13 +406,13 @@ module.exports = function(app, Graphene, Notification){
 		for(var i = 0; i < ids.length; i++) Comments.on(ids[i],comCall);
 		
 		if(req.params.set == 'dash' && req.params.setData == 'home') {
-			Graphene.getFollowing(req.session.user,null,function(e){
+			Graphene.getFollowing(req.session.user,null,(e)=>{
 				users = e;
 				for(var i = 0; i < users.length; i++) Posts.on(""+users[i],posCall);
 				Posts.on("@"+req.session.user,posCall);
 			});
 		} else if(req.params.set == 'feed' && req.session.user){
-			Graphene.getFollowing(req.session.user,req.params.setData,function(e){
+			Graphene.getFollowing(req.session.user,req.params.setData,(e)=>{
 				users = e;
 				for(var i = 0; i < users.length; i++) Posts.on(""+users[i],posCall);
 			});
@@ -425,7 +425,7 @@ module.exports = function(app, Graphene, Notification){
 			Posts.on(""+req.params.setData,posCall);
 		}
 		
-		req.on('close', function(){
+		req.on('close', ()=>{
 			for(var i = 0; i < ids.length; i++) Comments.removeListener(ids[i],comCall);
 			if(req.params.set == 'dash' && req.params.setData == 'home') {
 				for(var i = 0; i < users.length; i++) Posts.removeListener(""+users[i],posCall);
@@ -438,8 +438,8 @@ module.exports = function(app, Graphene, Notification){
 			}
 		});
 	});
-	app.post('/post/:id/comments', function(req,res){
-		Post.findOne({_id:req.params.id}, function(e,p){if(e) return res.send(e);
+	app.post('/post/:id/comments', (req,res)=>{
+		Post.findOne({_id:req.params.id}, (e,p)=>{if(e) return res.send(e);
 			var index = p.comments.length - 1;
 			if(req.body.start !== 'default')
 				for(var i = 0; i < p.comments.length; i++)
@@ -452,7 +452,7 @@ module.exports = function(app, Graphene, Notification){
 				}
 			for(var k = 0, cu = []; k < p.comments.length; k++)
 				if(!~cu.indexOf(p.comments[k].user)) cu[cu.length] = p.comments[k].user;
-			User.find({_id:{$in:cu}},function(e,uu){if(e) return res.send(e);
+			User.find({_id:{$in:cu}},(e,uu)=>{if(e) return res.send(e);
 				for(var l = 0, cs = []; l < cl.length; l++) cs[l] = {
 					richText	: cl[l].richText,
 					plainText	: cl[l].plainText,
@@ -477,38 +477,38 @@ module.exports = function(app, Graphene, Notification){
 	});
 
 	//	Feeds
-	app.post('/user/:user/follow',function(req,res){
+	app.post('/user/:user/follow',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in.");
-		User.findOne({_id:req.session.user},function(e,u){
+		User.findOne({_id:req.session.user},(e,u)=>{
 			if(e) return res.send(e);
 			//	Get default feed (supposed to be the first one in the array...)
 			if(u.feeds[0] == void 0) return res.send("Feed does not exist.");
 			if(!~u.feeds[0].users.indexOf(req.params.user)) u.feeds[0].users.push(req.params.user);
-			u.save(function(e,u){
+			u.save((e,u)=>{
 				if(e) return res.send(e);
 				else res.send("");
 			});
 		});
 	});
-	app.post('/user/:user/unfollow',function(req,res){
+	app.post('/user/:user/unfollow',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in.");
-		User.findOne({_id:req.session.user},function(e,u){
+		User.findOne({_id:req.session.user},(e,u)=>{
 			if(e) return res.send(e);
 			//	Remove from all feeds
 			for(var i = 0; i < u.feeds.length; i++){
 				var indx = u.feeds[i].users.indexOf(req.params.user);
 				if(indx > -1) u.feeds[i].users.splice(indx,1);
 			}
-			u.save(function(e,u){
+			u.save((e,u)=>{
 				if(e) res.send(e);
 				else res.send("");
 			});
 			
 		});
 	});
-	app.post('/feed/:id/add/:user',function(req,res){
+	app.post('/feed/:id/add/:user',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in.");
-		User.findOne({_id:req.session.user},function(e,u){
+		User.findOne({_id:req.session.user},(e,u)=>{
 			if(e) return res.send(e);
 			
 			//	I really can't be bothered to finish this script at the moment
@@ -517,30 +517,30 @@ module.exports = function(app, Graphene, Notification){
 			var feed = u.feeds.id(req.params.id);
 			if(feed == void 0) return res.send("Feed does not exist.");
 			if(!~feed.users.indexOf(req.params.user)) feed.users.push(req.params.user);
-			u.save(function(e,u){
+			u.save((e,u)=>{
 				if(e) return res.send(e);
 				else res.send("");
 			});
 		});
 	});
-	app.post('/feed/:id/remove/:user',function(req,res){
+	app.post('/feed/:id/remove/:user',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in.");
-		User.findOne({_id:req.session.user},function(e,u){
+		User.findOne({_id:req.session.user},(e,u)=>{
 			if(e) return res.send(e);
 			var feed = u.feeds.id(req.params.id);
 			if(feed == void 0) return res.send("Feed does not exist.");
 			var indx = feed.users.indexOf(req.params.user);
 			if(indx > -1) feed.users.splice(indx,1);
-			u.save(function(e,u){
+			u.save((e,u)=>{
 				if(e) res.send(e);
 				else res.send("");
 			});
 			
 		});
 	});
-	app.post('/feed/new/:name',function(req,res){
+	app.post('/feed/new/:name',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in.");
-		User.findOne({_id:req.session.user},function(e,u){
+		User.findOne({_id:req.session.user},(e,u)=>{
 			if(e) return res.send(e);
 			u.feeds.push({
 				name : req.params.name,
@@ -549,33 +549,33 @@ module.exports = function(app, Graphene, Notification){
 				default : false,
 				users : []
 			});
-			u.save(function(e,u){
+			u.save((e,u)=>{
 				if(e) return res.send(e);
 				res.send("");
 			});
 		});
 	});
-	app.post('/feed/:id/rename/:name',function(req,res){
+	app.post('/feed/:id/rename/:name',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in.");
-		User.findOne({_id:req.session.user},function(e,u){
+		User.findOne({_id:req.session.user},(e,u)=>{
 			if(e) return res.send(e);
 			var feed = u.feeds.id(req.params.id);
 			if(feed == void 0) return res.send("Feed does not exist.");
 			feed.name == req.params.name;
-			u.save(function(e,u){
+			u.save((e,u)=>{
 				if(e) return res.send(e);
 				else res.send("");
 			});
 		});
 	});
-	app.delete('/feed/:id',function(req,res){
+	app.delete('/feed/:id',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in.");
-		User.findOne({_id:req.session.user},function(e,u){
+		User.findOne({_id:req.session.user},(e,u)=>{
 			if(e) return res.send(e);
 			if(!u.feeds.id(req.params.id)) return res.send("Invalid feed!");
 			if(u.feeds.id(req.params.id).default) return res.send("Cannot delete default feed!");
 			var feed = u.feeds.id(req.params.id).remove();
-			u.save(function(e,u){
+			u.save((e,u)=>{
 				if(e) return res.send(e);
 				else res.send("");
 			});

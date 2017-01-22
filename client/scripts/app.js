@@ -809,7 +809,7 @@
 						this.posts	= this.posts.concat(pls);
 						_g.b.toLoad += pls.length * 3;
 						_g.b.loaded = 0;
-						for(var i = 0; i < pls.length; i++) this.load(pls[i], 'all', 'a');
+						for(var i of pls) this.load(i, 'all', 'a');
 						this.loading = !1;
 						if(last == void 0) _i("_post").remove();
 						_g.p.listen();
@@ -870,10 +870,10 @@
 				info.menu		= !0;
 				info.favoritable= !0;
 				info.enlarge	= (~info.richText.indexOf('<div class="post-video"') || ~info.richText.indexOf('<iframe src="/player?src=')) && window.innerWidth > 1340;
-				for(var i in info.commentList)
-					info.commentList[i].owner = info.commentList[i].user.id == _g.session.user,
-					info.commentList[i].post = id,
-					info.commentList[i].timestamp = _g.time(info.commentList[i].time);
+				for(var i of info.commentList)
+					i.owner = i.user.id == _g.session.user,
+					i.post = id,
+					i.timestamp = _g.time(i.time);
 				var template	= _g.temps.post(info);
 				if(info.all){
 					post.innerHTML = template;
@@ -960,13 +960,13 @@
 						i.reverse();
 						l.reverse();
 						//	remove client elements not recognized by server
-						for(var k = 0; k < l.length; k++)
-							if(!~i.indexOf(l[k])){
-								if(e = _i('post-' + l[k])){
+						for(var k of l)
+							if(!~i.indexOf(k)){
+								if(e = _i('post-' + k)){
 									scrollBy(0,-e.scrollHeight);
 									e.remove();
 								}
-								n.push(l[k]);
+								n.push(k);
 							};
 						
 						//	need to remove deleted posts' ids from _g.p.posts
@@ -1076,14 +1076,14 @@
 				'users',
 				'user-back'
 			]
-			for(var i in p) if(se = _i(p[i])) se.remove();
+			for(var i of p) if(se = _i(i)) se.remove();
 			
 			_g.s.feedsPg = !1;
 			
 			//	FIX SIDES
 			var cf = _c('column-fix');
-			for(var i = 0; i < cf.length; i++)
-				cf[i].style.top = 0;
+			for(var i of cf)
+				i.style.top = 0;
 			
 			//	MOVING ON
 			next();
