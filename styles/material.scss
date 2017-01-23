@@ -71,7 +71,7 @@ $red:						#F44336;
 	
 /* Models (ordered by height) */
 .icon						{color:#ccc;cursor:pointer;font-size:16px !important;}
-.responder					{background:#eee;height:100%;left:0;opacity:0;position:absolute;top:0;width:100%;}
+.responder					{background:#ddd;height:100%;left:0;opacity:0;position:absolute;top:0;width:100%;}
 .button						{z-index:200;box-shadow:$shadow-2dp;}
 	.button.is-primary		{}
 	.button.is-secondary	{background:#757575 !important;}
@@ -103,7 +103,7 @@ $red:						#F44336;
 	}
 .search						{height:35px;position:relative;}
 	.search-input			{background:transparent;border:0;left:0;outline:0;padding:10px;position:absolute;top:0;width:calc(100% - 55px);}
-	.search-submit			{border:0;cursor:pointer;font-size:20px !important;height:35px;line-height:35px;outline:0;position:absolute;right:0;text-align:center;top:0;width:35px;}
+	.search-submit			{border:0;color:#fff !important;cursor:pointer;font-size:20px !important;height:35px;line-height:35px;outline:0;position:absolute;right:0;text-align:center;top:0;width:35px;}
 
 /* Dark Elements (ordered by whatever, really) */
 html.dark					{background:#303030 url("../assets/img/back_dark.png");background-position:center center;background-attachment:fixed;color:#fff;}
@@ -112,6 +112,9 @@ html.dark					{background:#303030 url("../assets/img/back_dark.png");background-
 	code					{background:#383838;color:white;}
 	a						{color:#ccc;}
 	a:hover					{color:#fff;}
+	
+	.responder				{background:#888;}
+	.search-submit			{color:#444 !important;}
 }
 
 /* Prism (these colors are meant to work with both light and dark themes) */

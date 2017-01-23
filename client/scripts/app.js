@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	2016.12.28
+ *	2017.01.23
  */
 
    (function bippity(){
