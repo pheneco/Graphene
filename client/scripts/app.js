@@ -1654,6 +1654,16 @@
 					if(~_g.ui.columns[i].contains.indexOf('search'))
 						_i('body')._c('column')[i].insertAdjacentHTML('beforeend', '<div id="info-column" class="column-fix"></div>');
 			_i('info-column').innerHTML += _g.temps.search();
+			window.setTimeout(function(){
+				_c('search-input')[0].addEventListener('focus',function(){
+					window.setTimeout(function(){
+						_c('card search has-responder')[0].className = 'card search has-responder is-lifted';
+					},200);
+				});
+				_c('search-input')[0].addEventListener('blur',function(){
+					_c('card search has-responder is-lifted')[0].className = 'card search has-responder';
+				});
+			},10);
 		},
 		animations	: {
 			loadLogin	: function(){
