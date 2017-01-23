@@ -1,7 +1,7 @@
 /*
  *	Graphene Material Design CSS
  *	Written by Trevor J Hoglund
- *	2016.12.28
+ *	2017.01.22
  *
  *	Z-Index are somewhere in the range n * 100 < z-index < ((n + 1) * 100) - 100, where n is the material elevation
  *	This allows flexibility in the graphics, using z-index to control the actual imaging
@@ -100,7 +100,9 @@ $red:						#F44336;
 		padding:0 10px 10px 10px;text-align:right;
 		.post-button		{border:0;cursor:pointer;display:inline-block;outline:0;padding:3px;text-align:center;width:75px;}
 	}
-	
+.search						{height:35px;}
+	.search-input			{border:0;left:0;outline:0;padding:10px;position:absolute;top:0;width:calc(100% - 55px);}
+	.search-submit			{border:0;cursor:pointer;font-size:20px !important;height:35px;line-height:35px;outline:0;position:absolute;right:0;text-align:center;top:0;width:35px;}
 
 /* Dark Elements (ordered by whatever, really) */
 html.dark					{background:#303030 url("../assets/img/back_dark.png");background-position:center center;background-attachment:fixed;color:#fff;}

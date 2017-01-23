@@ -1626,12 +1626,7 @@
 				for(var i = 0; i < _g.ui.columns.length; i++)
 					if(~_g.ui.columns[i].contains.indexOf('search'))
 						_i('body')._c('column')[i].insertAdjacentHTML('beforeend', '<div id="info-column" class="column-fix"></div>');
-			_i('info-column').innerHTML += '<div id="search"><div class="notes-title">Search</div><input placeholder="Search something..." id="search-box"></div>';
-			window.setTimeout(function(){
-				_i('search-box').onkeypress = function(e){
-					if(e.keyCode == 13 && this.value != '') page('/search/' + encodeURIComponent(this.value));
-				}
-			},0);
+			_i('info-column').innerHTML += _g.temps.search();
 		},
 		animations	: {
 			loadLogin	: function(){
@@ -1741,7 +1736,8 @@
 		creator : _h('creator'),
 		change	: _h('change'),
 		user	: _h('user'),
-		notes	: _h('note')
+		notes	: _h('note'),
+		search	: _h('search')
 	});Handlebars.registerPartial('comment', _i('comment-template').innerHTML);
 	_g.u	= (_g.users		= {
 		loaded	: !1,
