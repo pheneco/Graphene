@@ -15,6 +15,17 @@
 			var l = ['change','cut','paste','drop','keydown'];
 			for(var i in l) this.addEventListener(l[i], resize.bind(this), !1);
 		}
+		Element.prototype.responsibleParent = function(){
+			var t = this;
+			if(t == null)
+				return false;
+			while(t.tagName.toLowerCase() !== 'html'){
+				if(~t.className.indexOf('has-responder'))
+					return t;
+				t = t.parentElement;
+			}
+			return false;
+		}
 		HTMLTextAreaElement.prototype.insertAtCaret = function(text){
 			text = text || '';
 			if(document.selection){
@@ -101,9 +112,25 @@
 			});
 		}(document, "script", "twitter-wjs"));
 		window.lastClick = {x:0,y:0};
-		window.addEventListener('click',(e)=>{
+		window.addEventListener('click',function(e){
 			window.lastClick.x = e.pageX;
 			window.lastClick.y = e.pageY;
+			var rsp = e.target.responsibleParent();
+			if(rsp){
+				var rpr = rsp._c('responder')[0],
+					rct = rsp.getBoundingClientRect(),
+					xPos = e.pageX - rct.left,
+					yPos = e.pageY - rct.top,
+					rad = Math.sqrt(Math.pow(rct.width,2) + Math.pow(rct.height,2));
+				rpr.style.transition = "";
+				rpr.style.webkitClipPath = "circle(0% at "+xPos+"px "+yPos+"px)";
+				rpr.style.opacity = 1;
+				window.setTimeout(function(){
+					rpr.style.transitionDuration = "1.0s";
+					rpr.style.webkitClipPath = "circle(" + rad + "px at "+xPos+"px "+yPos+"px)";
+					rpr.style.opacity = 0;
+				},10);
+			}
 		});
 		//	This is the thing that does everything important
 		window.addEventListener('load', function(){
