@@ -753,13 +753,13 @@
 			if(_g.n.amount < 0) _g.n.amount = 0;
 			//	_i('side-notes').innerHTML = _g.n.amount;
 			//	_i('side-notes').style.display = _g.n.amount == 0 ? 'none' : 'block';
-			_g.n.opened ? _i('notes-num').innerHTML = _g.n.amount : null;
+			//	_g.n.opened ? _i('notes-num').innerHTML = _g.n.amount : null;
 		},
 		open	: function(){
 			if(!_g.n.opened){
 				if(!_i('info-column'))
 					_g.ui.getColumn('notes').insertAdjacentHTML('beforeend', '<div id="info-column" class="column-fix"></div>');
-				_i('info-column').innerHTML += '<div id="notes"><div class="notes-title">Notifications (<span id="notes-num">' + _g.n.amount + '</span> unread)</div><div id="notes-notes"></div></div>';
+				_i('info-column').innerHTML += '<div id="notes"></div>';
 				_g.n.opened = !0;
 				_g.n.load();
 			}
@@ -782,8 +782,7 @@
 				}
 				_g.n.update();
 				if(_g.n.opened){
-					if(info.length == 0) _i('notes-notes').innerHTML = '<i>You have no notifications</i>';
-					else _i('notes-notes').innerHTML = _g.tp.notes({
+					if(info.length > 0) _i('notes').innerHTML = _g.tp.notes({
 						notes	: info
 					});
 				}
@@ -1657,11 +1656,11 @@
 			window.setTimeout(function(){
 				_c('search-input')[0].addEventListener('focus',function(){
 					window.setTimeout(function(){
-						_c('card search has-responder')[0].className = 'card search has-responder is-lifted';
+						_c('card search has-responder')[0].className = 'card search is-lifted';
 					},200);
 				});
 				_c('search-input')[0].addEventListener('blur',function(){
-					_c('card search has-responder is-lifted')[0].className = 'card search has-responder';
+					_c('card search is-lifted')[0].className = 'card search has-responder';
 				});
 			},10);
 		},

@@ -62,7 +62,6 @@ $red:						#F44336;
 	.emoji					{height:12px;}
 	
 /* Page Layout */
-
 #body						{padding-top:40px;position:relative;transition:filter 0.3s;}
 	#body.is-blurred		{filter:blur(3px);}
 .loading					{background:#444444;height:100%;left:0;position:fixed;top:0;transition-duration:0.3s;width:100%;z-index:2300;}
@@ -75,15 +74,29 @@ $red:						#F44336;
 .button						{z-index:200;box-shadow:$shadow-2dp;}
 	.button.is-primary		{}
 	.button.is-secondary	{background:#757575 !important;}
-.card						{z-index:200;box-shadow:$shadow-2dp;
-							width:100%;display:inline-block;background:#fff;margin-bottom:2rem;transition:box-shadow 0.3s cubic-bezier(.25,.8,.25,1);}
+.card						{z-index:200;box-shadow:$shadow-2dp;width:100%;display:inline-block;background:#fff;margin-bottom:2rem;transition:box-shadow 0.3s cubic-bezier(.25,.8,.25,1);}
 	.card.is-lifted			{z-index:800;box-shadow:$shadow-8dp;}
 .menu						{z-index:800;box-shadow:$shadow-8dp;}
 .drawer						{z-index:1600;box-shadow:$shadow-16dp;}
 .dialog						{z-index:2400;box-shadow:$shadow-24dp;}
 
 /* Implementations and Elements */
-
+.note						{
+	background:#fff;margin-bottom:0.5rem;position:relative;
+	.note-avat				{left:10px;position:absolute;top:10px;}
+	.note-content			{min-height:36px;padding:10px;}
+	.note-info				{
+		color:#111 !important;margin-left:46px;
+		a					{color:#111 !important;}
+	}
+	.note-icons				{bottom:10px;position:absolute;right:10px;z-index:50;}
+	.note-link				{left:0;height:100%;position:absolute;top:0;width:100%;z-index:25;}
+	.note-time				{
+		color:#ccc;
+		span				{font-size:8pt;}
+	}
+}
+	.note.note-read			{background:#f8f8f8;}
 .post						{}
 	.post.is-expanded		{
 		margin-left:-390px;width:1300px;
@@ -101,10 +114,12 @@ $red:						#F44336;
 		padding:0 10px 10px 10px;text-align:right;
 		.post-button		{border:0;cursor:pointer;display:inline-block;outline:0;padding:3px;text-align:center;width:75px;}
 	}
-.search						{height:35px;position:relative;}
+.search						{
+	height:35px;margin-bottom:1rem;position:relative;
 	.search-input			{background:transparent;border:0;left:0;outline:0;padding:10px;position:absolute;top:0;width:calc(100% - 55px);}
 	.search-submit			{border:0;color:#fff !important;cursor:pointer;font-size:20px !important;height:35px;line-height:35px;outline:0;position:absolute;right:0;text-align:center;top:0;width:35px;}
-
+}
+	
 /* Dark Elements (ordered by whatever, really) */
 html.dark					{background:#303030 url("../assets/img/back_dark.png");background-position:center center;background-attachment:fixed;color:#fff;}
 .dark						{
@@ -113,6 +128,8 @@ html.dark					{background:#303030 url("../assets/img/back_dark.png");background-
 	a						{color:#ccc;}
 	a:hover					{color:#fff;}
 	
+	.note					{background:#444;}
+	.note.note-read			{background:#383838;}
 	.responder				{background:#888;}
 	.search-submit			{color:#444 !important;}
 }

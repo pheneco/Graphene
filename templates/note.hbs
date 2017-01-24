@@ -1,10 +1,8 @@
 {{#each notes}}
-<div class="notes {{#if read}}notes-read{{/if}}" notes-id-list="{{ids}}">
-	<a href="{{link}}" onclick="_g.n.read('{{ids}}')">
-		<img class="notes-avat" src="{{users.0.avatar}}">
-	</a>
-	<div class="notes-info">
-		<a href="{{link}}" onclick="_g.n.read('{{ids}}')">
+<div class="card note {{#if read}}note-read{{/if}}" notes-id-list="{{ids}}">
+	<div class="note-content">
+		<img class="note-avat" src="{{users.0.avatar}}">
+		<div class="note-info">
 			{{names}}
 			{{#strCompare type 'comment'}}
 				{{#if yours}}
@@ -25,15 +23,19 @@
 			{{#if post.preview}}
 				{{post.preview}}
 			{{/if}}
-		</a>
-		<div class="notes-time">
-			<span class="timestamp" unix-time="{{time}}">{{timestamp}}</span> &bull; 
-			{{#unless read}}
-				<span class="notes-mark"><a onclick="_g.n.read('{{ids}}')">Mark as Read</a> &bull;</span>
-			{{/unless}}
-			<a onclick="_g.n.delete('{{ids}}')">Delete</a>
+			<div class="note-time">
+				<span class="timestamp" unix-time="{{time}}">{{timestamp}}</span>
+			</div>
+			<a href="{{link}}" onclick="_g.n.read('{{ids}}')">
+				<div class="note-link"></div>
+			</a>
+			<div class="note-icons">
+				{{#unless read}}
+					<span title="Mark as read" onclick="_g.n.read('{{ids}}')"><i class="icon note-icon material-icons">visibility</i></span>
+				{{/unless}}
+				<span title="Delete" onclick="_g.n.delete('{{ids}}')"><i class="icon note-icon material-icons">delete</i></span>
+			</div>
 		</div>
 	</div>
-	<div style="clear:both;"></div>
 </div>
 {{/each}}
