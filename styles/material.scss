@@ -128,8 +128,11 @@ html.dark					{background:#303030 url("../assets/img/back_dark.png");background-
 	a						{color:#ccc;}
 	a:hover					{color:#fff;}
 	
-	.note					{background:#444;}
-	.note.note-read			{background:#383838;}
+	.note					{
+		background:#444;
+		.note-info			{color:#fff !important;}
+	}
+	.note.note-read			{background:#383838 !important;}
 	.responder				{background:#888;}
 	.search-submit			{color:#444 !important;}
 }
