@@ -119,8 +119,8 @@
 			if(rsp){
 				var rpr = rsp._c('responder')[0],
 					rct = rsp.getBoundingClientRect(),
-					xPos = e.pageX - rct.left,
-					yPos = e.pageY - rct.top,
+					xPos = e.clientX - rct.left,
+					yPos = e.clientY - rct.top,
 					rad = Math.sqrt(Math.pow(rct.width,2) + Math.pow(rct.height,2));
 				rpr.style.transition = "";
 				rpr.style.webkitClipPath = "circle(0% at "+xPos+"px "+yPos+"px)";
