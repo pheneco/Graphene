@@ -82,6 +82,8 @@ $red:						#F44336;
 .card						{z-index:200;box-shadow:$shadow-2dp;width:100%;display:inline-block;background:#fff;margin-bottom:2rem;transition:box-shadow 0.3s cubic-bezier(.25,.8,.25,1);}
 	.card.is-lifted			{z-index:800;box-shadow:$shadow-8dp;}
 .menu						{z-index:800;box-shadow:$shadow-8dp;}
+.flag						{z-index:1500;background:$red;box-shadow:$shadow-15dp;color:#fff;left:0;padding:4px;position:fixed;text-align:center;top:0;width:calc(100% - 8px);}
+	.flag a					{color:#fff !important;font-weight:bold;}
 .drawer						{z-index:1600;box-shadow:$shadow-16dp;}
 .dialog						{z-index:2400;box-shadow:$shadow-24dp;}
 

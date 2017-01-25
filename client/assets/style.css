@@ -237,8 +237,8 @@
 	.draft-list td:first-child{width:400px;}
 	.draft-list td:nth-child(2){color:#ccc;}
 
-#version					{position:fixed;left:0;bottom:0;width:calc(100% - 8px);padding:4px;color:#fff;background:#CD3E3E;text-align:center;z-index:20;}
-	#version a				{color:#fff !important;font-weight:bold;}
+/* #version					{position:fixed;left:0;bottom:0;width:calc(100% - 8px);padding:4px;color:#fff;background:#CD3E3E;text-align:center;z-index:20;} */
+	/* #version a				{color:#fff !important;font-weight:bold;} */
 	
 @keyframes barberpole		{
 	from					{background-position:0 0;}

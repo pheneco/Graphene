@@ -459,7 +459,7 @@
 					if(_g.v == dat.v)
 						return !1;
 					_g.cn.stream.close();
-					if(!_i('version')) body.insertAdjacentHTML('afterend', '<div id="version"></div>');
+					if(!_i('version')) body.insertAdjacentHTML('afterend', '<div class="flag" id="version"></div>');
 					_i('version').innerHTML = 'Your Graphene version (<i>' + _g.v + '</i>) is out of date. Please <a href="javascript:location.reload();void(0);">reload</a> to update to <a href="' + _g.url + '/changes"><i>' + dat.v + '<i></a>.';
 					_g.cn.recheck(dat.v);
 				};
