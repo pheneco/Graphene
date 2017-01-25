@@ -2222,25 +2222,36 @@
 			}
 		],
 		blocks		: [],
-		load		: function(){
-			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
-			if(_i('body').innerHTML == '')
-				for(var i = 0; i < _g.ui.columns.length; i++)
-					_i('body').innerHTML += '<div class="column ' + _g.ui.columns[i].width + '"></div>';
-		},
-		update		: function(){
-			var ctr,left;
-			for(var i = 0; i < _g.ui.columns.length; i++)
-				if(_g.ui.columns[i].center) ctr = _i('body')._c('column')[i].getBoundingClientRect();
-			_i('body').style.marginLeft = Math.max(40,((window.innerWidth / 2) - (ctr.width / 2) - (ctr.left - _i('body').getBoundingClientRect().left))) + 'px';
+		clear		: function(){
+			
 		},
 		getColumn	: function(contains){
-			for(var i = 0; i < _g.ui.columns.length; i++)
+			for(var i in _g.ui.columns)
 				if(~_g.ui.columns[i].contains.indexOf(contains))
 					return _i('body')._c('column')[i];
 		},
+		load		: function(){
+			var left = 0;
+			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
+			if(_i('body').innerHTML == '')
+				for(var i in _g.ui.columns){
+					_i('body').innerHTML += `<div class="column ${_g.ui.columns[i].width}" style="left:calc(${left}px + ${i*2}rem)"></div>`;
+					left += _g.ui.columns[i].width == 'wide'
+						? 520
+						: _g.ui.columns[i].width == 'thin'
+							? 300
+							: 210;
+				}
+			_g.ui.update();
+		},
 		modal		: function(){
 			
+		},
+		update		: function(){
+			var ctr,left;
+			for(var i in _g.ui.columns)
+				if(_g.ui.columns[i].center) ctr = _i('body')._c('column')[i].getBoundingClientRect();
+			_i('body').style.left = Math.max(40,((window.innerWidth / 2) - (ctr.width / 2) - (ctr.left - _i('body').getBoundingClientRect().left))) + 'px';
 		}
 	});
 	_g.x	= (_g.crop		= {	//	Reservation (library)

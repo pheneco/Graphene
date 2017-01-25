@@ -6,12 +6,12 @@
  
 
 /* #body						{position:relative;padding-top:40px;} */
-	.column					{position:relative;float:left;margin-left:40px;min-height:1px;}
-	.column:first-child		{margin:0;}
-	.column.thin			{width:300px;}
-	.column.slim			{width:210px;}
-	.column.wide			{width:520px;}
-	.column-fix				{position:absolute;top:0;}
+	/* .column					{position:relative;float:left;margin-left:40px;min-height:1px;} */
+	/* .column:first-child		{margin:0;} */
+	/* .column.thin			{width:300px;} */
+	/* .column.slim			{width:210px;} */
+	/* .column.wide			{width:520px;} */
+	/* .column-fix				{position:absolute;top:0;} */
 	.space					{height:10px;}
 	/* .emoji					{height:12px;} */
 
