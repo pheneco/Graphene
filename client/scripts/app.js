@@ -510,12 +510,15 @@
 				tb.value	= draft.text;
 				resize.bind(tb)();
 			}});
-			/*
-			_i('post-new-image').onchange = this.drop;
-			_i('post-new-audio').onchange = this.drop;
-			*/
 			post.addEventListener('dragover', this.dragover);
 			post.addEventListener('drop', this.drop);
+			post.addEventListener('keypress', function(e){
+				if(e.keyCode == 10){
+					e.stopPropagation();
+					e.preventDefault();
+					_g.cr.post();
+				}
+			});
 			post._c('post-textbox')[0].addEventListener('focus',function(){
 				_i('post-new')._c('card')[0].className = 'card is-lifted';
 			});
@@ -523,44 +526,6 @@
 				_i('post-new')._c('card is-lifted')[0].className = 'card';
 			});
 			return !0;
-		},
-		renderImages	: function(){	//	deprecated
-			var img, pr
-				cre	= _i('post-new'),
-				pm	= cre._c('post-mediabox')[0];
-			pm.innerHTML = '<div></div>';
-			for(var i in this.imageLayout){
-				pr = document.createElement('div');
-				pr.className = 'post-images-' + this.imageLayout[i].length;
-				pm.appendChild(pr);
-				for(var j = 0; j < this.imageLayout[i].length; j++){
-					img = document.createElement('img');
-					img.src = this.images[this.imageLayout[i][j]];
-					img.imgId = this.imageLayout[i][j];
-					img.oncontextmenu = function(e){
-						e.preventDefault();
-						_g.m.open(e, {
-							Remove : "_g.cr.remove(" + this.imgId + ")",
-							"Move Up" : "",
-							"Move Down" : ""
-						})
-					};
-					pr.appendChild(img);
-				}
-			}
-		},
-		renderLink		: function(){	//	deprecated
-			var cre = _i('post-new'),
-				pm = cre._c('post-mediabox')[0];
-			if(cre.getAttribute('post-type') == 'text'){
-				cre.setAttribute('post-type', 'link');
-				cre._c('post-medias')[0].style.display = 'none';
-				pr = document.createElement('input');
-				pr.className = 'post-link';
-				pr.placeholder = 'http://www.example.com/';
-				pm.appendChild(pr);
-				window.setTimeout(pr.focus(), 0);
-			}
 		},
 		dragover		: function(e){	//	deprecated
 			e.stopPropagation();
@@ -585,22 +550,6 @@
 					_i('post-new')._c('post-textbox')[0].insertAtCaret('![](' + (webm ? urls['original'] : urls[1280]) + ')\n');
 				}
 			}
-		},
-		remove			: function(id){	//	deprecated
-			this.images.splice(id, 1);
-			for(var i in this.imageLayout){
-				for(var j in this.imageLayout[i]){
-					if(this.imageLayout[i][j] == id) this.imageLayout[i].splice(j, 1), j--;
-					if(this.imageLayout[i][j] > id) this.imageLayout[i][j]--;
-				}
-				if(this.imageLayout[i].length == 0) this.imageLayout.splice(i, 1), i--;
-			}
-			if(this.imageLayout.length == 0){
-				var cre	= _('post-new'),
-					pm	= cre._c('post-mediabox')[0];
-				cre.setAttribute('post-type', 'text');
-				pm.innerHTML = '';
-			} else this.renderImages();
 		},
 		post 			: function(){
 			if(this.posting) return;
