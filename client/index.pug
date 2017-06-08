@@ -11,8 +11,8 @@ html(lang="en")
 	link#darkcss(rel="stylesheet", href="/assets/dark.css", disabled)
 	link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
 	link(rel="icon", href="/assets/img/fav.png")
-	
-	
+
+
 	script#change-template(type="text/x-handlebars-template"): include ../templates/change.hbs
 	script#comment-template(type="text/x-handlebars-template"): include ../templates/comment.hbs
 	script#creator-template(type="text/x-handlebars-template"): include ../templates/creator.hbs
@@ -23,7 +23,7 @@ html(lang="en")
 	script#settings-template(type="text/x-handlebars-template"): include ../templates/settings.hbs
 	script#sidebar-template(type="text/x-handlebars-template"): include ../templates/sidebar.hbs
 	script#user-template(type="text/x-handlebars-template"): include ../templates/user.hbs
-	
+
 	if localLibraries
 		script(src="/scripts/page.js")
 		script(src="/scripts/soundcloud.js")
@@ -33,36 +33,23 @@ html(lang="en")
 		script(src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js")
 		script(src="http://connect.soundcloud.com/sdk.js")
 		script(src="http://twemoji.maxcdn.com/2/twemoji.min.js")
-		
-	
+
+
 	script
 		|	var url = window.location.origin,
 		|		api	= window.location.protocol + window.location.origin.split(':')[1] + ":" + "#{api}",
 		|		name = "Graphene";
-	
+
 	script(src="/scripts/prism.js")
 	script(src="/scripts/handlebars.js")
 	script(src="/scripts/app.js")
-	
-	if localLibraries
-		script(src="/scripts/color.js")
-		script(src="/scripts/crop.js")
-		script(src="/scripts/popup.js")
-		script(src="/scripts/menu.js")
-	else
-		script(src="//scripts.phene.co/color/0.1.0.0006")
-		script(src="//scripts.phene.co/crop/0.1.0.0026.min")
-		script(src="//scripts.phene.co/popup/0.2.0.0024")
-		script(src="//scripts.phene.co/menu/0.4.3.0043")
-		script
-			|	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			|	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			|	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			|	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			|	ga('create', 'UA-67481186-6', 'auto');ga('send', 'pageview');
-	
+	script(src="/scripts/color.js")
+	script(src="/scripts/crop.js")
+	script(src="/scripts/popup.js")
+	script(src="/scripts/menu.js")
+
 	title Graphene
-	
+
 body(style="overflow:hidden")
 	div.loading
 		div#loading-icon(style="opacity:1")
