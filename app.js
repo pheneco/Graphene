@@ -52,7 +52,7 @@ var root		= __dirname,
 			'\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\uFF00-\uFFEF\u4E00-\u9FAF\u2605-\u2606\u2190-\u2195\u203B',	//	Japanese
 			']+)'],'g');																							//	End
 		this.hashtagRegExp2	= new RegExp([
-			'(\\s+|^|\\>)#([\\w',																						//	Word Characters
+			'(\\s+|^|\\>)#([\\w',																					//	Word Characters
 			'\ud83c\udf00-\udfff\ud83d\udc00-\ude4f\ud83d\ude80-\udeff\u2600-\u26ff',								//	Emoji
 			'\u3000-\u303F\u3040-\u309F\u30A0-\u30FF\uFF00-\uFFEF\u4E00-\u9FAF\u2605-\u2606\u2190-\u2195\u203B',	//	Japanese
 			']+)'],'gm');																							//	End
@@ -175,7 +175,7 @@ var root		= __dirname,
 	}),
 	Notification = new events.EventEmitter();
 Notification.setMaxListeners(0)
-mongoose.connect('mongodb://' + config.addr.mongo + '/' + config.database);
+mongoose.connect(`mongodb://`+(config.mongo.user==""?``:`${config.mongo.user}:${config.mongo.pass}@`)+`${config.mongo.addr}:${config.mongo.port}/${config.database}`);
 
 //	Enable CORS
 app.use(function(req,res,next) {
@@ -218,7 +218,7 @@ require('./controllers/albums')(app, Graphene);
 
 ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.log(Graphene.time() + e);
 	Graphene.v = sc.version;
-	
+
 	//	Listen
 	app.listen(config.apiPort, function(){
 		var serve = serveStatic(__dirname + '/client', {});

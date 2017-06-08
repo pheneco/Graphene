@@ -28,9 +28,14 @@
 	},
 	"addr" : {
 		"web" : "http://localhost",
-		"mongo" : "localhost",
 		"img" : "/img",
 		"aud" : "/aud"
 	},
+    "mongo" : {
+        "addr" : "localhost",
+        "port" : 27017,
+        "user" : "",
+        "pass" : ""
+    },
 	"literalWebAddr" : false
 }
