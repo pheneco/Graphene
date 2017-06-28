@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	2017.01.23
+ *	2017.06.28
  */
 
    (function bippity(){
@@ -90,7 +90,7 @@
 			}).bind(this), 0);
 		}
 		window.scrollToPos = function(){
-			// Arguments: positions to, time, incremements 
+			// Arguments: positions to, time, incremements
 			var idst = (dist = arguments[0] - (cpos = document.documentElement.scrollTop || scrollY)) / (inum = (time = arguments[1] || 500) / (inc = arguments[2] || 10)),i=-1;
 			window.scrollBy(0, dist % inum);
 			while((++i)<inum) setTimeout(function(){window.scrollBy(0, idst)}, i * inc);
@@ -217,15 +217,13 @@
 				if(!isNaN(parseInt(ts[i].getAttribute('unix-time')))) ts[i].innerHTML = Graphene.time(ts[i].getAttribute('unix-time'));
 		}, 1e3);
 	})(url,api,name));boppity();
-	_g.a	= (_g.audio		= {	//	Reservation (module)
-		
-	});
+	_g.a	= (_g.audio		= {});	//	Reservation (module)
 	_g.b	= (_g.bar		= {
 		toLoad : 0,
 		loaded : 0,
 		error  : !1,
-		update : function(){
-			if(this.error || _g.t.login) return;
+		update(){
+			if(this.error || _g.u.login) return;
 			if(!this.toLoad) this.toLoad = 1, this.loaded = 1;
 			var sl	= _i('side-loading'),
 				lb	= _i('loading-bar'),
@@ -248,7 +246,7 @@
 				document.body.style.overflow = 'hidden';
 			}
 		},
-		fix		: function(){
+		fix(){
 			if(!_g.b.error) return;
 			_g.b.error = !1;
 			_i('loading-error-bar').id = 'loading-bar';
@@ -260,7 +258,7 @@
 		loading : !1,
 		visible : [],
 		streams : {},
-		load	: function(id, after, amount){
+		load(id, after, amount){
 			if(this.loading) return;
 			this.loading = !0;
 			var post = _i('post-' + id),
@@ -290,10 +288,10 @@
 				}
 			});
 		},
-		key		: function(e,id){
+		key(e,id){
 			if(e.keyCode == 13) _g.c.post(id);
 		},
-		post	: function(id){
+		post(id){
 			if(this.posting) return;
 			this.posting = !0;
 			new ajax(_g.api + '/post/' + id + '/comment', 'POST', JSON.stringify({
@@ -306,11 +304,11 @@
 					_i("comment-content-" + id).value = '';
 				}
 			});
-		}, 
-		delete	: function(post,comment){
+		},
+		delete(post,comment){
 			new ajax(_g.api + '/post/' + post + '/comment/' + comment, 'DELETE', '', {});
 		},
-		handle	: function(e){
+		handle(e){
 			var i = JSON.parse(e.data),
 				e = _i('post-'+i.id),
 				c = e._c('comment'),
@@ -323,7 +321,7 @@
 			//	load any new comments
 			if((x = i.list.length - 1 - i.list.indexOf(l[l.length-1])) > 0) _g.c.load(i.id,!0,x);
 		},
-		toggle	: function(id, focus){
+		toggle(id, focus){
 			var cpp = _i('post-' + id),
 				ccr = cpp._c('post-comments')[0],
 				p = _i('post-' + id).children[0],
@@ -336,15 +334,11 @@
 			} else ccr.style.display = 'none';
 		}
 	});
-	_g.ca	= (_g.calendar	= {	//	Reservation (module)
-		
-	});
-	_g.cl	= (_g.color		= {	//	Reservation (library)
-		
-	});
+	_g.ca	= (_g.calendar	= {});	//	Reservation (module)
+	_g.cl	= (_g.color		= {});	//	Reservation (library)
 	_g.cn	= (_g.changes	= {
 		stream	: {},
-		load	: function(ctx,next){
+		load(ctx,next){
 			document.title = _g.page = "Changes | " + _g.name;
 			var app = typeof ctx.params.app == 'string' ? ctx.params.app : 'webClient',
 				post = _i('changes');
@@ -432,7 +426,7 @@
 			});
 			next();
 		},
-		save	: function(app){
+		save(app){
 			new ajax(_g.api + '/change/' + app, 'POST', JSON.stringify({
 				version		: _i('change-v').value,
 				date		: _i('change-d').value,
@@ -451,7 +445,7 @@
 				}
 			});
 		},
-		recheck	: function(v){
+		recheck(v){
 			if(typeof(EventSource) !== "undefined"){
 				_g.cn.stream = new EventSource(_g.api + "/changes/stream/" + _g.v,{withCredentials:true});
 				_g.cn.stream.onmessage = function(e){
@@ -472,7 +466,7 @@
 		audioElement	: '',
 		audio			: '',
 		posting			: !1,
-		load			: function(){
+		load(){
 			var post = _i('post-new');
 			if(post == null){
 				post = document.createElement('div');
@@ -527,12 +521,12 @@
 			});
 			return !0;
 		},
-		dragover		: function(e){	//	deprecated
+		dragover(e){	//	deprecated
 			e.stopPropagation();
 			e.preventDefault();
 			e.dataTransfer.dropEffect = 'move';
 		},
-		drop			: function(e){
+		drop(e){
 			var f	= (typeof e.dataTransfer !== 'undefined') ? e.dataTransfer.files[0] : this.files[0],
 				d	= new FormData();
 			if(!/\/(jpe?g|png|gif|webm)$/i.test(f.type)) return !1;
@@ -551,7 +545,7 @@
 				}
 			}
 		},
-		post 			: function(){
+		post(){
 			if(this.posting) return;
 			this.posting = !0;
 			if(typeof this.audioElement === 'object') this.audioElement.close();
@@ -584,7 +578,7 @@
 			})
 		},
 		drafts			: {
-			list		: function(){
+			list(){
 				new ajax(_g.api + '/drafts', 'GET', '', {load : function(r){
 					var drafts = JSON.parse(r.responseText);
 					_g.pu.open({
@@ -619,7 +613,7 @@
 					}
 				}});
 			},
-			open		: function(id){
+			open(id){
 				_i('popup-shade').remove();
 				new ajax(_g.api + '/draft/' + id, 'GET', '', {load : function(r){
 					var draft	= JSON.parse(r.responseText),
@@ -628,7 +622,7 @@
 					resize.bind(tb)();
 				}});
 			},
-			save		: function(){
+			save(){
 				new ajax(_g.api + '/drafts/new', 'POST', JSON.stringify({
 					name : prompt(),
 					text : _i('post-new')._c('post-textbox')[0].value
@@ -637,7 +631,7 @@
 					load : function(){}
 				});
 			},
-			delete		: function(id){
+			delete(id){
 				new ajax(_g.api + '/draft/' + id, 'DELETE', '', {load : function(r){
 					_i('popup-shade').remove();
 					_g.cr.drafts.list();
@@ -645,38 +639,28 @@
 			}
 		}
 	});
-	_g.ct	= (_g.chat		= {	//	Reservation (module)
-		
-	});
-	_g.d	= (_g.data		= {	//	Reservation (module)
-		
-	});
-	_g.de	= (_g.ide		= {	//	Reservation (module)
-		
-	});
-	_g.e	= (_g.editor	= {
-		
-	});
+	_g.ct	= (_g.chat		= {});	//	Reservation (module)
+	_g.d	= (_g.data		= {});	//	Reservation (module)
+	_g.de	= (_g.ide		= {});	//	Reservation (module)
+	_g.e	= (_g.editor	= {});
 	_g.g	= (_g.groups	= {
 		loaded	: !1,
 		info	: {},
 		current	: '',
 		name	: '',
-		page	: function(){},
-		list	: function(){},
-		load	: function(){},
-		join	: function(){},
-		leave	: function(){}
+		page(){},
+		list(){},
+		load(){},
+		join(){},
+		leave(){}
 	});
-	_g.m	= (_g.menu		= {	//	Reservation (library)
-		
-	});
+	_g.m	= (_g.menu		= {});	//	Reservation (library)
 	_g.n	= (_g.notes		= {
 		amount	: 0,
 		opened	: !1,
 		stream	: {},
 		info	: {},
-		check	: function(){
+		check(){
 			if(!_g.user) return false;
 			_g.n.load();
 			if(typeof(EventSource) !== "undefined")
@@ -693,18 +677,18 @@
 				});
 			*/
 		},
-		onmsg	: function(e){
+		onmsg(e){
 			_i("notification_sound").play();
 			_g.n.amount = +e.data;
 			_g.n.load();
 		},
-		update	: function(){
+		update(){
 			if(_g.n.amount < 0) _g.n.amount = 0;
 			//	_i('side-notes').innerHTML = _g.n.amount;
 			//	_i('side-notes').style.display = _g.n.amount == 0 ? 'none' : 'block';
 			//	_g.n.opened ? _i('notes-num').innerHTML = _g.n.amount : null;
 		},
-		open	: function(){
+		open(){
 			if(!_g.n.opened){
 				if(!_i('info-column'))
 					_g.ui.getColumn('notes').insertAdjacentHTML('beforeend', '<div id="info-column" class="column-fix"></div>');
@@ -713,8 +697,8 @@
 				_g.n.load();
 			}
 		},
-		load	: function(){
-			new ajax(_g.api + '/notes', 'GET', '', {load : function(r){
+		load(){
+			new ajax(_g.api + '/notes', 'GET', '', {load : (r)=>{
 				var info = _g.n.info = JSON.parse(r.responseText);
 				_g.n.amount = 0;
 				for(var i = 0; i < info.length; i++){
@@ -730,23 +714,22 @@
 					if(!info[i].read) _g.n.amount++;
 				}
 				_g.n.update();
-				if(_g.n.opened){
+				if(_g.n.opened)
 					if(info.length > 0) _i('notes').innerHTML = _g.tp.notes({
 						notes	: info
 					});
-				}
 			}});
 		},
-		read	: function(ids){
+		read(ids){
 			new ajax(_g.api + '/notes/'+ids+'/read', 'POST', '', {
-				load	: function(r){
+				load	: (r)=>{
 					_g.n.load();
 				}
 			});
 		},
-		delete	: function(ids){
+		delete(ids){
 			new ajax(_g.api + '/notes/'+ids, 'DELETE', '', {
-				load	: function(r){
+				load	: (r)=>{
 					_g.n.load();
 				}
 			});
@@ -769,7 +752,7 @@
 		info		: {},
 		posts		: [],
 		cache		: [],
-		list 		: function(amount){
+		list(amount){
 			this.loaded = this.loading = !0;
 			if(!_i('posts'))
 				_g.ui.getColumn('posts').insertAdjacentHTML('beforeend', '<div id="posts"></div>');
@@ -792,7 +775,7 @@
 				});
 			} else this.needLoad = !1;
 		},
-		load 		: function(id, parts, ba){
+		load(id, parts, ba){
 			if(!_i('posts'))
 				_g.ui.getColumn('posts').insertAdjacentHTML('beforeend', '<div id="posts"></div>');
 			if(id == 'last'){
@@ -899,7 +882,7 @@
 				_g.b.update();
 			};
 		},
-		delete		: function(id){
+		delete(id){
 			if(!confirm("Are you sure you want to delete this post?")) return !1;
 			new ajax(_g.api + '/post/' + id, 'DELETE', '', {
 				load	: function(r){
@@ -907,7 +890,7 @@
 				}
 			});
 		},
-		remove		: function(id){
+		remove(id){
 			var a	= _i("post-" + id),
 				b	= a.getBoundingClientRect(),
 				t;
@@ -915,10 +898,8 @@
 				window.scrollBy(0, -b.height);
 			a.remove();
 		},
-		unfollow	: function(id){
-			
-		},
-		listen		: function(){ 
+		unfollow(id){},
+		listen(){
 			if(!_g.session.advanced[0].eventStream) return !1;
 			(_g.p.stream = new EventSource(_g.api + '/posts/listen/' + JSON.stringify(_g.p.posts) + "/" + _g.p.set + "/" + _g.p.setData, {withCredentials:true})).onmessage = function(e){
 				var type = JSON.parse(e.data).type;
@@ -926,7 +907,7 @@
 				if(type == 'post') _g.p.handle(e);
 			};
 		},
-		handle		: function(){
+		handle(){
 			new ajax(_g.api + '/posts?set=' + _g.p.set + '&amount=' + (_i('posts')._c('card').length * 2) + '&data=' + _g.p.setData + '&start=default', 'GET', '', {
 				load : function(r){
 					var i = JSON.parse(r.responseText),
@@ -943,10 +924,10 @@
 								}
 								n.push(k);
 							};
-						
+
 						//	need to remove deleted posts' ids from _g.p.posts
 						for(var m = 0; m < n.length; n++) _g.p.posts.splice(_g.p.posts.indexOf(l[k]),1);
-						
+
 						//	load any new posts
 						if((x = i.length - 1 - i.indexOf(l[l.length-1])) > 0){
 							_g.p.posts.push(i[i.length-1]);
@@ -957,7 +938,7 @@
 				}
 			});
 		},
-		enlarge		: function(id){
+		enlarge(id){
 			var p = _i('post-' + id).children[0],
 				i = _g.p.info[id];
 			i.expanded = !i.expanded;
@@ -967,7 +948,7 @@
 			else if(~_g.ui.blocks.indexOf(p)) _g.ui.blocks.splice(p,1);
 			window.scrollBy(10,10);window.scrollBy(-10,-10);
 		},
-		favorite	: function(id){
+		favorite(id){
 			var post		= _i("post-" + id),
 				fave		= post._c('post-favorite')[0];
 			fave.className	= 'material-icons icon post-favorite is-favorite';
@@ -987,7 +968,7 @@
 				}
 			});
 		},
-		unfavorite	: function(id){
+		unfavorite(id){
 			var post		= _i("post-" + id),
 				fave		= post._c('post-favorite')[0];
 			fave.className	= 'material-icons icon post-favorite';
@@ -1007,9 +988,9 @@
 				}
 			});
 		},
-		clear		: function(ctx, next){
+		clear(ctx, next){
 			var se;
-			
+
 			_g.b.fix();
 
 			//	POSTS
@@ -1022,23 +1003,23 @@
 			}
 			_g.p.posts = [];
 			_g.p.needLoad = true;
-			
+
 			//	USER PAGES
 			if(_g.u.loaded && ctx.path.toLowerCase().indexOf('/user/' + _g.u.name.toLowerCase())){
 				//console.log(!ctx.path.toLowerCase().indexOf('/user/' + _g.u.name.toLowerCase()));
 				if(se = _i('user')) se.remove();
 				_g.u.loaded = !1;
 			}
-			
+
 			//	HOVERCARDS
 			if(_g.u.hovering){
 				_g.u.cards[_g.u.card].style.display = 'none';
 				_g.u.hovering = !1;
 			}
-			
+
 			//	STREAMS
 			if(typeof _g.p.stream === 'object') _g.p.stream.close();
-			
+
 			//	GENERAL ELEMENTS
 			var p = [
 				'settings',
@@ -1052,24 +1033,22 @@
 				'user-back'
 			]
 			for(var i of p) if(se = _i(i)) se.remove();
-			
+
 			_g.s.feedsPg = !1;
-			
+
 			//	FIX SIDES
 			var cf = _c('column-fix');
 			for(var i of cf)
 				i.style.top = 0;
-			
+
 			//	MOVING ON
 			next();
 		}
 	});
-	_g.pu	= (_g.popup		= {	//	Reservation (library)
-		
-	});
+	_g.pu	= (_g.popup		= {});	//	Reservation (library)
 	_g.s	= (_g.settings	= {
 		feedsPg	: !1,
-		load	: function(ctx,next){
+		load(ctx,next){
 			_g.b.toLoad = 3;
 			_g.b.loaded = 0;
 			_g.b.update();
@@ -1082,7 +1061,7 @@
 				load	: function(r){
 					var sess = _g.session = JSON.parse(r.responseText);
 					if(!sess.user) return !1;
-					
+
 					var sets		= document.createElement('div'),
 						cont = _g.ui.getColumn('settings');
 					sets.id			= "settings";
@@ -1093,7 +1072,7 @@
 						all		: !0,
 						blankPost : !0
 					});
-					
+
 					sets._c('post-content')[0].innerHTML = _g.temps.sets({
 						settings	: [
 							{
@@ -1143,7 +1122,7 @@
 					});
 					cont.appendChild(sets);
 					sets._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options"><div class="button post-button" tabindex="-1" onclick="_g.s.save()">Save</div></div><div id="advset-link"><a href="'+_g.url+'/settings/advanced">Advanced Settings</a></div>');
-					
+
 					var clr	= new _g.cl.picker(_i('settings-clr'), {
 						input	: _i('settings-accent'),
 						color	: sess.accent,
@@ -1153,7 +1132,7 @@
 						_g.t.dark = (_i('settings-theme').getAttribute('toggled') == "true");
 						_g.t.update(_g.t.accent);
 					});
-					
+
 					var pass		= document.createElement('div');
 					pass.id			= "password";
 					pass.innerHTML	= _g.temps.post({
@@ -1163,7 +1142,7 @@
 						all		: !0,
 						blankPost : !0
 					});
-					
+
 					pass._c('post-content')[0].innerHTML = _g.temps.sets({
 						settings	: [
 							{
@@ -1202,7 +1181,7 @@
 			});
 			next();
 		},
-		advanced: function(ctx,next){
+		advanced(ctx,next){
 			_g.b.toLoad = 3;
 			_g.b.loaded = 0;
 			_g.b.update();
@@ -1225,7 +1204,7 @@
 						all		: !0,
 						blankPost : !0
 					});
-					
+
 					advset._c('post-content')[0].innerHTML = _g.temps.sets({
 						settings	: [
 							{
@@ -1261,7 +1240,7 @@
 			});
 			next();
 		},
-		feeds	: function(ctx,next){
+		feeds(ctx,next){
 			var load = !1;
 			_g.b.toLoad = 3;
 			_g.b.loaded = 0;
@@ -1317,7 +1296,7 @@
 			});
 			next();
 		},
-		loadFeed: function(info){
+		loadFeed(info){
 			if(!_i('feed-'+info._id)){
 				var feed	= document.createElement('div');
 				feed.id		= 'feed-'+info._id;
@@ -1365,7 +1344,7 @@
 				feed._c('post-content')[0].innerHTML += '<div class="feed-user feed-user-r" title="Unfollow ' + info.users[i].name + '" onclick="_g.u.unfollow(\'' + info.users[i]._id + '\',\'' + info._id + '\')">' + info.users[i].name + '</div>';
 			if(info.users.length == 0) feed._c('post-content')[0].innerHTML = '<i>This stream is empty.</i>';
 		},
-		save	: function(){
+		save(){
 			new ajax(_g.api + '/settings', 'POST', JSON.stringify({
 				//firstName	: _i('settings-fname').value,
 				//lastName	: _i('settings-lname').value,
@@ -1391,7 +1370,7 @@
 				}
 			});
 		},
-		saveAdv	: function(){
+		saveAdv(){
 			new ajax(_g.api + '/settings/advanced', 'POST', JSON.stringify({
 				emailNotes	: _i('settings-t1').getAttribute('toggled'),
 				hoverColors	: _i('settings-t2').getAttribute('toggled'),
@@ -1414,7 +1393,7 @@
 				}
 			});
 		},
-		savePass: function(){
+		savePass(){
 			new ajax(_g.api + '/password', 'POST', JSON.stringify({
 				oldPass		: _i('settings-oldPass').value,
 				newPass		: _i('settings-newPass').value,
@@ -1440,7 +1419,7 @@
 				}
 			});
 		},
-		newFeed	: function(name){
+		newFeed(name){
 			new ajax(_g.api + '/feed/new/' + name, 'POST', '', {
 				load	: function(r){
 					if(r.responseText !== '') _g.pu.open({
@@ -1453,7 +1432,7 @@
 				}
 			});
 		},
-		renameFeed: function(feed,name){
+		renameFeed(feed,name){
 			new ajax(_g.api + '/feed/' + feed + '/rename/' + name, 'POST', '', {
 				load	: function(r){
 					if(r.responseText !== '') _g.pu.open({
@@ -1466,7 +1445,7 @@
 				}
 			});
 		},
-		deleteFeed:	function(feed){
+		deleteFeed(feed){
 			new ajax(_g.api + '/feed/' + feed, 'DELETE', '', {
 				load	: function(r){
 					if(r.responseText !== '') _g.pu.open({
@@ -1483,18 +1462,18 @@
 			});
 		}
 	});
-	_g.t	= (_g.theme		= {	
+	_g.t	= (_g.theme		= {
 		menuOpen	: !1,
 		accent		: '#333333',
 		dark		: !1,
 		login		: !1,
-		menu		: function(){
+		menu(){
 			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-220px" : "-20px";
 			_i("side").style.transitionTimingFunction  = !this.menuOpen
 				? "cubic-bezier(0.7, 0.0, 1.0, 1.0)"
 				: "cubic-bezier(0.5, 0.0, 0.0, 1.5)";
 		},
-		update		: function(c){
+		update(c){
 			_g.t.accent = c;
 			var s = _i('accent').sheet.cssRules,
 				r = ['background','borderTopColor','borderLeftColor','borderRightColor','borderBottomColor','color','','background'];
@@ -1506,7 +1485,7 @@
 			document.getElementsByTagName('html')[0].className = _g.t.dark ? 'dark' : '';
 			_i('hexagon').style.stroke = _i('brandlogocss').sheet.cssRules[0].style.stroke = _g.t.dark ? "#444444" : "#FFFFFF";
 		},
-		side		: function(ctx, next){
+		side(ctx, next){
 			new ajax(_g.api + "/session", "GET", "", {load : function(r){
 				if(_g.session.user) {
 					_g.session = JSON.parse(r.responseText);
@@ -1596,7 +1575,7 @@
 				next();
 			}});
 		},
-		search		: function(){
+		search(){
 			if(!_i('info-column'))
 				for(var i = 0; i < _g.ui.columns.length; i++)
 					if(~_g.ui.columns[i].contains.indexOf('search'))
@@ -1612,9 +1591,63 @@
 					_c('card search is-lifted')[0].className = 'card search has-responder';
 				});
 			},10);
+		}
+	});
+	_g.tp	= (_g.temps		= {
+		post	: _h('post'),
+		side	: _h('sidebar'),
+		sets	: _h('settings'),
+		reg		: _h('register'),
+		creator : _h('creator'),
+		change	: _h('change'),
+		user	: _h('user'),
+		notes	: _h('note'),
+		search	: _h('search')
+	});Handlebars.registerPartial('comment', _i('comment-template').innerHTML);
+	_g.u	= (_g.users		= {
+		loaded	: !1,
+		info	: {
+			name	: {},
+			id		: {}
 		},
-		animations	: {
-			loadLogin	: function(){
+		current	: '',
+		name	: '',
+		height	: 0,
+		x		: {},
+		ranks	: [
+			'Guest',
+			'Registered User',
+			'Activated User',
+			'Contributor',
+			'Creator',
+			'Advanced Creator',
+			'Beta Tester',
+			'Graphene Contributor',
+			'Moderator',
+			'Administrator',
+			'Developer',
+			'God'
+		],
+		set		: '',
+		setData	: '',
+		hovering: !1,
+		card	: '',
+		cardSrc	: {},
+		cards	: {},
+		cardTime: 0,
+		bganimed: !1,
+		animations : {
+			background(xPos,yPos){
+				var bg = _i('user-back'),
+					endRad = Math.sqrt(Math.pow(window.innerHeight,2) + Math.pow(window.innerWidth,2));
+				bg.style.transition = "";
+				bg.style.webkitClipPath = "circle(0% at "+xPos+"px "+yPos+"px)";
+				window.setTimeout(function(){
+					bg.style.transitionDuration = "0.8s";
+					bg.style.webkitClipPath = "circle(" + endRad + "px at "+xPos+"px "+yPos+"px)";
+				},10);
+			},
+            loadLogin(){
 				var form = [
 					_c('login-text')[0],
 					_c('login-text')[1],
@@ -1657,7 +1690,7 @@
 				})(steps);
 				step.next().value();
 			},
-			login		: function(){
+			login(){
 				var form = [
 					_c('login-text')[0],
 					_c('login-text')[1],
@@ -1710,65 +1743,10 @@
 					for(var i = 0; i < s.length; i++) yield s[i];
 				})(steps);
 				step.next().value();
-			}
-		}
-	});
-	_g.tp	= (_g.temps		= {
-		post	: _h('post'),
-		side	: _h('sidebar'),
-		sets	: _h('settings'),
-		reg		: _h('register'),
-		creator : _h('creator'),
-		change	: _h('change'),
-		user	: _h('user'),
-		notes	: _h('note'),
-		search	: _h('search')
-	});Handlebars.registerPartial('comment', _i('comment-template').innerHTML);
-	_g.u	= (_g.users		= {
-		loaded	: !1,
-		info	: {
-			name	: {},
-			id		: {}
+			},
+            loadRegister(){}
 		},
-		current	: '',
-		name	: '',
-		height	: 0,
-		x		: {},
-		ranks	: [
-			'Guest',
-			'Registered User',
-			'Activated User',
-			'Contributor',
-			'Creator',
-			'Advanced Creator',
-			'Beta Tester',
-			'Graphene Contributor',
-			'Moderator',
-			'Administrator',
-			'Developer',
-			'God'
-		],
-		set		: '',
-		setData	: '',
-		hovering: !1,
-		card	: '',
-		cardSrc	: {},
-		cards	: {},
-		cardTime: 0,
-		bganimed: !1,
-		animations : {
-			background : function(xPos,yPos){
-				var bg = _i('user-back'),
-					endRad = Math.sqrt(Math.pow(window.innerHeight,2) + Math.pow(window.innerWidth,2));
-				bg.style.transition = "";
-				bg.style.webkitClipPath = "circle(0% at "+xPos+"px "+yPos+"px)";
-				window.setTimeout(function(){
-					bg.style.transitionDuration = "0.8s";
-					bg.style.webkitClipPath = "circle(" + endRad + "px at "+xPos+"px "+yPos+"px)";
-				},10);
-			}
-		},
-		login	: function(){
+		login(){
 			var data = {
 				email : _c('login-text')[0].value,
 				password : _c('login-text')[1].value
@@ -1784,7 +1762,7 @@
 				}
 			});
 		},
-		page	: function(user,ctx){
+		page(user,ctx){
 			_g.u.bganimed = !1;
 			if(_g.u.info.name[user.toLowerCase()]){
 				_c('loading')[0].insertAdjacentHTML('afterend','<div id="user-back" style="-webkit-clip-path: circle(0% at 0px 0px);"><div><div style="background:url(' + _g.u.info.name[user.toLowerCase()].background + ')"></div><div></div></div></div>');
@@ -1905,7 +1883,7 @@
 				}
 			})
 		},
-		list	: function(amount){
+		list(amount){
 			if(!_i('users')) _g.ui.getColumn('posts').insertAdjacentHTML('afterbegin', '<div id="users"></div>');
 			var last	= _i('users').children[_i('users').children.length - 1],
 				lastId	= last == void 0 ? 'default' : last.id.split('-')[1];
@@ -1924,7 +1902,7 @@
 				});
 			} else this.needLoad = !1;
 		},
-		load	: function(id){
+		load(id){
 			if(id == 'last' || id == 'only') return;
 			new ajax(_g.api + '/user/' + id + '/byId', 'GET', '', {
 				// change	: function(){
@@ -1958,7 +1936,7 @@
 				}
 			})
 		},
-		follow	: function(user,feed){
+		follow(user,feed){
 			var load = function(r){
 				if(r.responseText !== '') _g.pu.open({
 						title : "Error!",
@@ -1984,7 +1962,7 @@
 					load	: load
 				});
 		},
-		followLink: function(link,feed){
+		followLink(link,feed){
 			var p = link.split(_g.url)[1].split('#')[0].split("/");
 			if(!(typeof p[1] === 'string' && p[1].toLowerCase() == 'user' && typeof p[2] === 'string')) return !1;
 			new ajax(_g.api + '/user/' + p[2], 'GET', '', {
@@ -1995,7 +1973,7 @@
 				}
 			});
 		},
-		unfollow: function(user,feed){
+		unfollow(user,feed){
 			var load	= function(r){
 				if(_g.s.feedsPg) _g.s.feeds();
 				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
@@ -2015,7 +1993,7 @@
 					load	: load
 				});
 		},
-		avatar	: function(){
+		avatar(){
 			if(!_g.u.loaded || !_g.session.user || _g.u.current != _g.session.user) return false;
 			var xhr		= new XMLHttpRequest(),
 				file	= _i('avatinput').files[0],
@@ -2028,7 +2006,7 @@
 			xhr.withCredentials = true;
 			xhr.send(data);
 		},
-		background : function(){
+		background(){
 			if(!_g.u.loaded || !_g.session.user || _g.u.current != _g.session.user) return false;
 			var xhr		= new XMLHttpRequest(),
 				file	= _i('backinput').files[0],
@@ -2041,7 +2019,7 @@
 			xhr.withCredentials = true;
 			xhr.send(data);
 		},
-		crop	: function(img){
+		crop(img){
 			_g.popup.open({
 				title	: "Crop Avatar",
 				text	: '<div id="crop-avatar" style="width:500px"></div><div class="popup-button" onclick="_g.u.cropSave()">Save</div>',
@@ -2051,7 +2029,7 @@
 				square:true
 			});
 		},
-		cropSave: function(){
+		cropSave(){
 			_i('popup-shade').remove();
 			new ajax(_g.api + '/user/avatar/crop/', 'POST', JSON.stringify(_g.u.x.getValues()), {
 				type	: 'application/json',
@@ -2060,7 +2038,7 @@
 				}
 			});
 		},
-		hovercard: function(e){
+		hovercard(e){
 			if(_g.u.cardTime) window.clearTimeout(_g.u.cardTime);
 			if(_g.u.hovering){
 				var a = _g.u.cards[_g.u.card].getBoundingClientRect(),
@@ -2097,7 +2075,7 @@
 				}
 			}
 		},
-		loadCard: function(e){
+		loadCard(e){
 			var cards, card, info = _g.u.info.name[_g.u.card];
 			if(info._id == null) return _g.u.hovering = !1;
 			_g.u.cardSrc = e.target;
@@ -2171,15 +2149,13 @@
 			}
 		],
 		blocks		: [],
-		clear		: function(){
-			
-		},
-		getColumn	: function(contains){
+		clear(){},
+		getColumn(contains){
 			for(var i in _g.ui.columns)
 				if(~_g.ui.columns[i].contains.indexOf(contains))
 					return _i('body')._c('column')[i];
 		},
-		load		: function(){
+		load(){
 			var left = 0;
 			if(!_i('body')) document.body.insertAdjacentHTML('beforeend', '<div id="body"></div>');
 			if(_i('body').innerHTML == '')
@@ -2193,21 +2169,17 @@
 				}
 			_g.ui.update();
 		},
-		modal		: function(){
-			
-		},
-		update		: function(){
+		modal(){},
+		update(){
 			var ctr,left;
 			for(var i in _g.ui.columns)
 				if(_g.ui.columns[i].center) ctr = _i('body')._c('column')[i].getBoundingClientRect();
 			_i('body').style.left = Math.max(40,((window.innerWidth / 2) - (ctr.width / 2) - (ctr.left - _i('body').getBoundingClientRect().left))) + 'px';
 		}
 	});
-	_g.x	= (_g.crop		= {	//	Reservation (library)
-		
-	});
-	
-	page('*', function(ctx,next){
+	_g.x	= (_g.crop		= {});	//	Reservation (library)
+
+	page('*', (ctx,next)=>{
 		//	var lnk = document.getElementsByTagName('link');
 		//	lnk[lnk.length-1].href = '/assets/img/fav.php?c=' + _g.session.accent.replace('#','');
 		if(_i('post-new'))
@@ -2221,8 +2193,8 @@
 	});
 	page('*', _g.p.clear);
 	page('*', _g.t.side);
-	page('/', function(ctx,next){
-		if(!_g.user && !_g.t.login) page('/login');
+	page('/', (ctx,next)=>{
+		if(!_g.user && !_g.u.login && !_g.u.register) page('/login');
 		else {
 			document.title = _g.page = _g.name;
 			_g.p.set = 'dash';
@@ -2230,22 +2202,31 @@
 			_g.cr.load();
 			_g.p.list(20);
 		}
-		if(_g.t.login){
-			_g.t.login = !1;
-			_g.t.animations.login();
+		if(_g.u.login){
+			_g.u.login = !1;
+			_g.u.animations.login();
+		}
+		if(_g.u.register){
+			_g.u.register = !1;
+			_g.u.animations.register();
 		}
 		next();
 	}, pageview);
-	page('/login', function(ctx,next){
+    page('/register', (ctx,next)=>{
+        document.title = _g.page = "Register | " + _g.name;
+        _g.u.register = !0;
+        _g.u.animations.loadRegister();
+    }, pageview);
+    page('/login', (ctx,next)=>{
 		document.title = _g.page = "Login | " + _g.name;
-		_g.t.login = !0;
-		_g.t.animations.loadLogin();
+		_g.u.login = !0;
+		_g.u.animations.loadLogin();
 		next();
 	}, pageview);
-	page('/logout', function(){
+	page('/logout', ()=>{
 		window.location.replace(_g.api + "/logout");
 	});
-	page('/feed/:name', function(ctx,next){
+	page('/feed/:name', (ctx,next)=>{
 		if(!_g.user) page.redirect('/login');
 		else {
 			document.title = _g.page = ctx.params.name + " | " + _g.name;
@@ -2255,26 +2236,26 @@
 		}
 		next();
 	}, pageview);
-	page('/tag/:tag', function(ctx,next){
+	page('/tag/:tag', (ctx,next)=>{
 		document.title = _g.page = "#" + ctx.params.tag + " | " + _g.name;
 		_g.p.set = 'tag';
 		_g.p.setData = ctx.params.tag;
 		_g.p.list(20);
 		next();
 	}, pageview);
-	page('/search/:query', function(ctx,next){
+	page('/search/:query', (ctx,next)=>{
 		document.title = _g.page = "Results for \"" + ctx.params.query + "\" | " + _g.name;
 		_g.u.set = 'search';
 		_g.u.setData = ctx.params.query;
 		_g.u.list();
-		
+
 		_g.p.set = 'search';
 		_g.p.setData = ctx.params.query;
 		_g.p.list(20);
 		next();
 	}, pageview);
 	page('/changes/:app?', _g.cn.load, pageview),
-	page('/post/:id', function(ctx,next){
+	page('/post/:id', (ctx,next)=>{
 		_g.p.set = 'post';
 		_g.p.setData = ctx.params.id;
 		_g.p.posts = [ctx.params.id];
@@ -2286,7 +2267,7 @@
 		_g.p.listen();
 		next();
 	}, pageview);
-	page('/user/:user', function(ctx,next){
+	page('/user/:user', (ctx,next)=>{
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
 			_g.u.page(ctx.params.user,ctx)
@@ -2297,7 +2278,7 @@
 		next();
 		}});
 	}, pageview);
-	page('/user/:user/posts', function(ctx,next){
+	page('/user/:user/posts', (ctx,next)=>{
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
 			_g.u.page(ctx.params.user,ctx)
@@ -2308,7 +2289,7 @@
 			next();
 		}});
 	}, pageview);
-	page('/user/:user/favorites', function(ctx,next){
+	page('/user/:user/favorites', (ctx,next)=>{
 		new ajax(_g.api + '/user/' + ctx.params.user + '/getId', 'GET', '', {load:function(r){
 			var user = JSON.parse(r.responseText);
 			_g.u.page(ctx.params.user,ctx)
@@ -2321,7 +2302,7 @@
 	page('/settings', _g.s.load, pageview);
 	page('/settings/advanced', _g.s.advanced, pageview);
 	page('/feeds', _g.s.feeds, pageview);
-	page('*', function(ctx, next){
+	page('*', (ctx, next)=>{
 		_g.b.error						= !0;
 		var le							= _c('loading')[0];
 		_i('loading-bar').id			= 'loading-error-bar';
