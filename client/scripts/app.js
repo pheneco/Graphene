@@ -223,7 +223,7 @@
 		loaded : 0,
 		error  : !1,
 		update(){
-			if(this.error || _g.u.login) return;
+			if(this.error || _g.t.login) return;
 			if(!this.toLoad) this.toLoad = 1, this.loaded = 1;
 			var sl	= _i('side-loading'),
 				lb	= _i('loading-bar'),
@@ -1466,7 +1466,115 @@
 		menuOpen	: !1,
 		accent		: '#333333',
 		dark		: !1,
-		login		: !1,
+        login       : !1,
+        register    : !1,
+        animations  : {
+            loadLogin(){
+                _i('register-container').style.display = 'none';
+                _i('register-container').style.opacity = 0;
+				var form = [
+					_c('login-text')[0],
+					_c('login-text')[1],
+					_c('login-butn')[0],
+					_i('login-link')
+				];
+				for(var i = 0; i < form.length; i++){
+					form[i].style.opacity = 0;
+					form[i].style.transform = "scale(0.75)";
+					form[i].style.transformOrigin = "center";
+				}
+				var index = (function*(){
+					var inx = 0;
+					for(;;) yield inx++;
+				})();
+				function stdStep(){
+					var inx = index.next().value;
+					form[inx].style.opacity = 1;
+					form[inx].style.transform = "scale(1)";
+					window.setTimeout(step.next().value,130);
+				}
+				_i('login-container').style.display = 'block';
+				_i('login-container').style.opacity = 1;
+				var steps = [
+					function(){
+						var ldic			= _i('loading-icon');
+						ldic.style.width	= "40px";
+						ldic.style.height	= "40px";
+						ldic.style.left		= "calc(50vw - 20px)";
+						ldic.style.top		= "calc(50vh - 155px)";
+						window.setTimeout(step.next().value,300);
+					},
+					stdStep,
+					stdStep,
+					stdStep,
+					stdStep
+				];
+				var step = (function*(s){
+					for(var i = 0; i < s.length; i++) yield s[i];
+				})(steps);
+				step.next().value();
+			},
+			login(){
+				var form = [
+					_c('login-text')[0],
+					_c('login-text')[1],
+					_c('login-butn')[0],
+					_i('login-link')
+				];
+				var index = (function*(){
+					var inx = 0;
+					for(;;) yield inx++;
+				})();
+				function stdStep(){
+					var inx = index.next().value;
+					form[inx].style.opacity = 0;
+					form[inx].style.transform = "scale(0.75)";
+					window.setTimeout(step.next().value,50);
+				}
+				var steps = [
+					stdStep,
+					stdStep,
+					stdStep,
+					stdStep,
+					function(){
+						var ldic			= _i('loading-icon'),
+							ldng			= _c('loading')[0];
+						ldic.style.position	= "fixed";
+						ldic.style.left		= "10px";
+						ldic.style.top		= "50px";
+						ldng.style.left		= "-220px";
+						ldng.style.top		= "40px";
+						ldng.style.width	= "270px";
+						ldng.style.height	= "60px";
+						window.setTimeout(step.next().value,300);
+					},
+					function(){
+						var ldic			= _i('loading-icon'),
+							ldng			= _c('loading')[0];
+						ldng.style.display	= "none";
+						ldic.style.position	= "absolute";
+						ldic.style.left		= "calc(50vw - 125px)";
+						ldic.style.top		= "calc(50vh - 125px)";
+						ldic.style.width	= "250px";
+						ldic.style.height	= "250px";
+						ldng.style.left		= "0px";
+						ldng.style.top		= "0px";
+						ldng.style.width	= "100%";
+						ldng.style.height	= "100%";
+					},
+				],
+				step = (function*(s){
+					for(var i = 0; i < s.length; i++) yield s[i];
+				})(steps);
+				step.next().value();
+			},
+            loadRegister(){
+                _i('login-container').style.display = 'none';
+				_i('login-container').style.opacity = 0;
+                _i('register-container').style.display = 'block';
+				_i('register-container').style.opacity = 1;
+            }
+        },
 		menu(){
 			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-220px" : "-20px";
 			_i("side").style.transitionTimingFunction  = !this.menuOpen
@@ -1635,6 +1743,8 @@
 		cardSrc	: {},
 		cards	: {},
 		cardTime: 0,
+		login	: !1,
+        register : !1,
 		bganimed: !1,
 		animations : {
 			background(xPos,yPos){
@@ -1646,105 +1756,7 @@
 					bg.style.transitionDuration = "0.8s";
 					bg.style.webkitClipPath = "circle(" + endRad + "px at "+xPos+"px "+yPos+"px)";
 				},10);
-			},
-            loadLogin(){
-				var form = [
-					_c('login-text')[0],
-					_c('login-text')[1],
-					_c('login-butn')[0],
-					_i('login-link')
-				];
-				for(var i = 0; i < form.length; i++){
-					form[i].style.opacity = 0;
-					form[i].style.transform = "scale(0.75)";
-					form[i].style.transformOrigin = "center";
-				}
-				var index = (function*(){
-					var inx = 0;
-					for(;;) yield inx++;
-				})();
-				function stdStep(){
-					var inx = index.next().value;
-					form[inx].style.opacity = 1;
-					form[inx].style.transform = "scale(1)";
-					window.setTimeout(step.next().value,130);
-				}
-				_i('login-container').style.display = 'block';
-				_i('login-container').style.opacity = 1;
-				var steps = [
-					function(){
-						var ldic			= _i('loading-icon');
-						ldic.style.width	= "40px";
-						ldic.style.height	= "40px";
-						ldic.style.left		= "calc(50vw - 20px)";
-						ldic.style.top		= "calc(50vh - 155px)";
-						window.setTimeout(step.next().value,300);
-					},
-					stdStep,
-					stdStep,
-					stdStep,
-					stdStep
-				];
-				var step = (function*(s){
-					for(var i = 0; i < s.length; i++) yield s[i];
-				})(steps);
-				step.next().value();
-			},
-			login(){
-				var form = [
-					_c('login-text')[0],
-					_c('login-text')[1],
-					_c('login-butn')[0],
-					_i('login-link')
-				];
-				var index = (function*(){
-					var inx = 0;
-					for(;;) yield inx++;
-				})();
-				function stdStep(){
-					var inx = index.next().value;
-					form[inx].style.opacity = 0;
-					form[inx].style.transform = "scale(0.75)";
-					window.setTimeout(step.next().value,50);
-				}
-				var steps = [
-					stdStep,
-					stdStep,
-					stdStep,
-					stdStep,
-					function(){
-						var ldic			= _i('loading-icon'),
-							ldng			= _c('loading')[0];
-						ldic.style.position	= "fixed";
-						ldic.style.left		= "10px";
-						ldic.style.top		= "50px";
-						ldng.style.left		= "-220px";
-						ldng.style.top		= "40px";
-						ldng.style.width	= "270px";
-						ldng.style.height	= "60px";
-						window.setTimeout(step.next().value,300);
-					},
-					function(){
-						var ldic			= _i('loading-icon'),
-							ldng			= _c('loading')[0];
-						ldng.style.display	= "none";
-						ldic.style.position	= "absolute";
-						ldic.style.left		= "calc(50vw - 125px)";
-						ldic.style.top		= "calc(50vh - 125px)";
-						ldic.style.width	= "250px";
-						ldic.style.height	= "250px";
-						ldng.style.left		= "0px";
-						ldng.style.top		= "0px";
-						ldng.style.width	= "100%";
-						ldng.style.height	= "100%";
-					},
-				],
-				step = (function*(s){
-					for(var i = 0; i < s.length; i++) yield s[i];
-				})(steps);
-				step.next().value();
-			},
-            loadRegister(){}
+			}
 		},
 		login(){
 			var data = {
@@ -2194,7 +2206,7 @@
 	page('*', _g.p.clear);
 	page('*', _g.t.side);
 	page('/', (ctx,next)=>{
-		if(!_g.user && !_g.u.login && !_g.u.register) page('/login');
+        if(!_g.user && !_g.t.login && !_g.t.register) page('/login');
 		else {
 			document.title = _g.page = _g.name;
 			_g.p.set = 'dash';
@@ -2202,25 +2214,26 @@
 			_g.cr.load();
 			_g.p.list(20);
 		}
-		if(_g.u.login){
-			_g.u.login = !1;
-			_g.u.animations.login();
+		if(_g.t.login){
+			_g.t.login = !1;
+			_g.t.animations.login();
 		}
-		if(_g.u.register){
-			_g.u.register = !1;
-			_g.u.animations.register();
+		if(_g.t.register){
+			_g.t.register = !1;
+			_g.t.animations.register();
 		}
 		next();
 	}, pageview);
     page('/register', (ctx,next)=>{
         document.title = _g.page = "Register | " + _g.name;
-        _g.u.register = !0;
-        _g.u.animations.loadRegister();
+        _g.t.register = !0;
+        _g.t.animations.loadRegister();
+        next();
     }, pageview);
     page('/login', (ctx,next)=>{
 		document.title = _g.page = "Login | " + _g.name;
-		_g.u.login = !0;
-		_g.u.animations.loadLogin();
+		_g.t.login = !0;
+		_g.t.animations.loadLogin();
 		next();
 	}, pageview);
 	page('/logout', ()=>{

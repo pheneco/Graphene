@@ -80,6 +80,15 @@ body(style="overflow:hidden")
 					input.login-butn(name="submit", type="button", value="Login", onclick="_g.u.login()")
 					div#login-link
 						a(href="../register") Sign Up
+		div#register-container(style="display:none;opacity:0")
+			div#register-box
+				form(id="register-form", method="post", action=api + "/register")
+					input.register-text(name="username", type="text", autofocus, placeholder="Username")
+					input.register-text(name="email", type="text", placeholder="Email Address")
+					input.register-text(name="password", type="password", placeholder="Password")
+					input.register-butn(name="submit", type="submit", value="Register", style="color:#444;background:#fff;")
+					div#login-link
+						a(href="../login", style="color:#fff;") Already have an account?
 	div#side
 		div#side-bar.drawer
 			div#side-head

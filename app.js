@@ -88,6 +88,7 @@ var root		= __dirname,
 			}
 		}
 		this.getUserInfo	= function(user,name,callback,q,s){
+			if(typeof user == null) return s.send("User not defined");
 			Change.findOne(			{},{},{sort:{_id:-1}},							(e,c)=>{	if(e) return s.send(e);
 			User.findOne(			name?{username:user.toLowerCase()}:{_id:user},	(e,u)=>{	if(e) return s.send(e);
 			Post.find(				{user:u._id},									(e,p)=>{	if(e) return s.send(e);
@@ -133,7 +134,7 @@ var root		= __dirname,
 		this.getFollowing	= function(user,feed,callback){
 			if(user == 'bypass') return callback([]);
 			User.findOne({_id:user},function(e,u){
-				if(e) return;
+				if(e || user == null) return;
 				if(typeof feed == 'string') {
 					var feeds	= u.feeds,
 						arr		= [];
@@ -158,7 +159,7 @@ var root		= __dirname,
 		this.time			= function(){
 			var stamp = new Date(),t;
 			return stamp.getFullYear()
-				+ "."  + ((t=""+(stamp.getMonth()+1)).length==1?"0"+t:t)
+				+ "." + ((t=""+(stamp.getMonth()+1)).length==1?"0"+t:t)
 				+ "." + ((t=""+stamp.getDate()).length==1?"0"+t:t)
 				+ " " + ((t=""+stamp.getHours()).length==1?"0"+t:t)
 				+ "." + ((t=""+stamp.getMinutes()).length==1?"0"+t:t)
@@ -228,11 +229,7 @@ ServerChange.findOne({},{},{sort:{_id:-1}},function(e,sc){if(e) return console.l
 		});
 		client.all('*',function(req,res){
 			tumblr.blogPosts('trewbot.tumblr.com',{type:'photo',filter:'raw'},function(err,p){
-				var data = pug.renderFile(
-					req.path == '/register'
-						? __dirname + '/client/register.pug'
-						: __dirname + '/client/index.pug',
-					{
+				var data = pug.renderFile(__dirname + '/client/index.pug',{
 						localLibraries : config.localLibraries,
 						api : config.apiPort,
 						img	: p ? p.posts[~~(Math.random()*p.posts.length)].photos[0].original_size.url : '../assets/img/regbg/jpg'
