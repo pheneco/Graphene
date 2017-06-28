@@ -15,7 +15,7 @@ In the past I have only ever ran Graphene on Windows machines for one reason or 
    - [7-Zip](http://www.7-zip.org/)
    - [Windows build tools](https://github.com/Microsoft/nodejs-guidelines/blob/master/windows-environment.md#compiling-native-addon-modules)
 
-2. Once you have all of the above programs installed (make sure to have all of these in your PATH), pick a directory to install Graphene into and naviagate to it in Windows Explorer (I normally use c:\web).
+2. Once you have all of the above programs installed (make sure to have all of these in your PATH), pick a directory to install Graphene into and navigate to it in Windows Explorer (I normally use c:\web).
 
 3. SHIFT click and click "Open command window here".
 
