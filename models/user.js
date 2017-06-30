@@ -1,7 +1,7 @@
 /*
  *	Graphene >> User Model
  *	Written by Trevor J Hoglund
- *	2016.06.26
+ *	2017.06.29
  */
 
 var mongoose	= require('mongoose'),
@@ -17,7 +17,7 @@ var mongoose	= require('mongoose'),
 		name		: String,
 		firstName	: String,
 		lastName	: String,
-		email		: String, 
+		email		: String,
 		password	: String,
 		activated	: Boolean,
 		avatar		: String,
@@ -25,7 +25,6 @@ var mongoose	= require('mongoose'),
 		background	: String,
 		rank		: Number,
 		accent		: String,
-		nameHandle	: Boolean,
 		feeds		: [Feed],
 		advanced	: [Advanced],
 		bio			: String,

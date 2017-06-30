@@ -31,10 +31,6 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 								var nu = new User({
 									userName	: req.body.username,
 									username	: req.body.username.toLowerCase(),
-									//firstName	: req.body.firstname,
-									//lastName	: req.body.lastname,
-									firstName	: 'DEPRECATED',
-									lastName	: 'DEPRECATED',
 									name		: req.body.username,
 									email		: req.body.email,
 									password	: bcrypt.hashSync(req.body.password),
@@ -44,7 +40,6 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 									background	: 'default',
 									rank		: Graphene.dev?10:1,
 									accent		: '#444444',
-									nameHandle	: false,
 									feeds		: [{
 										name	: 'Default',
 										index	: 0,
@@ -116,7 +111,6 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 			//firstName	: req.body.firstName,
 			//lastName	: req.body.lastName,
 			name		: req.body.name,
-			nameHandle	: req.body.nameHandle,
 			accent		: req.body.accent,
 			dark		: req.body.dark
 		}, {upsert: true}, function(e){

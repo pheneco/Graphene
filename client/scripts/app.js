@@ -1108,15 +1108,6 @@
 								]*/
 							},
 							{
-								name		: "Display Name",
-								id			: "nh",
-								toggle		: !0,
-								value		: sess.nameHandle,
-								//offValue	: sess.firstName + " " + sess.lastName,
-								offValue	: sess.literalName,
-								onValue		: sess.userName
-							},
-							{
 								name		: "Accent Color",
 								id			: "clr",
 								color		: sess.accent
@@ -1361,7 +1352,6 @@
 				//firstName	: _i('settings-fname').value,
 				//lastName	: _i('settings-lname').value,
 				name		: _i('settings-name').value,
-				nameHandle	: _i('settings-nh').getAttribute('toggled'),
 				accent		: _i('settings-accent').value,
 				dark		: _i('settings-theme').getAttribute('toggled')
 			}), {

@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Post Routes
  *	Written by Trevor J Hoglund
- *	2017.01.21
+ *	2017.06.29
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -50,7 +50,7 @@ module.exports = function(app, Graphene, Notification){
 		renderer	: renderer,
 		sanitize	: true
 	});
-	
+
 	//	Create/Change
 	app.post('/post', (req,res)=>{
 		if(req.session.user){
@@ -118,7 +118,7 @@ module.exports = function(app, Graphene, Notification){
 							}
 						});
 					}else{
-						res.send("Error creating post.");	
+						res.send("Error creating post.");
 						console.log(Graphene.time() + "Error creating post.");
 					}
 				});
@@ -192,7 +192,7 @@ module.exports = function(app, Graphene, Notification){
 			});
 		});
 	});
-	
+
 	//	Interact
 	app.post('/post/:id/favorite',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in!");
@@ -223,7 +223,7 @@ module.exports = function(app, Graphene, Notification){
 			});
 		})
 	});
-	
+
 	//	Info
 	app.get('/posts', (req,res)=>{
 		if(typeof req.query.set == ""+void 0 || typeof req.query.data == ""+void 0) res.send('You fucked up, it\'s ok tho, we all do sometimes.');
@@ -308,8 +308,7 @@ module.exports = function(app, Graphene, Notification){
 					}
 			var post = {
 				user		: {
-					//name	: u.nameHandle ? u.userName : u.firstName + " " + u.lastName,
-					name	: u.nameHandle ? u.userName : u.name,
+					name	: u.name,
 					userName: u.userName,
 					id		: u._id,
 					url		: Graphene.url + "/user/" + u.userName,
@@ -345,8 +344,7 @@ module.exports = function(app, Graphene, Notification){
 					for(var j = 0; j < uu.length; j++)
 						for(var k = 0; k < p.comments.length; k++)
 							if(uu[j]._id == p.comments[k].user) post.commentList[k].user = {
-								//name	: uu[j].nameHandle ? uu[j].userName : uu[j].firstName + " " + uu[j].lastName,
-								name	: uu[j].nameHandle ? uu[j].userName : uu[j].name,
+								name	: uu[j].name,
 								userName: uu[j].userName,
 								id		: uu[j]._id,
 								url		: Graphene.url + "/user/" + uu[j].userName,
@@ -404,7 +402,7 @@ module.exports = function(app, Graphene, Notification){
 				});
 			};
 		for(var i = 0; i < ids.length; i++) Comments.on(ids[i],comCall);
-		
+
 		if(req.params.set == 'dash' && req.params.setData == 'home') {
 			Graphene.getFollowing(req.session.user,null,(e)=>{
 				users = e;
@@ -424,7 +422,7 @@ module.exports = function(app, Graphene, Notification){
 		} else if(req.params.set == 'userPosts'){
 			Posts.on(""+req.params.setData,posCall);
 		}
-		
+
 		req.on('close', ()=>{
 			for(var i = 0; i < ids.length; i++) Comments.removeListener(ids[i],comCall);
 			if(req.params.set == 'dash' && req.params.setData == 'home') {
@@ -462,8 +460,7 @@ module.exports = function(app, Graphene, Notification){
 				for(var m = 0; m < uu.length; m++)
 					for(var n = 0; n < cl.length; n++)
 						if(uu[m]._id == cl[n].user) cs[n].user = {
-							//name	: uu[m].nameHandle ? uu[m].userName : uu[m].firstName + " " + uu[m].lastName,
-							name	: uu[m].nameHandle ? uu[m].userName : uu[m].name,
+							name	: uu[m].name,
 							userName: uu[m].userName,
 							id		: uu[m]._id,
 							url		: Graphene.url + "/user/" + uu[m].userName,
@@ -503,17 +500,17 @@ module.exports = function(app, Graphene, Notification){
 				if(e) res.send(e);
 				else res.send("");
 			});
-			
+
 		});
 	});
 	app.post('/feed/:id/add/:user',(req,res)=>{
 		if(!req.session.user) return res.send("Must be logged in.");
 		User.findOne({_id:req.session.user},(e,u)=>{
 			if(e) return res.send(e);
-			
+
 			//	I really can't be bothered to finish this script at the moment
 			//	Sep 18, 2015
-			
+
 			var feed = u.feeds.id(req.params.id);
 			if(feed == void 0) return res.send("Feed does not exist.");
 			if(!~feed.users.indexOf(req.params.user)) feed.users.push(req.params.user);
@@ -535,7 +532,7 @@ module.exports = function(app, Graphene, Notification){
 				if(e) res.send(e);
 				else res.send("");
 			});
-			
+
 		});
 	});
 	app.post('/feed/new/:name',(req,res)=>{

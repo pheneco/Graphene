@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Notifications Routes
  *	Written by Trewbot
- *	Oct 18, 2015
+ *	2017.06.29
  */
 
 module.exports = function(app, Graphene, Notification){
@@ -9,10 +9,10 @@ module.exports = function(app, Graphene, Notification){
 	var Note			= require('../models/notification'),
 		Post			= require('../models/post'),
 		User			= require('../models/user');
-	
+
 	//	How did any of this ever get done? I don't do fucking anything ever.
 	//	Aug 21, 2015
-	
+
 	//	Routes
 	app.get('/notes', function(req,res){
 	Note.find({recipient:req.session.user},null,{sort:{date:-1}},function(e,n){
@@ -60,8 +60,7 @@ module.exports = function(app, Graphene, Notification){
 								u[l].password	= "";
 								if(~notes[y].senders.indexOf(""+u[l]._id)) notes[y].users.push(Graphene.collect(u[l]._doc,{
 									user		: u[l].userName,
-									// name		: u[l].nameHandle ? u[l].userName : u[l].firstName + " " + u[l].lastName,
-									name		: u[l].nameHandle ? u[l].userName : u[l].name,
+									name		: u[l].name,
 									avatar		: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-36.jpg",
 									avatarFull	: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-200.jpg",
 									url			: Graphene.url + "/user/" + u[l].userName
@@ -70,8 +69,7 @@ module.exports = function(app, Graphene, Notification){
 								//	May 29, 2016
 								if(""+u[l]._id == notes[y].post.user) notes[y].owner = Graphene.collect(u[l]._doc,{
 									user		: u[l].userName,
-									// name		: u[l].nameHandle ? u[l].userName : u[l].firstName + " " + u[l].lastName,
-									name		: u[l].nameHandle ? u[l].userName : u[l].name,
+									name		: u[l].name,
 									avatar		: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-36.jpg",
 									avatarFull	: Graphene.img + "/" + u[l].avatar + "/" + u[l].avatarHash + "-200.jpg",
 									url			: Graphene.url + "/user/" + u[l].userName
@@ -104,10 +102,10 @@ module.exports = function(app, Graphene, Notification){
 		})
 	});
 	app.get('/notes/stream', function(req,res){
-		
+
 		//	These streams are a pain in the ass
 		//	Sep 15, 2015
-		
+
 		req.socket.setTimeout(31536e6);
 		res.writeHead(200, {
 			'Content-Type'	: 'text/event-stream',
