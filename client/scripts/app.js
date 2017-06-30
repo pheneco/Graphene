@@ -19,11 +19,13 @@
 			var t = this;
 			if(t == null)
 				return false;
-			while(t.tagName.toLowerCase() !== 'html'){
-				if(~t.className.indexOf('has-responder'))
-					return t;
-				t = t.parentElement;
-			}
+            try{
+    			while(t.tagName.toLowerCase() !== 'html'){
+    				if(~t.className.indexOf('has-responder'))
+    					return t;
+    				t = t.parentElement;
+    			}
+            }catch(e){}
 			return false;
 		}
 		HTMLTextAreaElement.prototype.insertAtCaret = function(text){
