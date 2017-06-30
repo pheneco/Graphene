@@ -73,8 +73,8 @@ module.exports = function(app, Graphene, Notification){
 							.replace(/<a/g,'<a target="_blank"')
 							.replace(Graphene.hashtagRegExp2, '$1<a href="' + Graphene.url + '/tag/$2">#$2</a>')
 							.replace(/(\s+|^|\>)@(\w+)/gm, '$1<a href="' + Graphene.url + '/user/$2">@$2</a>')
-							.replace(/<p><a target="_blank" href="https:\/\/vimeo.com\/([0-9]+)&?(.*)">(.*)<\/a><\/p>/,'<div class="post-video"><iframe src="//player.vimeo.com/video/$1?$2"></iframe></div>')
-							.replace(/<p><a target="_blank" href="https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9-_]+)&?(.*)">(.*)<\/a><\/p>/,'<div class="post-video"><iframe src="https://www.youtube.com/embed/$1?$2"></iframe></div>')
+							.replace(/<p><a target="_blank" href="https:\/\/vimeo.com\/([0-9]+)&?(.*)">(.*)<\/a><\/p>/g,'<div class="post-video"><iframe src="//player.vimeo.com/video/$1?$2"></iframe></div>')
+							.replace(/<p><a target="_blank" href="https:\/\/www.youtube.com\/watch\?v=([a-zA-Z0-9-_]+)&?(.*)">(.*)<\/a><\/p>/g,'<div class="post-video"><iframe src="https://www.youtube.com/embed/$1?$2"></iframe></div>')
 							.replace(/<p>\/bandcamp album (.*)<\/p>/g, '<iframe style="border:0;" src="https://bandcamp.com/EmbeddedPlayer/album=$1/size=large/bgcol=ffffff/linkcol=444444/artwork=small/transparent=true/" seamless>Bandcamp Embed</iframe>')
 							.replace(/<p>\/map (.*)<\/p>/g, function(){
 								return '<iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q='

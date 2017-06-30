@@ -108,8 +108,6 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 	});
 	app.post('/settings', function(req,res){
 		User.update({_id:req.session.user}, {
-			//firstName	: req.body.firstName,
-			//lastName	: req.body.lastName,
 			name		: req.body.name,
 			accent		: req.body.accent,
 			dark		: req.body.dark

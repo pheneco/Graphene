@@ -1349,8 +1349,6 @@
 		},
 		save(){
 			new ajax(_g.api + '/settings', 'POST', JSON.stringify({
-				//firstName	: _i('settings-fname').value,
-				//lastName	: _i('settings-lname').value,
 				name		: _i('settings-name').value,
 				accent		: _i('settings-accent').value,
 				dark		: _i('settings-theme').getAttribute('toggled')
