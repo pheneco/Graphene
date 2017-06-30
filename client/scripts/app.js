@@ -894,12 +894,17 @@
 			};
 		},
 		delete(id){
-			if(!confirm("Are you sure you want to delete this post?")) return !1;
-			new ajax(_g.api + '/post/' + id, 'DELETE', '', {
-				load	: function(r){
-					_g.p.remove(id);
-				}
-			});
+			_g.mo.open(_g.collect(_g.ui.CONFIRM_STYLE,{
+                text : "Are you sure you want to delete this post?",
+                confirm : !0
+            })).then(
+                ()=>{
+                    new ajax(_g.api + '/post/' + id, 'DELETE', '', {
+        				load(r){_g.p.remove(id);}
+        			});
+                },
+                ()=>{}
+            );
 		},
 		remove(id){
 			var a	= _i("post-" + id),
@@ -2188,6 +2193,11 @@
 		}
 	});
 	_g.ui	= (_g.interface	= {
+        CONFIRM_STYLE : {
+            title : "Approval Required",
+            titleColor : "#FFC107",
+            titleTextColor : "#fff"
+        },
         ERROR_STYLE : {
             title : "Error!",
             titleColor : "#ff2727",
