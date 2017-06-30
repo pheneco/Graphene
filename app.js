@@ -1,7 +1,7 @@
 /*
  *	Graphene Server s0.5.0
  *	Written by Trevor J Hoglund
- *	2017.01.21
+ *	2017.06.28
  */
 
 //	Set Up

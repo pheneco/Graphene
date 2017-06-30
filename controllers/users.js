@@ -1,7 +1,7 @@
 /*
  *	Graphene >> Users Routes
  *	Written by Trevor J Hoglund
- *	2016.11.27
+ *	2017.06.29
  */
 
 module.exports	= function(app, Graphene, EmailTemp, mailer){
@@ -18,7 +18,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 		autoReap= require('multer-autoreap'),
 		bcrypt	= require('bcrypt-nodejs'),
 		striptags = require('striptags');
-	
+
 	//	Accounts
 	app.post('/register', function(req,res){
 		User.count({userName:{$regex: new RegExp("^" + req.body.username + "$", "i")}}, function(e,c){
@@ -78,7 +78,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 												if(e) console.log(Graphene.time() + e);
 											});
 										req.session.user = u._id;
-										res.redirect(Graphene.url);
+										res.send('');
 									}else{
 										console.log(Graphene.time() + e);
 										res.send("0");
@@ -334,7 +334,7 @@ module.exports	= function(app, Graphene, EmailTemp, mailer){
 	app.post('/deactivate',function(req,res){
 		res.send('NOT A THING YET');
 	});
-	
+
 	//	Info
 	app.get('/session', function(req,res){
 		if(req.session.user)

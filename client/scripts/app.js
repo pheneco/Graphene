@@ -1,7 +1,7 @@
 /*
  *	Graphene Web Client w0.5.0
  *	Written by Trevor J Hoglund
- *	2017.06.28
+ *	2017.06.29
  */
 
    (function bippity(){
@@ -223,7 +223,7 @@
 		loaded : 0,
 		error  : !1,
 		update(){
-			if(this.error || _g.t.login) return;
+			if(this.error || _g.t.login || _g.t.register) return;
 			if(!this.toLoad) this.toLoad = 1, this.loaded = 1;
 			var sl	= _i('side-loading'),
 				lb	= _i('loading-bar'),
@@ -1571,9 +1571,102 @@
             loadRegister(){
                 _i('login-container').style.display = 'none';
 				_i('login-container').style.opacity = 0;
+                var form = [
+                        _c('register-text')[0],
+                        _c('register-text')[1],
+                        _c('register-text')[2],
+                        _c('register-butn')[0],
+                        _i('register-link')
+                    ],
+                    index = (function*(){for(var inx = 0;;) yield inx++;})(),
+                    step;
+                for(var i of form){
+                    i.style.opacity = 0;
+                    i.style.transform = "scale(0.75)";
+                    i.style.transformOrigin = "center";
+                }
+                function stdStep(){
+                    var inx = index.next().value;
+                    form[inx].style.opacity = 1;
+                    form[inx].style.transform = "scale(1)";
+                    window.setTimeout(step.next().value,130);
+                }
                 _i('register-container').style.display = 'block';
 				_i('register-container').style.opacity = 1;
-            }
+                var steps = [
+                    function(){
+                        var ldic			= _i('loading-icon');
+                        ldic.style.width	= "40px";
+                        ldic.style.height	= "40px";
+                        ldic.style.left		= "calc(50vw - 20px)";
+                        ldic.style.top		= "calc(50vh - 155px)";
+                        window.setTimeout(step.next().value,300);
+                    },
+                    // function(){
+                    //     var regc            = _i('register-cover');
+                    //     regc.style.display  = "block";
+                    //     regc.style.opacity  = 1;
+                    //     window.setTimeout(step.next().value,10);
+                    // },
+                    stdStep,
+                    stdStep,
+                    stdStep,
+                    stdStep,
+                    stdStep
+                ];
+                (step = (function*(s){for(let i of s) yield i;})(steps)).next().value();
+            },
+            register(){
+                var form = [
+                        _c('register-text')[0],
+                        _c('register-text')[1],
+                        _c('register-text')[2],
+                        _c('register-butn')[0],
+                        _i('register-link')
+                    ],
+                    index = (function*(){for(var inx = 0;;) yield inx++;})(),
+                    step;
+                function stdStep(){
+                    var inx = index.next().value;
+                    form[inx].style.opacity = 0;
+                    form[inx].style.transform = "scale(0.75)";
+                    window.setTimeout(step.next().value,50);
+                }
+                var steps = [
+                    stdStep,
+                    stdStep,
+                    stdStep,
+                    stdStep,
+                    stdStep,
+                    function(){
+                        var ldic			= _i('loading-icon'),
+                            ldng			= _c('loading')[0];
+                        ldic.style.position	= "fixed";
+                        ldic.style.left		= "10px";
+                        ldic.style.top		= "50px";
+                        ldng.style.left		= "-220px";
+                        ldng.style.top		= "40px";
+                        ldng.style.width	= "270px";
+                        ldng.style.height	= "60px";
+                        window.setTimeout(step.next().value,300);
+                    },
+                    function(){
+                        var ldic			= _i('loading-icon'),
+                            ldng			= _c('loading')[0];
+                        ldng.style.display	= "none";
+                        ldic.style.position	= "absolute";
+                        ldic.style.left		= "calc(50vw - 125px)";
+                        ldic.style.top		= "calc(50vh - 125px)";
+                        ldic.style.width	= "250px";
+                        ldic.style.height	= "250px";
+                        ldng.style.left		= "0px";
+                        ldng.style.top		= "0px";
+                        ldng.style.width	= "100%";
+                        ldng.style.height	= "100%";
+                    },
+                ];
+                (step = (function*(s){for(let i of steps) yield i;})(steps)).next().value();
+            },
         },
 		menu(){
 			_i("side").style.left = !(this.menuOpen = !this.menuOpen) ? "-220px" : "-20px";
@@ -1774,6 +1867,23 @@
 				}
 			});
 		},
+        register(){
+            var data = {
+                username : _c('register-text')[0].value,
+                email : _c('register-text')[1].value,
+				password : _c('register-text')[2].value
+			};
+			new ajax(_g.api + '/register', 'POST', JSON.stringify(data), {
+				type	: 'application/json',
+				load	: function(r){
+					if(r.responseText == ''){
+						_g.session.user = 1;
+						page('/');
+					}
+					else alert(r.responseText);
+				}
+			});
+        },
 		page(user,ctx){
 			_g.u.bganimed = !1;
 			if(_g.u.info.name[user.toLowerCase()]){
