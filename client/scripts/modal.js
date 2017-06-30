@@ -226,9 +226,9 @@ _g.mo = (_g.modal = {
 			modalBody	= document.createElement('div').set({
 			class		: 'modal-body',
 			id			: 'modal-body-' + id,
-			style		: Object.collect({
+			style		: Object.collect(_g.mo.style.modal.body,{
 				width		: typeof ops.width == 'string'			? ops.width				: _g.mo.style.modal.body.width
-			},_g.mo.style.modal.body)
+			})
 		}),
 			modalTitle	= document.createElement('div').set({
 			class		: 'modal-title',
@@ -248,10 +248,10 @@ _g.mo = (_g.modal = {
 				textAlign	: typeof ops.textCenter == 'boolean' && ops.textCenter ? 'center' : ''
 			})
 		});
-		
+
 		modalBody.appendChild(modalTitle);
 		modalBody.appendChild(modalContent);
-		
+
 		if(typeof ops.confirm == 'boolean' && ops.confirm){
 			var modalConfirm= document.createElement('div').set({
 				class		: 'modal-confirm',
@@ -280,23 +280,23 @@ _g.mo = (_g.modal = {
 			modalConfirm.appendChild(modalApprove);
 			modalBody.appendChild(modalConfirm);
 		}
-		
+
 		modal.appendChild(modalShade);
 		modal.appendChild(modalBody);
-		
+
 		document.body.insertBefore(modal, document.body.children[0]);
-		
+
 		window.dispatchEvent(new Event('MODAL_OPEN'));
-		
+
 		window.setTimeout(function(){
 			_c('modal-shade')[0].addEventListener('click',_g.mo.close);
 		}, 0);
-		
+
 		if(typeof ops.confirm == 'boolean' && ops.confirm)
 			return new Promise(function(resolve,reject){
 				_c('modal-approve')[0].addEventListener('click',resolve);
 				_c('modal-approve')[0].addEventListener('click',_g.mo.close);
-				
+
 				_c('modal-reject')[0].addEventListener('click',reject);
 				_c('modal-shade')[0].addEventListener('click',reject);
 				_c('modal-reject')[0].addEventListener('click',_g.mo.close);
@@ -339,10 +339,10 @@ _g.mo = (_g.modal = {
 					j,
 					lbe = _c('lightbox')[0],
 					lbv = _c('lightbox-view')[0];
-				
+
 				if(iw > (j = Math.max(500, ww - 100))) lbw = j, lbh = (j / iw) * ih;
 				else lbw = iw, lbh = ih;
-				
+
 				if(lbh > (j = wh - 100)) lbw = (j / ih) * iw, lbh = j;
 
 				var olbi = _c('lightbox-image')[0];
@@ -353,7 +353,7 @@ _g.mo = (_g.modal = {
 				_c('lightbox-prev')[0].style.width = parseInt(lbv.style.width) - 150 + "px";
 				_c('lightbox-prev')[0].parentAnchor().onclick = function(){_g.mo.lightbox('api',_g.mo.lbSrc,_g.mo.lbLayt,++_g.mo.lbIndx)};
 				_c('lightbox-next')[0].parentAnchor().onclick = function(){_g.mo.lightbox('api',_g.mo.lbSrc,_g.mo.lbLayt,--_g.mo.lbIndx)};
-				
+
 				var lbm = document.createElement('img').set({
 					class 	: 'lightbox-image',
 					src		: img.src,
@@ -365,7 +365,7 @@ _g.mo = (_g.modal = {
 				lbv.insertBefore(lbm, lbv.children[0]);
 			}
 		};
-		
+
 		if(!_g.mo.lbOpen){
 			var id			= _g.mo.idFarm.modal.next().value,
 				lbox		= document.createElement('div').set({
@@ -433,14 +433,14 @@ _g.mo = (_g.modal = {
 				})
 			);
 
-			
+
 			document.body.insertBefore(lbox, document.body.children[0]);
 			window.setTimeout(function(){
 				window.addEventListener('click', _g.mo.lbClick);
 			}, 500);
 			_g.mo.lbOpen = !0;
 		} else var lb = _c('lightbox-shade')[0];
-		
+
 		if(type == 'api'){
 			if(typeof _g.mo.lbInfo[source] == 'undefined') new ajax(source, 'GET', '', {cred:false,load:function(res){
 				_g.mo.lbInfo[source] = JSON.parse(res.response);
@@ -476,11 +476,11 @@ _g.mo = (_g.modal = {
 				_g.mo.open(_g.mo.collect(this.ops,{
 					title	: step.title || "Step " + this.step,
 					text	: step.text +
-						'<div id="popup-confirm"><div style="' + 
+						'<div id="popup-confirm"><div style="' +
 						(typeof ops.titleColor == 'string'
 							? 'background:' + this.ops.titleColor + ';'
 							: '') +
-						'" id="popup-yes" class="popup-option" onclick="_i(\'popup-shade\').remove();">Okay</div>' + 
+						'" id="popup-yes" class="popup-option" onclick="_i(\'popup-shade\').remove();">Okay</div>' +
 						(typeof step.showExitButton == 'boolean' && step.showExitButton
 							? '<div id="popup-no" class="popup-option">Exit Tutorial</div>'
 							: '') +
@@ -490,7 +490,7 @@ _g.mo = (_g.modal = {
 				if(typeof step.showExitButton == 'boolean' && step.showExitButton) _i('popup-no').onclick = this.exit.bind(this);
 			}
 			else if(step.type.toLowerCase() == "pointer"){
-				
+
 			}
 			this.step++;
 		}

@@ -2094,17 +2094,17 @@
 			xhr.send(data);
 		},
 		crop(img){
-			_g.popup.open({
+			_g.mo.open({
 				title	: "Crop Avatar",
 				text	: '<div id="crop-avatar" style="width:500px"></div><div class="popup-button" onclick="_g.u.cropSave()">Save</div>',
-				width	: "500px"
+				width	: "520px"
 			});
 			_g.u.x = new _g.x(_i('crop-avatar'), img, 'cut', {
 				square:true
 			});
 		},
 		cropSave(){
-			_i('popup-shade').remove();
+			_g.mo.close();
 			new ajax(_g.api + '/user/avatar/crop/', 'POST', JSON.stringify(_g.u.x.getValues()), {
 				type	: 'application/json',
 				load	: function(r){
