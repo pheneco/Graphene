@@ -186,6 +186,13 @@
 				});
 				window.addEventListener('mousemove',_g.u.hovercard);
 				window.addEventListener('resize',_g.ui.update);
+                _g.mo.style.modal.shade.background = 'rgba(0,0,0,0.1)';
+                window.addEventListener('MODAL_OPEN',()=>{
+                	_i('body').className = _i('side').className = 'is-blurred';
+                });
+                window.addEventListener('MODAL_CLOSE',()=>{
+                	_i('body').className = _i('side').className = '';
+                });
 			}
 		});
 		});
@@ -211,7 +218,16 @@
 			el.innerHTML = tv == 'true' ? el.getAttribute("off") : el.getAttribute("on");
 			el.setAttribute("toggled", tv == 'true' ? 'false' : 'true');
 		}
-		setInterval(function(){
+        this.collect= function(){
+			var ret = {},
+				len = arguments.length;
+			for(var i = 0; i < len; i++)
+				for(p in arguments[i])
+					if(arguments[i].hasOwnProperty(p))
+						ret[p] = arguments[i][p];
+			return ret;
+		};
+        setInterval(function(){
 			var ts = _c('timestamp');
 			for(var i = 0; i < ts.length; i++)
 				if(!isNaN(parseInt(ts[i].getAttribute('unix-time')))) ts[i].innerHTML = Graphene.time(ts[i].getAttribute('unix-time'));
@@ -368,7 +384,7 @@
 								:(lib == "crop"
 									? _g.x.changes
 									: (lib == "popup"
-										? _g.pu.changes
+										? _g.mo.changes
 										: []));
 					_i('changes')._c('post-time')[0].innerHTML = list[list.length-1][0];
 					_i('changes')._c('post-content')[0].innerHTML = '<table id="changelog"></table>';
@@ -435,7 +451,7 @@
 				type : 'application/json',
 				load : function(r){
 					if(r.responseText !== '')
-						_g.pu.open({
+						_g.mo.open({
 							title			: "Error!",
 							text			: r.responseText,
 							titleColor		: "#ff2727",
@@ -565,13 +581,7 @@
 			}), {
 				type	: 'application/json',
 				load	: function(r){
-					if(r.responseText !== '')
-						_g.pu.open({
-							title			: 'Error!',
-							text			: r.responseText,
-							titleColor		: '#ff2727',
-							titleTextColor	: '#fff'
-						});
+					if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 					_g.cr.posting = !1;
 					_g.cr.load();
 				}
@@ -581,7 +591,7 @@
 			list(){
 				new ajax(_g.api + '/drafts', 'GET', '', {load : function(r){
 					var drafts = JSON.parse(r.responseText);
-					_g.pu.open({
+					_g.mo.open({
 						title	: "Open Draft",
 						text	: '<table class="draft-list"></table><div class="popup-button inactive">Open</div>',
 						width	: "500px"
@@ -655,6 +665,7 @@
 		leave(){}
 	});
 	_g.m	= (_g.menu		= {});	//	Reservation (library)
+	_g.mo	= (_g.modal		= {});	//	Reservation (library)
 	_g.n	= (_g.notes		= {
 		amount	: 0,
 		opened	: !1,
@@ -960,10 +971,7 @@
 						fave.className	= 'material-icons icon post-favorite';
 						fave.innerHTML	= 'favorite_outline';
 						fave.onclick	= (function(){_g.p.favorite(this)}).bind(id);
-						_g.pu.open({
-							title			: "Error!",
-							text			: r.responseText
-						});
+						_g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 					} else  fave.onclick	= (function(){_g.p.unfavorite(this)}).bind(id);
 				}
 			});
@@ -980,10 +988,7 @@
 						fave.className	= 'material-icons icon post-favorite is-favorite';
 						fave.innerHTML	= 'favorite';
 						fave.onclick	= (function(){_g.p.unfavorite(this)}).bind(id);
-						_g.pu.open({
-							title			: "Error!",
-							text			: r.responseText
-						});
+						_g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 					} else fave.onclick	= (function(){_g.p.favorite(this)}).bind(id);
 				}
 			});
@@ -1012,6 +1017,7 @@
 			}
 
 			//	HOVERCARDS
+            _i('body').className = _i('side').className = '';
 			if(_g.u.hovering){
 				_g.u.cards[_g.u.card].style.display = 'none';
 				_g.u.hovering = !1;
@@ -1045,7 +1051,6 @@
 			next();
 		}
 	});
-	_g.pu	= (_g.popup		= {});	//	Reservation (library)
 	_g.s	= (_g.settings	= {
 		feedsPg	: !1,
 		load(ctx,next){
@@ -1232,7 +1237,7 @@
 								onValue		: "On <div style='color:#ccc;display:inline-block;'>(Default)</div>"
 							}
 						],
-						save		: 'alert("WIP")'
+						save		: '_g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : "WIP"}));'
 					});
 					cont.appendChild(advset);
 					advset._c('post-content')[0].insertAdjacentHTML('afterend','<div class="post-options"><div class="button post-button" tabindex="-1" onclick="_g.s.saveAdv()">Save</div></div>');
@@ -1355,18 +1360,8 @@
 			}), {
 				type	: 'application/json',
 				load	: function(r){
-					if(r.responseText !== '') _g.pu.open({
-						title			: "Error!",
-						text			: r.responseText,
-						titleColor		: "#ff2727",
-						titleTextColor	: "#fff"
-					});
-					else _g.pu.open({
-						title			: "Saved",
-						text			: "Your settings have been saved.",
-						titleColor		: "#62ff62",
-						titleTextColor	: "#fff"
-					});
+					if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
+					else _g.mo.open(_g.collect(_g.ui.SAVED_STYLE,{text : "Your settings have been saved."}));
 				}
 			});
 		},
@@ -1378,18 +1373,8 @@
 			}), {
 				type	: 'application/json',
 				load	: function(r){
-					if(r.responseText !== '') _g.pu.open({
-						title			: "Error!",
-						text			: r.responseText,
-						titleColor		: "#ff2727",
-						titleTextColor	: "#fff"
-					});
-					else _g.pu.open({
-						title			: "Saved",
-						text			: "Your settings have been saved.",
-						titleColor		: "#62ff62",
-						titleTextColor	: "#fff"
-					});
+					if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
+					else _g.mo.open(_g.collect(_g.ui.SAVED_STYLE,{text : "Your settings have been saved."}));
 				}
 			});
 		},
@@ -1401,19 +1386,9 @@
 			}), {
 				type	: 'application/json',
 				load	: function(r){
-					if(r.responseText !== '') _g.pu.open({
-						title			: "Error!",
-						text			: r.responseText,
-						titleColor		: "#ff2727",
-						titleTextColor	: "#fff"
-					});
+					if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 					else {
-						_g.pu.open({
-							title			: "Success!",
-							text			: "Password changed succesfully!",
-							titleColor		: "#62ff62",
-							titleTextColor	: "#fff"
-						});
+						_g.mo.open(_g.collect(_g.ui.SUCCESS_STYLE,{text : "Password changed succesfully."}));
 						page('/settings');
 					}
 				}
@@ -1422,12 +1397,7 @@
 		newFeed(name){
 			new ajax(_g.api + '/feed/new/' + name, 'POST', '', {
 				load	: function(r){
-					if(r.responseText !== '') _g.pu.open({
-						title            : "Error!",
-						text            : r.responseText,
-						titleColor        : "#ff2727",
-						titleTextColor    : "#fff"
-					});
+					if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 					if(_g.s.feedsPg) _g.s.feeds();
 				}
 			});
@@ -1435,12 +1405,7 @@
 		renameFeed(feed,name){
 			new ajax(_g.api + '/feed/' + feed + '/rename/' + name, 'POST', '', {
 				load	: function(r){
-					if(r.responseText !== '') _g.pu.open({
-						title            : "Error!",
-						text            : r.responseText,
-						titleColor        : "#ff2727",
-						titleTextColor    : "#fff"
-					});
+					if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 					if(_g.s.feedsPg) _g.s.feeds();
 				}
 			});
@@ -1448,12 +1413,7 @@
 		deleteFeed(feed){
 			new ajax(_g.api + '/feed/' + feed, 'DELETE', '', {
 				load	: function(r){
-					if(r.responseText !== '') _g.pu.open({
-						title            : "Error!",
-						text            : r.responseText,
-						titleColor        : "#ff2727",
-						titleTextColor    : "#fff"
-					});
+					if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 					if(_g.s.feedsPg){
 						_i('feed-'+feed).remove();
 						_g.s.feeds();
@@ -1769,7 +1729,7 @@
 												"<a href='" + _g.url + "/changes/server' title='Server'>" + _g.session.sVersion + "</a> " +
 												"<a title='Color Picker'>c0.1.0.0006</a> " +
 												"<a href='" + _g.url + "/changes/_g.crop' title='Crop Tool'>" + _g.x.changes[_g.x.changes.length-1][0] + "</a> " +
-												"<a href='" + _g.url + "/changes/_g.popup' title='Popup'>" + _g.pu.changes[_g.pu.changes.length-1][0] + "</a> " +
+												"<a href='" + _g.url + "/changes/_g.modal' title='Modal'>" + _g.mo.changes[_g.mo.changes.length-1][0] + "</a> " +
 												"<a href='" + _g.url + "/changes/_g.menu' title='Context Menu'>" + _g.m.changes[_g.m.changes.length-1][0] + "</a>";
 				_g.b.toLoad = 0;
 				_g.ui.update();
@@ -1863,7 +1823,7 @@
 						_g.session.user = 1;
 						page('/');
 					}
-					else alert("Wrong password or something");
+					else _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : "Wrong password or something."}));
 				}
 			});
 		},
@@ -1880,7 +1840,7 @@
 						_g.session.user = 1;
 						page('/');
 					}
-					else alert(r.responseText);
+					else _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 				}
 			});
         },
@@ -1982,18 +1942,8 @@
 						_i('settings-avclr-save').addEventListener('click',function(){
 							new ajax(_g.api + '/user/avatar/color', 'POST', "colorAvatar=true&avatarColor=" + _i('settings-avatclr-input').value,{
 								load	: function(r){
-									if(r.responseText !== '') _g.pu.open({
-										title			: "Error!",
-										text			: r.responseText,
-										titleColor		: "#ff2727",
-										titleTextColor	: "#fff"
-									});
-									else _g.pu.open({
-										title			: "Saved",
-										text			: "Your settings have been saved.",
-										titleColor		: "#62ff62",
-										titleTextColor	: "#fff"
-									});
+									if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
+									else _g.mo.open(_g.collect(_g.ui.SAVED_STYLE,{text : "Your settings have been saved."}));
 								}
 							});
 						});
@@ -2060,12 +2010,7 @@
 		},
 		follow(user,feed){
 			var load = function(r){
-				if(r.responseText !== '') _g.pu.open({
-						title : "Error!",
-						text : r.responseText,
-						titleColor : "#ff2727",
-						titleTextColor : "#fff"
-					});
+				if(r.responseText !== '') _g.mo.open(_g.collect(_g.ui.ERROR_STYLE,{text : r.responseText}));
 				if(_g.u.info.id[user]) new ajax(_g.api + '/user/' + _g.u.info.id[user].username, 'GET', '', {
 					load	: function(r){
 						if(_g.s.feedsPg) _g.s.feeds();
@@ -2243,7 +2188,22 @@
 		}
 	});
 	_g.ui	= (_g.interface	= {
-		columns	: [
+        ERROR_STYLE : {
+            title : "Error!",
+            titleColor : "#ff2727",
+            titleTextColor : "#fff"
+        },
+        SAVED_STYLE : {
+            title			: "Saved",
+            titleColor		: "#62ff62",
+            titleTextColor	: "#fff"
+        },
+        SUCCESS_STYLE : {
+            title			: "Success!",
+            titleColor		: "#62ff62",
+            titleTextColor	: "#fff"
+        },
+        columns	: [
 			{
 				width		: 'slim',	//	210px
 				defaultOfSize : !0,
