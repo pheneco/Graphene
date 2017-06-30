@@ -24,16 +24,9 @@ html(lang="en")
 	script#sidebar-template(type="text/x-handlebars-template"): include ../templates/sidebar.hbs
 	script#user-template(type="text/x-handlebars-template"): include ../templates/user.hbs
 
-	if localLibraries
-		script(src="/scripts/page.js")
-		script(src="/scripts/soundcloud.js")
-		script(src="/scripts/clipboard.min.js")
-		script(src="http://twemoji.maxcdn.com/2/twemoji.min.js")
-	else
-		script(src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js")
-		script(src="http://connect.soundcloud.com/sdk.js")
-		script(src="http://twemoji.maxcdn.com/2/twemoji.min.js")
-
+	script(src="https://cdn.rawgit.com/visionmedia/page.js/master/page.js")
+	script(src="http://connect.soundcloud.com/sdk.js")
+	script(src="http://twemoji.maxcdn.com/2/twemoji.min.js")
 
 	script
 		|	var url = window.location.origin,
