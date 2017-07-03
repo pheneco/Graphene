@@ -3,3 +3,5 @@ node_js:
   - "node"
 services:
   - mongodb
+ notifications:
+    slack: pheneco:886t9GgCu1rYBx2OY8m61si4
