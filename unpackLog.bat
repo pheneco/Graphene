@@ -9,7 +9,7 @@ for /f "delims=" %%i in ('node cfg.js database') do set database=%%i
 for /f "delims=" %%i in ('node cfg.js serverDir') do set serverDir=%%i
 
 echo updating client changelog
-%mongoDir%\mongorestore --drop --db %database% %serverDir%\changelog\webClientChanges.bson
+"%mongoDir%\mongorestore" --drop --db %database% "%serverDir%\changelog\webClientChanges.bson"
 
 echo updating server changelog
-%mongoDir%\mongorestore --drop --db %database% %serverDir%\changelog\serverChanges.bson
+"%mongoDir%\mongorestore" --drop --db %database% "%serverDir%\changelog\serverChanges.bson"
