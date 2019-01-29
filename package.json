@@ -10,7 +10,7 @@
   "contributors": [],
   "main": "app.js",
   "scripts": {
-      "start": "app.js"
+    "start": "app.js"
   },
   "dependencies": {
     "bcrypt-nodejs": ">=0.0.3",
