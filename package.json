@@ -1,11 +1,11 @@
 {
-  "name": "Graphene",
+  "name": "graphene",
   "version": "0.5.0",
   "description": "Server API application for the Graphene Social Network.",
   "author": {
-    "name": "Trevor J Hoglund",
-    "email": "trewbot@phene.co",
-    "url": "trevorjhoglund.com"
+    "name": "Una Ada",
+    "email": "una@xn--z7x.dev",
+    "url": "https://xn--z7x.dev/"
   },
   "contributors": [],
   "main": "app.js",
@@ -37,12 +37,11 @@
     "tumblr.js": ">=1.0.0"
   },
   "bugs": {
-    "url": "https://github.com/Trewbot/Graphene/issues",
-    "email": "trewbot@phene.co"
+    "url": "https://github.com/pheneco/Graphene/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Trewbot/Graphene.git"
+    "url": "https://github.com/pheneco/Graphene.git"
   },
   "license": "MIT",
   "devDependencies": {
